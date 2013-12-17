@@ -1,9 +1,7 @@
 package controler;
-
+import fenetre.Fenetre_principale;
 
 import java.awt.event.ActionEvent;
-
-import fenetre.Fenetre_principale;
 
 public class Controler {
 	
