@@ -1,9 +1,6 @@
 package model;
 
 import java.util.Observable;
-
-public class Model extends Observable {
-
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Observable;

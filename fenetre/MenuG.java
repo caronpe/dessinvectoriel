@@ -27,8 +27,8 @@ public class MenuG extends JPanel{
 		ImageIcon imgcercle = new ImageIcon("cercle.jpg");
 		ImageIcon imgcrayon = new ImageIcon("crayon.jpg");
 
-		crayon=new JButton(imgcrayon);
-		crayon.setPreferredSize(new Dimension(29,29));
+		stylo=new JButton(imgcrayon);
+		stylo.setPreferredSize(new Dimension(29,29));
 	
 		rectangle=new JButton(imgrectangle);
 		rectangle.setPreferredSize(new Dimension(29,29));
@@ -39,7 +39,7 @@ public class MenuG extends JPanel{
 
 		GridLayout grid = new GridLayout(2,3);
 		setLayout(grid);
-		add(crayon,grid);
+		add(stylo,grid);
 		add(rectangle,grid);
 		add(cercle,grid);
 		
