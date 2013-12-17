@@ -9,7 +9,9 @@ public class Forme {
 	String type , forme;
 	Color couleur;
 	
+
 	//constructeur le plus basique de la forme a dessiner avec ses coordonnées vectoriels, sa couleur et une string représentant sa forme
+
 	public Forme(int xdep, int ydep, int xarr, int yarr, String type, String forme ,
 			Color couleur) {
 		super();
@@ -22,7 +24,9 @@ public class Forme {
 		this.couleur = couleur;
 	}
 
+
 	//dessine la figure dans le panel placé en parametre.
+
 	public void dessiner(JPanel pan){
 		if(type == "rond"){
 			pan.getGraphics().setColor(couleur);
