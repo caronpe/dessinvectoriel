@@ -14,7 +14,7 @@ public class MenuG extends JPanel{
 	JButton	rectangle;
 	JButton	cercle;
 	JButton	ligne;
-	JButton crayon;
+	JButton pinceau;
 	
 	public MenuG(){
 		pinceau=new JButton();
