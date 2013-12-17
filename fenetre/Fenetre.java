@@ -6,10 +6,10 @@ import java.util.Observer;
 
 import javax.swing.JFrame;
 
-public class fenetre extends JFrame implements Observer {
+public class Fenetre extends JFrame implements Observer {
 
 	
-	public fenetre() throws HeadlessException {
+	public Fenetre() throws HeadlessException {
 		super();
 		this.setTitle("logiciel de dessin vectoriel");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
