@@ -1,10 +1,10 @@
 package controler;
+import fenetre.Fenetre_principale;
 
 import java.awt.event.ActionEvent;
 
-import fenetre.Fenetre_principale;
-
 public class Controler {
+	
 	private Fenetre_principale fenetre;
 	
 	public Controler(Fenetre_principale fenetre) {

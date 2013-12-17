@@ -10,11 +10,11 @@ import javax.swing.JPanel;
 
 public class MenuG extends JPanel{
 
-	JButton pinceau;
 	JButton	stylo;
 	JButton	rectangle;
 	JButton	cercle;
 	JButton	ligne;
+	JButton crayon;
 	
 	public MenuG(){
 		pinceau=new JButton();
@@ -44,8 +44,6 @@ public class MenuG extends JPanel{
 		add(cercle,grid);
 		
 		//this.setMaximumSize(new Dimension(29*2,5*29));
-		
-
 	}
 
 	/* MAIN D'ALEX */
