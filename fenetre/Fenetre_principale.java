@@ -1,10 +1,7 @@
 package fenetre;
 
 // INTERNE
-import controler.Controler;
-import model.Model;
-
-//EXTERNE
+import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.HeadlessException;
@@ -16,7 +13,11 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 import javax.swing.JRadioButtonMenuItem;
+
+import model.Model;
+import controler.Controler;
 
 public class Fenetre_principale extends JFrame implements Observer {
 	private Container container;
@@ -34,14 +35,14 @@ public class Fenetre_principale extends JFrame implements Observer {
 	private JRadioButtonMenuItem radioAction1 = new JRadioButtonMenuItem("Radio Button1");
 //	private JRadioButtonMenuItem radioAction2 = new JRadioButtonMenuItem("Radio Button2");
 	
+	// zone ou le dessin s'éffectura.
 	
+	private JPanel zoneDessin;
 	public Fenetre_principale(Model model) throws HeadlessException {
 		super();
 		this.model = model;
 		this.model.addObserver(this);
 		this.initialiser();
-		this.setTitle("logiciel de dessin vectoriel");
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
 	public void afficher() {
@@ -49,9 +50,15 @@ public class Fenetre_principale extends JFrame implements Observer {
 	}
 	
 	public void initialiser() {
+		
 		container = this.getContentPane();
+		container.setLayout(new BorderLayout());
 		gauche = new MenuG();
-		container.add(gauche);
+		container.add(gauche , BorderLayout.WEST);
+		
+		//création de la zone de dessinS
+		zoneDessin = new JPanel();
+		container.add(zoneDessin , BorderLayout.CENTER);
 		
 		this.setTitle("logiciel de dessin vectoriel");
 		this.setResizable(true);
@@ -59,6 +66,7 @@ public class Fenetre_principale extends JFrame implements Observer {
 		this.setMinimumSize(new Dimension(400, 400));
 		
 		this.creation_menu();
+		this.pack();
 	}
 	
 	public void creation_menu() {		 

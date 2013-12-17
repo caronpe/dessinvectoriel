@@ -45,7 +45,7 @@ public class MenuG extends JPanel{
 		//this.setMaximumSize(new Dimension(29*2,5*29));
 	}
 
-	/* MAIN D'ALEX */
+	/* MAIN D'ALEX 
 	public static void  main (String args[]){
 		JFrame fram = new JFrame();
 		JPanel menuG = new MenuG();
@@ -54,5 +54,6 @@ public class MenuG extends JPanel{
 		fram.pack();
 		fram.setVisible(true);
 	}
+	*/
 }
 
