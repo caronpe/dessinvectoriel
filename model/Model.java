@@ -8,11 +8,11 @@ import java.util.Observable;
 import javax.swing.JPanel;
 
 public class Model extends Observable {
-	ArrayList<Forme> listeDessin ;
-	Color selectColor;
-	String selectType;
-	String selectForme;
-	boolean travail_enregistre;
+	private ArrayList<Forme> listeDessin ;
+	private Color selectColor;
+	private String selectType;
+	private String selectForme;
+	private boolean travail_enregistre;
 
 	public Model() {
 		super();
@@ -23,18 +23,27 @@ public class Model extends Observable {
 		this.setEnregistre(false);
 	}
 	
-	//ajoute une figure a la liste des formes presente
-
+	// Ajoute une figure à la liste des formes présentes
 	public void addForme(Point deb , Point arr, JPanel pan){
-		Forme courant = new Forme(deb , arr , selectType, selectForme , selectColor);
+		Forme courant = new Forme(deb, arr, selectType, selectForme, selectColor);
 		listeDessin.add(courant);
-		System.out.println("forme ajoutée");
+		System.out.println("Forme ajoutée"); // DEBUG
+		
 		courant.dessiner(pan);
-		System.out.println("forme peinte");
+		System.out.println("Forme peinte"); // DEBUG
+		
 		setChanged();
-		notifyObservers(courant);
+		notifyObservers(courant); // Lorsqu'une forme est ajoutée, l'objet Forme "courant" est envoyé à l'update des vues
 	}	
 
+	public Color getColor() {
+		return this.selectColor; 
+	}
+	
+	public void setColor (Color couleur) {
+		this.selectColor = couleur;
+	}
+	
 	public boolean getEnregistre() {
 		return travail_enregistre;
 	}

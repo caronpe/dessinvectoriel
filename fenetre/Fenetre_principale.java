@@ -12,9 +12,9 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
+import controler.*;
 // INTERNE
 import model.*;
-import controler.*;
 
 public class Fenetre_principale extends JFrame implements Observer {
 	// FENETRE
@@ -54,7 +54,7 @@ public class Fenetre_principale extends JFrame implements Observer {
 		container.setLayout(new BorderLayout());
 		
 		// Ajout des panels au container
-		gauche = new MenuG();
+		gauche = new MenuG(model);
 		zonedessin = new zoneDessin();
 		zonedessin.addMouseListener(new zoneDessin_listener(zonedessin, model));
 		container.add(gauche, BorderLayout.WEST);

@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.io.File;
-
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -14,9 +13,14 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.colorchooser.AbstractColorChooserPanel;
 
+import controler.ChangerCouleur;
+// INTERNE
+import model.*;
+
 public class MenuG extends JPanel{
 	BoxLayout box1;
 	JColorChooser bacacouleur;
+	Model model;
 	// JButton
 		JButton crayon;
 		JButton	rectangle;
@@ -29,7 +33,8 @@ public class MenuG extends JPanel{
 	ImageIcon imgcercle;
 	ImageIcon imgcrayon;
 		
-	public MenuG(){
+	public MenuG(Model model){
+		this.model = model;
 		initialisation();
 		
 		// Définition de l'adresse de chaque icône
@@ -46,24 +51,24 @@ public class MenuG extends JPanel{
 		cercle.setPreferredSize(new Dimension(22,22));
 		
 		// Couleurs
-		rouge= new JButton();
+		rouge= new JButton(new ChangerCouleur(model, "rouge"));
 		rouge.setBackground(Color.RED);
 		rouge.setPreferredSize(new Dimension(22,22));
-		bleu= new JButton();
+		bleu= new JButton(new ChangerCouleur(model, "bleu"));
 		bleu.setBackground(Color.BLUE);
 		bleu.setPreferredSize(new Dimension(22,22));
-		vert= new JButton();
+		vert= new JButton(new ChangerCouleur(model, "vert"));
 		vert.setBackground(Color.GREEN);
 		vert.setPreferredSize(new Dimension(22,22));
 		
 		// Ajouts outils
-		add(crayon);
-		add(rectangle);
-		add(cercle);
+		this.add(crayon);
+		this.add(rectangle);
+		this.add(cercle);
 		// Ajours couleurs
-		add(rouge);
-		add(bleu);
-		add(vert);
+		this.add(rouge);
+		this.add(bleu);
+		this.add(vert);
 	}
 	
 	public void initialisation() {
