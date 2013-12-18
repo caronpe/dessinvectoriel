@@ -8,19 +8,36 @@ import model.Forme;
 
 public class zoneDessin extends JPanel {
 	
-	public void paintComponent(Graphics g , Forme courante){
+	Forme courante;
+	
+	
+	public zoneDessin() {
+		super();
+	}
+
+
+	public void paintComponent(Graphics g){
+			g.setColor(courante.getCouleur());
 		
-		if(type == "rond"){
-			pan.getGraphics().setColor(couleur);
-			pan.getGraphics().fillOval((int)deb.getX() , (int)deb.getY(), (int)arr.getX(), (int)arr.getY());
+		if(courante.getForme() == "rond"){
+			g.fillOval((int)courante.getDeb().getX() , (int)courante.getDeb().getY(), (int)courante.getArr().getX(), (int)courante.getArr().getY());
 		}
-		if(type == "carre"){
-			pan.getGraphics().setColor(couleur);
-			pan.getGraphics().fillRect((int)deb.getX() , (int)deb.getY(), (int)arr.getX(), (int)arr.getY());
+		if(courante.getForme() == "carre"){
+			g.fillRect((int)courante.getDeb().getX() , (int)courante.getDeb().getY(), (int)courante.getArr().getX(), (int)courante.getArr().getY());
 		}
-		if(type == "droite"){
-			pan.getGraphics().setColor(couleur);
-			pan.getGraphics().drawLine((int)deb.getX() , (int)deb.getY(), (int)arr.getX(), (int)arr.getY());
+		if(courante.getForme() == "droite"){
+			g.drawLine((int)courante.getDeb().getX() , (int)courante.getDeb().getY(), (int)courante.getArr().getX(), (int)courante.getArr().getY());
 		}		
 	}
+
+
+	public Forme getCourante() {
+		return courante;
+	}
+
+
+	public void setCourante(Forme courante) {
+		this.courante = courante;
+	}
+	
 }

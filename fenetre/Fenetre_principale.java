@@ -39,7 +39,8 @@ public class Fenetre_principale extends JFrame implements Observer {
 	
 	// zone ou le dessin s'éffectura.
 	
-	private JPanel zoneDessin;
+	private zoneDessin zonedessin;
+	
 	public Fenetre_principale(Model model) throws HeadlessException {
 		super();
 		this.model = model;
@@ -59,9 +60,9 @@ public class Fenetre_principale extends JFrame implements Observer {
 		container.add(gauche , BorderLayout.WEST);
 		
 		//création de la zone de dessin
-		zoneDessin = new JPanel();
-		zoneDessin.addMouseListener(new zoneDessin_listener(zoneDessin, model));
-		container.add(zoneDessin , BorderLayout.CENTER);
+		zonedessin = new zoneDessin();
+		zonedessin.addMouseListener(new zoneDessin_listener(zonedessin, model));
+		container.add(zonedessin , BorderLayout.CENTER);
 		
 		this.setTitle("logiciel de dessin vectoriel");
 		this.setResizable(true);
@@ -116,7 +117,7 @@ public class Fenetre_principale extends JFrame implements Observer {
 		Forme courant = null;
 		if(arg1 instanceof Forme)
 			courant = (Forme) arg1;
-		courant.dessiner(zoneDessin);
-		zoneDessin.repaint();
+		zonedessin.setCourante(courant);
+		zonedessin.repaint();
 	}
 }
