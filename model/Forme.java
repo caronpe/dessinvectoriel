@@ -1,6 +1,7 @@
 package model;
 
 import java.awt.Color;
+import java.awt.Point;
 
 import javax.swing.JPanel;
 
@@ -27,15 +28,15 @@ public class Forme {
 	public void dessiner(JPanel pan){
 		if(type == "rond"){
 			pan.getGraphics().setColor(couleur);
-			pan.getGraphics().fillOval(deb.getX() , deb.getY(), arr.getX(), arr.getY());
+			pan.getGraphics().fillOval((int)deb.getX() , (int)deb.getY(), (int)arr.getX(), (int)arr.getY());
 		}
 		if(type == "carre"){
 			pan.getGraphics().setColor(couleur);
-			pan.getGraphics().fillRect(deb.getX() , deb.getY(), arr.getX(), arr.getY());
+			pan.getGraphics().fillRect((int)deb.getX() , (int)deb.getY(), (int)arr.getX(), (int)arr.getY());
 		}
 		if(type == "droite"){
 			pan.getGraphics().setColor(couleur);
-			pan.getGraphics().drawLine(deb.getX() , deb.getY(), arr.getX(), arr.getY());
+			pan.getGraphics().drawLine((int)deb.getX() , (int)deb.getY(), (int)arr.getX(), (int)arr.getY());
 		}		
 	} 
 }
