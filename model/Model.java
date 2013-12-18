@@ -24,7 +24,5 @@ public class Model extends Observable {
 		Forme courant = new Forme(deb , arr , selectType, selectForme , selectColor);
 		listeDessin.add(courant);
 		courant.dessiner(pan);
-	}
-
-	
+	}	
 }
