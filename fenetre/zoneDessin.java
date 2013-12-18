@@ -1,10 +1,9 @@
 package fenetre;
 
 import java.awt.Graphics;
-
 import javax.swing.JPanel;
 
-import model.Forme;
+import model.*;
 
 public class zoneDessin extends JPanel {
 	
