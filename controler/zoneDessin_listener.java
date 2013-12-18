@@ -9,32 +9,11 @@ import javax.swing.JPanel;
 import model.Model;
 
 public class zoneDessin_listener implements MouseListener {
-
-	Point deb , arr ;
+	Point deb, arr ;
 	JPanel pan;
 	Model mod;
 	
-	@Override
-	public void mouseClicked(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseExited(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public void mousePressed(MouseEvent arg0) {
-		// TODO Auto-generated method stub
 		deb = arg0.getPoint();
 	}
 
@@ -44,11 +23,16 @@ public class zoneDessin_listener implements MouseListener {
 		this.mod = mod;
 	}
 
-	@Override
 	public void mouseReleased(MouseEvent arg0) {
-		// TODO Auto-generated method stub
 		arr = arg0.getPoint();
-		mod.addForme(deb , arr, pan);
+		mod.addForme(deb, arr, pan);
 	}
-
+	
+	// Inutiles pour le moment
+	public void mouseClicked(MouseEvent arg0) {
+	}
+	public void mouseEntered(MouseEvent arg0) {
+	}
+	public void mouseExited(MouseEvent arg0) {
+	}
 }
