@@ -16,6 +16,9 @@ public class Model extends Observable {
 	public Model() {
 		super();
 		listeDessin = new ArrayList<Forme>();
+		selectColor = Color.BLACK;
+		selectType = "plein";
+		selectForme = "rond";
 	}
 	
 	//ajoute une figure a la liste des formes presente
@@ -23,6 +26,10 @@ public class Model extends Observable {
 	public void addForme(Point deb , Point arr, JPanel pan){
 		Forme courant = new Forme(deb , arr , selectType, selectForme , selectColor);
 		listeDessin.add(courant);
+		System.out.println("forme ajouté");
 		courant.dessiner(pan);
+		System.out.println("forme painte");
+		setChanged();
+		notifyObservers(courant);
 	}	
 }

@@ -25,6 +25,8 @@ public class Forme {
 
 	//dessine la figure dans le panel placé en parametre.
 
+
+
 	public void dessiner(JPanel pan){
 		if(type == "rond"){
 			pan.getGraphics().setColor(couleur);
@@ -39,4 +41,11 @@ public class Forme {
 			pan.getGraphics().drawLine((int)deb.getX() , (int)deb.getY(), (int)arr.getX(), (int)arr.getY());
 		}		
 	} 
+	
+	@Override
+	public String toString() {
+		return "Forme [deb=" + deb + ", arr=" + arr + ", type=" + type
+				+ ", forme=" + forme + ", couleur=" + couleur + "]";
+	}
+
 }

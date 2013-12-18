@@ -18,6 +18,8 @@ import javax.swing.JRadioButtonMenuItem;
 
 import model.Model;
 import controler.Controler;
+import controler.zoneDessin_listener;
+import model.Forme;
 
 public class Fenetre_principale extends JFrame implements Observer {
 	private Container container;
@@ -58,6 +60,7 @@ public class Fenetre_principale extends JFrame implements Observer {
 		
 		//création de la zone de dessin
 		zoneDessin = new JPanel();
+		zoneDessin.addMouseListener(new zoneDessin_listener(zoneDessin, model));
 		container.add(zoneDessin , BorderLayout.CENTER);
 		
 		this.setTitle("logiciel de dessin vectoriel");
@@ -109,6 +112,11 @@ public class Fenetre_principale extends JFrame implements Observer {
 	}
 	
 	public void update(Observable arg0, Object arg1) {
-		repaint();
+		System.out.println(arg1.toString());
+		Forme courant = null;
+		if(arg1 instanceof Forme)
+			courant = (Forme) arg1;
+		courant.dessiner(zoneDessin);
+		zoneDessin.repaint();
 	}
 }
