@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.colorchooser.AbstractColorChooserPanel;
 
-import controler.ChangerCouleur;
+import controler.ActionCouleur;
 // INTERNE
 import model.*;
 
@@ -51,13 +51,13 @@ public class MenuG extends JPanel{
 		cercle.setPreferredSize(new Dimension(22,22));
 		
 		// Couleurs
-		rouge= new JButton(new ChangerCouleur(model, "rouge"));
+		rouge= new JButton(new ActionCouleur(model, "rouge"));
 		rouge.setBackground(Color.RED);
 		rouge.setPreferredSize(new Dimension(22,22));
-		bleu= new JButton(new ChangerCouleur(model, "bleu"));
+		bleu= new JButton(new ActionCouleur(model, "bleu"));
 		bleu.setBackground(Color.BLUE);
 		bleu.setPreferredSize(new Dimension(22,22));
-		vert= new JButton(new ChangerCouleur(model, "vert"));
+		vert= new JButton(new ActionCouleur(model, "vert"));
 		vert.setBackground(Color.GREEN);
 		vert.setPreferredSize(new Dimension(22,22));
 		

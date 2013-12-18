@@ -4,17 +4,25 @@ import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.HeadlessException;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.util.Observable;
 import java.util.Observer;
+
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JPanel;
 
-import controler.*;
+import model.Forme;
+import model.Model;
+import controler.ActionCopier;
+import controler.ActionCouper;
+import controler.ActionEnregistrer;
+import controler.ActionNouveau;
+import controler.ActionQuitter;
+import controler.zoneDessin_listener;
 // INTERNE
-import model.*;
 
 public class Fenetre_principale extends JFrame implements Observer {
 	// FENETRE
@@ -65,9 +73,10 @@ public class Fenetre_principale extends JFrame implements Observer {
 		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		this.addWindowListener(new ActionQuitter(model.getEnregistre()));
 		this.setMinimumSize(new Dimension(400, 400));
+		this.addComponentListener(this);
 	}
 	
-	public void creation_menu() {		 
+	public void creation_menu() { 
 		// CRÉATION MENU BAR
 		menuBar = new JMenuBar();
 		this.setJMenuBar(menuBar);
