@@ -12,6 +12,7 @@ public class Model extends Observable {
 	Color selectColor;
 	String selectType;
 	String selectForme;
+	boolean travail_enregistre;
 
 	public Model() {
 		super();
@@ -19,6 +20,7 @@ public class Model extends Observable {
 		selectColor = Color.BLACK;
 		selectType = "plein";
 		selectForme = "rond";
+		this.setEnregistre(false);
 	}
 	
 	//ajoute une figure a la liste des formes presente
@@ -32,4 +34,14 @@ public class Model extends Observable {
 		setChanged();
 		notifyObservers(courant);
 	}	
+
+	public boolean getEnregistre() {
+		return travail_enregistre;
+	}
+	
+	public void setEnregistre(boolean travail) {
+		this.travail_enregistre = travail;
+		setChanged();
+		notifyObservers();
+	}
 }

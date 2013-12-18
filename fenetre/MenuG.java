@@ -1,60 +1,62 @@
 package fenetre;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.GridLayout;
+
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JColorChooser;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.colorchooser.AbstractColorChooserPanel;
 
 public class MenuG extends JPanel{
 
-	JButton	stylo;
+	JButton crayon;
 	JButton	rectangle;
 	JButton	cercle;
-	JButton	ligne;
-	JButton pinceau;
+	JButton rouge;
+	JButton bleu;
+	JButton vert;
+	BoxLayout box1;
+	ImageIcon imgrectangle;
+	ImageIcon imgcercle;
+	ImageIcon imgcrayon;
+	JColorChooser bacacouleur;
 	
 	public MenuG(){
-		pinceau=new JButton();
-		stylo=new JButton();
-		rectangle=new JButton();
-		cercle=new JButton();
-		ligne=new JButton();
-
-		ImageIcon imgrectangle = new ImageIcon("carre.jpg");
-		ImageIcon imgcercle = new ImageIcon("cercle.jpg");
-		ImageIcon imgcrayon = new ImageIcon("crayon.jpg");
-
-		stylo=new JButton(imgcrayon);
-		stylo.setPreferredSize(new Dimension(29,29));
-	
-		rectangle=new JButton(imgrectangle);
-		rectangle.setPreferredSize(new Dimension(29,29));
-
-		cercle=new JButton(imgcercle);
-		cercle.setPreferredSize(new Dimension(29,29));
-
-
-		GridLayout grid = new GridLayout(2,3);
-		setLayout(grid);
-		add(stylo,grid);
-		add(rectangle,grid);
-		add(cercle,grid);
+		imgrectangle = new ImageIcon("carre.jpg");
+		imgcercle = new ImageIcon("cercle.png");
+		imgcrayon = new ImageIcon("crayon.jpg");
+		 
+		this.setPreferredSize(new Dimension(45,45));
+		this.setMinimumSize(new Dimension(45,45));
+		this.setMaximumSize(new Dimension(45,45));
+		crayon = new JButton(imgcrayon);
+		crayon.setPreferredSize(new Dimension(22,22));
+		rectangle = new JButton(imgrectangle);
+		rectangle.setPreferredSize(new Dimension(22,22));
+		cercle = new JButton(imgcercle);
+		cercle.setPreferredSize(new Dimension(22,22));
+		rouge= new JButton();
+		rouge.setBackground(Color.RED);
+		rouge.setPreferredSize(new Dimension(22,22));
+		bleu= new JButton();
+		bleu.setBackground(Color.BLUE);
+		bleu.setPreferredSize(new Dimension(22,22));
+		vert= new JButton();
+		vert.setBackground(Color.GREEN);
+		vert.setPreferredSize(new Dimension(22,22));
 		
-		//this.setMaximumSize(new Dimension(29*2,5*29));
+		add(crayon);
+		add(rectangle);
+		add(cercle);
+		add(crayon);
+		add(rectangle);
+		add(cercle);
 	}
-
-	/* MAIN D'ALEX 
-	public static void  main (String args[]){
-		JFrame fram = new JFrame();
-		JPanel menuG = new MenuG();
-		fram.add(BorderLayout.WEST,menuG);
-		
-		fram.pack();
-		fram.setVisible(true);
-	}
-	*/
 }
 
