@@ -56,7 +56,7 @@ public class Fenetre_principale extends JFrame implements Observer {
 		gauche = new MenuG();
 		container.add(gauche , BorderLayout.WEST);
 		
-		//création de la zone de dessinS
+		//création de la zone de dessin
 		zoneDessin = new JPanel();
 		container.add(zoneDessin , BorderLayout.CENTER);
 		
