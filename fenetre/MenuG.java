@@ -10,20 +10,18 @@ import javax.swing.JPanel;
 
 public class MenuG extends JPanel{
 
-
 	JButton	stylo;
 	JButton	rectangle;
 	JButton	cercle;
 	JButton	ligne;
 	JButton pinceau;
 	
-	public MenuG() {
+	public MenuG(){
 		pinceau=new JButton();
 		stylo=new JButton();
 		rectangle=new JButton();
 		cercle=new JButton();
 		ligne=new JButton();
-
 
 		ImageIcon imgrectangle = new ImageIcon("carre.jpg");
 		ImageIcon imgcercle = new ImageIcon("cercle.jpg");
@@ -31,7 +29,7 @@ public class MenuG extends JPanel{
 
 		stylo=new JButton(imgcrayon);
 		stylo.setPreferredSize(new Dimension(29,29));
-
+	
 		rectangle=new JButton(imgrectangle);
 		rectangle.setPreferredSize(new Dimension(29,29));
 
@@ -41,12 +39,12 @@ public class MenuG extends JPanel{
 
 		GridLayout grid = new GridLayout(2,3);
 		setLayout(grid);
-
 		add(stylo,grid);
 		add(rectangle,grid);
 		add(cercle,grid);
 		
 		//this.setMaximumSize(new Dimension(29*2,5*29));
+	}
 
 	/* MAIN D'ALEX 
 	public static void  main (String args[]){
@@ -58,7 +56,5 @@ public class MenuG extends JPanel{
 		fram.setVisible(true);
 	}
 	*/
-
-	}
 }
 

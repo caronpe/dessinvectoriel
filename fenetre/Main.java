@@ -1,7 +1,8 @@
 package fenetre;
 
-// INTERNE
+// Interne
 import controler.*;
+
 import model.*;
 
 public class Main {
