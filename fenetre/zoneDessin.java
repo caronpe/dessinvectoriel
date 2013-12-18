@@ -30,7 +30,7 @@ public class zoneDessin extends JPanel {
 			if(courante.getForme() == "droite"){
 				g.drawLine((int)courante.getDeb().getX() , (int)courante.getDeb().getY(), (int)courante.getArr().getX(), (int)courante.getArr().getY());
 			}		
-		} else { 
+		} else {
 			// Si courante est nulle, on fait simplement un repaint,
 			// cela permets de ne pas avoir de problème d'affichage
 			// au démarrage de l'application
