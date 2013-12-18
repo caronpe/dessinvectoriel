@@ -5,20 +5,17 @@ import java.awt.Color;
 import javax.swing.JPanel;
 
 public class Forme {
-	int xdep, ydep, xarr ,yarr;
+	Point deb , arr;
 	String type , forme;
 	Color couleur;
 	
 
 	//constructeur le plus basique de la forme a dessiner avec ses coordonnées vectoriels, sa couleur et une string représentant sa forme
 
-	public Forme(int xdep, int ydep, int xarr, int yarr, String type, String forme ,
-			Color couleur) {
+	public Forme(Point deb , Point arr, String type, String forme, Color couleur) {
 		super();
-		this.xdep = xdep;
-		this.ydep = ydep;
-		this.xarr = xarr;
-		this.yarr = yarr;
+		this.deb = deb;
+		this.arr = arr;
 		this.type = type;
 		this.forme = forme;
 		this.couleur = couleur;
@@ -30,15 +27,15 @@ public class Forme {
 	public void dessiner(JPanel pan){
 		if(type == "rond"){
 			pan.getGraphics().setColor(couleur);
-			pan.getGraphics().fillOval(xdep ,ydep , xarr ,yarr);
+			pan.getGraphics().fillOval(deb.getX() , deb.getY(), arr.getX(), arr.getY());
 		}
 		if(type == "carre"){
 			pan.getGraphics().setColor(couleur);
-			pan.getGraphics().fillRect(xdep ,ydep , xarr ,yarr);
+			pan.getGraphics().fillRect(deb.getX() , deb.getY(), arr.getX(), arr.getY());
 		}
 		if(type == "droite"){
 			pan.getGraphics().setColor(couleur);
-			pan.getGraphics().drawLine(xdep ,ydep , xarr ,yarr);
+			pan.getGraphics().drawLine(deb.getX() , deb.getY(), arr.getX(), arr.getY());
 		}		
 	} 
 }

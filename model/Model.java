@@ -19,11 +19,10 @@ public class Model extends Observable {
 	
 	//ajoute une figure a la liste des formes presente
 
-	public void addForme(int xdep, int ydep, int xarr, int yarr, JPanel pan){
-		Forme courant = new Forme(xdep, ydep, xarr, yarr, selectType, selectForme , selectColor);
+	public void addForme(Point deb , Point arr, JPanel pan){
+		Forme courant = new Forme(deb , arr , selectType, selectForme , selectColor);
 		listeDessin.add(courant);
 		courant.dessiner(pan);
-
 	}
 
 	
