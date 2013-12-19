@@ -23,7 +23,7 @@ public class ActionOuvrir extends AbstractAction {
 	
 	public void actionPerformed(ActionEvent arg0) {
 		if ( model.getEnregistre() ) {
-			fileChooser();
+			ouvrir();
 		} else {
 			System.out.println("Nouveau, travail non enregistré");
 			Object[] options = {"Enregistrer", "Ne pas enregistrer", "Annuler"};
@@ -34,12 +34,12 @@ public class ActionOuvrir extends AbstractAction {
 			if ( n == 0 ) {
 				new ActionEnregistrer(model).enregistrer();
 			} else if ( n == 1 ) {
-				fileChooser();
+				ouvrir();
 			}
 		}
 	}
 	
-	public void fileChooser() {
+	public void ouvrir() {
 		JFileChooser filechoose = new JFileChooser();
 		filechoose.setCurrentDirectory(new File("."));
 		// Le répertoire source du JFileChooser est le répertoire d’où est lancé notre programme
@@ -49,11 +49,11 @@ public class ActionOuvrir extends AbstractAction {
 		int resultatOuvrir = filechoose.showDialog(filechoose, approve); // Pour afficher le JFileChooser
 		if(resultatOuvrir == JFileChooser.APPROVE_OPTION) { // Si l’utilisateur clique sur le bouton OUVRIR
 			monFichier = filechoose.getSelectedFile().toString(); // Récupérer le nom du fichier qu’il a spécifié
-			this.ouvrir(monFichier);
+			this.fluxOuverture(monFichier);
 		}
 	}
 	
-	public void ouvrir(String monFichier) {
+	public void fluxOuverture(String monFichier) {
 		try { 
 			FileInputStream fis = new FileInputStream(monFichier);
 			// Créer un flux d’entrée avec comme paramètre le nom du fichier à ouvrir
@@ -62,7 +62,8 @@ public class ActionOuvrir extends AbstractAction {
 				byte[] b = new byte[n]; // récupérer le byte à l’endroit n et le stocker dans un tableau de bytes
 				int result = fis.read(b); // lire ce tableau de byte à l’endroit désiré
 				if (result == -1) break; // si le byte est -1, c’est que le flux est arrivé à sa fin (par définition)
-				String s = new String(b);// assembler les bytes pour former une chaîne
+				String s = new String(b); // assembler les bytes pour former une chaîne
+				System.out.println(s);
 			}
 		} catch (Exception err) {
 			System.err.println("Erreur lors de l'ouverture du fichier");
