@@ -1,17 +1,20 @@
 package fenetre;
 
 import java.awt.Graphics;
+import java.util.Iterator;
 
 import javax.swing.JPanel;
-
-import model.Forme;
+// INTERNE
+import model.*;
 
 public class zoneDessin extends JPanel {
 	Forme courante;
+	Model model;
 		
-	public zoneDessin() {
+	public zoneDessin(Model model) {
 		super();
 		this.courante = null;
+		this.model = model;
 	}
 
 	public void paintComponent(Graphics g){
@@ -19,17 +22,28 @@ public class zoneDessin extends JPanel {
 		// Cela permet d'éviter les erreurs du type NullPointerException 
 		// à la construction de zoneDessin dans la fenêtre principale
 		if ( courante != null ) {
-			g.setColor(courante.getCouleur());
-		
-			if(courante.getForme() == "rond"){
-				g.fillOval((int)courante.getDeb().getX() , (int)courante.getDeb().getY(), (int)courante.getArr().getX(), (int)courante.getArr().getY());
+			dessiner(courante, g);
+			System.out.println("Formes en cours de réinitialisation");
+			Iterator<Forme> it = model.getListeDessin().iterator();
+			
+			while (it.hasNext()) {
+			      Forme forme = it.next();
+			      dessiner(forme, g);
 			}
-			if(courante.getForme() == "carre"){
-				g.fillRect((int)courante.getDeb().getX() , (int)courante.getDeb().getY(), (int)courante.getArr().getX(), (int)courante.getArr().getY());
-			}
-			if(courante.getForme() == "droite"){
-				g.drawLine((int)courante.getDeb().getX() , (int)courante.getDeb().getY(), (int)courante.getArr().getX(), (int)courante.getArr().getY());
-			}		
+			System.out.println("Formes redessinées");
+		}
+	}
+	
+	public void dessiner(Forme courante, Graphics g) {
+		g.setColor(courante.getCouleur());
+		if(courante.getForme() == "rond"){
+			g.fillOval((int)courante.getDeb().getX() , (int)courante.getDeb().getY(), (int)courante.getArr().getX(), (int)courante.getArr().getY());
+		}
+		if(courante.getForme() == "carre"){
+			g.fillRect((int)courante.getDeb().getX() , (int)courante.getDeb().getY(), (int)courante.getArr().getX(), (int)courante.getArr().getY());
+		}
+		if(courante.getForme() == "droite"){
+			g.drawLine((int)courante.getDeb().getX() , (int)courante.getDeb().getY(), (int)courante.getArr().getX(), (int)courante.getArr().getY());
 		}
 	}
 

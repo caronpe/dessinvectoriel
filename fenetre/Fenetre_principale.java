@@ -4,11 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.HeadlessException;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 import java.util.Observable;
 import java.util.Observer;
-
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -63,7 +60,7 @@ public class Fenetre_principale extends JFrame implements Observer {
 		
 		// Ajout des panels au container
 		gauche = new MenuG(model);
-		zonedessin = new zoneDessin();
+		zonedessin = new zoneDessin(model);
 		zonedessin.addMouseListener(new zoneDessin_listener(zonedessin, model));
 		container.add(gauche, BorderLayout.WEST);
 		container.add(zonedessin , BorderLayout.CENTER);
@@ -113,5 +110,9 @@ public class Fenetre_principale extends JFrame implements Observer {
 			courant = (Forme) arg1;
 		zonedessin.setCourante(courant);
 		zonedessin.repaint();
+	}
+	
+	public void redessinerFormes() {
+		
 	}
 }

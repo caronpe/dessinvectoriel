@@ -28,15 +28,13 @@ public class Model extends Observable {
 		Forme courant = new Forme(deb, arr, selectType, selectForme, selectColor);
 		listeDessin.add(courant);
 		System.out.println("Forme ajoutée"); // DEBUG
-		
-		courant.dessiner(pan);
-		System.out.println("Forme peinte"); // DEBUG
-		
 		setChanged();
 		notifyObservers(courant); // Lorsqu'une forme est ajoutée, l'objet Forme "courant" est envoyé à l'update des vues
 		
 		setEnregistre(false);
-	}	
+	}
+	
+	
 
 	public Color getColor() {
 		return this.selectColor; 
@@ -56,6 +54,10 @@ public class Model extends Observable {
 	
 	public void setEnregistre(boolean travail) {
 		this.travail_enregistre = travail;
+	}
+	
+	public ArrayList<Forme> getListeDessin() {
+		return this.listeDessin;
 	}
 	
 	public String informationsEnregistrement() {
