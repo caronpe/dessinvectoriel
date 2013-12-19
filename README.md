@@ -13,7 +13,8 @@ couleur par défaut : noir,
 type par défaut : plein.
 
 Enregistrement :
-L'utilisateur peut enregistrer son fichier. L'extension est .cth.
+L'utilisateur peut enregistrer son fichier. L'extension est .cth. Le nom de fichier est préselectionné, de sorte que l'utilisateur peut directement écrire le nom du fichier et appuyer sur la touche "Entrée" ou le bouton "enregistrer".
+Si l'utilisateur entre directement son nom de fichier sans extension, elle est tout de même rajoutée lors de l'enregistrement.
 Il est notifié à l'utilisateur si le fichier existe déjà et lui demande confirmation avant de l'écraser.
 Si l'utilisateur enregistre, il ne lui est pas demandé en quittant d'enregistrer.
 De même, si entre l'enregistrement et la fermeture, il crée d'autres formes, il lui est demandé s'il souhaite réenregistrer.
