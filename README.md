@@ -12,5 +12,11 @@ Outil par défaut : droite
 couleur par défaut : noir,
 type par défaut : plein.
 
+Enregistrement :
+L'utilisateur peut enregistrer son fichier. L'extension est .cth.
+Il est notifié à l'utilisateur si le fichier existe déjà et lui demande confirmation avant de l'écraser.
+Si l'utilisateur enregistre, il ne lui est pas demandé en quittant d'enregistrer.
+De même, si entre l'enregistrement et la fermeture, il crée d'autres formes, il lui est demandé s'il souhaite réenregistrer.
+
 Fonctionnement général :
 Lorsqu'une forme est ajoutée, l'arrayList du modèle est modifiée : une forme lui est ajoutée
