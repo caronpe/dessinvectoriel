@@ -10,16 +10,9 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-
-import model.Forme;
-import model.Model;
-import controler.ActionCopier;
-import controler.ActionCouper;
-import controler.ActionEnregistrer;
-import controler.ActionNouveau;
-import controler.ActionQuitter;
-import controler.zoneDessin_listener;
-// INTERNE
+//INTERNE
+import model.*;
+import controler.*;
 
 public class Fenetre_principale extends JFrame implements Observer {
 	// FENETRE
@@ -35,6 +28,7 @@ public class Fenetre_principale extends JFrame implements Observer {
 	private JMenu fileMenu;
 	private JMenu editMenu;
 	private JMenuItem nouveau;
+	private JMenuItem ouvrir;
 	private JMenuItem enregistrer;
 	private JMenuItem exitAction;
 	private JMenuItem copy;
@@ -86,6 +80,7 @@ public class Fenetre_principale extends JFrame implements Observer {
 		
 		// MENUITEMS
 		nouveau = new JMenuItem(new ActionNouveau());
+		ouvrir = new JMenuItem(new ActionOuvrir(model));
 		enregistrer = new JMenuItem(new ActionEnregistrer(model));
 		exitAction = new JMenuItem(new ActionQuitter(model));
 		copy = new JMenuItem(new ActionCopier());
@@ -94,6 +89,7 @@ public class Fenetre_principale extends JFrame implements Observer {
 		// FILE MENU
 		fileMenu.addSeparator();
 		fileMenu.add(nouveau);
+		fileMenu.add(ouvrir);
 		fileMenu.add(enregistrer);
 		fileMenu.add(exitAction);
 

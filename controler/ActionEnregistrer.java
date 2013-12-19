@@ -31,7 +31,7 @@ public class ActionEnregistrer extends AbstractAction {
 		// FileChooser
 			JFileChooser filechoose = new JFileChooserOverwrite();
 			filechoose.setSelectedFile(new File(nom_du_fichier)); // Répertoire par défaut : où est lancé notre programme
-			String approve = new String("Enregistrer"); // portera la mention ENREGSITRER
+			String approve = new String("Enregistrer"); // portera la mention ENREGISTRER
 			ExtensionFileFilter filter = new ExtensionFileFilter("Fichiers .CTH", "cth");
 		    filechoose.setFileFilter(filter);
 	    
