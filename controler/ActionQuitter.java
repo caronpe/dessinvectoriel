@@ -3,21 +3,25 @@ package controler;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-
 import javax.swing.AbstractAction;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+// INTERNE
+import model.*;
 
 public class ActionQuitter extends AbstractAction implements WindowListener {
 	private boolean enregistre;
+	private Model model;
 	
-	public ActionQuitter(boolean enregistre) {
-		this.enregistre = enregistre;
+	public ActionQuitter(Model model) {
+		this.model = model;
+		this.enregistre = model.getEnregistre();
 		putValue(NAME, "Quitter");
 		putValue(SHORT_DESCRIPTION, "Quitte le logiciel");
 	}
 			
 	public void actionPerformed(ActionEvent e) {
+		this.enregistre = model.getEnregistre();
 		if (enregistre) {
 			quitter_enregistre();
 		} else {
@@ -45,13 +49,14 @@ public class ActionQuitter extends AbstractAction implements WindowListener {
 		
 		// Si on sélectionne l'option Enregistrer
 		if ( n == 0 ) {
-			
+			new ActionEnregistrer(model).enregistrer();
 		} else if ( n == 1 ) {
 			System.exit(0);
 		}
 	}
 	
 	public void windowClosing(WindowEvent arg0) {
+		this.enregistre = model.getEnregistre();
 		if (enregistre) {
 			quitter_enregistre();
 		} else {

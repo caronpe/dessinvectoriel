@@ -71,9 +71,8 @@ public class Fenetre_principale extends JFrame implements Observer {
 		this.setTitle("logiciel de dessin vectoriel");
 		this.setResizable(true);
 		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		this.addWindowListener(new ActionQuitter(model.getEnregistre()));
+		this.addWindowListener(new ActionQuitter(model));
 		this.setMinimumSize(new Dimension(400, 400));
-		this.addComponentListener(this);
 	}
 	
 	public void creation_menu() { 
@@ -90,8 +89,8 @@ public class Fenetre_principale extends JFrame implements Observer {
 		
 		// MENUITEMS
 		nouveau = new JMenuItem(new ActionNouveau());
-		enregistrer = new JMenuItem(new ActionEnregistrer());
-		exitAction = new JMenuItem(new ActionQuitter(model.getEnregistre()));
+		enregistrer = new JMenuItem(new ActionEnregistrer(model));
+		exitAction = new JMenuItem(new ActionQuitter(model));
 		copy = new JMenuItem(new ActionCopier());
 		paste = new JMenuItem(new ActionCouper());
 		
