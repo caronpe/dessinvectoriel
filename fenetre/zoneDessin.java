@@ -1,5 +1,6 @@
 package fenetre;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.util.Iterator;
 
@@ -15,12 +16,14 @@ public class zoneDessin extends JPanel {
 		super();
 		this.courante = null;
 		this.model = model;
+		this.setBackground(Color.WHITE);
 	}
 
 	public void paintComponent(Graphics g){
 		// Si la forme n'a pas été initialisé, on ne touche pas à g
 		// Cela permet d'éviter les erreurs du type NullPointerException 
 		// à la construction de zoneDessin dans la fenêtre principale
+		super.paintComponent(g);
 		if ( courante != null ) {
 			dessiner(courante, g);
 			System.out.println("Formes en cours de réinitialisation");
