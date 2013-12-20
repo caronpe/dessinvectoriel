@@ -20,7 +20,7 @@ public class Fenetre_principale extends JFrame implements Observer {
 	// Fenêtre
 		private Container container; // Container principal de la fenêtre
 		private MenuG gauche; // Menu d'outils sur la gauche
-		private zoneDessin zonedessin; // Zone où le dessin s'effectuera.
+		private ZoneDessin zonedessin; // Zone où le dessin s'effectuera.
 	// MVC
 		private Model model;	
 	// Menu
@@ -34,6 +34,12 @@ public class Fenetre_principale extends JFrame implements Observer {
 		private JMenuItem copy;
 		private JMenuItem paste;
 	
+	/**
+	 * @param model Modèle du MVCd
+	 * 
+	 * @throws HeadlessException Aucun catch puisque paint nécessite un environnement graphique
+	 * comprenant souris et clavier
+	 */
 	public Fenetre_principale(Model model) throws HeadlessException {
 		super();
 		this.model = model;
@@ -44,10 +50,21 @@ public class Fenetre_principale extends JFrame implements Observer {
 		this.pack();
 	}
 	
+	/**
+	 * Affiche la fenêtre.
+	 * 
+	 * @category init
+	 */
 	public void afficher() {
 		this.setVisible(true);
 	}
 	
+	/**
+	 * Initialise complètement une fenêtre de 400x400 non-centrée avec 
+	 * une barre d'outil latérale, un menu et une zone de dessin
+	 * 
+	 * @category init
+	 */
 	public void initialiser() {
 		// Configuration du container
 		container = this.getContentPane();
@@ -55,7 +72,7 @@ public class Fenetre_principale extends JFrame implements Observer {
 		
 		// Ajout des panels au container
 		gauche = new MenuG(model);
-		zonedessin = new zoneDessin(model);
+		zonedessin = new ZoneDessin(model);
 		zonedessin.addMouseListener(new zoneDessin_listener(zonedessin, model));
 		container.add(gauche, BorderLayout.WEST);
 		container.add(zonedessin , BorderLayout.CENTER);
@@ -68,7 +85,12 @@ public class Fenetre_principale extends JFrame implements Observer {
 		this.setMinimumSize(new Dimension(400, 400));
 	}
 	
-	public void creation_menu() { 
+	/**
+	 * Crée la barre de menu
+	 * 
+	 * @category init
+	 */
+	private void creation_menu() { 
 		// Création Barre de menu
 		menuBar = new JMenuBar();
 		this.setJMenuBar(menuBar);
@@ -102,6 +124,20 @@ public class Fenetre_principale extends JFrame implements Observer {
 		editMenu.add(paste);
 	}
 	
+	/**
+	 * Si le paramètre est une forme, on la set dans la zone de dessin,
+	 * seule la fonction addForme() du Modèle envoie un paramètre
+	 * Sinon, on la set à null. La fonction paintComponent de ZoneDessin gère
+	 * localement les paramètres.
+	 * 
+	 * Cette gestion des paramètres permets de régler un bug d'affichage lorsqu'on
+	 * ouvre un fichier. Elle évite les exceptions NullPointerException intervenant
+	 * dans la classe ZoneDessin
+	 * 
+	 * @see ZoneDessin.paintComponent()
+	 * 
+	 * @param arg1 Forme qui va être relayée à ZoneDessin
+	 */
 	public void update(Observable arg0, Object arg1) {
 		if (arg1 != null ) { // S'il y a un argument lors de la notification du modèle
 			System.out.println(arg1.toString()); // DEBUG

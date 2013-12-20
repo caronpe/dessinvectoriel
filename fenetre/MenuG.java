@@ -12,9 +12,21 @@ import controler.ActionCouleur;
 // INTERNE
 import model.*;
 
+/**
+ * Menu de gauche contenant tous les outils de couleur,
+ * de type et d'objet pour les formes déssinées.
+ * Il contient pour le moment : quelques couleurs fonctionnelles,
+ * 3 formes dont seule la droite fonctionne.
+ * 
+ * @author Alexandre Thorez
+ * @author Fabien Huitelec
+ * @author Pierre-Édouard Caron
+ * 
+ * @version 0.1
+ */
 public class MenuG extends JPanel{
 	BoxLayout box1;
-	JColorChooser bacacouleur;
+	JColorChooser bacacouleur;	
 	Model model;
 	// JButton
 		JButton crayon;
@@ -28,6 +40,9 @@ public class MenuG extends JPanel{
 		ImageIcon imgcercle;
 		ImageIcon imgcrayon;
 		
+	/**
+	 * @param model Modèle du MVC
+	 */
 	public MenuG(Model model){
 		this.model = model;
 		initialiser();
@@ -66,6 +81,10 @@ public class MenuG extends JPanel{
 		this.add(vert);
 	}
 	
+	/**
+	 * Initialise la taille des boutons à 45x45
+	 * @category init
+	 */
 	public void initialiser() {
 		this.setPreferredSize(new Dimension(45,45));
 		this.setMinimumSize(new Dimension(45,45));
