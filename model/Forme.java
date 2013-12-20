@@ -2,8 +2,9 @@ package model;
 
 import java.awt.Color;
 import java.awt.Point;
+import java.io.Serializable;
 
-public class Forme {
+public class Forme implements Serializable {
 	Point deb , arr;
 	String type , forme;
 	Color couleur;

@@ -3,15 +3,19 @@ package controler;
 import java.awt.event.ActionEvent;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
+
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
-//INTERNE
+
 import model.Model;
 import ressources.ExtensionFileFilter;
 import ressources.JFileChooserOverwrite;
+//INTERNE
 
 
 public class ActionEnregistrer extends AbstractAction {
@@ -27,11 +31,13 @@ public class ActionEnregistrer extends AbstractAction {
 	}
 	
 	public void enregistrer() {
-			String extension = model.getExtension(), nom_du_fichier = "Nom du fichier" + extension;
 		// FileChooser
 			JFileChooser filechoose = new JFileChooserOverwrite();
-			filechoose.setSelectedFile(new File(nom_du_fichier)); // Répertoire par défaut : où est lancé notre programme
-			String approve = new String("Enregistrer"); // portera la mention ENREGISTRER
+			// Permets de donner un nom au fichier dans le TextField et à choisir ~ comme répertoire par défaut
+			String extension = model.getExtension(), nom_du_fichier = "Nom du fichier" + extension;
+			filechoose.setSelectedFile(new File(nom_du_fichier)); 
+			String approve = new String("Enregistrer"); // Le bouton d'enregistrement aura pour étiquette "Enregistrer"
+		// Extension
 			ExtensionFileFilter filter = new ExtensionFileFilter("Fichiers .CTH", "cth");
 		    filechoose.setFileFilter(filter);
 	    
@@ -51,6 +57,18 @@ public class ActionEnregistrer extends AbstractAction {
 	}
 	
 	private void fluxEnregistrement(String nom_du_fichier) {
+		try {
+			FileOutputStream fichier = new FileOutputStream(nom_du_fichier);
+			ObjectOutputStream oos = new ObjectOutputStream(fichier);
+			oos.writeObject(model.getListeDessin());
+			oos.flush();
+			oos.close();
+		} catch (java.io.IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void oldFluxEnregistrement(String nom_du_fichier) {
 		try {
 			FileWriter lu = new FileWriter(nom_du_fichier);
 			BufferedWriter out = new BufferedWriter(lu); //Met le flux en tampon en cache

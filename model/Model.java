@@ -8,14 +8,14 @@ import java.util.Observable;
 import javax.swing.JPanel;
 
 public class Model extends Observable {
-	private ArrayList<Forme> listeDessin ;
+	private ListeDessin listeDessin ;
 	private Color selectColor;
 	private String selectType, selectForme, extension;
 	private boolean travail_enregistre;
 
 	public Model() {
 		super();
-		listeDessin = new ArrayList<Forme>();
+		listeDessin = new ListeDessin();
 		selectColor = Color.BLACK;
 		selectType = "plein";
 		selectForme = "droite";
@@ -33,8 +33,6 @@ public class Model extends Observable {
 		
 		setEnregistre(false);
 	}
-	
-	
 
 	public Color getColor() {
 		return this.selectColor; 
@@ -56,10 +54,16 @@ public class Model extends Observable {
 		this.travail_enregistre = travail;
 	}
 	
-	public ArrayList<Forme> getListeDessin() {
+	public ListeDessin getListeDessin() {
 		return this.listeDessin;
 	}
 	
+	public void setListeDessin(ListeDessin listeDessin) {
+		this.listeDessin = listeDessin;
+		setChanged();
+		notifyObservers();
+	}
+	 
 	public String informationsEnregistrement() {
 		return listeDessin.toString() + "\n";
 	}

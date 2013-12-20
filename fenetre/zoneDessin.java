@@ -27,14 +27,15 @@ public class zoneDessin extends JPanel {
 		if ( courante != null ) {
 			dessiner(courante, g);
 			System.out.println("Formes en cours de réinitialisation");
-			Iterator<Forme> it = model.getListeDessin().iterator();
-			
-			while (it.hasNext()) {
-			      Forme forme = it.next();
-			      dessiner(forme, g);
-			}
-			System.out.println("Formes redessinées");
 		}
+		Iterator<Forme> it = model.getListeDessin().iterator();
+		
+		while (it.hasNext()) {
+		      Forme forme = it.next();
+		      dessiner(forme, g);
+		}
+		System.out.println("Formes redessinées");
+		System.out.println("Zone Dessin"); // DEBUG
 	}
 	
 	public void dessiner(Forme courante, Graphics g) {

@@ -100,11 +100,14 @@ public class Fenetre_principale extends JFrame implements Observer {
 	}
 	
 	public void update(Observable arg0, Object arg1) {
-		System.out.println(arg1.toString());
-		Forme courant = null;
-		if(arg1 instanceof Forme)
-			courant = (Forme) arg1;
-		zonedessin.setCourante(courant);
+		if (arg1 != null ) {
+			System.out.println(arg1.toString());
+			Forme courant = null;
+			if(arg1 instanceof Forme)
+				courant = (Forme) arg1;
+			zonedessin.setCourante(courant);
+			zonedessin.repaint();
+		}
 		zonedessin.repaint();
 	}
 	

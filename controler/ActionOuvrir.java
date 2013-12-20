@@ -3,12 +3,14 @@ package controler;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.ObjectInputStream;
 
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import model.ListeDessin;
 import model.Model;
 // INTERNE
 
@@ -25,14 +27,15 @@ public class ActionOuvrir extends AbstractAction {
 		if ( model.getEnregistre() ) {
 			ouvrir();
 		} else {
-			System.out.println("Nouveau, travail non enregistré");
+			System.out.println("Ouvrir, travail non enregistré"); // DEBUG
 			Object[] options = {"Enregistrer", "Ne pas enregistrer", "Annuler"};
-			int n = JOptionPane.showOptionDialog(new JFrame(), "Souhaitez-vous vraiment quitter ?", "Quitter", 
+			int n = JOptionPane.showOptionDialog(new JFrame(), "Souhaitez-vous vraiment ouvrir un fichier sans enregistrer ?", "Ouvrir", 
 					JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 			
 			// Si on sélectionne l'option Enregistrer
 			if ( n == 0 ) {
 				new ActionEnregistrer(model).enregistrer();
+				ouvrir();
 			} else if ( n == 1 ) {
 				ouvrir();
 			}
@@ -41,9 +44,11 @@ public class ActionOuvrir extends AbstractAction {
 	
 	public void ouvrir() {
 		JFileChooser filechoose = new JFileChooser();
-		filechoose.setCurrentDirectory(new File("."));
+		// Permets de donner un nom au fichier dans le TextField et à choisir ~ comme répertoire par défaut
+		String extension = model.getExtension(), nom_du_fichier = "Nom du fichier" + extension;
+		filechoose.setSelectedFile(new File(nom_du_fichier));
 		// Le répertoire source du JFileChooser est le répertoire d’où est lancé notre programme
-		String approve = new String("OUVRIR");
+		String approve = new String("Ouvrir");
 		// Le bouton pour valider l’enregistrement portera la mention OUVRIR
 		String monFichier = ""; // On ne sait pas pour l’instant quel sera le fichier à ouvrir
 		int resultatOuvrir = filechoose.showDialog(filechoose, approve); // Pour afficher le JFileChooser
@@ -54,6 +59,21 @@ public class ActionOuvrir extends AbstractAction {
 	}
 	
 	public void fluxOuverture(String monFichier) {
+		
+		try {
+			FileInputStream fichier = new FileInputStream(monFichier);
+			ObjectInputStream ois = new ObjectInputStream(fichier);
+			ListeDessin listeDessin = (ListeDessin) ois.readObject();
+			model.setListeDessin(listeDessin);
+			System.out.println(listeDessin); // DEBUG
+		} catch (java.io.IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+				
+		}
+	}
+	
+	public void oldFluxOuverture(String monFichier) {
 		try { 
 			FileInputStream fis = new FileInputStream(monFichier);
 			// Créer un flux d’entrée avec comme paramètre le nom du fichier à ouvrir
