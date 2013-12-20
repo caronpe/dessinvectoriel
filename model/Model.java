@@ -8,7 +8,7 @@ import java.util.Observable;
 import javax.swing.JPanel;
 
 public class Model extends Observable {
-	private ListeDessin listeDessin ;
+	private ListeDessin listeDessin;
 	private Color selectColor;
 	private String selectType, selectForme, extension;
 	private boolean travail_enregistre;
@@ -19,7 +19,7 @@ public class Model extends Observable {
 		selectColor = Color.BLACK;
 		selectType = "plein";
 		selectForme = "droite";
-		this.setEnregistre(false);
+		this.setEnregistre(true); // Pas besoin d'enregistrer lorsque le dessin est vide
 		this.extension = ".cth";
 	}
 	

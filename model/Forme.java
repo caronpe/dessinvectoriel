@@ -25,53 +25,42 @@ public class Forme implements Serializable {
 		return deb;
 	}
 
-
 	public void setDeb(Point deb) {
 		this.deb = deb;
 	}
-
 
 	public Point getArr() {
 		return arr;
 	}
 
-
 	public void setArr(Point arr) {
 		this.arr = arr;
 	}
-
 
 	public String getType() {
 		return type;
 	}
 
-
 	public void setType(String type) {
 		this.type = type;
 	}
-
 
 	public String getForme() {
 		return forme;
 	}
 
-
 	public void setForme(String forme) {
 		this.forme = forme;
 	}
-
 
 	public Color getCouleur() {
 		return couleur;
 	}
 
-
 	public void setCouleur(Color couleur) {
 		this.couleur = couleur;
 	}
 
-
-	@Override
 	public String toString() {
 		return "Forme [deb=" + deb + ", arr=" + arr + ", type=" + type
 				+ ", forme=" + forme + ", couleur=" + couleur + "]";

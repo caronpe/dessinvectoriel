@@ -19,35 +19,37 @@ public class zoneDessin extends JPanel {
 		this.setBackground(Color.WHITE);
 	}
 
-	public void paintComponent(Graphics g){
+	public void paintComponent(Graphics g) {
 		// Si la forme n'a pas été initialisé, on ne touche pas à g
 		// Cela permet d'éviter les erreurs du type NullPointerException 
 		// à la construction de zoneDessin dans la fenêtre principale
 		super.paintComponent(g);
 		if ( courante != null ) {
 			dessiner(courante, g);
-			System.out.println("Formes en cours de réinitialisation");
+			System.out.println("Formes en cours de réinitialisation"); // DEBUG
 		}
-		Iterator<Forme> it = model.getListeDessin().iterator();
 		
-		while (it.hasNext()) {
+		Iterator<Forme> it = model.getListeDessin().iterator();
+		while ( it.hasNext() ) {
 		      Forme forme = it.next();
 		      dessiner(forme, g);
 		}
-		System.out.println("Formes redessinées");
-		System.out.println("Zone Dessin"); // DEBUG
+		System.out.println("Formes redessinées"); // DEBUG
 	}
 	
-	public void dessiner(Forme courante, Graphics g) {
-		g.setColor(courante.getCouleur());
-		if(courante.getForme() == "rond"){
-			g.fillOval((int)courante.getDeb().getX() , (int)courante.getDeb().getY(), (int)courante.getArr().getX(), (int)courante.getArr().getY());
+	public void dessiner(Forme forme, Graphics g) {
+		g.setColor(forme.getCouleur());
+		if(forme.getForme().equals("rond")){
+			g.fillOval((int)forme.getDeb().getX() , (int)forme.getDeb().getY(), (int)forme.getArr().getX(), (int)forme.getArr().getY());
+			System.out.println("rond");
 		}
-		if(courante.getForme() == "carre"){
-			g.fillRect((int)courante.getDeb().getX() , (int)courante.getDeb().getY(), (int)courante.getArr().getX(), (int)courante.getArr().getY());
+		if(forme.getForme().equals("carre")){
+			g.fillRect((int)forme.getDeb().getX() , (int)forme.getDeb().getY(), (int)forme.getArr().getX(), (int)forme.getArr().getY());
+			System.out.println("carre");
 		}
-		if(courante.getForme() == "droite"){
-			g.drawLine((int)courante.getDeb().getX() , (int)courante.getDeb().getY(), (int)courante.getArr().getX(), (int)courante.getArr().getY());
+		if(forme.getForme().equals("droite")){
+			g.drawLine((int)forme.getDeb().getX() , (int)forme.getDeb().getY(), (int)forme.getArr().getX(), (int)forme.getArr().getY());
+			System.out.println("droite");
 		}
 	}
 

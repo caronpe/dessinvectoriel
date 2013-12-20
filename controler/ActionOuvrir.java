@@ -65,7 +65,6 @@ public class ActionOuvrir extends AbstractAction {
 			ObjectInputStream ois = new ObjectInputStream(fichier);
 			ListeDessin listeDessin = (ListeDessin) ois.readObject();
 			model.setListeDessin(listeDessin);
-			System.out.println(listeDessin); // DEBUG
 		} catch (java.io.IOException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
