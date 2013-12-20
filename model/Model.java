@@ -30,7 +30,6 @@ public class Model extends Observable {
 		System.out.println("Forme ajoutée"); // DEBUG
 		setChanged();
 		notifyObservers(courant); // Lorsqu'une forme est ajoutée, l'objet Forme "courant" est envoyé à l'update des vues
-		
 		setEnregistre(false);
 	}
 

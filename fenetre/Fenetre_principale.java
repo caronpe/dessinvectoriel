@@ -106,8 +106,12 @@ public class Fenetre_principale extends JFrame implements Observer {
 			if(arg1 instanceof Forme)
 				courant = (Forme) arg1;
 			zonedessin.setCourante(courant);
+			zonedessin.repaint();
+		} else {
+			zonedessin.setCourante(null);
+			zonedessin.repaint();
 		}
-		zonedessin.repaint();
+		
 	}
 	
 	public void redessinerFormes() {
