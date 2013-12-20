@@ -9,26 +9,26 @@ import javax.swing.JPanel;
 import model.Model;
 
 public class zoneDessin_listener implements MouseListener {
-	Point deb, arr ;
-	JPanel pan;
-	Model mod;
+	Point pointDebut, pointArrivee;
+	JPanel panel;
+	Model model;
 	
-	public void mousePressed(MouseEvent arg0) {
-		deb = arg0.getPoint();
+	public zoneDessin_listener(JPanel pan, Model model) {
+		super();
+		this.panel = pan;
+		this.model = model;
 	}
 
-	public zoneDessin_listener(JPanel pan, Model mod) {
-		super();
-		this.pan = pan;
-		this.mod = mod;
+	public void mousePressed(MouseEvent e) {
+		pointDebut = e.getPoint();
 	}
 
 	public void mouseReleased(MouseEvent arg0) {
-		arr = arg0.getPoint();
-		mod.addForme(deb, arr, pan);
+		pointArrivee = arg0.getPoint();
+		model.addForme(pointDebut, pointArrivee, panel);
 	}
 	
-	// Inutiles pour le moment
+	// Inutile
 	public void mouseClicked(MouseEvent arg0) {
 	}
 	public void mouseEntered(MouseEvent arg0) {

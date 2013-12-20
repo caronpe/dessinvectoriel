@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import ressources.Forme;
+
 public class ListeDessin implements Serializable {
 	private ArrayList<Forme> listeDessin;
 	

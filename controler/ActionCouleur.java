@@ -13,12 +13,18 @@ public class ActionCouleur extends AbstractAction {
 	public ActionCouleur(Model model, String couleur) {
 		this.model = model;
 		
-		if ( couleur == "rouge" ) {
-			this.couleur_actuelle = Color.RED;
-		} else if ( couleur == "bleu" ) {
-			this.couleur_actuelle = Color.BLUE;
-		} else if ( couleur == "vert" ) {
-			this.couleur_actuelle = Color.GREEN;
+		switch (couleur) {
+		  	case "rouge":
+		  		this.couleur_actuelle = Color.RED;
+		  		break;
+		  	case "vert":
+		  		this.couleur_actuelle = Color.GREEN;
+		  		break;  
+		  	case "bleu":
+		  		this.couleur_actuelle = Color.BLUE;
+		  		break;  
+		  	default :
+		  		this.couleur_actuelle = Color.BLACK;     
 		}
 	}
 	

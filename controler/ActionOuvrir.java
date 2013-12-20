@@ -19,47 +19,52 @@ public class ActionOuvrir extends AbstractAction {
 	
 	public ActionOuvrir(Model model) {
 		this.model = model;
+		
+		// Values
 		putValue(NAME, "Ouvrir");
 		putValue(SHORT_DESCRIPTION, "Ouvrir un fichier déjà existant");
 	}
 	
 	public void actionPerformed(ActionEvent arg0) {
-		if ( model.getEnregistre() ) {
+		if ( model.getEnregistre() ) { // Si le travail est enregistré
 			ouvrir();
 		} else {
-			System.out.println("Ouvrir, travail non enregistré"); // DEBUG
+			// DialogBox
 			Object[] options = {"Enregistrer", "Ne pas enregistrer", "Annuler"};
-			int n = JOptionPane.showOptionDialog(new JFrame(), "Souhaitez-vous vraiment ouvrir un fichier sans enregistrer ?", "Ouvrir", 
-					JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
-			
-			// Si on sélectionne l'option Enregistrer
-			if ( n == 0 ) {
+			int n = JOptionPane.showOptionDialog(new JFrame(), 
+					"Souhaitez-vous vraiment ouvrir un fichier sans enregistrer ?", 
+					"Ouvrir", 
+					JOptionPane.YES_NO_CANCEL_OPTION, 
+					JOptionPane.QUESTION_MESSAGE, 
+					null, 
+					options, options[0]);
+						
+			if ( n == 0 ) { // Si "Enregistrer"
 				new ActionEnregistrer(model).enregistrer();
-				ouvrir();
-			} else if ( n == 1 ) {
-				ouvrir();
 			}
+			ouvrir();
 		}
 	}
 	
 	public void ouvrir() {
+		// FileChooser
 		JFileChooser filechoose = new JFileChooser();
-		// Permets de donner un nom au fichier dans le TextField et à choisir ~ comme répertoire par défaut
-		String extension = model.getExtension(), nom_du_fichier = "Nom du fichier" + extension;
+		// Permets de donner un nom au fichier dans le TextField et à 
+		String extension = model.getExtension(), nom_du_fichier = "Nom du fichier" + extension; // choisit ~ comme répertoire par défaut
 		filechoose.setSelectedFile(new File(nom_du_fichier));
 		// Le répertoire source du JFileChooser est le répertoire d’où est lancé notre programme
 		String approve = new String("Ouvrir");
 		// Le bouton pour valider l’enregistrement portera la mention OUVRIR
 		String monFichier = ""; // On ne sait pas pour l’instant quel sera le fichier à ouvrir
 		int resultatOuvrir = filechoose.showDialog(filechoose, approve); // Pour afficher le JFileChooser
-		if(resultatOuvrir == JFileChooser.APPROVE_OPTION) { // Si l’utilisateur clique sur le bouton OUVRIR
+		
+		if(resultatOuvrir == JFileChooser.APPROVE_OPTION) { // Si "Ouvrir"
 			monFichier = filechoose.getSelectedFile().toString(); // Récupérer le nom du fichier qu’il a spécifié
 			this.fluxOuverture(monFichier);
 		}
 	}
 	
 	public void fluxOuverture(String monFichier) {
-		
 		try {
 			FileInputStream fichier = new FileInputStream(monFichier);
 			ObjectInputStream ois = new ObjectInputStream(fichier);
@@ -69,23 +74,6 @@ public class ActionOuvrir extends AbstractAction {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
 				
-		}
-	}
-	
-	public void oldFluxOuverture(String monFichier) {
-		try { 
-			FileInputStream fis = new FileInputStream(monFichier);
-			// Créer un flux d’entrée avec comme paramètre le nom du fichier à ouvrir
-			int n;
-			while ( (n = fis.available()) > 0 ) { // tant qu’il y a des données dans le flux
-				byte[] b = new byte[n]; // récupérer le byte à l’endroit n et le stocker dans un tableau de bytes
-				int result = fis.read(b); // lire ce tableau de byte à l’endroit désiré
-				if (result == -1) break; // si le byte est -1, c’est que le flux est arrivé à sa fin (par définition)
-				String s = new String(b); // assembler les bytes pour former une chaîne
-				System.out.println(s);
-			}
-		} catch (Exception err) {
-			System.err.println("Erreur lors de l'ouverture du fichier");
 		}
 	}
 }
