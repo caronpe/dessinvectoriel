@@ -33,22 +33,9 @@ public class ActionCouleur extends AbstractAction {
 	 * 
 	 * @see view/FenetrePrincipale
 	 */
-	public ActionCouleur(Model model, String couleur) {
+	public ActionCouleur(Model model, Color color) {
 		this.model = model;
-		
-		switch (couleur) {
-		  	case "rouge":
-		  		this.couleur_actuelle = Color.RED;
-		  		break;
-		  	case "vert":
-		  		this.couleur_actuelle = Color.GREEN;
-		  		break;  
-		  	case "bleu":
-		  		this.couleur_actuelle = Color.BLUE;
-		  		break;  
-		  	default :
-		  		this.couleur_actuelle = Color.BLACK;     
-		}
+		this.couleur_actuelle = color;
 	}
 	
 	public void actionPerformed(ActionEvent arg0) {

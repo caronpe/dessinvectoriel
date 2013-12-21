@@ -29,7 +29,7 @@ import controler.*;
 public class FenetrePrincipale extends JFrame implements Observer {
 	// Fenêtre
 		private Container container; // Container principal de la fenêtre
-		private MenuOutils gauche; // Menu d'outils sur la gauche
+		private MenuOutils outils; // Menu d'outils sur la gauche
 		private ZoneDessin zoneDessin; // Zone où le dessin s'effectuera.
 	// MVC
 		private Model model;	
@@ -84,12 +84,12 @@ public class FenetrePrincipale extends JFrame implements Observer {
 		container.setLayout(new BorderLayout());
 		
 		// Ajout des panels au container
-		gauche = new MenuOutils(model);
+		outils = new MenuOutils(model);
 		zoneDessin = new ZoneDessin(model);
 		DessinListener dessinListener = new DessinListener(zoneDessin, model);
 		zoneDessin.addMouseListener(dessinListener);
 		zoneDessin.addMouseMotionListener(dessinListener);
-		container.add(gauche, BorderLayout.WEST);
+		container.add(outils, BorderLayout.WEST);
 		container.add(zoneDessin , BorderLayout.CENTER);
 
 		// Configuration de la JFrame

@@ -23,17 +23,13 @@ import controler.*;
  * 
  * @version 0.1
  */
-public class MenuOutils extends JPanel{
+public class MenuOutils extends JPanel {
 	BoxLayout box1;
 	JColorChooser bacacouleur;	
 	Model model;
 	// JButton
-		JButton crayon;
-		JButton	rectangle;
-		JButton	cercle;
-		JButton rouge;
-		JButton bleu;
-		JButton vert;
+		JButton crayon, rectangle, cercle;
+		JButton	noir, rouge, bleu, vert;
 		
 	/**
 	 * @param model Modèle du MVC
@@ -51,13 +47,16 @@ public class MenuOutils extends JPanel{
 		cercle.setPreferredSize(new Dimension(22,22));
 		
 		// Boutons : Couleurs
-		rouge= new JButton(new ActionCouleur(model, "rouge"));
+		noir = new JButton(new ActionCouleur(model, Color.BLACK));
+		noir.setBackground(Color.BLACK);
+		noir.setPreferredSize(new Dimension(22,22));
+		rouge= new JButton(new ActionCouleur(model, Color.RED));
 		rouge.setBackground(Color.RED);
 		rouge.setPreferredSize(new Dimension(22,22));
-		bleu= new JButton(new ActionCouleur(model, "bleu"));
+		bleu = new JButton(new ActionCouleur(model, Color.BLUE));
 		bleu.setBackground(Color.BLUE);
 		bleu.setPreferredSize(new Dimension(22,22));
-		vert= new JButton(new ActionCouleur(model, "vert"));
+		vert = new JButton(new ActionCouleur(model, Color.GREEN));
 		vert.setBackground(Color.GREEN);
 		vert.setPreferredSize(new Dimension(22,22));
 		
@@ -66,6 +65,7 @@ public class MenuOutils extends JPanel{
 		this.add(rectangle);
 		this.add(cercle);
 		// Ajouts boutons couleurs
+		this.add(noir);
 		this.add(rouge);
 		this.add(bleu);
 		this.add(vert);
@@ -76,9 +76,10 @@ public class MenuOutils extends JPanel{
 	 * @category init
 	 */
 	public void initialiser() {
-		this.setPreferredSize(new Dimension(45,45));
-		this.setMinimumSize(new Dimension(45,45));
-		this.setMaximumSize(new Dimension(45,45));
+		int taille = 45;
+		this.setPreferredSize(new Dimension(taille,taille));
+        this.setMinimumSize(new Dimension(taille,taille));
+        this.setMaximumSize(new Dimension(taille,taille));
 	}
 }
 
