@@ -7,6 +7,10 @@ import javax.swing.JOptionPane;
 public class JFileChooserOverwrite extends JFileChooser {
 	// FileChooser qui supporte l'écrasement de fichier
 	
+	public JFileChooserOverwrite(File file) {
+		super(file);
+	}
+	
 	@Override
 	public void approveSelection() {
         File file = this.getSelectedFile(); // On récupère l'entrée du fichier du FileChooser
@@ -22,4 +26,3 @@ public class JFileChooserOverwrite extends JFileChooser {
         super.approveSelection(); // Une fois écrasée, la méthode continue de fonctionner normalement
     }
 }
-

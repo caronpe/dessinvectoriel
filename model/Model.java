@@ -32,7 +32,7 @@ public class Model extends Observable {
 	 * Couleur : noire
 	 * Objet : droite
 	 * Type : plein
-	 * Extension : *.cth
+	 * Extension : .cth
 	 * 
 	 * Indique qu'il n'y a pas besoin d'enregistrer lorsque le dessin est vide
 	 * (au démarrage ou lorsqu'on ouvre un nouveau fichier)

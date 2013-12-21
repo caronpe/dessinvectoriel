@@ -1,17 +1,16 @@
 package controler;
 
+import java.awt.FileDialog;
 import java.awt.event.ActionEvent;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.io.ObjectOutputStream;
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.filechooser.FileNameExtensionFilter;
 //INTERNE
-import model.*;
+import model.Model;
 import ressources.*;
 
 /**
@@ -24,15 +23,19 @@ import ressources.*;
  * @author Fabien Huitelec
  * @author Pierre-Édouard Caron
  * 
- * @version 0.1
+ * @version 0.2
  */
 public class ActionEnregistrer extends AbstractAction {
 	private Model model;
+	/** * L'extension est sous la forme ".extension" */
 	private String extension;
 	// FileChooser
 		private JFileChooser chooser;
 		private FileNameExtensionFilter filter;
        
+	/**
+	 * @param model Modèle du MVC
+	 */
 	public ActionEnregistrer(Model model) {
 		this.model = model;
 		this.extension = model.getExtension();
@@ -42,11 +45,17 @@ public class ActionEnregistrer extends AbstractAction {
 		putValue(SHORT_DESCRIPTION, "Enregistre votre travail");
 	}
 	
-	// Permets de donner un nom au fichier dans le TextField et à choisir ~ comme répertoire par défaut
+	/**
+	 * Permets de donner un nom au fichier dans le TextField et à choisir ~ comme répertoire par défaut
+	 * Ne fonctionne pas sous Windows 8 (voir sous toute version de windows)
+	 * 
+	 */
 	public void enregistrer() {
 		// FileChooser
-			JFileChooser filechoose = new JFileChooserOverwrite();
 			String nom_du_fichier = "Nom du fichier" + extension;
+			File file = (new File(nom_du_fichier));
+			System.out.println(file.getAbsolutePath());
+			JFileChooser filechoose = new JFileChooserOverwrite(new File(nom_du_fichier));
 			filechoose.setSelectedFile(new File(nom_du_fichier));
 			String approve = new String("Enregistrer"); // Le bouton d'enregistrement aura pour étiquette "Enregistrer"
 		// Extension
@@ -69,6 +78,10 @@ public class ActionEnregistrer extends AbstractAction {
 		}
 	}
 	
+	/**
+	 * Méthode gérant le processus d'enregistrement par des flux
+	 * @param nom_du_fichier Adresse du fichier comprenant son nom complet
+	 */
 	private void fluxEnregistrement(String nom_du_fichier) {
 		try {
 			FileOutputStream fichier = new FileOutputStream(nom_du_fichier);
@@ -83,9 +96,8 @@ public class ActionEnregistrer extends AbstractAction {
 	
 	/**
 	 * Lorsque l'utilisateur clique sur le bouton "Enregistrer" du menu "Fichier"
-	 *
 	 */
-	public void actionPerformed(ActionEvent arg0) {
+	public void actionPerformed(ActionEvent e) {
 		enregistrer();
 	}
 }

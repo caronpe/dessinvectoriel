@@ -1,7 +1,8 @@
 package main;
+
 // INTERNE
-import model.*;
-import view.*;
+import model.Model;
+import view.FenetrePrincipale;
 
 public class Main {
 	public static void main(String[] args) {
