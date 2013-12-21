@@ -3,13 +3,20 @@ package view;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.Iterator;
-
 import javax.swing.JPanel;
-
 import ressources.Forme;
 // INTERNE
 import model.*;
 
+/**
+ * Listener qui régit les actions de la souris sur la zone de dessin
+ * 
+ * @author Alexandre Thorez
+ * @author Fabien Huitelec
+ * @author Pierre-Édouard Caron
+ * 
+ * @version 0.2
+ */
 public class ZoneDessin extends JPanel {
 	Forme courante;
 	Model model;
@@ -42,15 +49,17 @@ public class ZoneDessin extends JPanel {
 			while ( it.hasNext() ) { // Parcours de la liste pour redissiner toutes les formes
 			      Forme forme = it.next();
 			      dessiner(forme, g);
-			      System.out.println("Formes redessinées"); // DEBUG
+			      System.out.println("Formes de listeDessin toutes redessinées"); // DEBUG
 			}
 			dessiner(courante, g);
-			System.out.println("Forme courante"); // DEBUG
+			System.out.println("Forme courante dessinée"); // DEBUG
 		}
 	}
 	
 	/**
 	 * Dessine les objets selon les formes qui lui sont envoyé
+	 * Réagis à la touche SHIFT appuyé pour le cercle et le rectangle
+	 * en les définissant comme parfait
 	 * 
 	 * @param forme Forme qui va être dessinée
 	 * @param g Graphics qui vient de paintComponent
@@ -75,6 +84,11 @@ public class ZoneDessin extends JPanel {
 				height = Math.abs(height);
 			}
 			
+			if ( forme.getParfait() ) { // SHIFT pressed
+				System.out.println("Shift + cercle"); // DEBUG
+				height = width;
+			}
+//			
 			g.fillOval(oX, oY, width, height);
 			break;
 			
@@ -88,6 +102,11 @@ public class ZoneDessin extends JPanel {
 				oY -= Math.abs(height);
 				height = Math.abs(height);
 			}					
+			
+			if ( forme.getParfait()) { // SHIFT pressed
+				System.out.println("Shift + rectangle"); // DEBUG
+				height = width;
+			}
 			
 			g.fillRect(oX, oY, width, height);
 			break;

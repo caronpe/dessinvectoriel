@@ -21,11 +21,10 @@ import model.Model;
  * @author Fabien Huitelec
  * @author Pierre-Édouard Caron
  * 
- * @version 0.1
+ * @version 0.2
  */
 public class DessinListener implements MouseListener, MouseMotionListener {
 	private Point pointDebut, pointArrivee;
-	private ZoneDessin zoneDessin;
 	private Model model;
 	
 	/**
@@ -35,7 +34,6 @@ public class DessinListener implements MouseListener, MouseMotionListener {
 	public DessinListener(ZoneDessin zoneDessin, Model model) {
 		super();
 		this.model = model;
-		this.zoneDessin = zoneDessin;
 	}
 
 	/**
@@ -62,9 +60,15 @@ public class DessinListener implements MouseListener, MouseMotionListener {
 	 * @param e Coordonnées de la souris pendant le déplacement
 	 */
 	public void mouseDragged(MouseEvent e) {
-			pointArrivee = e.getPoint();
-			System.out.println(this.pointDebut);
-			model.addTmpForme(this.pointDebut, e.getPoint(), zoneDessin);
+		pointArrivee = e.getPoint();
+		
+		if ( model.getShiftPressed() ) {
+			model.addTmpForme(this.pointDebut, e.getPoint(), true);
+		} else {
+			model.addTmpForme(this.pointDebut, e.getPoint(), false);
+		}
+		System.out.println(this.pointDebut);
+			
 	}
 	
 	/**
@@ -78,28 +82,33 @@ public class DessinListener implements MouseListener, MouseMotionListener {
 	 */
 	public void mouseReleased(MouseEvent e) {
 		pointArrivee = e.getPoint();
-		model.addForme(this.pointDebut, this.pointArrivee, zoneDessin);
+		
+		if ( model.getShiftPressed() ) {
+			model.addForme(this.pointDebut, e.getPoint(), true);
+		} else {
+			model.addForme(this.pointDebut, e.getPoint(), false);
+		}
 	}
 	
 	
 
 	/**
-	 * @category inutile
+	 * @category unused
 	 */
 	public void mouseMoved(MouseEvent e) {
 	}
 	/**
-	 * @category inutile
+	 * @category unused
 	 */
 	public void mouseClicked(MouseEvent e) {
 	}
 	/**
-	 * @category inutile
+	 * @category unused
 	 */
 	public void mouseEntered(MouseEvent e) {
 	}
 	/**
-	 * @category inutile
+	 * @category unused
 	 */
 	public void mouseExited(MouseEvent e) {
 	}

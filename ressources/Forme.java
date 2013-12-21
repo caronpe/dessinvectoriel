@@ -4,11 +4,20 @@ import java.awt.Color;
 import java.awt.Point;
 import java.io.Serializable;
 
+/**
+ * Contient toutes les caractéristiques de l'objet Forme
+ * 
+ * @author Alexandre Thorez
+ * @author Fabien Huitelec
+ * @author Pierre-Édouard Caron
+ * 
+ * @version 0.2
+ */
 public class Forme implements Serializable {
 	private Point pointDebut, pointArrivee;
 	private String type , objet;
 	private Color couleur;
-	private boolean temporaire;
+	private boolean parfait;
 	
 	/**
 	 * Constructeur basique de la forme à dessiner avec ses coordonnées vectorielles,
@@ -18,16 +27,16 @@ public class Forme implements Serializable {
 	 * @param type Plein, vide
 	 * @param objet Carré, rond, droite
 	 * @param couleur Couleur de l'objet
-	 * @param temporaire Définit si la forme est temporaire
+	 * @param parfait Définit si la forme est temporaire
 	 */
-	public Forme(Point pointDebut , Point pointArrivee, String type, String objet, Color couleur, boolean temporaire) {
+	public Forme(Point pointDebut , Point pointArrivee, String type, String objet, Color couleur, boolean parfait) {
 		super();
 		this.pointDebut = pointDebut;
 		this.pointArrivee = pointArrivee;
 		this.type = type;
 		this.objet = objet;
 		this.couleur = couleur;
-		this.temporaire = temporaire;
+		this.parfait = parfait;
 	}
 	
 	/**
@@ -117,15 +126,15 @@ public class Forme implements Serializable {
 	/**
 	 * @category accessor
 	 */
-	public boolean getTemporaire() {
-		return this.temporaire;
+	public boolean getParfait() {
+		return this.parfait;
 	}
 	
 	/**
 	 * @category accessor
 	 */
 	public void setTemporaire(boolean temporaire) {
-		this.temporaire = temporaire;
+		this.parfait = temporaire;
 	}
 	
 	public String toString() {

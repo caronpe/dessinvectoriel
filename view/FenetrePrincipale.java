@@ -24,7 +24,7 @@ import controler.*;
  * @author Fabien Huitelec
  * @author Pierre-Édouard Caron
  * 
- * @version 0.1
+ * @version 0.2
  */
 public class FenetrePrincipale extends JFrame implements Observer {
 	// Fenêtre
@@ -83,16 +83,24 @@ public class FenetrePrincipale extends JFrame implements Observer {
 		container = this.getContentPane();
 		container.setLayout(new BorderLayout());
 		
+		// Listeners
+		DessinListener dessinListener = new DessinListener(zoneDessin, model);
+		KeyListenerAll keyListener = new KeyListenerAll(model);
+		
 		// Ajout des panels au container
 		outils = new MenuOutils(model);
 		zoneDessin = new ZoneDessin(model);
-		DessinListener dessinListener = new DessinListener(zoneDessin, model);
 		zoneDessin.addMouseListener(dessinListener);
 		zoneDessin.addMouseMotionListener(dessinListener);
+		zoneDessin.setFocusable(true);
+		zoneDessin.addKeyListener(keyListener);
 		container.add(outils, BorderLayout.WEST);
 		container.add(zoneDessin , BorderLayout.CENTER);
 
 		// Configuration de la JFrame
+		this.setFocusable(true);
+		this.requestFocus();
+		this.addKeyListener(keyListener);
 		this.setTitle("logiciel de dessin vectoriel");
 		this.setResizable(true);
 		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);

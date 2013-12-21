@@ -2,11 +2,10 @@ package model;
 
 import java.awt.Color;
 import java.awt.Point;
-import java.util.ArrayList;
 import java.util.Observable;
-import javax.swing.JPanel;
-// INTERNE
+//INTERNE
 import ressources.Forme;
+import controler.DessinListener;
 
 /**
  * Partie Modèle du MVC
@@ -26,7 +25,7 @@ public class Model extends Observable {
 		private Color couleurCourante;
 		private String typeCourant, objetCourant; 
 		private String extension;
-		private boolean travail_enregistre;
+		private boolean travail_enregistre, keyGpressed;
 
 	/**
 	 * Couleur : noire
@@ -54,8 +53,8 @@ public class Model extends Observable {
 	 * 
 	 * @see FenetrePrincipale.update()
 	 */
-	public void addForme(Point pointDebut, Point pointArrivee, JPanel pan){
-		Forme courant = new Forme(pointDebut, pointArrivee, typeCourant, objetCourant, couleurCourante);
+	public void addForme(Point pointDebut, Point pointArrivee, boolean parfait) {
+		Forme courant = new Forme(pointDebut, pointArrivee, typeCourant, objetCourant, couleurCourante, parfait);
 		listeDessin.add(courant);
 		System.out.println("Forme ajoutée"); // DEBUG
 		setChanged();
@@ -74,8 +73,8 @@ public class Model extends Observable {
 	 * 
 	 * @see DessinListener
 	 */
-	public void addTmpForme(Point pointDebut, Point pointArrivee, JPanel zoneDessin){
-		addForme(pointDebut, pointArrivee, zoneDessin);
+	public void addTmpForme(Point pointDebut, Point pointArrivee, boolean parfait) {
+		addForme(pointDebut, pointArrivee, parfait);
 		this.delLastForme();
 	}
 	
@@ -145,6 +144,18 @@ public class Model extends Observable {
 		return this.typeCourant;
 	}
 	
+	/**
+	 * @category accessor
+	 * 
+	 * @param L'objet à modifier
+	 */
+	public boolean getShiftPressed() {
+		return this.keyGpressed;
+	}
+
+	public void setGPressed(boolean keyGpressed) {
+		this.keyGpressed = keyGpressed; 
+	}
 	/**
 	 * @category accessor
 	 * 

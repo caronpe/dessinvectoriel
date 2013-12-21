@@ -35,4 +35,11 @@ public class ListeDessin implements Serializable {
 	public String toString() {
 		return this.listeDessin.toString();
 	}
+	
+	public Forme getLast() {
+		if ( listeDessin.size() != 0 ) {
+			return this.listeDessin.get(this.listeDessin.size() - 1);
+		}
+		return null;
+	}
 }

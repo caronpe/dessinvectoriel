@@ -21,7 +21,7 @@ import controler.*;
  * @author Fabien Huitelec
  * @author Pierre-Édouard Caron
  * 
- * @version 0.1
+ * @version 0.2
  */
 public class MenuOutils extends JPanel {
 	BoxLayout box1;
@@ -32,6 +32,8 @@ public class MenuOutils extends JPanel {
 		JButton	noir, rouge, bleu, vert;
 		
 	/**
+	 * Les boutons sont non focusable pour les keylistener fonctionnent
+	 * 
 	 * @param model Modèle du MVC
 	 */
 	public MenuOutils(Model model){
@@ -41,24 +43,37 @@ public class MenuOutils extends JPanel {
 		// Boutons : Outils
 		crayon = new JButton(new ActionTrait(model));
 		crayon.setPreferredSize(new Dimension(22,22));
+		crayon.setFocusable(false);
+		
 		rectangle = new JButton(new ActionRectangle(model));
 		rectangle.setPreferredSize(new Dimension(22,22));
+		rectangle.setFocusable(false);
+		
 		cercle = new JButton(new ActionCercle(model));
 		cercle.setPreferredSize(new Dimension(22,22));
+		cercle.setFocusable(false);
 		
 		// Boutons : Couleurs
 		noir = new JButton(new ActionCouleur(model, Color.BLACK));
 		noir.setBackground(Color.BLACK);
 		noir.setPreferredSize(new Dimension(22,22));
+		noir.setFocusable(false);
+		
 		rouge= new JButton(new ActionCouleur(model, Color.RED));
 		rouge.setBackground(Color.RED);
 		rouge.setPreferredSize(new Dimension(22,22));
+		rouge.setFocusable(false);
+		
 		bleu = new JButton(new ActionCouleur(model, Color.BLUE));
 		bleu.setBackground(Color.BLUE);
 		bleu.setPreferredSize(new Dimension(22,22));
+		bleu.setFocusable(false);
+		
 		vert = new JButton(new ActionCouleur(model, Color.GREEN));
 		vert.setBackground(Color.GREEN);
 		vert.setPreferredSize(new Dimension(22,22));
+		vert.setFocusable(false);
+		
 		
 		// Ajouts boutons outils
 		this.add(crayon);
