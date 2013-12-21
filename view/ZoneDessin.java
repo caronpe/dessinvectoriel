@@ -58,37 +58,41 @@ public class ZoneDessin extends JPanel {
 	 */
 	public void dessiner(Forme forme, Graphics g) {
 		g.setColor(forme.getCouleur());
-		int Ox = (int) forme.getOrigin().getX(), Oy = (int) forme.getOrigin().getY();
+		int oX = (int) forme.getOrigin().getX(), oY = (int) forme.getOrigin().getY();
+		int aX = (int) forme.getFin().getX(), aY = (int) forme.getFin().getY();
+		int width = (int)(aX - oX);
+		int height = (int)(aY - oY);
 
-		
 		// Dessins selon les types de formes sélectionnés
-		if (forme.getForme().equals("cercle")) { // ROND PLEIN
-			int width = (int)(forme.getFin().getX() - forme.getOrigin().getX());
-			int height = (int)(forme.getFin().getY() - forme.getOrigin().getY());
+		if (forme.getForme().equals("cercle")) { // ROND PLEIN			
 			
-			g.fillOval(	(int)forme.getOrigin().getX(), // X d'origine
-						(int)forme.getOrigin().getY(), // Y d'origine
-						(int)(forme.getFin().getX() - forme.getOrigin().getX()), // Longueur
-						(int)(forme.getFin().getY() - forme.getOrigin().getY())); // Hauteur
+			if (width < 0) { 
+				oX -= Math.abs(width); // On soustrait la longueur absolue à X origine
+				width = Math.abs(width); // On prend la longueur absolue
+			}
+			if (height < 0) { // Si la hauteur est négative, on permute l'origine et la fin
+				oY -= Math.abs(height); // On soustrait la hauteur absolue aux Y origine
+				height = Math.abs(height); // On prend la hauteur absolue
+			}
+			
+			g.fillOval(oX, oY, width, height);
 			
 		} else if (forme.getForme().equals("rectangle")) { // CARRÉ PLEIN
-			int width = (int)(forme.getFin().getX() - forme.getOrigin().getX());
-			int height = (int)(forme.getFin().getY() - forme.getOrigin().getY());
-			
-				if (width < 0) { // Si la longueur est négative, on permute l'origine et la fin
-					Ox -= Math.abs(width);
-					width = Math.abs(width);
+				
+			if (width < 0) { 
+					oX -= Math.abs(width); // On soustrait la longueur absolue à X origine
+					width = Math.abs(width); // On prend la longueur absolue
 				}
 				if (height < 0) { // Si la hauteur est négative, on permute l'origine et la fin
-					Oy -= Math.abs(height);
-					height = Math.abs(height);
+					oY -= Math.abs(height); // On soustrait la hauteur absolue aux Y origine
+					height = Math.abs(height); // On prend la hauteur absolue
 				}					
 				
-				g.fillRect(Ox, Oy, width, height);
+				g.fillRect(oX, oY, width, height);
 			
 		} else if (forme.getForme().equals("trait")) { // DROITE
 			
-			g.drawLine(Ox, Oy, (int)forme.getFin().getX(), (int)forme.getFin().getY());
+			g.drawLine(oX, oY, (int)forme.getFin().getX(), (int)forme.getFin().getY());
 			
 		}
 	}
