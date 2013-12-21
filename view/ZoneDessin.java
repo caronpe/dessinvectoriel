@@ -58,28 +58,37 @@ public class ZoneDessin extends JPanel {
 	 */
 	public void dessiner(Forme forme, Graphics g) {
 		g.setColor(forme.getCouleur());
+		int Ox = (int) forme.getOrigin().getX(), Oy = (int) forme.getOrigin().getY();
+
 		
 		// Dessins selon les types de formes sélectionnés
 		if (forme.getForme().equals("cercle")) { // ROND PLEIN
-			int rayon = (int) (forme.getOrigin().getX() - forme.getFin().getX());
+			int width = (int)(forme.getFin().getX() - forme.getOrigin().getX());
+			int height = (int)(forme.getFin().getY() - forme.getOrigin().getY());
+			
 			g.fillOval(	(int)forme.getOrigin().getX(), // X d'origine
 						(int)forme.getOrigin().getY(), // Y d'origine
 						(int)(forme.getFin().getX() - forme.getOrigin().getX()), // Longueur
 						(int)(forme.getFin().getY() - forme.getOrigin().getY())); // Hauteur
 			
 		} else if (forme.getForme().equals("rectangle")) { // CARRÉ PLEIN
+			int width = (int)(forme.getFin().getX() - forme.getOrigin().getX());
+			int height = (int)(forme.getFin().getY() - forme.getOrigin().getY());
 			
-			g.fillRect(	(int)forme.getOrigin().getX(),
-						(int)forme.getOrigin().getY(),
-						(int)(forme.getFin().getX() - forme.getOrigin().getX()),
-						(int)(forme.getFin().getY() - forme.getOrigin().getY()));
+				if (width < 0) { // Si la longueur est négative, on permute l'origine et la fin
+					Ox -= Math.abs(width);
+					width = Math.abs(width);
+				}
+				if (height < 0) { // Si la hauteur est négative, on permute l'origine et la fin
+					Oy -= Math.abs(height);
+					height = Math.abs(height);
+				}					
+				
+				g.fillRect(Ox, Oy, width, height);
 			
 		} else if (forme.getForme().equals("trait")) { // DROITE
 			
-			g.drawLine(	(int)forme.getOrigin().getX(),
-						(int)forme.getOrigin().getY(),
-						(int)forme.getFin().getX(),
-						(int)forme.getFin().getY());
+			g.drawLine(Ox, Oy, (int)forme.getFin().getX(), (int)forme.getFin().getY());
 			
 		}
 	}
