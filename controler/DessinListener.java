@@ -7,8 +7,8 @@ import java.awt.event.MouseMotionListener;
 import javax.swing.JPanel;
 // INTERNE
 import ressources.*;
+import view.ZoneDessin;
 import model.Model;
-import fenetre.ZoneDessin;
 
 /**
  * Contient les Listeners de la zone de dessin. 

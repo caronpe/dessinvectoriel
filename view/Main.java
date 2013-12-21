@@ -1,4 +1,4 @@
-package fenetre;
+package view;
 
 // INTERNE
 import model.*;
