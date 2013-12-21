@@ -27,42 +27,72 @@ public class Forme implements Serializable {
 		this.couleur = couleur;
 	}
 
-	public Point getDeb() {
+	/**
+	 * @category accessor
+	 */
+	public Point getOrigin() {
 		return pointDebut;
 	}
 
-	public void setDeb(Point pointDebut) {
+	/**
+	 * @category accessor
+	 */
+	public void setOrigin(Point pointDebut) {
 		this.pointDebut = pointDebut;
 	}
 
-	public Point getArr() {
+	/**
+	 * @category accessor
+	 */
+	public Point getFin() {
 		return this.pointArrivee;
 	}
 
-	public void setArr(Point pointArrivee) {
+	/**
+	 * @category accessor
+	 */
+	public void setFin(Point pointArrivee) {
 		this.pointArrivee = pointArrivee;
 	}
 
+	/**
+	 * @category accessor
+	 */
 	public String getType() {
 		return this.type;
 	}
 
+	/**
+	 * @category accessor
+	 */
 	public void setType(String type) {
 		this.type = type;
 	}
 
+	/**
+	 * @category accessor
+	 */
 	public String getForme() {
 		return this.objet;
 	}
 
+	/**
+	 * @category accessor
+	 */
 	public void setForme(String forme) {
 		this.objet = forme;
 	}
 
+	/**
+	 * @category accessor
+	 */
 	public Color getCouleur() {
 		return this.couleur;
 	}
 
+	/**
+	 * @category accessor
+	 */
 	public void setCouleur(Color couleur) {
 		this.couleur = couleur;
 	}

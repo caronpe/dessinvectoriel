@@ -58,26 +58,26 @@ public class ZoneDessin extends JPanel {
 		g.setColor(forme.getCouleur());
 		
 		// Dessins selon les types de formes sélectionnés
-		if (forme.getForme().equals("rond")) { // ROND PLEIN
-			
-			g.fillOval(	(int)forme.getDeb().getX(),
-						(int)forme.getDeb().getY(),
-						(int)forme.getArr().getX(),
-						(int)forme.getArr().getY());
+		if (forme.getForme().equals("cercle")) { // ROND PLEIN
+			int rayon = (int) (forme.getOrigin().getX() - forme.getFin().getX());
+			g.fillOval(	(int)forme.getOrigin().getX(),
+						(int)forme.getOrigin().getY(),
+						(int)forme.getFin().getX(),
+						(int)forme.getFin().getY());
 			
 		} else if (forme.getForme().equals("carre")) { // CARRÉ PLEIN
 			
-			g.fillRect(	(int)forme.getDeb().getX(),
-						(int)forme.getDeb().getY(),
-						(int)forme.getArr().getX(),
-						(int)forme.getArr().getY());
+			g.fillRect(	(int)forme.getOrigin().getX(),
+						(int)forme.getOrigin().getY(),
+						(int)(forme.getFin().getX() - forme.getOrigin().getX()),
+						(int)(forme.getFin().getY() - forme.getOrigin().getY()));
 			
 		} else if (forme.getForme().equals("droite")) { // DROITE
 			
-			g.drawLine(	(int)forme.getDeb().getX(),
-						(int)forme.getDeb().getY(),
-						(int)forme.getArr().getX(),
-						(int)forme.getArr().getY());
+			g.drawLine(	(int)forme.getOrigin().getX(),
+						(int)forme.getOrigin().getY(),
+						(int)forme.getFin().getX(),
+						(int)forme.getFin().getY());
 			
 		}
 	}
