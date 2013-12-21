@@ -148,6 +148,15 @@ public class Model extends Observable {
 	/**
 	 * @category accessor
 	 * 
+	 * @param L'objet à modifier
+	 */
+	public void setObjetCourant(String objetCourant) {
+		this.objetCourant = objetCourant;
+	}
+	
+	/**
+	 * @category accessor
+	 * 
 	 * @return L'objet actuel
 	 */
 	public String getObjetCourant() {

@@ -67,14 +67,14 @@ public class ZoneDessin extends JPanel {
 						(int)(forme.getFin().getX() - forme.getOrigin().getX()), // Longueur
 						(int)(forme.getFin().getY() - forme.getOrigin().getY())); // Hauteur
 			
-		} else if (forme.getForme().equals("carre")) { // CARRÉ PLEIN
+		} else if (forme.getForme().equals("rectangle")) { // CARRÉ PLEIN
 			
 			g.fillRect(	(int)forme.getOrigin().getX(),
 						(int)forme.getOrigin().getY(),
 						(int)(forme.getFin().getX() - forme.getOrigin().getX()),
 						(int)(forme.getFin().getY() - forme.getOrigin().getY()));
 			
-		} else if (forme.getForme().equals("droite")) { // DROITE
+		} else if (forme.getForme().equals("trait")) { // DROITE
 			
 			g.drawLine(	(int)forme.getOrigin().getX(),
 						(int)forme.getOrigin().getY(),
