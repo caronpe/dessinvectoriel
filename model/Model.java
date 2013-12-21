@@ -43,7 +43,7 @@ public class Model extends Observable {
 		this.listeDessin = new ListeDessin();
 		this.couleurCourante = Color.BLACK;
 		this.typeCourant = "plein";
-		this.objetCourant = "cercle";
+		this.objetCourant = "trait";
 		this.setEnregistre(true); // 
 		this.extension = ".cth";
 	}

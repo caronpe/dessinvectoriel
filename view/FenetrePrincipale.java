@@ -97,7 +97,8 @@ public class FenetrePrincipale extends JFrame implements Observer {
 		this.setResizable(true);
 		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		this.addWindowListener(new ActionQuitter(model));
-		this.setMinimumSize(new Dimension(400, 400));
+		this.setMinimumSize(new Dimension(1280, 720));
+		this.setLocationRelativeTo(null);
 	}
 	
 	/**
