@@ -62,37 +62,41 @@ public class ZoneDessin extends JPanel {
 		int aX = (int) forme.getFin().getX(), aY = (int) forme.getFin().getY();
 		int width = (int)(aX - oX);
 		int height = (int)(aY - oY);
-
-		// Dessins selon les types de formes sélectionnés
-		if (forme.getForme().equals("cercle")) { // ROND PLEIN			
+		
+		switch (forme.getForme()) {
+		
+		case "cercle" :
 			
-			if (width < 0) { 
-				oX -= Math.abs(width); // On soustrait la longueur absolue à X origine
-				width = Math.abs(width); // On prend la longueur absolue
+			if (width < 0) { // On soustrait la longueur absolue à X origine, on prend la longueur absolue
+				oX -= Math.abs(width); 
+				width = Math.abs(width);
 			}
-			if (height < 0) { // Si la hauteur est négative, on permute l'origine et la fin
-				oY -= Math.abs(height); // On soustrait la hauteur absolue aux Y origine
-				height = Math.abs(height); // On prend la hauteur absolue
+			if (height < 0) { // On soustrait la hauteur absolue aux Y origine, on prend la hauteur absolue
+				oY -= Math.abs(height);
+				height = Math.abs(height);
 			}
 			
 			g.fillOval(oX, oY, width, height);
+			break;
 			
-		} else if (forme.getForme().equals("rectangle")) { // CARRÉ PLEIN
-				
-			if (width < 0) { 
-					oX -= Math.abs(width); // On soustrait la longueur absolue à X origine
-					width = Math.abs(width); // On prend la longueur absolue
-				}
-				if (height < 0) { // Si la hauteur est négative, on permute l'origine et la fin
-					oY -= Math.abs(height); // On soustrait la hauteur absolue aux Y origine
-					height = Math.abs(height); // On prend la hauteur absolue
-				}					
-				
-				g.fillRect(oX, oY, width, height);
+		case "rectangle" :
 			
-		} else if (forme.getForme().equals("trait")) { // DROITE
+			if (width < 0) { // On soustrait la longueur absolue à X origine, on prend la longueur absolue
+				oX -= Math.abs(width);
+				width = Math.abs(width);
+			}
+			if (height < 0) { // On soustrait la hauteur absolue aux Y origine, on prend la hauteur absolue
+				oY -= Math.abs(height);
+				height = Math.abs(height);
+			}					
 			
-			g.drawLine(oX, oY, (int)forme.getFin().getX(), (int)forme.getFin().getY());
+			g.fillRect(oX, oY, width, height);
+			break;
+			
+		case "trait" : 
+			
+			g.drawLine(oX, oY, aX, aY);
+			break;
 			
 		}
 	}
