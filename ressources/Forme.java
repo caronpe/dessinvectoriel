@@ -9,8 +9,15 @@ public class Forme implements Serializable {
 	String type , objet;
 	Color couleur;
 	
-	/* 	Constructeur basique de la forme à dessiner avec ses coordonnées vectorielles,
-		sa couleur, sa forme et son type */
+	/**
+	 * Constructeur basique de la forme à dessiner avec ses coordonnées vectorielles,
+	 * sa couleur, sa forme et son type 
+	 * @param pointDebut Point d'origine de l'objet
+	 * @param pointArrivee Point final de l'objet
+	 * @param type Plein, vide
+	 * @param objet Carré, rond, droite
+	 * @param couleur Couleur de l'objet
+	 */
 	public Forme(Point pointDebut , Point pointArrivee, String type, String objet, Color couleur) {
 		super();
 		this.pointDebut = pointDebut;

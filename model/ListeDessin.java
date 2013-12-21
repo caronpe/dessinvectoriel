@@ -17,6 +17,13 @@ public class ListeDessin implements Serializable {
 		this.listeDessin.add(forme);
 	}
 	
+	/**
+	 * Supprime la dernière forme de l'arrayList
+	 */
+	public void removeLast() {
+		this.listeDessin.remove(this.listeDessin.size() - 1);
+	}
+	
 	public Iterator iterator() {
 		return this.listeDessin.iterator();
 	}

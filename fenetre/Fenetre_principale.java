@@ -16,11 +16,21 @@ import ressources.Forme;
 import model.*;
 import controler.*;
 
+/**
+ * Fenêtre principale contenant tous les éléments graphiques.
+ * C'est la seule vue.
+ * 
+ * @author Alexandre Thorez
+ * @author Fabien Huitelec
+ * @author Pierre-Édouard Caron
+ * 
+ * @version 0.1
+ */
 public class Fenetre_principale extends JFrame implements Observer {
 	// Fenêtre
 		private Container container; // Container principal de la fenêtre
 		private MenuG gauche; // Menu d'outils sur la gauche
-		private ZoneDessin zonedessin; // Zone où le dessin s'effectuera.
+		private ZoneDessin zoneDessin; // Zone où le dessin s'effectuera.
 	// MVC
 		private Model model;	
 	// Menu
@@ -35,7 +45,7 @@ public class Fenetre_principale extends JFrame implements Observer {
 		private JMenuItem paste;
 	
 	/**
-	 * @param model Modèle du MVCd
+	 * @param model Modèle du MVC
 	 * 
 	 * @throws HeadlessException Aucun catch puisque paint nécessite un environnement graphique
 	 * comprenant souris et clavier
@@ -63,6 +73,9 @@ public class Fenetre_principale extends JFrame implements Observer {
 	 * Initialise complètement une fenêtre de 400x400 non-centrée avec 
 	 * une barre d'outil latérale, un menu et une zone de dessin
 	 * 
+	 * zoneDessin contient un seul et unique DessinListener car cela permets de
+	 * garder les points d'origine et d'arrivée en mémoire
+	 * 
 	 * @category init
 	 */
 	public void initialiser() {
@@ -72,10 +85,12 @@ public class Fenetre_principale extends JFrame implements Observer {
 		
 		// Ajout des panels au container
 		gauche = new MenuG(model);
-		zonedessin = new ZoneDessin(model);
-		zonedessin.addMouseListener(new zoneDessin_listener(zonedessin, model));
+		zoneDessin = new ZoneDessin(model);
+		DessinListener dessinListener = new DessinListener(zoneDessin, model);
+		zoneDessin.addMouseListener(dessinListener);
+		zoneDessin.addMouseMotionListener(dessinListener);
 		container.add(gauche, BorderLayout.WEST);
-		container.add(zonedessin , BorderLayout.CENTER);
+		container.add(zoneDessin , BorderLayout.CENTER);
 
 		// Configuration de la JFrame
 		this.setTitle("logiciel de dessin vectoriel");
@@ -150,11 +165,11 @@ public class Fenetre_principale extends JFrame implements Observer {
 									"la méthode Update() de la fenêtre principale.");
 			}
 
-			zonedessin.setCourante(courant);
+			zoneDessin.setCourante(courant);
 		} else { // S'il n'y a pas d'argument
-			zonedessin.setCourante(null);
+			zoneDessin.setCourante(null);
 		}
 		
-		zonedessin.repaint();
+		zoneDessin.repaint();
 	}
 }

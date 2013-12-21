@@ -8,6 +8,18 @@ import javax.swing.JPanel;
 // INTERNE
 import ressources.Forme;
 
+/**
+ * Partie Modèle du MVC
+ * Gère l'ajout des formes (temporaires ou non)
+ * et tous les outils qui peuvent être selectionnées
+ * par l'utilisateur à un moment t
+ * 
+ * @author Alexandre Thorez
+ * @author Fabien Huitelec
+ * @author Pierre-Édouard Caron
+ * 
+ * @version 0.1
+ */
 public class Model extends Observable {
 	private ListeDessin listeDessin;
 	// Types de modification d'un objet forme
@@ -20,7 +32,7 @@ public class Model extends Observable {
 	 * Couleur : noire
 	 * Objet : droite
 	 * Type : plein
-	 * Extension : 
+	 * Extension : *.cth
 	 * 
 	 * Indique qu'il n'y a pas besoin d'enregistrer lorsque le dessin est vide
 	 * (au démarrage ou lorsqu'on ouvre un nouveau fichier)
@@ -50,14 +62,27 @@ public class Model extends Observable {
 		notifyObservers(courant); // Envoi de l'objet au vues
 		setEnregistre(false);
 	}
-
+	
 	/**
-	 * @category accessor
+	 * Cette méthode est appelée par mouseDragged dans le DessinListener,
+	 * elle met à jour l'affichage de la zone de dessin en ajoutant une forme temporaire
+	 * puis en la supprimant juste après
+	 * 
+	 * @param pointDebut Point d'origine de la forme
+	 * @param pointArrivee Point d'arrivée de la forme
+	 * @param zoneDessin Panel sur lequel on va dessiner la forme
+	 * 
+	 * @see DessinListener
 	 */
-	public Color getColor() {
-		return this.couleurCourante; 
+	public void addTmpForme(Point pointDebut, Point pointArrivee, JPanel zoneDessin){
+		addForme(pointDebut, pointArrivee, zoneDessin);
+		this.delLastForme();
 	}
 	
+	public void delLastForme() {
+		this.listeDessin.removeLast();
+	}
+
 	/**
 	 * @category accessor
 	 */
@@ -102,5 +127,31 @@ public class Model extends Observable {
 	 */
 	public String getExtension() {
 		return this.extension;
+	}
+	
+	/**
+	 * @category accessor
+	 * 
+	 * @return Le type actuel
+	 */
+	public String getTypeCourant() {
+		return this.typeCourant;
+	}
+	
+	/**
+	 * @category accessor
+	 * 
+	 * @return L'objet actuel
+	 */
+	public String getObjetCourant() {
+		return this.objetCourant;
+	}
+	
+	/**
+	 * @category accessor
+	 * @return La couleur actuelle
+	 */
+	public Color getColor() {
+		return this.couleurCourante; 
 	}
 }
