@@ -38,16 +38,15 @@ public class ZoneDessin extends JPanel {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		if ( courante != null ) { // Si courante n'a pas encore été initialisée
+			Iterator<Forme> it = model.getListeDessin().iterator();
+			while ( it.hasNext() ) { // Parcours de la liste pour redissiner toutes les formes
+			      Forme forme = it.next();
+			      dessiner(forme, g);
+			      System.out.println("Formes redessinées"); // DEBUG
+			}
 			dessiner(courante, g);
-			System.out.println("Formes en cours de réinitialisation"); // DEBUG
+			System.out.println("Forme courante"); // DEBUG
 		}
-		
-		Iterator<Forme> it = model.getListeDessin().iterator();
-		while ( it.hasNext() ) { // Parcours de la liste pour redissiner toutes les formes
-		      Forme forme = it.next();
-		      dessiner(forme, g);
-		}
-		System.out.println("Formes redessinées"); // DEBUG
 	}
 	
 	/**
@@ -63,7 +62,7 @@ public class ZoneDessin extends JPanel {
 		int width = (int)(aX - oX);
 		int height = (int)(aY - oY);
 		
-		switch (forme.getForme()) {
+		switch (forme.getForme()) { // Sélectionne l'outil du modèle
 		
 		case "cercle" :
 			

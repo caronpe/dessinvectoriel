@@ -5,9 +5,30 @@ import java.awt.Point;
 import java.io.Serializable;
 
 public class Forme implements Serializable {
-	Point pointDebut, pointArrivee;
-	String type , objet;
-	Color couleur;
+	private Point pointDebut, pointArrivee;
+	private String type , objet;
+	private Color couleur;
+	private boolean temporaire;
+	
+	/**
+	 * Constructeur basique de la forme à dessiner avec ses coordonnées vectorielles,
+	 * sa couleur, sa forme et son type 
+	 * @param pointDebut Point d'origine de l'objet
+	 * @param pointArrivee Point final de l'objet
+	 * @param type Plein, vide
+	 * @param objet Carré, rond, droite
+	 * @param couleur Couleur de l'objet
+	 * @param temporaire Définit si la forme est temporaire
+	 */
+	public Forme(Point pointDebut , Point pointArrivee, String type, String objet, Color couleur, boolean temporaire) {
+		super();
+		this.pointDebut = pointDebut;
+		this.pointArrivee = pointArrivee;
+		this.type = type;
+		this.objet = objet;
+		this.couleur = couleur;
+		this.temporaire = temporaire;
+	}
 	
 	/**
 	 * Constructeur basique de la forme à dessiner avec ses coordonnées vectorielles,
@@ -19,12 +40,8 @@ public class Forme implements Serializable {
 	 * @param couleur Couleur de l'objet
 	 */
 	public Forme(Point pointDebut , Point pointArrivee, String type, String objet, Color couleur) {
-		super();
-		this.pointDebut = pointDebut;
-		this.pointArrivee = pointArrivee;
-		this.type = type;
-		this.objet = objet;
-		this.couleur = couleur;
+		this(pointDebut, pointArrivee, type, objet, couleur, false);
+
 	}
 
 	/**
@@ -96,7 +113,21 @@ public class Forme implements Serializable {
 	public void setCouleur(Color couleur) {
 		this.couleur = couleur;
 	}
-
+	
+	/**
+	 * @category accessor
+	 */
+	public boolean getTemporaire() {
+		return this.temporaire;
+	}
+	
+	/**
+	 * @category accessor
+	 */
+	public void setTemporaire(boolean temporaire) {
+		this.temporaire = temporaire;
+	}
+	
 	public String toString() {
 		return "Forme [deb=" + pointDebut + ", arr=" + pointArrivee + ", type=" + type
 				+ ", forme=" + objet + ", couleur=" + couleur + "]";
