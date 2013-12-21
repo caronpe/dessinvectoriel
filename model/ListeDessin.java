@@ -24,6 +24,10 @@ public class ListeDessin implements Serializable {
 		this.listeDessin.remove(this.listeDessin.size() - 1);
 	}
 	
+	public void removeAll() {
+		this.listeDessin.removeAll(listeDessin);
+	}
+	
 	public Iterator iterator() {
 		return this.listeDessin.iterator();
 	}

@@ -83,6 +83,13 @@ public class Model extends Observable {
 		this.listeDessin.removeLast();
 	}
 
+	public void delAllFormes() {
+		this.listeDessin.removeAll();
+		setChanged();
+		notifyObservers(); // Envoi de l'objet au vues
+		setEnregistre(true);
+	}
+	
 	/**
 	 * @category accessor
 	 */

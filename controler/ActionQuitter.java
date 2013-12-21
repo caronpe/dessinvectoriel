@@ -9,6 +9,10 @@ import javax.swing.JOptionPane;
 // INTERNE
 import model.*;
 
+/**
+ * @author fabien
+ *
+ */
 public class ActionQuitter extends AbstractAction implements WindowListener {
 	private Model model;
 	
@@ -19,8 +23,24 @@ public class ActionQuitter extends AbstractAction implements WindowListener {
 		putValue(NAME, "Quitter");
 		putValue(SHORT_DESCRIPTION, "Quitte le logiciel");
 	}
-			
+	
+	/**
+	 * Vérifie si l'utilisateur a enregistré ou non puis quitte
+	 * lorsque l'utilisateur clique sur "Quitter" dans le menu "Fichier"
+	 */
 	public void actionPerformed(ActionEvent e) {
+		if (model.getEnregistre()) {
+			quitter_enregistre();
+		} else {
+			quitter_non_enregistre();
+		}
+	}
+	
+	/**
+	 * Vérifie si l'utilisateur a enregistré ou non puis quitte
+	 * lorsque l'utilisateur clique sur la croix
+	 */
+	public void windowClosing(WindowEvent arg0) {
 		if (model.getEnregistre()) {
 			quitter_enregistre();
 		} else {
@@ -39,12 +59,15 @@ public class ActionQuitter extends AbstractAction implements WindowListener {
 		}
 	}
 	
+	/**
+	 * Ouvre une fenêtre de dialogue si l'utilisateur n'a pas enregistré
+	 */
 	private void quitter_non_enregistre() {
 		// DialogBox
 		Object[] options = {"Enregistrer", "Ne pas enregistrer", "Annuler"};
 		int n = JOptionPane.showOptionDialog(new JFrame(),
-				"Souhaitez-vous vraiment quitter ?",
-				"Quitter", 
+				"Souhaitez-vous vraiment quitter sans enregistrer ?",
+				"Quitter",
 				JOptionPane.YES_NO_CANCEL_OPTION,
 				JOptionPane.QUESTION_MESSAGE,
 				null,
@@ -58,26 +81,35 @@ public class ActionQuitter extends AbstractAction implements WindowListener {
 			System.exit(0);
 		}
 	}
-	
-	public void windowClosing(WindowEvent arg0) {
-		if (model.getEnregistre()) {
-			quitter_enregistre();
-		} else {
-			quitter_non_enregistre();
-		}
-	}
-	
-	// INUTILE
+
+	/**
+	 * @category inutile
+	 */
 	public void windowActivated(WindowEvent arg0) {
 	}
+	/**
+	 * @category inutile
+	 */
 	public void windowClosed(WindowEvent arg0) {
 	}
+	/**
+	 * @category inutile
+	 */
 	public void windowDeactivated(WindowEvent arg0) {
 	}
+	/**
+	 * @category inutile
+	 */
 	public void windowDeiconified(WindowEvent arg0) {	
 	}
+	/**
+	 * @category inutile
+	 */
 	public void windowIconified(WindowEvent arg0) {	
 	}
+	/**
+	 * @category inutile
+	 */
 	public void windowOpened(WindowEvent arg0) {	
 	}
 }

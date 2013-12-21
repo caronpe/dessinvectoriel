@@ -14,6 +14,18 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import model.*;
 import ressources.*;
 
+/**
+ * Contient le Listener du bouton Enregistrer de la barre de menu
+ * de la fenêtre principale.
+ * Est appelé lorsqu'on appuie sur le bouton enregistrer mais aussi
+ * lorsque l'on ferme la fenêtre
+ * 
+ * @author Alexandre Thorez
+ * @author Fabien Huitelec
+ * @author Pierre-Édouard Caron
+ * 
+ * @version 0.1
+ */
 public class ActionEnregistrer extends AbstractAction {
 	private Model model;
 	private String extension;
@@ -69,6 +81,10 @@ public class ActionEnregistrer extends AbstractAction {
 		}
 	}
 	
+	/**
+	 * Lorsque l'utilisateur clique sur le bouton "Enregistrer" du menu "Fichier"
+	 *
+	 */
 	public void actionPerformed(ActionEvent arg0) {
 		enregistrer();
 	}

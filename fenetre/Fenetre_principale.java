@@ -119,7 +119,7 @@ public class Fenetre_principale extends JFrame implements Observer {
 		menuBar.add(editMenu);
 		
 		// Items
-		nouveau = new JMenuItem(new ActionNouveau());
+		nouveau = new JMenuItem(new ActionNouveau(model));
 		ouvrir = new JMenuItem(new ActionOuvrir(model));
 		enregistrer = new JMenuItem(new ActionEnregistrer(model));
 		exitAction = new JMenuItem(new ActionQuitter(model));
