@@ -26,7 +26,7 @@ import controler.*;
  * 
  * @version 0.1
  */
-public class Fenetre_principale extends JFrame implements Observer {
+public class FenetrePrincipale extends JFrame implements Observer {
 	// Fenêtre
 		private Container container; // Container principal de la fenêtre
 		private MenuG gauche; // Menu d'outils sur la gauche
@@ -50,7 +50,7 @@ public class Fenetre_principale extends JFrame implements Observer {
 	 * @throws HeadlessException Aucun catch puisque paint nécessite un environnement graphique
 	 * comprenant souris et clavier
 	 */
-	public Fenetre_principale(Model model) throws HeadlessException {
+	public FenetrePrincipale(Model model) throws HeadlessException {
 		super();
 		this.model = model;
 		this.model.addObserver(this);

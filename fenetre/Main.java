@@ -6,7 +6,7 @@ import model.*;
 public class Main {
 	public static void main(String[] args) {
 		Model model = new Model();
-		Fenetre_principale paint = new Fenetre_principale(model);
+		FenetrePrincipale paint = new FenetrePrincipale(model);
 		paint.afficher();
 	}
 }

@@ -51,6 +51,8 @@ public class ZoneDessin extends JPanel {
 	}
 	
 	/**
+	 * Dessine les objets selon les formes qui lui sont envoyé
+	 * 
 	 * @param forme Forme qui va être dessinée
 	 * @param g Graphics qui vient de paintComponent
 	 */
@@ -60,10 +62,10 @@ public class ZoneDessin extends JPanel {
 		// Dessins selon les types de formes sélectionnés
 		if (forme.getForme().equals("cercle")) { // ROND PLEIN
 			int rayon = (int) (forme.getOrigin().getX() - forme.getFin().getX());
-			g.fillOval(	(int)forme.getOrigin().getX(),
-						(int)forme.getOrigin().getY(),
-						(int)forme.getFin().getX(),
-						(int)forme.getFin().getY());
+			g.fillOval(	(int)forme.getOrigin().getX(), // X d'origine
+						(int)forme.getOrigin().getY(), // Y d'origine
+						(int)(forme.getFin().getX() - forme.getOrigin().getX()), // Longueur
+						(int)(forme.getFin().getY() - forme.getOrigin().getY())); // Hauteur
 			
 		} else if (forme.getForme().equals("carre")) { // CARRÉ PLEIN
 			
