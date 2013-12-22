@@ -18,8 +18,11 @@ import model.*;
  * @version 0.2
  */
 public class ZoneDessin extends JPanel {
-	Forme courante;
-	Model model;
+	private Forme courante;
+	private Model model;
+	private int oX, oY, aX, aY, height, width;
+	private boolean parfait;
+	
 	
 	/**
 	 * Panel de couleur blanche
@@ -58,64 +61,74 @@ public class ZoneDessin extends JPanel {
 	
 	/**
 	 * Dessine les objets selon les formes qui lui sont envoyé
-	 * Réagis à la touche SHIFT appuyé pour le cercle et le rectangle
-	 * en les définissant comme parfait
+
 	 * 
 	 * @param forme Forme qui va être dessinée
 	 * @param g Graphics qui vient de paintComponent
 	 */
 	public void dessiner(Forme forme, Graphics g) {
 		g.setColor(forme.getCouleur());
-		int oX = (int) forme.getOrigin().getX(), oY = (int) forme.getOrigin().getY();
-		int aX = (int) forme.getFin().getX(), aY = (int) forme.getFin().getY();
-		int width = (int)(aX - oX);
-		int height = (int)(aY - oY);
+		this.oX = (int) forme.getOrigin().getX();
+		this.oY = (int) forme.getOrigin().getY();
+		this.aX = (int) forme.getFin().getX();
+		this.aY = (int) forme.getFin().getY();
+		this.width = (int)(aX - oX);
+		this.height = (int)(aY - oY);
+		this.parfait = forme.getParfait();
+		
 		
 		switch (forme.getForme()) { // Sélectionne l'outil du modèle
 		
 		case "cercle" :
+			initialiserVariables();
+			g.fillOval(oX, oY, width, height);
+			break;
+		case "rectangle" :
+			initialiserVariables();
+			g.fillRect(oX, oY, width, height);
+			break;
+		case "trait" : 
+			g.drawLine(oX, oY, aX, aY);
+			break;
+		}
+	}
+	
+	/**
+	 * Calcule selon les différentes positions du point d'arrivée.
+	 * Réagis à la touche SHIFT appuyé pour le cercle et le rectangle
+	 * en les définissant comme parfait.
+	 */
+	private void initialiserVariables() {
+		if ( height < 0 && width < 0 && parfait ) { // Si on va en haut à gauche du point d'origine
+			oY -= Math.abs(height);
+			oX -= Math.abs(height);
+			height = Math.abs(height);
+			width = height;
+		}
+		
+		if (width < 0) { // Si on part à gauche du point d'origine
+			oX -= Math.abs(width); 
+			width = Math.abs(width);
 			
-			if (width < 0) { // On soustrait la longueur absolue à X origine, on prend la longueur absolue
-				oX -= Math.abs(width); 
-				width = Math.abs(width);
-			}
-			if (height < 0) { // On soustrait la hauteur absolue aux Y origine, on prend la hauteur absolue
-				oY -= Math.abs(height);
-				height = Math.abs(height);
-			}
-			
-			if ( forme.getParfait() ) { // SHIFT pressed
+			if ( parfait ) { // Forme parfaite
 				System.out.println("Shift + cercle"); // DEBUG
 				height = width;
 			}
-//			
-			g.fillOval(oX, oY, width, height);
-			break;
+		}
+		
+		if (height < 0) { // Si on part au dessus du point d'origine
+			oY -= Math.abs(height);
+			height = Math.abs(height);
 			
-		case "rectangle" :
-			
-			if (width < 0) { // On soustrait la longueur absolue à X origine, on prend la longueur absolue
-				oX -= Math.abs(width);
-				width = Math.abs(width);
+			if ( parfait ) { // Forme parfait
+				System.out.println("Shift + cercle"); // DEBUG
+				width = height;
 			}
-			if (height < 0) { // On soustrait la hauteur absolue aux Y origine, on prend la hauteur absolue
-				oY -= Math.abs(height);
-				height = Math.abs(height);
-			}					
-			
-			if ( forme.getParfait()) { // SHIFT pressed
-				System.out.println("Shift + rectangle"); // DEBUG
-				height = width;
-			}
-			
-			g.fillRect(oX, oY, width, height);
-			break;
-			
-		case "trait" : 
-			
-			g.drawLine(oX, oY, aX, aY);
-			break;
-			
+		}
+		
+		if ( parfait ) { // Forme parfaite en bas à droite du point d'origine
+			System.out.println("Shift + cercle"); // DEBUG
+			height = width;
 		}
 	}
 
