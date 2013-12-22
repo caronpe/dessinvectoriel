@@ -30,10 +30,26 @@ public class KeyListenerAll extends KeyAdapter {
 			model.setGPressed(true);
 			System.out.println("Shift appuyé");
 		}
+				
+		if (e.getKeyCode() == KeyEvent.VK_S && e.isControlDown()) {
+			System.out.println("Ctrl-S pressé !");
+			new ActionEnregistrer(model).enregistrer();
+		}
 		
-		if ((e.getModifiers() == KeyEvent.CTRL_DOWN_MASK) && (e.getKeyCode()==KeyEvent.VK_S)) {
-            System.out.println("Ctrl-S pressé !");
-        }
+		if (e.getKeyCode() == KeyEvent.VK_O && e.isControlDown()) {
+			System.out.println("Ctrl-O pressé !");
+			new ActionOuvrir(model).ouvrir();
+		}
+		
+		if (e.getKeyCode() == KeyEvent.VK_N && e.isControlDown()) {
+			System.out.println("Ctrl-O pressé !");
+			if (model.getEnregistre()) {
+				new ActionNouveau(model).nouveau();
+			} else {
+				new ActionNouveau(model).nouveau_non_enregistre();
+			}
+			new ActionNouveau(model).nouveau();
+		}
 	}
 
 	/**

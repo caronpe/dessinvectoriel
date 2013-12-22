@@ -50,7 +50,7 @@ public class ActionOuvrir extends AbstractAction {
 		// FileChooser
 		JFileChooser filechoose = new JFileChooser();
 		// Permets de donner un nom au fichier dans le TextField et à 
-		String extension = model.getExtension(), nom_du_fichier = "Nom du fichier" + extension; // choisit ~ comme répertoire par défaut
+		String extension = model.getExtension(), nom_du_fichier = ""; // choisit ~ comme répertoire par défaut
 		filechoose.setSelectedFile(new File(nom_du_fichier));
 		// Le répertoire source du JFileChooser est le répertoire d’où est lancé notre programme
 		String approve = new String("Ouvrir");

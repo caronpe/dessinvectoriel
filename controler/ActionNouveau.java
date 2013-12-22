@@ -37,7 +37,7 @@ public class ActionNouveau extends AbstractAction {
 	/**
 	 * Ouvre une fenêtre de dialogue si l'utilisateur n'a pas enregistré
 	 */
-	private void nouveau_non_enregistre() {
+	public void nouveau_non_enregistre() {
 		// DialogBox
 		Object[] options = {"Enregistrer", "Ne pas enregistrer", "Annuler"};
 		int n = JOptionPane.showOptionDialog(new JFrame(),
@@ -72,7 +72,7 @@ public class ActionNouveau extends AbstractAction {
 	/**
 	 * Supprime tous les éléments de l'arrayList de formes du modèle
 	 */
-	private void nouveau() {
+	public void nouveau() {
 		model.delAllFormes();
 	}
 }
