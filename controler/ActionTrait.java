@@ -28,7 +28,7 @@ public class ActionTrait extends AbstractAction {
 		
 		// Values
 		this.putValue(SHORT_DESCRIPTION, "Sélectionne l'outil trait");
-		this.putValue(SMALL_ICON, new ImageIcon("src_projet/ressources/crayon.jpg"));
+		this.putValue(SMALL_ICON, new ImageIcon("dessinvectoriel/ressources/crayon.jpg"));
 	}
 
 	

@@ -47,13 +47,13 @@ public class ZoneDessin extends JPanel {
 	 */
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
+		Iterator<Forme> it = model.getListeDessin().iterator();
+		while ( it.hasNext() ) { // Parcours de la liste pour redissiner toutes les formes
+		      Forme forme = it.next();
+		      dessiner(forme, g);
+		      System.out.println("Formes de listeDessin toutes redessinées"); // DEBUG
+		}
 		if ( courante != null ) { // Si courante n'a pas encore été initialisée
-			Iterator<Forme> it = model.getListeDessin().iterator();
-			while ( it.hasNext() ) { // Parcours de la liste pour redissiner toutes les formes
-			      Forme forme = it.next();
-			      dessiner(forme, g);
-			      System.out.println("Formes de listeDessin toutes redessinées"); // DEBUG
-			}
 			dessiner(courante, g);
 			System.out.println("Forme courante dessinée"); // DEBUG
 		}

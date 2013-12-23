@@ -28,7 +28,7 @@ public class ActionRectangle extends AbstractAction {
 		
 		// Values
 		this.putValue(SHORT_DESCRIPTION, "Sélectionne l'outil rectangle");
-		this.putValue(SMALL_ICON, new ImageIcon("src_projet/ressources/carre.jpg"));
+		this.putValue(SMALL_ICON, new ImageIcon("dessinvectoriel/ressources/carre.jpg"));
 	}
 
 	

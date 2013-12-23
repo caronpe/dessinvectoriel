@@ -7,6 +7,7 @@ import java.util.Iterator;
 import ressources.Forme;
 
 public class ListeDessin implements Serializable {
+	static final long serialVersionUID = 1L;
 	private ArrayList<Forme> listeDessin;
 	
 	public ListeDessin() {

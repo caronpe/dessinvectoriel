@@ -28,7 +28,7 @@ public class ActionCercle extends AbstractAction {
 		
 		// Values
 		this.putValue(SHORT_DESCRIPTION, "Sélectionne l'outil cercle");
-		this.putValue(SMALL_ICON, new ImageIcon("src_projet/ressources/cercle.png"));
+		this.putValue(SMALL_ICON, new ImageIcon("dessinvectoriel/ressources/cercle.png"));
 	}
 
 	
