@@ -28,7 +28,7 @@ public class MenuOutils extends JPanel {
 	JColorChooser bacacouleur;	
 	Model model;
 	// JButton
-		JButton crayon, rectangle, cercle;
+		JButton selection, crayon, rectangle, cercle;
 		JButton	noir, rouge, bleu, vert;
 		
 	/**
@@ -53,6 +53,10 @@ public class MenuOutils extends JPanel {
 		cercle.setPreferredSize(new Dimension(22,22));
 		cercle.setFocusable(false);
 		
+		selection = new JButton(new ActionSelection(model));
+		selection.setPreferredSize(new Dimension(22,22));
+		selection.setFocusable(false);
+		
 		// Boutons : Couleurs
 		noir = new JButton(new ActionCouleur(model, Color.BLACK));
 		noir.setBackground(Color.BLACK);
@@ -76,6 +80,7 @@ public class MenuOutils extends JPanel {
 		
 		
 		// Ajouts boutons outils
+		this.add(selection);
 		this.add(crayon);
 		this.add(rectangle);
 		this.add(cercle);

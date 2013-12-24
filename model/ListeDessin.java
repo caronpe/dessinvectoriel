@@ -3,6 +3,7 @@ package model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.ListIterator;
 
 import ressources.Forme;
 
@@ -29,8 +30,8 @@ public class ListeDessin implements Serializable {
 		this.listeDessin.removeAll(listeDessin);
 	}
 	
-	public Iterator iterator() {
-		return this.listeDessin.iterator();
+	public ListIterator iterator() {
+		return this.listeDessin.listIterator();
 	}
 	
 	public String toString() {

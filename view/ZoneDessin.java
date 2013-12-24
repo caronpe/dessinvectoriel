@@ -2,11 +2,14 @@ package view;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.util.Iterator;
+
 import javax.swing.JPanel;
-import ressources.Forme;
+
 // INTERNE
-import model.*;
+import model.Model;
+import ressources.Forme;
 
 /**
  * Listener qui régit les actions de la souris sur la zone de dessin
@@ -91,6 +94,8 @@ public class ZoneDessin extends JPanel {
 			g.drawLine(oX, oY, aX, aY);
 			break;
 		}
+		
+		forme.setReferentiel(new Rectangle(oX, oY, width, height));
 	}
 	
 	/**

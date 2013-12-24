@@ -42,7 +42,7 @@ public class Model extends Observable {
 		this.listeDessin = new ListeDessin();
 		this.couleurCourante = Color.BLACK;
 		this.typeCourant = "plein";
-		this.objetCourant = "trait";
+		this.objetCourant = "selection";
 		this.setEnregistre(true); // 
 		this.extension = ".cth";
 	}
@@ -57,8 +57,10 @@ public class Model extends Observable {
 		Forme courant = new Forme(pointDebut, pointArrivee, typeCourant, objetCourant, couleurCourante, parfait);
 		listeDessin.add(courant);
 		System.out.println("Forme ajoutée"); // DEBUG
+		
+		// Envoi de l'objet au vues
 		setChanged();
-		notifyObservers(courant); // Envoi de l'objet au vues
+		notifyObservers(courant); 
 		setEnregistre(false);
 	}
 	
@@ -84,9 +86,37 @@ public class Model extends Observable {
 
 	public void delAllFormes() {
 		this.listeDessin.removeAll();
+		
+		// Envoi de l'objet au vues
 		setChanged();
-		notifyObservers(); // Envoi de l'objet au vues
+		notifyObservers();
 		setEnregistre(true);
+	}
+	
+	/**
+	 * @param forme Forme qui a été sélectionnée par le DessinListener lors du Dragging
+	 * @param pointDebut Point de début de translation
+	 * @param pointArrivee Point de fin de translation
+	 */
+	public void formeModifiee(Forme forme, Point pointDebut, Point pointArrivee) {
+		// Initialisation distances
+		int distanceX = (int) (pointArrivee.getX() - pointDebut.getX()),
+			distanceY = (int) (pointArrivee.getY() - pointDebut.getY());
+		
+		// Point Départ
+		int tmpX = (int) (forme.getOrigin().getX() + distanceX),
+			tmpY = (int) (forme.getOrigin().getY() + distanceY);
+		forme.setOrigin(new Point(tmpX, tmpY));
+		
+		// Point Arrivée
+		tmpX = (int) (forme.getFin().getX() + distanceX);
+		tmpY = (int) (forme.getFin().getY() + distanceY);
+		forme.setFin(new Point(tmpX, tmpY));
+		
+		// Envoi de l'objet au vues
+		setChanged();
+		notifyObservers();
+		setEnregistre(false);
 	}
 	
 	/**

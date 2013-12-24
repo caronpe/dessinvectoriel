@@ -4,11 +4,12 @@ import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import javax.swing.JPanel;
-// INTERNE
-import ressources.*;
-import view.ZoneDessin;
+import java.util.ListIterator;
+
 import model.Model;
+import ressources.Forme;
+import view.ZoneDessin;
+// INTERNE
 
 /**
  * Contient les Listeners de la zone de dessin. 
@@ -25,6 +26,8 @@ import model.Model;
  */
 public class DessinListener implements MouseListener, MouseMotionListener {
 	private Point pointDebut, pointArrivee;
+	Forme draggingForme;
+	boolean dragging;
 	private Model model;
 	
 	/**
@@ -34,12 +37,15 @@ public class DessinListener implements MouseListener, MouseMotionListener {
 	public DessinListener(ZoneDessin zoneDessin, Model model) {
 		super();
 		this.model = model;
+		this.dragging = false;
+		this.draggingForme = null;
 	}
 
 	/**
-	 * Dessine une forme temporaire en récupérant les données du modèle,
-	 * le point d'origine (lorsque la souris est cliquée) 
-	 * et le point final (l'actuel)
+	 * Définit le point d'origine du départ lorsqu'un outil de création est sélectionné dans le modèle
+	 * Lorsque c'est l'outil sélection qui est sélectionné, il vérifie si ses coordonnées sont "contenues"
+	 * dans une forme de la liste de dessins. /!\ La liste est parcourue à partir de la fin pour
+	 * sélectionner la forme la plus récente (et donc la plus visible)
 	 * 
 	 * @category mouseListeners
 	 * 
@@ -47,34 +53,63 @@ public class DessinListener implements MouseListener, MouseMotionListener {
 	 */
 	public void mousePressed(MouseEvent e) {
 		this.pointDebut = new Point(e.getPoint());
-		System.out.println(this.pointDebut);
+		System.out.println(this.pointDebut); // DEBUG	
+		
+		if (model.getObjetCourant().equals("selection")) { // Si l'outil est "sélection"
+			boolean trouve = false;
+			ListIterator<Forme> it = model.getListeDessin().iterator();
+			
+			while (it.hasNext()) { // On déroule la liste pour commencer par la fin
+				it.next();
+			}
+			
+			while (it.hasPrevious() && !trouve) { /* 	On parcours la liste de dessin à la recherche d'une 
+														forme correspondante si elle n'est pas déjà trouvée */
+				Forme f = it.previous();										
+				if ( f.contains(e.getPoint()) ) {
+					draggingForme = f;
+					this.pointDebut = e.getPoint();
+					
+					// Vérifications interne 
+					this.dragging = true;
+					trouve = true; 
+				}
+			}
+		}
 	}
 
 	/**
-	 * Dessine une forme temporaire en récupérant les données du modèle,
-	 * le point d'origine (lorsque la souris est cliquée) 
-	 * et le point final (l'actuel)
+	 * Lorqu'un outil de création est sélectionné dans le modèle,
+	 * dessine une forme temporaire en récupérant les données du modèle,
+	 * le point d'origine (lorsque la souris est cliquée)  et le point final (l'actuel).
+	 * Quand l'outil est sélection, gère le déplacement de l'objet :
+	 * Appele la modification de forme du modèle avec la draggingForme courante
 	 * 
 	 * @category mouseListeners
 	 * 
 	 * @param e Coordonnées de la souris pendant le déplacement
 	 */
 	public void mouseDragged(MouseEvent e) {
-		pointArrivee = e.getPoint();
-		
-		if ( model.getShiftPressed() ) {
-			model.addTmpForme(this.pointDebut, e.getPoint(), true);
-		} else {
-			model.addTmpForme(this.pointDebut, e.getPoint(), false);
+		if (!model.getObjetCourant().equals("selection")) { // Si l'outil n'est pas "sélection"
+			pointArrivee = e.getPoint();
+			if ( model.getShiftPressed() ) {
+				model.addTmpForme(this.pointDebut, e.getPoint(), true);
+			} else {
+				model.addTmpForme(this.pointDebut, e.getPoint(), false);
+			}
+			System.out.println(this.pointDebut);
+		} else { // Si l'outil est "sélection"
+			if ( this.dragging ) { // Si une forme est en train d'être déplacée
+				this.pointArrivee = e.getPoint();
+				model.formeModifiee(this.draggingForme, this.pointDebut, this.pointArrivee);
+				this.pointDebut = this.pointArrivee;
+			}
 		}
-		System.out.println(this.pointDebut);
-			
 	}
 	
 	/**
-	 * Dessine une forme temporaire en récupérant les données du modèle,
-	 * le point d'origine (lorsque la souris est cliquée) 
-	 * et le point final (l'actuel)
+	 * Si un outil de création est sélectionné, dessine la forme avec le point d'arrivée final.
+	 * S'il y a eu un quelconque dragging de forme, les variables associées sont réinitialisés.
 	 * 
 	 * @category mouseListeners
 	 * 
@@ -83,15 +118,18 @@ public class DessinListener implements MouseListener, MouseMotionListener {
 	public void mouseReleased(MouseEvent e) {
 		pointArrivee = e.getPoint();
 		
-		if ( model.getShiftPressed() ) {
-			model.addForme(this.pointDebut, e.getPoint(), true);
-		} else {
-			model.addForme(this.pointDebut, e.getPoint(), false);
-		}
+		if (!model.getObjetCourant().equals("selection")) { // Si l'outil n'est pas "sélection"
+			if ( model.getShiftPressed() ) {
+				model.addForme(this.pointDebut, e.getPoint(), true);
+			} else if ( !model.getObjetCourant().equals("selection") ) {
+				model.addForme(this.pointDebut, e.getPoint(), false);
+			}
+		} // Si l'outil est sélection, aucun traitement n'est à faire
+				
+		this.dragging = false;
+		this.draggingForme = null;
 	}
 	
-	
-
 	/**
 	 * @category unused
 	 */

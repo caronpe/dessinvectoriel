@@ -2,10 +2,13 @@ package ressources;
 
 import java.awt.Color;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.io.Serializable;
 
 /**
  * Contient toutes les caractéristiques de l'objet Forme
+ * Chaque fois qu'une forme est créée, un rectangle est créé, 
+ * il facilitera les déplacements de la forme
  * 
  * @author Alexandre Thorez
  * @author Fabien Huitelec
@@ -14,6 +17,7 @@ import java.io.Serializable;
  * @version 0.2
  */
 public class Forme implements Serializable {
+	private Rectangle referentielPosition;
 	private Point pointDebut, pointArrivee;
 	private String type , objet;
 	private Color couleur;
@@ -50,9 +54,21 @@ public class Forme implements Serializable {
 	 */
 	public Forme(Point pointDebut , Point pointArrivee, String type, String objet, Color couleur) {
 		this(pointDebut, pointArrivee, type, objet, couleur, false);
-
 	}
 
+	/**
+	 * Utilise le comparateur du rectangle référentiel qui permet
+	 * de savoir si le curseur est dans la forme ou non.
+	 * @param position Position du curseur quand la forme est cliquée ou survolée
+	 * @return Si le point est contenu ou non dans la forme
+	 */
+	public boolean contains(Point position) {
+		if ( referentielPosition.contains(position) ) {
+			return true;
+		}
+		return false;
+	}
+	
 	/**
 	 * @category accessor
 	 */
@@ -137,9 +153,12 @@ public class Forme implements Serializable {
 		this.parfait = temporaire;
 	}
 	
+	public void setReferentiel(Rectangle referentielPosition) {
+		this.referentielPosition = referentielPosition;
+	}
+	
 	public String toString() {
 		return "Forme [deb=" + pointDebut + ", arr=" + pointArrivee + ", type=" + type
 				+ ", forme=" + objet + ", couleur=" + couleur + "]";
 	}
-
 }
