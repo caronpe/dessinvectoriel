@@ -46,7 +46,6 @@ public class ZoneDessin extends JPanel {
 	 * à la construction de zoneDessin dans la fenêtre principale
 	 * @category accessor
 	 * 
-	 * @return Forme courante
 	 */
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);

@@ -8,12 +8,15 @@ import model.Model;
 // INTERNE
 
 /**
+ * Contient tous les listeners concernant le clavier.
+ * Gère la touche shift pour dessiner des formes parfaites. 
+ * Gère également les raccourcis clavier.
  * 
  * @author Alexandre Thorez
  * @author Fabien Huitelec
  * @author Pierre-Édouard Caron
  *
- * @version v0.2
+ * @version 0.2
  */
 public class KeyListenerAll extends KeyAdapter {
 	private Model model;
@@ -23,7 +26,7 @@ public class KeyListenerAll extends KeyAdapter {
 	}
 	
 	/**
-	 * Modifie le modèle en fonction de la touche appuyée
+	 * Modifie le modèle en fonction de la touche appuyée et gère les raccourcis.
 	 */
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_SHIFT) {
@@ -33,7 +36,7 @@ public class KeyListenerAll extends KeyAdapter {
 				
 		if (e.getKeyCode() == KeyEvent.VK_S && e.isControlDown()) {
 			System.out.println("Ctrl-S pressé !");
-			new ActionEnregistrer(model).enregistrer();
+			new ActionMenuEnregistrer(model).enregistrer();
 		}
 		
 		if (e.getKeyCode() == KeyEvent.VK_O && e.isControlDown()) {
@@ -44,16 +47,16 @@ public class KeyListenerAll extends KeyAdapter {
 		if (e.getKeyCode() == KeyEvent.VK_N && e.isControlDown()) {
 			System.out.println("Ctrl-O pressé !");
 			if (model.getEnregistre()) {
-				new ActionNouveau(model).nouveau();
+				new ActionMenuNouveau(model).nouveau();
 			} else {
-				new ActionNouveau(model).nouveau_non_enregistre();
+				new ActionMenuNouveau(model).nouveau_non_enregistre();
 			}
-			new ActionNouveau(model).nouveau();
+			new ActionMenuNouveau(model).nouveau();
 		}
 	}
 
 	/**
-	 * Modifie le modèle en fonction de la touche relâchée
+	 * Modifie le modèle en fonction de la touche relâchée.
 	 */
 	public void keyReleased(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_SHIFT) {
@@ -63,7 +66,14 @@ public class KeyListenerAll extends KeyAdapter {
 	}
 	
 	/**
+	 * L'usage de keytyped est déconseillé.
+	 * 
 	 * @category unused
+	 *
+	 * @see #keyPressed
+	 * @see #keyReleased
+	 * 
+	 * @deprecated
 	 */
 	public void keyTyped(KeyEvent arg0) {
 	}

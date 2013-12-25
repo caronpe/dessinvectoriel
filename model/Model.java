@@ -8,10 +8,10 @@ import ressources.Forme;
 import controler.DessinListener;
 
 /**
- * Partie Modèle du MVC
+ * Partie Modèle du MVC.
  * Gère l'ajout des formes (temporaires ou non)
  * et tous les outils qui peuvent être selectionnées
- * par l'utilisateur à un moment t
+ * par l'utilisateur à un moment t.
  * 
  * @author Alexandre Thorez
  * @author Fabien Huitelec
@@ -51,7 +51,11 @@ public class Model extends Observable {
 	 * Ajoute une figure à la liste des formes présentes.
 	 * Lorsqu'une forme est ajoutée, l'objet Forme "courant" est envoyé à l'update des vues
 	 * 
-	 * @see FenetrePrincipale.update()
+	 * @param pointDebut Point d'origine de la forme.
+	 * @param pointArrivee Point de fin de la forme.
+	 * @param parfait Indique si la forme est parfait ou non.
+	 * 
+	 * @see view.FenetrePrincipale#update
 	 */
 	public void addForme(Point pointDebut, Point pointArrivee, boolean parfait) {
 		Forme courant = new Forme(pointDebut, pointArrivee, typeCourant, objetCourant, couleurCourante, parfait);
@@ -67,23 +71,34 @@ public class Model extends Observable {
 	/**
 	 * Cette méthode est appelée par mouseDragged dans le DessinListener,
 	 * elle met à jour l'affichage de la zone de dessin en ajoutant une forme temporaire
-	 * puis en la supprimant juste après
+	 * puis en la supprimant juste après.
 	 * 
-	 * @param pointDebut Point d'origine de la forme
-	 * @param pointArrivee Point d'arrivée de la forme
-	 * @param zoneDessin Panel sur lequel on va dessiner la forme
+	 * @param pointDebut Point d'origine de la forme.
+	 * @param pointArrivee Point d'arrivée de la forme.
+	 * @param parfait Dégigne une forme parfaite (carrée, cercle etc.).
 	 * 
-	 * @see DessinListener
+	 * @see controler.DessinListener
+	 * @see view.ZoneDessin#update
 	 */
 	public void addTmpForme(Point pointDebut, Point pointArrivee, boolean parfait) {
 		addForme(pointDebut, pointArrivee, parfait);
 		this.delLastForme();
 	}
 	
+	/**
+	 * Supprime la dernière forme de la liste de formes
+	 * 
+	 * @see model.ListeDessin#removeLast
+	 */
 	public void delLastForme() {
 		this.listeDessin.removeLast();
 	}
 
+	/**
+	 * Supprime toutes les formes de la liste de formes
+	 * 
+	 * @see model.ListeDessin#removeAll
+	 */
 	public void delAllFormes() {
 		this.listeDessin.removeAll();
 		
@@ -94,9 +109,13 @@ public class Model extends Observable {
 	}
 	
 	/**
-	 * @param forme Forme qui a été sélectionnée par le DessinListener lors du Dragging
-	 * @param pointDebut Point de début de translation
-	 * @param pointArrivee Point de fin de translation
+	 * S'occupe de la modification des coordonnées d'une forme lorsqu'elle est déplacée
+	 * 
+	 * @param forme Forme qui a été sélectionnée par le DessinListener lors du Dragging.
+	 * @param pointDebut Point de début de translation.
+	 * @param pointArrivee Point de fin de translation.
+	 * 
+	 * @see controler.DessinListener#mouseDragged
 	 */
 	public void formeModifiee(Forme forme, Point pointDebut, Point pointArrivee) {
 		// Initialisation distances
@@ -176,8 +195,6 @@ public class Model extends Observable {
 	
 	/**
 	 * @category accessor
-	 * 
-	 * @param L'objet à modifier
 	 */
 	public boolean getShiftPressed() {
 		return this.keyGpressed;
@@ -189,7 +206,7 @@ public class Model extends Observable {
 	/**
 	 * @category accessor
 	 * 
-	 * @param L'objet à modifier
+	 * @param objetCourant L'objet à modifier
 	 */
 	public void setObjetCourant(String objetCourant) {
 		this.objetCourant = objetCourant;

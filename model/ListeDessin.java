@@ -2,11 +2,20 @@ package model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.ListIterator;
-
+// INTERNE
 import ressources.Forme;
 
+/**
+ * Gère une arrayList de Formes. Encapsule ArrayList pour implémenter Serializable
+ * qui gère l'enregistrement et l'ouverture de fichiers.
+ * 
+ * @author Alexandre Thorez
+ * @author Fabien Huitelec
+ * @author Pierre-Édouard Caron
+ * 
+ * @version 0.1
+ */
 public class ListeDessin implements Serializable {
 	static final long serialVersionUID = 1L;
 	private ArrayList<Forme> listeDessin;
@@ -15,6 +24,11 @@ public class ListeDessin implements Serializable {
 		this.listeDessin = new ArrayList<Forme>();
 	}
 	
+	/**
+	 * Ajoute une forme à l'arrayList
+	 * 
+	 * @param forme Forme que l'on souhaite ajouter.
+	 */
 	public void add(Forme forme) {
 		this.listeDessin.add(forme);
 	}
@@ -26,10 +40,19 @@ public class ListeDessin implements Serializable {
 		this.listeDessin.remove(this.listeDessin.size() - 1);
 	}
 	
+	/**
+	 * Supprime toutes les formes de l'arrayList
+	 * 
+	 */
 	public void removeAll() {
 		this.listeDessin.removeAll(listeDessin);
 	}
 	
+	/**
+	 * @return Un ListIterator qui permets d'être parcourus par next() et previous().
+	 * 
+	 * @see <a href="http://docs.oracle.com/javase/7/docs/api/java/util/ListIterator.html">java.util.ListIterator</a>
+	 */
 	public ListIterator iterator() {
 		return this.listeDessin.listIterator();
 	}
@@ -38,6 +61,9 @@ public class ListeDessin implements Serializable {
 		return this.listeDessin.toString();
 	}
 	
+	/**
+	 * @return La dernière forme de la liste.
+	 */
 	public Forme getLast() {
 		if ( listeDessin.size() != 0 ) {
 			return this.listeDessin.get(this.listeDessin.size() - 1);

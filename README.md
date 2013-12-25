@@ -7,6 +7,16 @@ Huitelec Fabien
 
 Démarré en Décembre 2013 dans le cadre d'un projet collaboratif édité par Monsieur Jean Martinet au sein de la matière AP5 du DUT (IUT A) informatique de Lille 1 (S3 - groupe N).
 
+Indications développement :
+
+JAVADOC : 	Dans les VM options de génération javadoc ajoutez pour éviter tout problème d'accentuation et pour éviter tout warning concernant le tag @category:
+				-encoding utf8 -docencoding utf8 -charset utf8 -tag category	
+JAVADOC : 	Dans les Extra Javadoc options ajoutez : controler main model ressources view
+			Ca vous permettra de n'avoir qu'à cliquer sur finish et vous fera gagner du temps dans la génération de javadoc
+JAVADOC : 	Pour ne pas voir la doc dans le projet sous eclipse, allez dans les propriétés du projet puis Resource/Resource Filters
+			puis ajoutez un filtre qui exclue tous les fichiers et dossier dont le nom correspond à "doc" et un deuxième correspondant à "package-info*"
+JAVADOC :	Les fonctions inutilisées sont marqués dans les commentaires javadoc avec le tag @deprecated. 
+
 Démarrage du logiciel :
 Outil par défaut : droite
 couleur par défaut : noir,

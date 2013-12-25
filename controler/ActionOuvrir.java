@@ -4,16 +4,25 @@ import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
-
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-
+//INTERNE
 import model.ListeDessin;
 import model.Model;
-// INTERNE
 
+
+/**
+ * Listener pour le menu Ouvrir. Contient toutes les fonctions d'ouverture de fichier
+ * dans l'extension définie dans le modèle
+ * 
+ * @author Alexandre Thorez
+ * @author Fabien Huitelec
+ * @author Pierre-Édouard Caron
+ * 
+ * @version 0.2
+ */
 public class ActionOuvrir extends AbstractAction {
 	private Model model;
 	
@@ -25,6 +34,13 @@ public class ActionOuvrir extends AbstractAction {
 		putValue(SHORT_DESCRIPTION, "Ouvrir un fichier déjà existant");
 	}
 	
+	/**
+	 * Vérifie si l'utilisateur a enregistré ou non et affiche une fenêtre
+	 * de dialogue appropriée pour ensuite ouvrir la fenêtre d'ouverture.
+	 * 
+	 * @see #ouvrir
+	 * 
+	 */
 	public void actionPerformed(ActionEvent arg0) {
 		if ( model.getEnregistre() ) { // Si le travail est enregistré
 			ouvrir();
@@ -40,12 +56,16 @@ public class ActionOuvrir extends AbstractAction {
 					options, options[0]);
 						
 			if ( n == 0 ) { // Si "Enregistrer"
-				new ActionEnregistrer(model).enregistrer();
+				new ActionMenuEnregistrer(model).enregistrer();
 			}
 			ouvrir();
 		}
 	}
 	
+	/**
+	 * Gère la fenêtre d'ouverture.
+	 * 
+	 */
 	public void ouvrir() {
 		// FileChooser
 		JFileChooser filechoose = new JFileChooser();
@@ -64,6 +84,12 @@ public class ActionOuvrir extends AbstractAction {
 		}
 	}
 	
+	/**
+	 * Gère le lien entre le fichier et le modèle en ajoutant toutes les formes à la liste
+	 * de dessin du modèle.
+	 * 
+	 * @param monFichier Nom du fichier contenant l'adresse absolue du fichier.
+	 */
 	public void fluxOuverture(String monFichier) {
 		try {
 			FileInputStream fichier = new FileInputStream(monFichier);

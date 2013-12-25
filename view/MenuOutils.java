@@ -41,39 +41,39 @@ public class MenuOutils extends JPanel {
 		initialiser();
 		
 		// Boutons : Outils
-		crayon = new JButton(new ActionTrait(model));
+		crayon = new JButton(new ActionOutilTrait(model));
 		crayon.setPreferredSize(new Dimension(22,22));
 		crayon.setFocusable(false);
 		
-		rectangle = new JButton(new ActionRectangle(model));
+		rectangle = new JButton(new ActionOutilRectangle(model));
 		rectangle.setPreferredSize(new Dimension(22,22));
 		rectangle.setFocusable(false);
 		
-		cercle = new JButton(new ActionCercle(model));
+		cercle = new JButton(new ActionOutilCercle(model));
 		cercle.setPreferredSize(new Dimension(22,22));
 		cercle.setFocusable(false);
 		
-		selection = new JButton(new ActionSelection(model));
+		selection = new JButton(new ActionOutilSelection(model));
 		selection.setPreferredSize(new Dimension(22,22));
 		selection.setFocusable(false);
 		
 		// Boutons : Couleurs
-		noir = new JButton(new ActionCouleur(model, Color.BLACK));
+		noir = new JButton(new ActionMenuCouleur(model, Color.BLACK));
 		noir.setBackground(Color.BLACK);
 		noir.setPreferredSize(new Dimension(22,22));
 		noir.setFocusable(false);
 		
-		rouge= new JButton(new ActionCouleur(model, Color.RED));
+		rouge= new JButton(new ActionMenuCouleur(model, Color.RED));
 		rouge.setBackground(Color.RED);
 		rouge.setPreferredSize(new Dimension(22,22));
 		rouge.setFocusable(false);
 		
-		bleu = new JButton(new ActionCouleur(model, Color.BLUE));
+		bleu = new JButton(new ActionMenuCouleur(model, Color.BLUE));
 		bleu.setBackground(Color.BLUE);
 		bleu.setPreferredSize(new Dimension(22,22));
 		bleu.setFocusable(false);
 		
-		vert = new JButton(new ActionCouleur(model, Color.GREEN));
+		vert = new JButton(new ActionMenuCouleur(model, Color.GREEN));
 		vert.setBackground(Color.GREEN);
 		vert.setPreferredSize(new Dimension(22,22));
 		vert.setFocusable(false);

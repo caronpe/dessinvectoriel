@@ -73,7 +73,7 @@ public class FenetrePrincipale extends JFrame implements Observer {
 	 * Initialise complètement une fenêtre de 400x400 non-centrée avec 
 	 * une barre d'outil latérale, un menu et une zone de dessin
 	 * 
-	 * zoneDessin contient un seul et unique DessinListener car cela permets de
+	 * zoneDessin ne contient qu'un seul et unique DessinListener car cela permets de
 	 * garder les points d'origine et d'arrivée en mémoire
 	 * 
 	 * @category init
@@ -104,7 +104,7 @@ public class FenetrePrincipale extends JFrame implements Observer {
 		this.setTitle("logiciel de dessin vectoriel");
 		this.setResizable(true);
 		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		this.addWindowListener(new ActionQuitter(model));
+		this.addWindowListener(new ActionMenuQuitter(model));
 		this.setMinimumSize(new Dimension(1280, 720));
 		this.setLocationRelativeTo(null);
 	}
@@ -128,12 +128,12 @@ public class FenetrePrincipale extends JFrame implements Observer {
 		menuBar.add(editMenu);
 		
 		// Items
-		nouveau = new JMenuItem(new ActionNouveau(model));
+		nouveau = new JMenuItem(new ActionMenuNouveau(model));
 		ouvrir = new JMenuItem(new ActionOuvrir(model));
-		enregistrer = new JMenuItem(new ActionEnregistrer(model));
-		exitAction = new JMenuItem(new ActionQuitter(model));
-		copy = new JMenuItem(new ActionCopier());
-		paste = new JMenuItem(new ActionCouper());
+		enregistrer = new JMenuItem(new ActionMenuEnregistrer(model));
+		exitAction = new JMenuItem(new ActionMenuQuitter(model));
+		copy = new JMenuItem(new ActionMenuCopier());
+		paste = new JMenuItem(new ActionMenuCouper());
 		
 		// Menu : Fichiers
 		fileMenu.addSeparator();
@@ -158,7 +158,7 @@ public class FenetrePrincipale extends JFrame implements Observer {
 	 * ouvre un fichier. Elle évite les exceptions NullPointerException intervenant
 	 * dans la classe ZoneDessin
 	 * 
-	 * @see ZoneDessin.paintComponent()
+	 * @see view.ZoneDessin#paintComponent
 	 * 
 	 * @param arg1 Forme qui va être relayée à ZoneDessin
 	 */
