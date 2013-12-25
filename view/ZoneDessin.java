@@ -79,6 +79,7 @@ public class ZoneDessin extends JPanel {
 		this.parfait = forme.getParfait();
 		
 		
+		
 		switch (forme.getForme()) { // Sélectionne l'outil du modèle
 		
 		case "cercle" :
@@ -91,6 +92,7 @@ public class ZoneDessin extends JPanel {
 			break;
 		case "trait" : 
 			g.drawLine(oX, oY, aX, aY);
+			initialiserVariables();	// On initialise les variables après pour faire un setReferentiel correct					
 			break;
 		}
 		
