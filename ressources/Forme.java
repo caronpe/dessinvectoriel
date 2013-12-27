@@ -21,11 +21,11 @@ public class Forme implements Serializable {
 	private Point pointDebut, pointArrivee;
 	private String type , objet;
 	private Color couleur;
-	private boolean parfait;
+	private boolean parfait, selected;
 	
 	/**
 	 * Constructeur basique de la forme à dessiner avec ses coordonnées vectorielles,
-	 * sa couleur, sa forme et son type 
+	 * sa couleur, sa forme et son type. Définit la forme comme non sélectionné.
 	 * @param pointDebut Point d'origine de l'objet
 	 * @param pointArrivee Point final de l'objet
 	 * @param type Plein, vide
@@ -41,6 +41,7 @@ public class Forme implements Serializable {
 		this.objet = objet;
 		this.couleur = couleur;
 		this.parfait = parfait;
+		this.selected = false;
 	}
 	
 	/**
@@ -59,9 +60,10 @@ public class Forme implements Serializable {
 	/**
 	 * Utilise le comparateur du rectangle référentiel qui permet
 	 * de savoir si le curseur est dans la forme ou non.
-	 * @param position Position du curseur quand la forme est cliquée ou survolée
-	 * @return Si le point est contenu ou non dans la forme
+	 * @param position Position du curseur quand la forme est cliquée ou survolée.
+	 * @return Si le point est contenu ou non dans la forme.
 	 */
+	
 	public boolean contains(Point position) {
 		if ( referentielPosition.contains(position) ) {
 			return true;
@@ -69,6 +71,16 @@ public class Forme implements Serializable {
 		return false;
 	}
 	
+	public boolean isSelected() {
+		return this.selected;
+	}
+	
+	/**
+	 * @category accessor
+	 */
+	public void setSelected(boolean selected) {
+		this.selected = selected;
+	}
 	/**
 	 * @category accessor
 	 */
@@ -152,7 +164,9 @@ public class Forme implements Serializable {
 	public void setTemporaire(boolean temporaire) {
 		this.parfait = temporaire;
 	}
-	
+	/**
+	 * @category accessor
+	 */
 	public void setReferentiel(Rectangle referentielPosition) {
 		this.referentielPosition = referentielPosition;
 	}

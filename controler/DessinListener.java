@@ -66,6 +66,8 @@ public class DessinListener implements MouseListener, MouseMotionListener {
 		System.out.println(this.pointDebut); // DEBUG	
 		
 		if (model.getObjetCourant().equals("selection")) { // Si l'outil est "sélection"
+			
+			
 			boolean trouve = false;
 			ListIterator<Forme> it = model.getListeDessin().iterator();
 			
@@ -75,14 +77,17 @@ public class DessinListener implements MouseListener, MouseMotionListener {
 			
 			while (it.hasPrevious() && !trouve) { /* 	On parcours la liste de dessin à la recherche d'une 
 														forme correspondante si elle n'est pas déjà trouvée */
-				Forme f = it.previous();										
-				if ( f.contains(e.getPoint()) ) {
+				Forme f = it.previous();		
+
+				if ( f.contains(e.getPoint())) {
 					draggingForme = f;
 					this.pointDebut = e.getPoint();
 					
 					// Vérifications interne 
 					this.dragging = true;
 					trouve = true; 
+				} else { // Sinon on définit toutes les formes comme non sélectionnées
+					model.getListeDessin().getLast().setSelected(false);
 				}
 			}
 		}
@@ -134,7 +139,7 @@ public class DessinListener implements MouseListener, MouseMotionListener {
 			} else if ( !model.getObjetCourant().equals("selection") ) {
 				model.addForme(this.pointDebut, e.getPoint(), false);
 			}
-		} // Si l'outil est sélection, aucun traitement n'est à faire
+		}
 				
 		this.dragging = false;
 		this.draggingForme = null;

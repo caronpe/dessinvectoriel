@@ -1,7 +1,9 @@
 package view;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.Iterator;
 
@@ -25,6 +27,8 @@ public class ZoneDessin extends JPanel {
 	private Model model;
 	private int oX, oY, aX, aY, height, width;
 	private boolean parfait;
+	// Dashed
+		final BasicStroke dashed;
 	
 	
 	/**
@@ -38,6 +42,10 @@ public class ZoneDessin extends JPanel {
 		this.courante = null;
 		this.model = model;
 		this.setBackground(Color.WHITE);
+		// Dashed
+		final float dash1[] = { 10.0f };
+		this.dashed = new BasicStroke(1.0f, 
+					BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, dash1, 0.0f);
 	}
 
 	/**
@@ -48,28 +56,30 @@ public class ZoneDessin extends JPanel {
 	 * 
 	 */
 	public void paintComponent(Graphics g) {
+		Graphics2D g2d = (Graphics2D)g;
 		super.paintComponent(g);
 		Iterator<Forme> it = model.getListeDessin().iterator();
 		while ( it.hasNext() ) { // Parcours de la liste pour redissiner toutes les formes
 		      Forme forme = it.next();
-		      dessiner(forme, g);
+		      dessiner(forme, g2d);
 		      System.out.println("Formes de listeDessin toutes redessinées"); // DEBUG
 		}
 		if ( courante != null ) { // Si courante n'a pas encore été initialisée
-			dessiner(courante, g);
+			dessiner(courante, g2d);
 			System.out.println("Forme courante dessinée"); // DEBUG
 		}
 	}
 	
 	/**
-	 * Dessine les objets selon les formes qui lui sont envoyé
+	 * Dessine les objets selon les formes qui lui sont envoyé.
+	 * Définie également le référentiel qui servira lors de la sélection d'une forme.
 
 	 * 
 	 * @param forme Forme qui va être dessinée
-	 * @param g Graphics qui vient de paintComponent
+	 * @param g2d Graphics qui vient de paintComponent
 	 */
-	public void dessiner(Forme forme, Graphics g) {
-		g.setColor(forme.getCouleur());
+	public void dessiner(Forme forme, Graphics2D g2d) {
+		g2d.setColor(forme.getCouleur());
 		this.oX = (int) forme.getOrigin().getX();
 		this.oY = (int) forme.getOrigin().getY();
 		this.aX = (int) forme.getFin().getX();
@@ -78,22 +88,25 @@ public class ZoneDessin extends JPanel {
 		this.height = (int)(aY - oY);
 		this.parfait = forme.getParfait();
 		
-		
-		
 		switch (forme.getForme()) { // Sélectionne l'outil du modèle
 		
 		case "cercle" :
 			initialiserVariables();
-			g.fillOval(oX, oY, width, height);
+			g2d.fillOval(oX, oY, width, height);
 			break;
 		case "rectangle" :
 			initialiserVariables();
-			g.fillRect(oX, oY, width, height);
+			g2d.fillRect(oX, oY, width, height);
 			break;
-		case "trait" : 
-			g.drawLine(oX, oY, aX, aY);
+		case "trait" :
+			g2d.drawLine(oX, oY, aX, aY);
 			initialiserVariables();	// On initialise les variables après pour faire un setReferentiel correct					
 			break;
+		}
+		
+		if ( forme.isSelected() ) {
+			g2d.setStroke(dashed);
+			g2d.drawRect(oX - 10, oY - 10, width + 20, height + 20);
 		}
 		
 		forme.setReferentiel(new Rectangle(oX, oY, width, height));

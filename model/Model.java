@@ -42,7 +42,7 @@ public class Model extends Observable {
 		this.listeDessin = new ListeDessin();
 		this.couleurCourante = Color.BLACK;
 		this.typeCourant = "plein";
-		this.objetCourant = "selection";
+		this.objetCourant = "polygon";
 		this.setEnregistre(true); // 
 		this.extension = ".cth";
 	}
@@ -163,6 +163,8 @@ public class Model extends Observable {
 	 * @category accessor
 	 */
 	public ListeDessin getListeDessin() {
+		setChanged();
+		notifyObservers();
 		return this.listeDessin;
 	}
 	
