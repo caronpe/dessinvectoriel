@@ -2,14 +2,13 @@ package model;
 
 import java.awt.Color;
 import java.awt.Point;
-import java.awt.Rectangle;
-import java.awt.geom.Rectangle2D;
+import java.awt.geom.Ellipse2D;
 import java.io.Serializable;
 
-public class FormeRectangle extends Forme implements Serializable {
+public class FormeEllipse extends Forme implements Serializable {
 	private int oX, oY, aX, aY, height, width;
 	
-	public FormeRectangle(Point pointDebut, Point pointArrivee, String type, String objet, Color couleur, boolean parfait) {
+	public FormeEllipse(Point pointDebut, Point pointArrivee, String type, String objet, Color couleur, boolean parfait) {
 		super(pointDebut, pointArrivee, type, objet, couleur, parfait);
 		
 		// Calculs pour l'initialisation du référentiel
@@ -21,7 +20,7 @@ public class FormeRectangle extends Forme implements Serializable {
 		this.height = (int) (aY - oY);
 		
 		initialiserVariables();
-		this.referentielPosition = new Rectangle2D.Double(oX, oY, width, height);
+		this.referentielPosition = new Ellipse2D.Double(oX, oY, width, height);
 	}
 	
 	/**

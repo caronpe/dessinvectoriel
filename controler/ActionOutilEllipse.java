@@ -15,7 +15,7 @@ import model.*;
  * 
  * @version 0.1
  */
-public class ActionOutilCercle extends AbstractAction {
+public class ActionOutilEllipse extends AbstractAction {
 	private Model model;
 	
 	/**
@@ -23,7 +23,7 @@ public class ActionOutilCercle extends AbstractAction {
 	 * l'affichage ne s'effectuerait pas correctement
 	 * @param model Modèle du MVC
 	 */
-	public ActionOutilCercle(Model model) {
+	public ActionOutilEllipse(Model model) {
 		this.model = model;
 		
 		// Values
@@ -37,7 +37,7 @@ public class ActionOutilCercle extends AbstractAction {
 	 * 
 	 */
 	public void actionPerformed(ActionEvent e) {
-		model.setObjetCourant("cercle");
+		model.setObjetCourant("ellipse");
 	}
 }
 

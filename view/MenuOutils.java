@@ -49,7 +49,7 @@ public class MenuOutils extends JPanel {
 		rectangle.setPreferredSize(new Dimension(22,22));
 		rectangle.setFocusable(false);
 		
-		cercle = new JButton(new ActionOutilCercle(model));
+		cercle = new JButton(new ActionOutilEllipse(model));
 		cercle.setPreferredSize(new Dimension(22,22));
 		cercle.setFocusable(false);
 		

@@ -65,8 +65,8 @@ public class Model extends Observable {
 		case "rectangle" :
 			courant = new FormeRectangle(pointDebut, pointArrivee, typeCourant, objetCourant, couleurCourante, parfait);
 			break;
-		case "cercle" :
-			courant = new FormeRectangle(pointDebut, pointArrivee, typeCourant, objetCourant, couleurCourante, parfait);
+		case "ellipse" :
+			courant = new FormeEllipse(pointDebut, pointArrivee, typeCourant, objetCourant, couleurCourante, parfait);
 			break;
 		case "trait" :
 			courant = new FormeRectangle(pointDebut, pointArrivee, typeCourant, objetCourant, couleurCourante, parfait);
