@@ -6,6 +6,15 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.io.Serializable;
 
+/**
+ * Gère la forme trait.
+ * 
+ * @author Alexandre Thorez
+ * @author Fabien Huitelec
+ * @author Pierre-Édouard Caron
+ * 
+ * @version 0.2
+ */
 public class FormeLine extends Forme implements Serializable {
 	private int oX, oY, aX, aY;
 	
@@ -22,9 +31,9 @@ public class FormeLine extends Forme implements Serializable {
 	}
 	/**
 	 * Le contains d'une ligne renvoie toujours faux.
-	 * TODO Créer une nouvelle fonction qui gère correctement le contains
+	 * TODO Créer une nouvelle fonction qui gère correctement le contains.
 	 * 
-	 * @see <a ref="http://stackoverflow.com/questions/1797209/how-to-select-a-line">tuto</a>
+	 * @see <a href="http://stackoverflow.com/questions/1797209/how-to-select-a-line">http://stackoverflow.com</a>
 	 */
 	public boolean contains(Point2D position) {
 		if (referentielPosition.contains(position)) {

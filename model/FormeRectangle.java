@@ -6,6 +6,15 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
 
+/**
+ * Gère la forme rectangle.
+ * 
+ * @author Alexandre Thorez
+ * @author Fabien Huitelec
+ * @author Pierre-Édouard Caron
+ * 
+ * @version 0.2
+ */
 public class FormeRectangle extends Forme implements Serializable {
 	private int oX, oY, aX, aY, height, width;
 	
