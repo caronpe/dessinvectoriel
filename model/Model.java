@@ -18,7 +18,7 @@ import controler.DessinListener;
  * @author Fabien Huitelec
  * @author Pierre-Édouard Caron
  * 
- * @version 0.1
+ * @version 0.2
  */
 public class Model extends Observable {
 	private ListeDessin listeDessin;
@@ -43,7 +43,7 @@ public class Model extends Observable {
 		this.listeDessin = new ListeDessin();
 		this.couleurCourante = Color.BLACK;
 		this.typeCourant = "plein";
-		this.objetCourant = "selection";
+		this.objetCourant = "trait";
 		this.setEnregistre(true);
 		this.extension = ".cth";
 	}

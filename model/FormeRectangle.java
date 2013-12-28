@@ -29,7 +29,7 @@ public class FormeRectangle extends Forme implements Serializable {
 		super(pointDebut, pointArrivee, type, objet, couleur, parfait);
 
 		initialiserVariables();
-		this.referentielPosition = new Rectangle2D.Double(oX, oY, width, height);
+		this.forme = new Rectangle2D.Double(oX, oY, width, height);
 	}
 	
 	/**
@@ -82,7 +82,7 @@ public class FormeRectangle extends Forme implements Serializable {
 	public void setFin(Point pointArrivee) {
 		this.pointArrivee = pointArrivee;
 		this.initialiserVariables();
-		this.referentielPosition = new Rectangle2D.Double(oX, oY, width, height);
+		this.forme = new Rectangle2D.Double(oX, oY, width, height);
 	}
 	
 	public void setOrigin(Point pointDebut) {
@@ -91,7 +91,7 @@ public class FormeRectangle extends Forme implements Serializable {
 	}
 	
 	public boolean contains(Point2D position) {
-		if (referentielPosition.contains(position)) {
+		if (forme.contains(position)) {
 			return true;
 		}
 		return false;

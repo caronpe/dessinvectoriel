@@ -96,17 +96,15 @@ public class ZoneDessin extends JPanel {
 		this.height = (int)(aY - oY);
 		this.parfait = forme.getParfait();
 		
-		switch (forme.getObjet()) { // Sélectionne l'outil du modèle
-		
+		switch(forme.getObjet()) {
 		case "trait" :
-			g2d.drawLine(oX, oY, aX, aY);
-			initialiserVariables();	// On initialise les variables après pour faire un setReferentiel correct					
+			g2d.draw(forme.getShape());
 			break;
 		default :
 			g2d.fill(forme.getShape());
 			break;
 		}
-		
+			
 //		if ( forme.isSelected() ) {
 //			g2d.setStroke(dashed);
 //			g2d.drawRect(oX - 10, oY - 10, width + 20, height + 20);

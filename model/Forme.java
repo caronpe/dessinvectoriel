@@ -18,7 +18,7 @@ import java.io.Serializable;
  * @version 0.2
  */
 public abstract class Forme implements Serializable {
-	protected Shape referentielPosition;
+	protected Shape forme;
 	protected Point pointDebut, pointArrivee;
 	protected String type, objet;
 	protected Color couleur;
@@ -170,7 +170,7 @@ public abstract class Forme implements Serializable {
 	 * @category accessor
 	 */
 	public Shape getShape() {
-		return this.referentielPosition;
+		return this.forme;
 	}
 	
 	public String toString() {
