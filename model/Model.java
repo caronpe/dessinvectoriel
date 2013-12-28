@@ -43,7 +43,7 @@ public class Model extends Observable {
 		this.listeDessin = new ListeDessin();
 		this.couleurCourante = Color.BLACK;
 		this.typeCourant = "plein";
-		this.objetCourant = "polygon";
+		this.objetCourant = "selection";
 		this.setEnregistre(true);
 		this.extension = ".cth";
 	}
@@ -69,7 +69,7 @@ public class Model extends Observable {
 			courant = new FormeEllipse(pointDebut, pointArrivee, typeCourant, objetCourant, couleurCourante, parfait);
 			break;
 		case "trait" :
-			courant = new FormeRectangle(pointDebut, pointArrivee, typeCourant, objetCourant, couleurCourante, parfait);
+			courant = new FormeLine(pointDebut, pointArrivee, typeCourant, objetCourant, couleurCourante, parfait);
 			break;
 		}
 		listeDessin.add(courant);

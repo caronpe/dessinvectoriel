@@ -3,21 +3,22 @@ package model;
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
 
 public class FormeEllipse extends Forme implements Serializable {
 	private int oX, oY, aX, aY, height, width;
 	
+	/**
+	 * Même constructeur que la classe abstraite Forme. 
+	 * Instancie les coordonnées et appelle une méthode de calcul privée pour les initialiser. 
+	 * 
+	 * @see model.Forme
+	 * @see #initialiserVariables
+	 */
 	public FormeEllipse(Point pointDebut, Point pointArrivee, String type, String objet, Color couleur, boolean parfait) {
 		super(pointDebut, pointArrivee, type, objet, couleur, parfait);
-		
-		// Calculs pour l'initialisation du référentiel
-		this.oX = (int) pointDebut.getX();
-		this.oY = (int) pointDebut.getY();
-		this.aX = (int) pointArrivee.getX();
-		this.aY = (int) pointArrivee.getY();
-		this.width = (int) (aX - oX);
-		this.height = (int) (aY - oY);
 		
 		initialiserVariables();
 		this.referentielPosition = new Ellipse2D.Double(oX, oY, width, height);
@@ -29,6 +30,14 @@ public class FormeEllipse extends Forme implements Serializable {
 	 * en les définissant comme parfait.
 	 */
 	private void initialiserVariables() {
+		// Calculs pour l'initialisation du référentiel
+		this.oX = (int) pointDebut.getX();
+		this.oY = (int) pointDebut.getY();
+		this.aX = (int) pointArrivee.getX();
+		this.aY = (int) pointArrivee.getY();
+		this.width = (int) (aX - oX);
+		this.height = (int) (aY - oY);
+				
 		if ( height < 0 && width < 0 && parfait ) { // Si on va en haut à gauche du point d'origine
 			oY -= Math.abs(height);
 			oX -= Math.abs(height);
@@ -62,10 +71,23 @@ public class FormeEllipse extends Forme implements Serializable {
 		}
 	}
 	
-	public boolean contains(Point position) {
+	public void setFin(Point pointArrivee) {
+		this.pointArrivee = pointArrivee;
+		this.initialiserVariables();
+		this.referentielPosition = new Ellipse2D.Double(oX, oY, width, height);
+	}
+	
+	public void setOrigin(Point pointDebut) {
+		this.pointDebut = pointDebut;
+		this.initialiserVariables();
+	}
+	
+	public boolean contains(Point2D position) {
 		if (referentielPosition.contains(position)) {
 			return true;
 		}
 		return false;
 	}
+
+	
 }

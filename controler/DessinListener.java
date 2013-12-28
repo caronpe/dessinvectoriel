@@ -4,6 +4,7 @@ import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.geom.Point2D;
 import java.util.ListIterator;
 
 import model.Forme;
@@ -76,16 +77,16 @@ public class DessinListener implements MouseListener, MouseMotionListener {
 			
 			while (it.hasPrevious() && !trouve) { /* 	On parcours la liste de dessin à la recherche d'une 
 														forme correspondante si elle n'est pas déjà trouvée */
-				Forme f = it.previous();		
-				if ( f.contains(e.getPoint())) {
+				System.out.println("DessinListener.mousePressed#while(it.hasPrevious)");
+				Forme f = it.previous();
+				if ( f.contains((Point2D)e.getPoint())) {
+					System.out.println("trouvé + if (contains)");
 					draggingForme = f;
 					this.pointDebut = e.getPoint();
 					
 					// Vérifications interne 
 					this.dragging = true;
-					trouve = true; 
-				} else { // Sinon on définit toutes les formes comme non sélectionnées
-					model.getListeDessin().getLast().setSelected(false);
+					trouve = true;
 				}
 			}
 		}

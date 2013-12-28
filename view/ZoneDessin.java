@@ -6,8 +6,10 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.Iterator;
+import java.util.ListIterator;
 
 import javax.swing.JPanel;
+
 
 
 import model.Forme;
@@ -60,12 +62,15 @@ public class ZoneDessin extends JPanel {
 	public void paintComponent(Graphics g) {
 		Graphics2D g2d = (Graphics2D) g;
 		super.paintComponent(g);
-		Iterator<Forme> it = model.getListeDessin().iterator();
-		while ( it.hasNext() ) { // Parcours de la liste pour redessiner toutes les formes
-		      Forme forme = it.next();
-		      dessiner(forme, g2d);
-		      System.out.println("Formes de listeDessin toutes redessinées"); // DEBUG
+		ListIterator<Forme> it = model.getListeDessin().iterator();
+		System.out.println("Taille : " + model.getListeDessin().getSize());
+		while ( model.getListeDessin().getSize() != 0 && it.hasNext() ) { // Parcours de la liste pour redessiner toutes les formes
+			System.out.println("dans la boucle");
+			Forme forme = it.next();
+			dessiner(forme, g2d);
+			System.out.println("Formes de listeDessin toutes redessinées"); // DEBUG
 		}
+		
 		if ( courante != null ) { // Si courante n'a pas encore été initialisée
 			dessiner(courante, g2d);
 			System.out.println("Forme courante dessinée"); // DEBUG

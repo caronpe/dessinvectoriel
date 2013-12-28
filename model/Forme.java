@@ -2,8 +2,8 @@ package model;
 
 import java.awt.Color;
 import java.awt.Point;
-import java.awt.Rectangle;
 import java.awt.Shape;
+import java.awt.geom.Point2D;
 import java.io.Serializable;
 
 /**
@@ -65,7 +65,7 @@ public abstract class Forme implements Serializable {
 	 * @return Si le point est contenu ou non dans la forme.
 	 */
 	
-	public abstract boolean contains(Point position);
+	public abstract boolean contains(Point2D position);
 	
 	public boolean isSelected() {
 		return this.selected;
@@ -85,11 +85,14 @@ public abstract class Forme implements Serializable {
 	}
 
 	/**
+	 * Reféfinis le point de début de la forme. Cette méthode a pour but de redéfinir le point d'origine
+	 * en recréant un referentielPosition avec les nouvelles coordonnées en les initialisant préalablement.
+	 * 
 	 * @category accessor
+	 * 
+	 * @param pointDebut Nouveau point d'origine de la forme
 	 */
-	public void setOrigin(Point pointDebut) {
-		this.pointDebut = pointDebut;
-	}
+	public abstract void setOrigin(Point pointDebut);
 
 	/**
 	 * @category accessor
@@ -99,11 +102,14 @@ public abstract class Forme implements Serializable {
 	}
 
 	/**
+	 * Reféfinis le point de fin de la forme. Cette méthode a pour but de redéfinir le point de fin
+	 * en recréant un referentielPosition avec les nouvelles coordonnées en les initialisant préalablement.
+	 * 
 	 * @category accessor
+	 * 
+	 * @param pointArrivee Nouveau point d'origine de la forme
 	 */
-	public void setFin(Point pointArrivee) {
-		this.pointArrivee = pointArrivee;
-	}
+	public abstract void setFin(Point pointArrivee);
 
 	/**
 	 * @category accessor

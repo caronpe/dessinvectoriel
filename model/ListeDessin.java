@@ -50,6 +50,8 @@ public class ListeDessin implements Serializable {
 	/**
 	 * @return Un ListIterator qui permets d'être parcourus par next() et previous().
 	 * 
+	 * @category accessor
+	 * 
 	 * @see <a href="http://docs.oracle.com/javase/7/docs/api/java/util/ListIterator.html">java.util.ListIterator</a>
 	 */
 	public ListIterator iterator() {
@@ -62,11 +64,22 @@ public class ListeDessin implements Serializable {
 	
 	/**
 	 * @return La dernière forme de la liste.
+	 * 
+	 * @category accessor
 	 */
 	public Forme getLast() {
 		if ( listeDessin.size() != 0 ) {
 			return this.listeDessin.get(this.listeDessin.size() - 1);
 		}
 		return null;
+	}
+	
+	/**
+	 * @return La taille de la liste.
+	 * 
+	 * @category accessor
+	 */
+	public int getSize() {
+		return listeDessin.size();
 	}
 }
