@@ -6,8 +6,8 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ListIterator;
 
+import model.Forme;
 import model.Model;
-import ressources.Forme;
 import view.ZoneDessin;
 // INTERNE
 
@@ -66,8 +66,7 @@ public class DessinListener implements MouseListener, MouseMotionListener {
 		System.out.println(this.pointDebut); // DEBUG	
 		
 		if (model.getObjetCourant().equals("selection")) { // Si l'outil est "sélection"
-			
-			
+				
 			boolean trouve = false;
 			ListIterator<Forme> it = model.getListeDessin().iterator();
 			
@@ -78,7 +77,6 @@ public class DessinListener implements MouseListener, MouseMotionListener {
 			while (it.hasPrevious() && !trouve) { /* 	On parcours la liste de dessin à la recherche d'une 
 														forme correspondante si elle n'est pas déjà trouvée */
 				Forme f = it.previous();		
-
 				if ( f.contains(e.getPoint())) {
 					draggingForme = f;
 					this.pointDebut = e.getPoint();
@@ -107,7 +105,7 @@ public class DessinListener implements MouseListener, MouseMotionListener {
 	public void mouseDragged(MouseEvent e) {
 		if (!model.getObjetCourant().equals("selection")) { // Si l'outil n'est pas "sélection"
 			pointArrivee = e.getPoint();
-			if ( model.getShiftPressed() ) {
+			if ( model.getShiftPressed() ) { // Si c'est une forme parfaite
 				model.addTmpForme(this.pointDebut, e.getPoint(), true);
 			} else {
 				model.addTmpForme(this.pointDebut, e.getPoint(), false);
@@ -134,7 +132,7 @@ public class DessinListener implements MouseListener, MouseMotionListener {
 		pointArrivee = e.getPoint();
 		
 		if (!model.getObjetCourant().equals("selection")) { // Si l'outil n'est pas "sélection"
-			if ( model.getShiftPressed() ) {
+			if ( model.getShiftPressed() ) { // Forme parfaite
 				model.addForme(this.pointDebut, e.getPoint(), true);
 			} else if ( !model.getObjetCourant().equals("selection") ) {
 				model.addForme(this.pointDebut, e.getPoint(), false);

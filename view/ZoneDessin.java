@@ -9,9 +9,10 @@ import java.util.Iterator;
 
 import javax.swing.JPanel;
 
+
+import model.Forme;
 // INTERNE
 import model.Model;
-import ressources.Forme;
 
 /**
  * Listener qui régit les actions de la souris sur la zone de dessin
@@ -52,14 +53,15 @@ public class ZoneDessin extends JPanel {
 	 * Si la forme n'a pas été initialisé, on ne dessine rien
 	 * Cela permet d'éviter les erreurs du type NullPointerException 
 	 * à la construction de zoneDessin dans la fenêtre principale
+	 * 
 	 * @category accessor
 	 * 
 	 */
 	public void paintComponent(Graphics g) {
-		Graphics2D g2d = (Graphics2D)g;
+		Graphics2D g2d = (Graphics2D) g;
 		super.paintComponent(g);
 		Iterator<Forme> it = model.getListeDessin().iterator();
-		while ( it.hasNext() ) { // Parcours de la liste pour redissiner toutes les formes
+		while ( it.hasNext() ) { // Parcours de la liste pour redessiner toutes les formes
 		      Forme forme = it.next();
 		      dessiner(forme, g2d);
 		      System.out.println("Formes de listeDessin toutes redessinées"); // DEBUG
@@ -68,6 +70,7 @@ public class ZoneDessin extends JPanel {
 			dessiner(courante, g2d);
 			System.out.println("Forme courante dessinée"); // DEBUG
 		}
+		System.out.println("paint");
 	}
 	
 	/**
@@ -88,28 +91,21 @@ public class ZoneDessin extends JPanel {
 		this.height = (int)(aY - oY);
 		this.parfait = forme.getParfait();
 		
-		switch (forme.getForme()) { // Sélectionne l'outil du modèle
+		switch (forme.getObjet()) { // Sélectionne l'outil du modèle
 		
-		case "cercle" :
-			initialiserVariables();
-			g2d.fillOval(oX, oY, width, height);
-			break;
-		case "rectangle" :
-			initialiserVariables();
-			g2d.fillRect(oX, oY, width, height);
-			break;
 		case "trait" :
 			g2d.drawLine(oX, oY, aX, aY);
 			initialiserVariables();	// On initialise les variables après pour faire un setReferentiel correct					
 			break;
+		default :
+			g2d.fill(forme.getShape());
+			break;
 		}
 		
-		if ( forme.isSelected() ) {
-			g2d.setStroke(dashed);
-			g2d.drawRect(oX - 10, oY - 10, width + 20, height + 20);
-		}
-		
-		forme.setReferentiel(new Rectangle(oX, oY, width, height));
+//		if ( forme.isSelected() ) {
+//			g2d.setStroke(dashed);
+//			g2d.drawRect(oX - 10, oY - 10, width + 20, height + 20);
+//		}
 	}
 	
 	/**

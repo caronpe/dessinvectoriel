@@ -1,8 +1,9 @@
-package ressources;
+package model;
 
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.Shape;
 import java.io.Serializable;
 
 /**
@@ -16,12 +17,12 @@ import java.io.Serializable;
  * 
  * @version 0.2
  */
-public class Forme implements Serializable {
-	private Rectangle referentielPosition;
-	private Point pointDebut, pointArrivee;
-	private String type , objet;
-	private Color couleur;
-	private boolean parfait, selected;
+public abstract class Forme implements Serializable {
+	protected Shape referentielPosition;
+	protected Point pointDebut, pointArrivee;
+	protected String type, objet;
+	protected Color couleur;
+	protected boolean parfait, selected;
 	
 	/**
 	 * Constructeur basique de la forme à dessiner avec ses coordonnées vectorielles,
@@ -64,12 +65,7 @@ public class Forme implements Serializable {
 	 * @return Si le point est contenu ou non dans la forme.
 	 */
 	
-	public boolean contains(Point position) {
-		if ( referentielPosition.contains(position) ) {
-			return true;
-		}
-		return false;
-	}
+	public abstract boolean contains(Point position);
 	
 	public boolean isSelected() {
 		return this.selected;
@@ -126,7 +122,7 @@ public class Forme implements Serializable {
 	/**
 	 * @category accessor
 	 */
-	public String getForme() {
+	public String getObjet() {
 		return this.objet;
 	}
 
@@ -167,8 +163,8 @@ public class Forme implements Serializable {
 	/**
 	 * @category accessor
 	 */
-	public void setReferentiel(Rectangle referentielPosition) {
-		this.referentielPosition = referentielPosition;
+	public Shape getShape() {
+		return this.referentielPosition;
 	}
 	
 	public String toString() {

@@ -4,7 +4,8 @@ import java.awt.Color;
 import java.awt.Point;
 import java.util.Observable;
 //INTERNE
-import ressources.Forme;
+
+
 import controler.DessinListener;
 
 /**
@@ -43,13 +44,13 @@ public class Model extends Observable {
 		this.couleurCourante = Color.BLACK;
 		this.typeCourant = "plein";
 		this.objetCourant = "polygon";
-		this.setEnregistre(true); // 
+		this.setEnregistre(true);
 		this.extension = ".cth";
 	}
 	
 	/**
-	 * Ajoute une figure à la liste des formes présentes.
-	 * Lorsqu'une forme est ajoutée, l'objet Forme "courant" est envoyé à l'update des vues
+	 * Ajoute une figure à la liste des formes présentes. Crée une forme spécifique selon l'objet courant.
+	 * Lorsqu'une forme est ajoutée, l'objet Forme "courant" est envoyé à l'update des vues.
 	 * 
 	 * @param pointDebut Point d'origine de la forme.
 	 * @param pointArrivee Point de fin de la forme.
@@ -58,13 +59,25 @@ public class Model extends Observable {
 	 * @see view.FenetrePrincipale#update
 	 */
 	public void addForme(Point pointDebut, Point pointArrivee, boolean parfait) {
-		Forme courant = new Forme(pointDebut, pointArrivee, typeCourant, objetCourant, couleurCourante, parfait);
+		Forme courant = null;
+				
+		switch (this.objetCourant) {
+		case "rectangle" :
+			courant = new FormeRectangle(pointDebut, pointArrivee, typeCourant, objetCourant, couleurCourante, parfait);
+			break;
+		case "cercle" :
+			courant = new FormeRectangle(pointDebut, pointArrivee, typeCourant, objetCourant, couleurCourante, parfait);
+			break;
+		case "trait" :
+			courant = new FormeRectangle(pointDebut, pointArrivee, typeCourant, objetCourant, couleurCourante, parfait);
+			break;
+		}
 		listeDessin.add(courant);
 		System.out.println("Forme ajoutée"); // DEBUG
 		
 		// Envoi de l'objet au vues
 		setChanged();
-		notifyObservers(courant); 
+		notifyObservers(courant);
 		setEnregistre(false);
 	}
 	
@@ -84,6 +97,8 @@ public class Model extends Observable {
 		addForme(pointDebut, pointArrivee, parfait);
 		this.delLastForme();
 	}
+	
+	
 	
 	/**
 	 * Supprime la dernière forme de la liste de formes
@@ -163,8 +178,6 @@ public class Model extends Observable {
 	 * @category accessor
 	 */
 	public ListeDessin getListeDessin() {
-		setChanged();
-		notifyObservers();
 		return this.listeDessin;
 	}
 	

@@ -6,12 +6,12 @@ import java.awt.Dimension;
 import java.awt.HeadlessException;
 import java.util.Observable;
 import java.util.Observer;
+
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
-import ressources.Forme;
 //INTERNE
 import model.*;
 import controler.*;
@@ -178,7 +178,7 @@ public class FenetrePrincipale extends JFrame implements Observer {
 		} else { // S'il n'y a pas d'argument
 			zoneDessin.setCourante(null);
 		}
-		
+		System.out.println("update");
 		zoneDessin.repaint();
 	}
 }

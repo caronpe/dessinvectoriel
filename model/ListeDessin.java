@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.ListIterator;
 // INTERNE
-import ressources.Forme;
 
 /**
  * Gère une arrayList de Formes. Encapsule ArrayList pour implémenter Serializable
