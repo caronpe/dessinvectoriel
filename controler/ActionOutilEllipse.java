@@ -38,7 +38,6 @@ public class ActionOutilEllipse extends AbstractAction {
 	 */
 	public void actionPerformed(ActionEvent e) {
 		model.setObjetCourant("ellipse");
-		model.deselectionnerToutesLesFormes();
 	}
 }
 

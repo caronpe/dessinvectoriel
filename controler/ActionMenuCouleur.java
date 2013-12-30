@@ -19,7 +19,7 @@ import model.*;
  * 
  * @version 0.1
  */
-public class ActionOutilCouleur extends AbstractAction {
+public class ActionMenuCouleur extends AbstractAction {
 	Color couleur_actuelle;
 	Model model;
 	
@@ -32,7 +32,7 @@ public class ActionOutilCouleur extends AbstractAction {
 	 * 
 	 * @see view.FenetrePrincipale
 	 */
-	public ActionOutilCouleur(Model model, Color color) {
+	public ActionMenuCouleur(Model model, Color color) {
 		this.model = model;
 		this.couleur_actuelle = color;
 	}

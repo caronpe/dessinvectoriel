@@ -37,7 +37,6 @@ public class ActionOutilRectangle extends AbstractAction {
 	 */
 	public void actionPerformed(ActionEvent e) {
 		model.setObjetCourant("rectangle");
-		model.deselectionnerToutesLesFormes();
 	}
 }
 

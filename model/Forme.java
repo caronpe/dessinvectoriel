@@ -1,8 +1,6 @@
 package model;
 
-import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Shape;
 import java.awt.geom.Point2D;
@@ -20,14 +18,11 @@ import java.io.Serializable;
  * @version 0.2
  */
 public abstract class Forme implements Serializable {
-	protected int oX, oY, aX, aY, width, height;
 	protected Shape forme;
 	protected Point pointDebut, pointArrivee;
 	protected String type, objet;
 	protected Color couleur;
 	protected boolean parfait, selected;
-	// Dashed
-		final BasicStroke dashed;
 	
 	/**
 	 * Constructeur basique de la forme à dessiner avec ses coordonnées vectorielles,
@@ -48,11 +43,6 @@ public abstract class Forme implements Serializable {
 		this.couleur = couleur;
 		this.parfait = parfait;
 		this.selected = false;
-		
-		// Dashed
-		final float dash1[] = { 10.0f };
-		this.dashed = 	new BasicStroke(1.0f, 
-						BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, dash1, 0.0f);
 	}
 	
 	/**
@@ -75,60 +65,8 @@ public abstract class Forme implements Serializable {
 	 * @return Si le point est contenu ou non dans la forme.
 	 */
 	
-	/**
-	 * Dessine les objets selon les formes qui lui sont envoyé.
-	 * Définie également le référentiel qui servira lors de la sélection d'une forme.
-	 * 
-	 * @param graphics Graphics qui vient de paintComponent
-	 */
-	public void draw(Graphics2D graphics) {
-		graphics.setColor(this.couleur);
-		
-		switch (this.type) {
-		case "plein" :
-			graphics.fill(this.forme);
-			break;
-		case "vide" :
-			graphics.draw(this.forme);
-			break;
-		}
-	}
-	
-	/**
-	 * Dessine les marqueurs de sélection pour notifier à l'utilisateur qu'une
-	 * ou plusieurs formes ont été sélectionnés.
-	 * 
-	 * @param graphics Zone de dessin dans laquelle le tout sera dessiné.
-	 */
-	public void selectionner(Graphics2D graphics) {
-		Color tmp = graphics.getColor();
-		graphics.setColor(Color.BLACK);
-		
-		graphics.setStroke(dashed);
-		graphics.drawRect(oX - 10, oY - 10, width + 20, height + 20);
-		
-		// Rectangles des extrémités
-				
-		graphics.fillRect(oX - 13, oY - 13, 7, 7);
-		graphics.fillRect(oX + width + 7, oY - 13, 7, 7);
-		graphics.fillRect(oX - 13, oY + height + 7, 7, 7);
-		graphics.fillRect(oX + width + 7, oY + height + 7, 7, 7);
-		
-		graphics.setColor(tmp); // Rétablissement de la couleur d'origine
-	}
-	
-	/**
-	 * Calcule selon les différentes positions du point d'arrivée.
-	 * Réagis à la touche SHIFT appuyé pour le cercle et le rectangle
-	 * en les définissant comme parfait.
-	 */
-	protected abstract void initialiserVariables();
-	
 	public abstract boolean contains(Point2D position);
 	
-	/**
-	 * @category accessor
-	 */
 	public boolean isSelected() {
 		return this.selected;
 	}

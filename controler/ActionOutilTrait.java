@@ -37,7 +37,6 @@ public class ActionOutilTrait extends AbstractAction {
 	 */
 	public void actionPerformed(ActionEvent e) {
 		model.setObjetCourant("trait");
-		model.deselectionnerToutesLesFormes();
 	}
 }
 

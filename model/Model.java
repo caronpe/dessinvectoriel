@@ -2,9 +2,11 @@ package model;
 
 import java.awt.Color;
 import java.awt.Point;
-import java.util.ListIterator;
 import java.util.Observable;
 //INTERNE
+
+
+import controler.DessinListener;
 
 /**
  * Partie Modèle du MVC.
@@ -73,7 +75,7 @@ public class Model extends Observable {
 		listeDessin.add(courant);
 		System.out.println("Forme ajoutée"); // DEBUG
 		
-		// Envoi de la notification aux vues
+		// Envoi de l'objet au vues
 		setChanged();
 		notifyObservers(courant);
 		setEnregistre(false);
@@ -96,45 +98,7 @@ public class Model extends Observable {
 		this.delLastForme();
 	}
 	
-	/**
-	 * Définie la forme comme non sélectionnée. Notifie aux vues
-	 * le changement pour qu'elle redessine les formes sans marqueur de sélection (pointillés).
-	 * 
-	 * @param formes Tableau des formes sélectionnées
-	 */
-	public void selectionner(Forme forme) {
-		forme.setSelected(true);
-		// Envoi de la notification aux vues
-		setChanged();
-		notifyObservers();
-	}
 	
-	/**
-	 * Définie les formes du tableau comme non sélectionnées. Notifie aux vues
-	 * le changement pour qu'elle redessine les formes sans marqueur de sélection (pointillés).
-	 * 
-	 * @param formes Tableau des formes sélectionnées
-	 */
-	public void selectionner(Forme[] formes) {
-		for (Forme f : formes) {
-			f.setSelected(true);
-		}
-		// Envoi de la notification aux vues
-		setChanged();
-		notifyObservers();
-	}
-	public void deselectionnerToutesLesFormes() {
-		ListIterator<Forme> it = this.listeDessin.iterator();
-		while (it.hasNext()) {
-			System.out.println("Dans la boucle de deselectionner");
-			it.next().setSelected(false);
-		}
-		System.out.println("Toutes les formes sont déselectionner"); // DEBUG
-		
-		// Envoi de la notification aux vues
-		setChanged();
-		notifyObservers();
-	}
 	
 	/**
 	 * Supprime la dernière forme de la liste de formes
@@ -153,7 +117,7 @@ public class Model extends Observable {
 	public void delAllFormes() {
 		this.listeDessin.removeAll();
 		
-		// Envoi de la notification aux vues
+		// Envoi de l'objet au vues
 		setChanged();
 		notifyObservers();
 		setEnregistre(true);
@@ -190,32 +154,10 @@ public class Model extends Observable {
 	}
 	
 	/**
-	 * Si une ou plusieurs formes sont sélectionnées, change leur couleur mais ne change pas 
-	 * la couleur courante du modèle.
-	 * 
 	 * @category accessor
 	 */
 	public void setColor (Color couleur) {
-		boolean ilYaDesFormesSelectionnes = false;
-		
-		ListIterator<Forme> it = this.listeDessin.iterator();
-		while (it.hasNext()) {
-			Forme f = it.next();
-			if ( f.isSelected() ) {
-				f.setCouleur(couleur);
-				ilYaDesFormesSelectionnes = true;
-			}
-		}
-		
-		if (ilYaDesFormesSelectionnes) {
-			// Envoi de l'objet au vues
-			setChanged();
-			notifyObservers();
-			setEnregistre(false);
-		} else {
-			this.couleurCourante = couleur;
-		}
-		
+		this.couleurCourante = couleur;
 	}
 	
 	/**

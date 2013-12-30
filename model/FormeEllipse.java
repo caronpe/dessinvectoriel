@@ -1,9 +1,7 @@
 package model;
 
 import java.awt.Color;
-import java.awt.Graphics2D;
 import java.awt.Point;
-import java.awt.Shape;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
@@ -19,6 +17,7 @@ import java.io.Serializable;
  * @version 0.2
  */
 public class FormeEllipse extends Forme implements Serializable {
+	private int oX, oY, aX, aY, height, width;
 	
 	/**
 	 * Même constructeur que la classe abstraite Forme. 
@@ -34,7 +33,12 @@ public class FormeEllipse extends Forme implements Serializable {
 		this.forme = new Ellipse2D.Double(oX, oY, width, height);
 	}
 	
-	protected void initialiserVariables() {
+	/**
+	 * Calcule selon les différentes positions du point d'arrivée.
+	 * Réagis à la touche SHIFT appuyé pour le cercle et le rectangle
+	 * en les définissant comme parfait.
+	 */
+	private void initialiserVariables() {
 		// Calculs pour l'initialisation du référentiel
 		this.oX = (int) pointDebut.getX();
 		this.oY = (int) pointDebut.getY();
@@ -93,4 +97,6 @@ public class FormeEllipse extends Forme implements Serializable {
 		}
 		return false;
 	}
+
+	
 }
