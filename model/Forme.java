@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Shape;
+import java.awt.Stroke;
 import java.awt.geom.Point2D;
 import java.io.Serializable;
 
@@ -101,7 +102,8 @@ public abstract class Forme implements Serializable {
          * @param graphics Zone de dessin dans laquelle le tout sera dessiné.
          */
         public void selectionner(Graphics2D graphics) {
-                Color tmp = graphics.getColor();
+        		Stroke strokeTmp = graphics.getStroke();
+                Color colorTmp = graphics.getColor();
                 graphics.setColor(Color.BLACK);
                 
                 graphics.setStroke(dashed);
@@ -114,7 +116,9 @@ public abstract class Forme implements Serializable {
                 graphics.fillRect(oX - 13, oY + height + 7, 7, 7);
                 graphics.fillRect(oX + width + 7, oY + height + 7, 7, 7);
                 
-                graphics.setColor(tmp); // Rétablissement de la couleur d'origine
+                // Réinitialisation du graphics avec ses valeurs par défaut
+                graphics.setStroke(strokeTmp);
+                graphics.setColor(colorTmp); // Rétablissement de la couleur d'origine
         }
         
         /**
