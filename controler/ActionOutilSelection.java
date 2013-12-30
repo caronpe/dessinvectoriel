@@ -37,6 +37,7 @@ public class ActionOutilSelection extends AbstractAction {
 	 */
 	public void actionPerformed(ActionEvent e) {
 		model.setObjetCourant("selection");
+		model.deselectionnerToutesLesFormes();
 	}
 }
 
