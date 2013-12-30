@@ -82,12 +82,15 @@ public class DessinListener implements MouseListener, MouseMotionListener {
 				if ( f.contains((Point2D)e.getPoint())) {
 					System.out.println("trouvé + if (contains)");
 					draggingForme = f;
+					model.selectionner(draggingForme);
 					this.pointDebut = e.getPoint();
 					
-					// Vérifications interne 
+					// Vérifications interne
 					this.dragging = true;
 					trouve = true;
-				}
+				} else {
+					 model.deselectionnerToutesLesFormes();
+		          }
 			}
 		}
 	}

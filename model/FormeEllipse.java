@@ -17,7 +17,6 @@ import java.io.Serializable;
  * @version 0.2
  */
 public class FormeEllipse extends Forme implements Serializable {
-	private int oX, oY, aX, aY, height, width;
 	
 	/**
 	 * Même constructeur que la classe abstraite Forme. 
@@ -38,7 +37,7 @@ public class FormeEllipse extends Forme implements Serializable {
 	 * Réagis à la touche SHIFT appuyé pour le cercle et le rectangle
 	 * en les définissant comme parfait.
 	 */
-	private void initialiserVariables() {
+	protected void initialiserVariables() {
 		// Calculs pour l'initialisation du référentiel
 		this.oX = (int) pointDebut.getX();
 		this.oY = (int) pointDebut.getY();

@@ -58,22 +58,22 @@ public class MenuOutils extends JPanel {
 		selection.setFocusable(false);
 		
 		// Boutons : Couleurs
-		noir = new JButton(new ActionMenuCouleur(model, Color.BLACK));
+		noir = new JButton(new ActionOutilCouleur(model, Color.BLACK));
 		noir.setBackground(Color.BLACK);
 		noir.setPreferredSize(new Dimension(22,22));
 		noir.setFocusable(false);
 		
-		rouge= new JButton(new ActionMenuCouleur(model, Color.RED));
+		rouge= new JButton(new ActionOutilCouleur(model, Color.RED));
 		rouge.setBackground(Color.RED);
 		rouge.setPreferredSize(new Dimension(22,22));
 		rouge.setFocusable(false);
 		
-		bleu = new JButton(new ActionMenuCouleur(model, Color.BLUE));
+		bleu = new JButton(new ActionOutilCouleur(model, Color.BLUE));
 		bleu.setBackground(Color.BLUE);
 		bleu.setPreferredSize(new Dimension(22,22));
 		bleu.setFocusable(false);
 		
-		vert = new JButton(new ActionMenuCouleur(model, Color.GREEN));
+		vert = new JButton(new ActionOutilCouleur(model, Color.GREEN));
 		vert.setBackground(Color.GREEN);
 		vert.setPreferredSize(new Dimension(22,22));
 		vert.setFocusable(false);
