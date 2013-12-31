@@ -90,7 +90,7 @@ public class ActionMenuQuitter extends AbstractAction implements WindowListener 
 		
 		
 		if ( n == 0 ) { // Si "Enregistrer"
-			new ActionMenuEnregistrer(model).enregistrer();
+			new ActionMenuEnregistrerSous(model).enregistrer();
 		} else if ( n == 1 ) {
 			System.exit(0);
 		}

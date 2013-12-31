@@ -40,6 +40,7 @@ public class FenetrePrincipale extends JFrame implements Observer {
 		private JMenuItem nouveau;
 		private JMenuItem ouvrir;
 		private JMenuItem enregistrer;
+		private JMenuItem enregistrerSous;
 		private JMenuItem exitAction;
 		private JMenuItem copy;
 		private JMenuItem paste;
@@ -131,6 +132,7 @@ public class FenetrePrincipale extends JFrame implements Observer {
 		nouveau = new JMenuItem(new ActionMenuNouveau(model));
 		ouvrir = new JMenuItem(new ActionMenuOuvrir(model));
 		enregistrer = new JMenuItem(new ActionMenuEnregistrer(model));
+		enregistrerSous = new JMenuItem(new ActionMenuEnregistrerSous(model));
 		exitAction = new JMenuItem(new ActionMenuQuitter(model));
 		copy = new JMenuItem(new ActionMenuCopier());
 		paste = new JMenuItem(new ActionMenuCouper());
@@ -140,6 +142,7 @@ public class FenetrePrincipale extends JFrame implements Observer {
 		fileMenu.add(nouveau);
 		fileMenu.add(ouvrir);
 		fileMenu.add(enregistrer);
+		fileMenu.add(enregistrerSous);
 		fileMenu.add(exitAction);
 
 		// Menu : Édition

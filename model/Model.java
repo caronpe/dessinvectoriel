@@ -22,7 +22,8 @@ public class Model extends Observable {
 	// Types de modification d'un objet forme
 	private Color couleurCourante;
 	private String typeCourant, objetCourant;
-	private String extension;
+	// Enregistrement
+	private String adresseEnregistrement, extension;
 	private boolean travail_enregistre;
 	// Touches
 	private boolean keyShiftPressed,
@@ -43,6 +44,7 @@ public class Model extends Observable {
 		this.objetCourant = "trait";
 		this.setEnregistre(true);
 		this.extension = ".cth";
+		this.adresseEnregistrement = null;
 	}
 
 	/**
@@ -354,5 +356,24 @@ public class Model extends Observable {
 	 */
 	public Color getColor() {
 		return this.couleurCourante;
+	}
+	
+	/**
+	 * @category accessor
+	 * 
+	 * @param adresseEnregistrement Nouvelle adresse d'enregistrement
+	 * 
+	 */
+	public void setAdresseEnregistrement(String adresseEnregistrement) {
+		this.adresseEnregistrement = adresseEnregistrement;
+	}
+	
+	/**
+	 * @category accessor
+	 * 
+	 * @return L'adresse du précédent enregistrement
+	 */
+	public String getAdresseEnregistrement() {
+		return this.adresseEnregistrement;
 	}
 }

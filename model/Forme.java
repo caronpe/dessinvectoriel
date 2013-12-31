@@ -165,7 +165,6 @@ public abstract class Forme implements Serializable {
 	 */
 	public void setSelected(boolean selected) {
 		this.selected = selected;
-		System.out.println(this + " - sélection : " + selected);
 	}
 
 	/**
