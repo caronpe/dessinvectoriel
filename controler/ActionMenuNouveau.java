@@ -51,9 +51,10 @@ public class ActionMenuNouveau extends AbstractAction {
 		
 		if ( n == 0 ) { // Si "Enregistrer"
 			new ActionMenuEnregistrer(model).enregistrer();
+			nouveau();	
+		} else if (n == 1) {
+			nouveau();
 		}
-		
-		nouveau();		
 	}
 	
 	/**

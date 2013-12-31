@@ -23,10 +23,10 @@ import model.Model;
  * 
  * @version 0.2
  */
-public class ActionOuvrir extends AbstractAction {
+public class ActionMenuOuvrir extends AbstractAction {
 	private Model model;
 	
-	public ActionOuvrir(Model model) {
+	public ActionMenuOuvrir(Model model) {
 		this.model = model;
 		
 		// Values
@@ -57,8 +57,11 @@ public class ActionOuvrir extends AbstractAction {
 						
 			if ( n == 0 ) { // Si "Enregistrer"
 				new ActionMenuEnregistrer(model).enregistrer();
+				ouvrir();
+			} else if ( n == 1 ) {
+				ouvrir();
 			}
-			ouvrir();
+			
 		}
 	}
 	

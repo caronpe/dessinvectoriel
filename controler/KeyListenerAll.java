@@ -41,7 +41,7 @@ public class KeyListenerAll extends KeyAdapter {
 		
 		if (e.getKeyCode() == KeyEvent.VK_O && e.isControlDown()) {
 			System.out.println("Ctrl-O pressé !");
-			new ActionOuvrir(model).ouvrir();
+			new ActionMenuOuvrir(model).ouvrir();
 		}
 		
 		if (e.getKeyCode() == KeyEvent.VK_N && e.isControlDown()) {

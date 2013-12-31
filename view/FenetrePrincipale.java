@@ -129,7 +129,7 @@ public class FenetrePrincipale extends JFrame implements Observer {
 		
 		// Items
 		nouveau = new JMenuItem(new ActionMenuNouveau(model));
-		ouvrir = new JMenuItem(new ActionOuvrir(model));
+		ouvrir = new JMenuItem(new ActionMenuOuvrir(model));
 		enregistrer = new JMenuItem(new ActionMenuEnregistrer(model));
 		exitAction = new JMenuItem(new ActionMenuQuitter(model));
 		copy = new JMenuItem(new ActionMenuCopier());
