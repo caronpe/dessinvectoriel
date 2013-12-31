@@ -28,7 +28,7 @@ public class MenuOutils extends JPanel {
 	Model model;
 	// JButton
 		JButton selection, crayon, rectangle, cercle;
-		JButton	noir, rouge, bleu, vert;
+		JButton	noir, rouge, bleu, vert, autres;
 		
 	/**
 	 * Les boutons sont non focusable pour les keylistener fonctionnent
@@ -76,6 +76,15 @@ public class MenuOutils extends JPanel {
 		vert.setBackground(Color.GREEN);
 		vert.setPreferredSize(new Dimension(22,22));
 		vert.setFocusable(false);
+		
+		autres = new JButton("autres");
+		//autres.setAction(new ActionAutresCouleur();
+		autres.setPreferredSize(new Dimension(22,22));
+		autres.setFocusable(false);
+		
+		
+		
+		
 		
 		
 		// Ajouts boutons outils
