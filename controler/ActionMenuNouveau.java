@@ -1,11 +1,10 @@
 package controler;
 
 import java.awt.event.ActionEvent;
-
 import javax.swing.AbstractAction;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-
+// INTERNE
 import model.Model;
 
 /**
@@ -17,7 +16,7 @@ import model.Model;
  * @author Fabien Huitelec
  * @author Pierre-Édouard Caron
  * 
- * @version 0.1
+ * @version 0.2
  */
 public class ActionMenuNouveau extends AbstractAction {
 	private Model model;
@@ -35,7 +34,7 @@ public class ActionMenuNouveau extends AbstractAction {
 	
 	/**
 	 * Ouvre une fenêtre de dialogue si l'utilisateur n'a pas enregistré
-	 * Puis, peu importe l'action de l'utilisateur, crée un nouveau fichier.
+	 * Puis, sauf si l'utilisateur annule, crée un nouveau fichier.
 	 */
 	public void nouveau_non_enregistre() {
 		// DialogBox
@@ -49,10 +48,10 @@ public class ActionMenuNouveau extends AbstractAction {
 				options,
 				options[0]);
 		
-		if ( n == 0 ) { // Si "Enregistrer"
-			new ActionMenuEnregistrer(model).enregistrer();
+		if ( n == 0 ) { // Si Enregistrer
+			new ActionMenuEnregistrerSous(model).enregistrerSous();
 			nouveau();	
-		} else if (n == 1) {
+		} else if (n == 1) { // Si Ne pas enregistrer
 			nouveau();
 		}
 	}
@@ -67,7 +66,6 @@ public class ActionMenuNouveau extends AbstractAction {
 		} else {
 			nouveau_non_enregistre();
 		}
-		
 	}
 	
 	/**

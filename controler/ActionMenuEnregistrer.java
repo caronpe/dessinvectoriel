@@ -1,21 +1,12 @@
 package controler;
 
-import java.awt.FileDialog;
 import java.awt.event.ActionEvent;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.ObjectOutputStream;
 import javax.swing.AbstractAction;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.filechooser.FileNameExtensionFilter;
 //INTERNE
 import model.Model;
-import ressources.*;
 
 /**
- * Listener pour le menu Enregistrer. Est appelé lorsqu'on appuie sur le bouton enregistrer mais aussi
- * lorsque l'on ferme la fenêtre.
+ * Listener pour le menu Enregistrer. Est appelé lorsqu'on appuie sur le bouton enregistrer.
  * 
  * 
  * @author Alexandre Thorez
@@ -28,8 +19,6 @@ public class ActionMenuEnregistrer extends AbstractAction {
 	private Model model;
        
 	/**
-	 * Récupère l'extension de fichier définie dans le modèle.
-	 * 
 	 * @param model Modèle du MVC
 	 */
 	public ActionMenuEnregistrer(Model model) {
@@ -41,25 +30,19 @@ public class ActionMenuEnregistrer extends AbstractAction {
 	}
 	
 	/**
-	 * Si l'adresse du fichier existe dans le modèle, il ne fait qu'enregistrer,
-	 * autrement il fait appel à la méthode d'enregistrement de ActionMenuEnregistrerSous.
+	 * Lorsque l'utilisateur clique sur le bouton "Enregistrer" du menu "Fichier".
+	 * Vérifie si une adresse est présente dans le modèle. Si c'est le cas, il enregistre le flux
+	 * sans intervention de l'utilisateur. Dans le cas contraire, 
+	 * il appelle la fonction enregistrer sous de ActionMenuEnregistrerSous.
 	 * 
-	 * @see controler/ActionMenuEnregisterSous#enregistrer
-	 * 
+	 * @see controler.ActionMenuEnregistrerSous#enregistrerSous
 	 */
-	public void enregistrer() {
+	public void actionPerformed(ActionEvent e) {
 		if (model.getAdresseEnregistrement() == null) {
-			new ActionMenuEnregistrerSous(model).enregistrer();
+			new ActionMenuEnregistrerSous(model).enregistrerSous();
 		} else {
 			new ActionMenuEnregistrerSous(model).fluxEnregistrement(model.getAdresseEnregistrement());
 		}
-	}
-	
-	/**
-	 * Lorsque l'utilisateur clique sur le bouton "Enregistrer" du menu "Fichier"
-	 */
-	public void actionPerformed(ActionEvent e) {
-		enregistrer();
 	}
 }
 

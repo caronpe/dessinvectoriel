@@ -13,14 +13,15 @@ import model.*;
  * @author Fabien Huitelec
  * @author Pierre-Édouard Caron
  * 
- * @version 0.1
+ * @version 0.2
  */
 public class ActionOutilSelection extends AbstractAction {
 	private Model model;
 	
 	/**
 	 * Ne comporte pas de nom, autrement
-	 * l'affichage ne s'effectuerait pas correctement
+	 * l'affichage ne s'effectuerait pas correctement.
+	 * 
 	 * @param model Modèle du MVC
 	 */
 	public ActionOutilSelection(Model model) {
@@ -32,8 +33,7 @@ public class ActionOutilSelection extends AbstractAction {
 	}
 
 	/**
-	 * Sélectionne l'outil selection dans le modèle
-	 * 
+	 * Sélectionne l'outil selection dans le modèle.
 	 */
 	public void actionPerformed(ActionEvent e) {
 		model.setObjetCourant("selection");

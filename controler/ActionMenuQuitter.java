@@ -16,7 +16,7 @@ import model.*;
  * @author Fabien Huitelec
  * @author Pierre-Édouard Caron
  * 
- * @version 0.1
+ * @version 0.2
  */
 public class ActionMenuQuitter extends AbstractAction implements WindowListener {
 	private Model model;
@@ -60,7 +60,6 @@ public class ActionMenuQuitter extends AbstractAction implements WindowListener 
 	
 	/**
 	 * Si l'utilisateur a enregistré. Affiche une fenêtre de dialogue.
-	 * 
 	 */
 	private void quitter_enregistre() {
 		Object[] options = {"Quitter", "Annuler"};
@@ -88,9 +87,8 @@ public class ActionMenuQuitter extends AbstractAction implements WindowListener 
 				options,
 				options[0]);
 		
-		
 		if ( n == 0 ) { // Si "Enregistrer"
-			new ActionMenuEnregistrerSous(model).enregistrer();
+			new ActionMenuEnregistrerSous(model).enregistrerSous();
 		} else if ( n == 1 ) {
 			System.exit(0);
 		}

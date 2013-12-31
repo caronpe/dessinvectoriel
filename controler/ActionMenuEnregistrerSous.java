@@ -1,22 +1,18 @@
 package controler;
 
-import java.awt.FileDialog;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.filechooser.FileNameExtensionFilter;
 //INTERNE
 import model.Model;
 import ressources.*;
 
 /**
- * Listener pour le menu Enregistrer. Est appelé lorsqu'on appuie sur le bouton enregistrer mais aussi
- * lorsque l'on ferme la fenêtre.
- * 
+ * Listener pour le menu Enregistrer sous. Est appelé lorsqu'on appuie sur le bouton enregistrer sous mais aussi
+ * lorsque l'on ferme la fenêtre et lorsque l'on clique sur le bouton enregistrer.
  * 
  * @author Alexandre Thorez
  * @author Fabien Huitelec
@@ -28,10 +24,7 @@ public class ActionMenuEnregistrerSous extends AbstractAction {
 	private Model model;
 	/** * L'extension est sous la forme ".extension" */
 	private String extension;
-	// FileChooser
-		private JFileChooser chooser;
-		private FileNameExtensionFilter filter;
-       
+
 	/**
 	 * Récupère l'extension de fichier définie dans le modèle.
 	 * 
@@ -48,17 +41,18 @@ public class ActionMenuEnregistrerSous extends AbstractAction {
 	
 	/**
 	 * Permets de donner un nom au fichier dans le TextField et à choisir ~ comme répertoire par défaut
-	 * Ne fonctionne pas sous Windows 8 (voir sous toute version de windows)
-	 * 
+	 * Ne fonctionne pas sous Windows 8.1 (voir sous toute version de windows)
 	 */
-	public void enregistrer() {
-		// FileChooser
+	public void enregistrerSous() {
+		// Fichier
 			String adresse_du_fichier = "Nom du fichier" + extension;
-			File file = (new File(adresse_du_fichier));
-			System.out.println("Enregistré : " + file.getAbsolutePath()); // DEBUG
+			File file = new File(adresse_du_fichier);
+		
+		// FileChooser
 			JFileChooser filechoose = new JFileChooserOverwrite(new File(adresse_du_fichier));
-			filechoose.setSelectedFile(new File(adresse_du_fichier));
-			String approve = new String("Enregistrer"); // Le bouton d'enregistrement aura pour étiquette "Enregistrer"
+			filechoose.setSelectedFile(file);
+			String approve = new String("Enregistrer"); // Étiquette : "Enregistrer"
+			
 		// Extension
 			ExtensionFileFilter filter = new ExtensionFileFilter("Fichiers .CTH", "cth");
 		    filechoose.setFileFilter(filter);
@@ -81,28 +75,30 @@ public class ActionMenuEnregistrerSous extends AbstractAction {
 	
 	/**
 	 * Méthode gérant le processus d'enregistrement par des flux
-	 * @param nom_du_fichier Adresse du fichier comprenant son nom complet
+	 * @param adresse_du_fichier Adresse du fichier comprenant son nom complet
 	 */
-	public void fluxEnregistrement(String nom_du_fichier) {
+	public void fluxEnregistrement(String adresse_du_fichier) {
+		System.out.println("Enregistré : " + adresse_du_fichier); // DEBUG
+		
 		// Initialisation avant enregistrement
 		model.setEnregistre(true); // On marque dans le modèle que le fichier est enregistré
 		model.deselectionnerToutesLesFormes();
 		
 		try {
-			FileOutputStream fichier = new FileOutputStream(nom_du_fichier);
-			ObjectOutputStream oos = new ObjectOutputStream(fichier);
-			oos.writeObject(model.getListeDessin());
-			oos.flush();
-			oos.close();
+			FileOutputStream fichier = new FileOutputStream(adresse_du_fichier);
+			ObjectOutputStream output = new ObjectOutputStream(fichier);
+			output.writeObject(model.getListeDessin());
+			output.flush();
+			output.close();
 		} catch (java.io.IOException e) {
 			e.printStackTrace();
 		}
 	}
 	
 	/**
-	 * Lorsque l'utilisateur clique sur le bouton "Enregistrer" du menu "Fichier"
+	 * Lorsque l'utilisateur clique sur le bouton "Enregistrer" du menu "Fichier".
 	 */
 	public void actionPerformed(ActionEvent e) {
-		enregistrer();
+		enregistrerSous();
 	}
 }

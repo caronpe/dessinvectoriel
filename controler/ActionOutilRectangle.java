@@ -20,7 +20,8 @@ public class ActionOutilRectangle extends AbstractAction {
 	
 	/**
 	 * Ne comporte pas de nom, autrement
-	 * l'affichage ne s'effectuerait pas correctement
+	 * l'affichage ne s'effectuerait pas correctement.
+	 * 
 	 * @param model Modèle du MVC
 	 */
 	public ActionOutilRectangle(Model model) {
@@ -40,4 +41,3 @@ public class ActionOutilRectangle extends AbstractAction {
 		model.deselectionnerToutesLesFormes();
 	}
 }
-

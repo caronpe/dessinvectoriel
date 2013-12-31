@@ -5,8 +5,6 @@ import java.awt.Point;
 import java.util.ListIterator;
 import java.util.Observable;
 
-//INTERNE
-
 /**
  * Partie Modèle du MVC. Gère l'ajout des formes (temporaires ou non) et tous
  * les outils qui peuvent être selectionnées par l'utilisateur à un moment t.
@@ -30,11 +28,12 @@ public class Model extends Observable {
 					keyControlPressed;
 
 	/**
-	 * Couleur : noire Objet : droite Type : plein Extension : .cth
+	 * Couleur : noire,
+	 * Objet : droite,
+	 * Type : plein Extension : .cth.
 	 * 
 	 * Indique qu'il n'y a pas besoin d'enregistrer lorsque le dessin est vide
 	 * (au démarrage ou lorsqu'on ouvre un nouveau fichier)
-	 * 
 	 */
 	public Model() {
 		super();

@@ -1,17 +1,12 @@
 package view;
 
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
-import java.util.Iterator;
 import java.util.ListIterator;
-
 import javax.swing.JPanel;
-
+//INTERNE
 import model.Forme;
-// INTERNE
 import model.Model;
 
 /**

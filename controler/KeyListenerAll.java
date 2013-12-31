@@ -2,10 +2,9 @@ package controler;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-
+//INTERNE
 import model.Model;
-// INTERNE
+
 
 /**
  * Contient tous les listeners concernant le clavier.
@@ -30,25 +29,16 @@ public class KeyListenerAll extends KeyAdapter {
 	 */
 	public void keyPressed(KeyEvent e) {
 		// Fonctions
-		if (e.getKeyCode() == KeyEvent.VK_SHIFT) {
-			model.setShiftPressed(true);
-			System.out.println("Shift appuyé");
-		}
+		if (e.getKeyCode() == KeyEvent.VK_SHIFT) model.setShiftPressed(true);
 		
-		if (e.getKeyCode() == KeyEvent.VK_CONTROL) {
-			model.setControlPressed(true);
-			System.out.println("Control appuyé");
-		}
+		if (e.getKeyCode() == KeyEvent.VK_CONTROL) model.setControlPressed(true);
 		
-		if (e.getKeyCode() == KeyEvent.VK_DELETE) {
-			model.supprimerFormes();
-		}
-				
+		if (e.getKeyCode() == KeyEvent.VK_DELETE) model.supprimerFormes();
 		
 		// Raccourcis
 		if (e.getKeyCode() == KeyEvent.VK_S && e.isControlDown()) {
 			System.out.println("Ctrl-S pressé !");
-			new ActionMenuEnregistrer(model).enregistrer();
+			new ActionMenuEnregistrerSous(model).enregistrerSous();
 		}
 		
 		if (e.getKeyCode() == KeyEvent.VK_O && e.isControlDown()) {
@@ -57,7 +47,7 @@ public class KeyListenerAll extends KeyAdapter {
 		}
 		
 		if (e.getKeyCode() == KeyEvent.VK_N && e.isControlDown()) {
-			System.out.println("Ctrl-O pressé !");
+			System.out.println("Ctrl-N pressé !");
 			if (model.getEnregistre()) {
 				new ActionMenuNouveau(model).nouveau();
 			} else {
@@ -73,12 +63,10 @@ public class KeyListenerAll extends KeyAdapter {
 	public void keyReleased(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_SHIFT) {
 			model.setShiftPressed(false);
-			System.out.println("Shift relâché");
 		}
 		
 		if (e.getKeyCode() == KeyEvent.VK_CONTROL) {
 			model.setControlPressed(false);
-			System.out.println("Controle relâché");
 		}
 	}
 	

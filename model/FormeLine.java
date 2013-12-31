@@ -126,10 +126,10 @@ public class FormeLine extends Forme implements Serializable {
 		graphics.setColor(Color.BLACK);
 
 		// Rectangles des extrémités
-
 		graphics.fillRect(oX - 4, oY - 4, 8, 8);
 		graphics.fillRect(aX - 4, aY - 4, 8, 8);
-		graphics.draw(referentielPosition); // DEBUG
-		graphics.setColor(tmp); // Rétablissement de la couleur d'origine
+		
+		// Rétablissement de la couleur d'origine
+		graphics.setColor(tmp);
 	}
 }

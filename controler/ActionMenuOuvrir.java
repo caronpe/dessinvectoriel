@@ -55,10 +55,10 @@ public class ActionMenuOuvrir extends AbstractAction {
 					null, 
 					options, options[0]);
 						
-			if ( n == 0 ) { // Si "Enregistrer"
-				new ActionMenuEnregistrer(model).enregistrer();
+			if ( n == 0 ) { // Si Enregistrer
+				new ActionMenuEnregistrerSous(model).enregistrerSous();
 				ouvrir();
-			} else if ( n == 1 ) {
+			} else if ( n == 1 ) { // Si Ne pas enregistrer
 				ouvrir();
 			}
 			
@@ -67,21 +67,24 @@ public class ActionMenuOuvrir extends AbstractAction {
 	
 	/**
 	 * Gère la fenêtre d'ouverture.
-	 * 
 	 */
 	public void ouvrir() {
 		// FileChooser
 		JFileChooser filechoose = new JFileChooser();
+		
 		// Permets de donner un nom au fichier dans le TextField et à 
 		String extension = model.getExtension(), nom_du_fichier = ""; // choisit ~ comme répertoire par défaut
 		filechoose.setSelectedFile(new File(nom_du_fichier));
+		
 		// Le répertoire source du JFileChooser est le répertoire d’où est lancé notre programme
 		String approve = new String("Ouvrir");
+		
 		// Le bouton pour valider l’enregistrement portera la mention OUVRIR
 		String monFichier = ""; // On ne sait pas pour l’instant quel sera le fichier à ouvrir
 		int resultatOuvrir = filechoose.showDialog(filechoose, approve); // Pour afficher le JFileChooser
 		
-		if(resultatOuvrir == JFileChooser.APPROVE_OPTION) { // Si "Ouvrir"
+		// Si Ouvrir
+		if(resultatOuvrir == JFileChooser.APPROVE_OPTION) { 
 			monFichier = filechoose.getSelectedFile().toString(); // Récupérer le nom du fichier qu’il a spécifié
 			this.fluxOuverture(monFichier);
 		}
@@ -96,13 +99,12 @@ public class ActionMenuOuvrir extends AbstractAction {
 	public void fluxOuverture(String monFichier) {
 		try {
 			FileInputStream fichier = new FileInputStream(monFichier);
-			ObjectInputStream ois = new ObjectInputStream(fichier);
-			ListeDessin listeDessin = (ListeDessin) ois.readObject();
+			ObjectInputStream input = new ObjectInputStream(fichier);
+			ListeDessin listeDessin = (ListeDessin) input.readObject();
 			model.setListeDessin(listeDessin);
-		} catch (java.io.IOException e) {
+		} catch (Exception e) {
+			System.err.println("Problème lors de l'ouverture du fichier.");
 			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-				
 		}
 	}
 }

@@ -7,13 +7,13 @@ import javax.swing.ImageIcon;
 import model.*;
 
 /**
- * Listener pour le bouton trait
+ * Listener pour le bouton trait.
  *  
  * @author Alexandre Thorez
  * @author Fabien Huitelec
  * @author Pierre-Édouard Caron
  * 
- * @version 0.1
+ * @version 0.2
  */
 public class ActionOutilTrait extends AbstractAction {
 	private Model model;
@@ -32,12 +32,10 @@ public class ActionOutilTrait extends AbstractAction {
 	}
 
 	/**
-	 * Sélectionne l'outil trait dans le modèle
-	 * 
+	 * Sélectionne l'outil trait dans le modèle.
 	 */
 	public void actionPerformed(ActionEvent e) {
 		model.setObjetCourant("trait");
 		model.deselectionnerToutesLesFormes();
 	}
 }
-

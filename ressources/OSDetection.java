@@ -1,11 +1,9 @@
 package ressources;
 
-import java.awt.Color;
-
 /**
  * Partie Modèle du MVC
  * Fournit des utilitaires permettant de gérer la compatibilité
- * avec différents OS
+ * avec différents OS.
  * 
  * @author Alexandre Thorez
  * @author Fabien Huitelec
@@ -17,7 +15,8 @@ public class OSDetection {
 	private static final String OS = System.getProperty("os.name").toLowerCase();
 	
 	/**
-	 * Gère le dossier par défaut de l'utilisateur
+	 * Gère le dossier par défaut de l'utilisateur.
+	 * 
 	 * @return La variable définissant le dossier de l'utilisateur
 	 * @throws OSDefaultDirectoryNotFound Répertoire utilisateur non trouvé
 	 */

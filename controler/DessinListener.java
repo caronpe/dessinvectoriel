@@ -6,11 +6,10 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.Point2D;
 import java.util.ListIterator;
-
+//INTERNE
 import model.Forme;
 import model.Model;
 import view.ZoneDessin;
-// INTERNE
 
 /**
  * Contient les Listeners de la zone de dessin. 
