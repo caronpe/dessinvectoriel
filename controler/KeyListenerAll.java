@@ -46,6 +46,11 @@ public class KeyListenerAll extends KeyAdapter {
 			new ActionMenuOuvrir(model).ouvrir();
 		}
 		
+		if (e.getKeyCode() == KeyEvent.VK_Q && e.isControlDown()) {
+			System.out.println("Ctrl-Q pressé !");
+			new ActionMenuQuitter(model).quitter();
+		}
+		
 		if (e.getKeyCode() == KeyEvent.VK_N && e.isControlDown()) {
 			System.out.println("Ctrl-N pressé !");
 			if (model.getEnregistre()) {

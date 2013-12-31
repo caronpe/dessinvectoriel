@@ -29,7 +29,7 @@ public class Model extends Observable {
 
 	/**
 	 * Couleur : noire,
-	 * Objet : droite,
+	 * Objet : sélection,
 	 * Type : plein Extension : .cth.
 	 * 
 	 * Indique qu'il n'y a pas besoin d'enregistrer lorsque le dessin est vide
@@ -40,7 +40,7 @@ public class Model extends Observable {
 		this.listeDessin = new ListeDessin();
 		this.couleurCourante = Color.BLACK;
 		this.typeCourant = "plein";
-		this.objetCourant = "trait";
+		this.objetCourant = "selection";
 		this.setEnregistre(true);
 		this.extension = ".cth";
 		this.adresseEnregistrement = null;

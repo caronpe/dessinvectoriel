@@ -38,7 +38,7 @@ public class ActionMenuQuitter extends AbstractAction implements WindowListener 
 	 * @see #quitter_enregistre
 	 * 
 	 */
-	public void actionPerformed(ActionEvent e) {
+	public void quitter() {
 		if (model.getEnregistre()) {
 			quitter_enregistre();
 		} else {
@@ -48,14 +48,18 @@ public class ActionMenuQuitter extends AbstractAction implements WindowListener 
 	
 	/**
 	 * Vérifie si l'utilisateur a enregistré ou non puis quitte
+	 * lorsque l'utilisateur clique sur le bouton Quitter du menu Fichier
+	 */
+	public void actionPerformed(ActionEvent e) {
+		quitter();
+	}
+	
+	/**
+	 * Vérifie si l'utilisateur a enregistré ou non puis quitte
 	 * lorsque l'utilisateur clique sur la croix.
 	 */
 	public void windowClosing(WindowEvent arg0) {
-		if (model.getEnregistre()) {
-			quitter_enregistre();
-		} else {
-			quitter_non_enregistre();
-		}
+		quitter();
 	}
 	
 	/**

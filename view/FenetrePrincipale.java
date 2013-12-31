@@ -32,7 +32,7 @@ public class FenetrePrincipale extends JFrame implements Observer {
 		private MenuOutils outils; // Menu d'outils sur la gauche
 		private ZoneDessin zoneDessin; // Zone où le dessin s'effectuera.
 	// MVC
-		private Model model;	
+		private Model model;
 	// Menu
 		private JMenuBar menuBar;
 		private JMenu fileMenu;

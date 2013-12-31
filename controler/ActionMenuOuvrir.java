@@ -3,11 +3,18 @@ package controler;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.StreamCorruptedException;
+
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+
+
+
+
 //INTERNE
 import model.ListeDessin;
 import model.Model;
@@ -95,6 +102,7 @@ public class ActionMenuOuvrir extends AbstractAction {
 	 * de dessin du modèle.
 	 * 
 	 * @param monFichier Nom du fichier contenant l'adresse absolue du fichier.
+	 * @throws ClassNotFoundException 
 	 */
 	public void fluxOuverture(String monFichier) {
 		try {
@@ -102,9 +110,16 @@ public class ActionMenuOuvrir extends AbstractAction {
 			ObjectInputStream input = new ObjectInputStream(fichier);
 			ListeDessin listeDessin = (ListeDessin) input.readObject();
 			model.setListeDessin(listeDessin);
-		} catch (Exception e) {
-			System.err.println("Problème lors de l'ouverture du fichier.");
-			e.printStackTrace();
+		} catch (StreamCorruptedException e) {
+			System.err.println("Extension non correcte.");
+			Object[] options = {"OK"};
+			int n = JOptionPane.showOptionDialog(new JFrame(), "Extension du fichier non correcte.", "Extension", 
+					JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE, null, options, options[0]);
+		} catch (IOException | ClassNotFoundException e) {
+			System.err.println("Problème.");
+			Object[] options = {"OK"};
+			int n = JOptionPane.showOptionDialog(new JFrame(), "Problème lors de l'ouverture du fichier.", "Extension", 
+					JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE, null, options, options[0]);
 		}
 	}
 }
