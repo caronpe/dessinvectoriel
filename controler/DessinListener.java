@@ -78,8 +78,13 @@ public class DessinListener implements MouseListener, MouseMotionListener {
 				
 				// Une forme contient les coordonnées du clic
 				if ( f.contains((Point2D)e.getPoint())) {
-					// Sélection				
-					model.selectionner(f);
+					// Sélection
+					if (f.isSelected()) {
+						model.deselectionner(f);
+					} else {
+						model.selectionner(f);
+					}
+					
 					
 					// Définition du dragging ...
 					this.pointDebut = e.getPoint();

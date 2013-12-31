@@ -120,6 +120,14 @@ public class Model extends Observable {
 		notifyObservers();
 	}
 
+	public void deselectionner(Forme f) {
+		f.setSelected(false);
+		
+		// Envoi de la notification aux vues
+		setChanged();
+		notifyObservers();
+	}
+	
 	public void deselectionnerToutesLesFormes() {
 		ListIterator<Forme> it = this.listeDessin.iterator();
 		while (it.hasNext()) {

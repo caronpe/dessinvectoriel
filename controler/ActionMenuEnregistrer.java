@@ -84,6 +84,9 @@ public class ActionMenuEnregistrer extends AbstractAction {
 	 * @param nom_du_fichier Adresse du fichier comprenant son nom complet
 	 */
 	private void fluxEnregistrement(String nom_du_fichier) {
+		// Initialisation avant enregistrement
+		model.deselectionnerToutesLesFormes();
+		
 		try {
 			FileOutputStream fichier = new FileOutputStream(nom_du_fichier);
 			ObjectOutputStream oos = new ObjectOutputStream(fichier);
