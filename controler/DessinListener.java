@@ -66,7 +66,7 @@ public class DessinListener implements MouseListener, MouseMotionListener {
 		}
 		
 		// Si Sélection
-		if (model.getObjetCourant().equals("selection")) {
+		if (model.getObjetCourant().equals("selection")) {			
 			// Initialisation
 			boolean trouve = false;
 			ListIterator<Forme> it = model.getListeDessin().iterator();
@@ -116,7 +116,7 @@ public class DessinListener implements MouseListener, MouseMotionListener {
 				model.addTmpForme(this.pointDebut, e.getPoint(), false);
 			}
 		// Si Sélection
-		} else { 
+		} else {
 			// Si une forme est en train d'être déplacée
 			if ( this.dragging ) {
 				// ... Définition du dragging ...
@@ -140,15 +140,15 @@ public class DessinListener implements MouseListener, MouseMotionListener {
 	 * @param e Coordonnées de la souris au relâchement.
 	 */
 	public void mouseReleased(MouseEvent e) {
-		pointArrivee = e.getPoint();
+		this.pointArrivee = e.getPoint();
 		
 		// Si pas Sélection
 		if (!model.getObjetCourant().equals("selection")) {
 			// Si c'est une forme parfaite
 			if ( model.getShiftPressed() ) {
-				model.addForme(this.pointDebut, e.getPoint(), true);
+				model.addForme(this.pointDebut, this.pointArrivee, true);
 			} else {
-				model.addForme(this.pointDebut, e.getPoint(), false);
+				model.addForme(this.pointDebut, this.pointArrivee, false);
 			}
 		}
 		

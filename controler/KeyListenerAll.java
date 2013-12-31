@@ -29,6 +29,7 @@ public class KeyListenerAll extends KeyAdapter {
 	 * Modifie le modèle en fonction de la touche appuyée et gère les raccourcis.
 	 */
 	public void keyPressed(KeyEvent e) {
+		// Fonctions
 		if (e.getKeyCode() == KeyEvent.VK_SHIFT) {
 			model.setShiftPressed(true);
 			System.out.println("Shift appuyé");
@@ -38,7 +39,13 @@ public class KeyListenerAll extends KeyAdapter {
 			model.setControlPressed(true);
 			System.out.println("Control appuyé");
 		}
+		
+		if (e.getKeyCode() == KeyEvent.VK_DELETE) {
+			model.supprimerFormes();
+		}
 				
+		
+		// Raccourcis
 		if (e.getKeyCode() == KeyEvent.VK_S && e.isControlDown()) {
 			System.out.println("Ctrl-S pressé !");
 			new ActionMenuEnregistrer(model).enregistrer();

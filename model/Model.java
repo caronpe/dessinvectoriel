@@ -20,13 +20,13 @@ import java.util.Observable;
 public class Model extends Observable {
 	private ListeDessin listeDessin;
 	// Types de modification d'un objet forme
-		private Color couleurCourante;
-		private String typeCourant, objetCourant;
-		private String extension;
-		private boolean travail_enregistre;
-		// Touches
-		private boolean keyShiftPressed,
-						keyControlPressed;
+	private Color couleurCourante;
+	private String typeCourant, objetCourant;
+	private String extension;
+	private boolean travail_enregistre;
+	// Touches
+	private boolean keyShiftPressed,
+					keyControlPressed;
 
 	/**
 	 * Couleur : noire Objet : droite Type : plein Extension : .cth
@@ -101,7 +101,7 @@ public class Model extends Observable {
 	 */
 	public void addTmpForme(Point pointDebut, Point pointArrivee,
 			boolean parfait) {
-		addForme(pointDebut, pointArrivee, parfait);
+		this.addForme(pointDebut, pointArrivee, parfait);
 		this.delLastForme();
 	}
 
@@ -115,24 +115,6 @@ public class Model extends Observable {
 	 */
 	public void selectionner(Forme forme) {
 		forme.setSelected(true);
-		// Envoi de la notification aux vues
-		setChanged();
-		notifyObservers();
-	}
-
-	/**
-	 * Définie les formes du tableau comme non sélectionnées. Notifie aux vues
-	 * le changement pour qu'elle redessine les formes sans marqueur de
-	 * sélection (pointillés).
-	 * 
-	 * @param formes
-	 *            Tableau des formes sélectionnées
-	 */
-	public void selectionner(Forme[] formes) {
-		for (Forme f : formes) {
-			f.setSelected(true);
-		}
-		
 		// Envoi de la notification aux vues
 		setChanged();
 		notifyObservers();
@@ -216,6 +198,7 @@ public class Model extends Observable {
 	public void setColor(Color couleur) {
 		boolean ilYaDesFormesSelectionnes = false;
 
+		// Parcours de toutes les formes
 		ListIterator<Forme> it = this.listeDessin.iterator();
 		while (it.hasNext()) {
 			Forme f = it.next();
@@ -224,9 +207,10 @@ public class Model extends Observable {
 				ilYaDesFormesSelectionnes = true;
 			}
 		}
-
+		
+		// Définis le comportement du modèle
 		if (ilYaDesFormesSelectionnes) {
-			// Envoi de l'objet au vues
+			// Envoi de la notification aux vues
 			setChanged();
 			notifyObservers();
 			setEnregistre(false);
@@ -234,6 +218,31 @@ public class Model extends Observable {
 			this.couleurCourante = couleur;
 		}
 
+	}
+	
+	/**
+	 * Supprimes toutes les formes sélectionnées. Si aucune forme n'est sélectionné,
+	 * il n'y a aucune notifications aux vues.
+	 */
+	public void supprimerFormes() {
+		boolean ilYaDesFormesSelectionnes = false;
+		
+		// Parcours de toutes les formes
+		ListIterator<Forme> it = this.listeDessin.iterator();
+		while (it.hasNext()) {
+			Forme f = it.next();
+			if (f.isSelected()) {
+				it.remove();
+				ilYaDesFormesSelectionnes = true;
+			}
+		}
+		
+		if (ilYaDesFormesSelectionnes) {
+			// Envoi de la notification aux vues
+			setChanged();
+			notifyObservers();
+			setEnregistre(false);
+		}
 	}
 
 	/**

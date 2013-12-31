@@ -134,7 +134,6 @@ public abstract class Forme implements Serializable {
 		graphics.drawRect(oX - 10, oY - 10, width + 20, height + 20);
 
 		// Rectangles des extrémités
-
 		graphics.fillRect(oX - 13, oY - 13, 7, 7);
 		graphics.fillRect(oX + width + 7, oY - 13, 7, 7);
 		graphics.fillRect(oX - 13, oY + height + 7, 7, 7);
@@ -166,6 +165,7 @@ public abstract class Forme implements Serializable {
 	 */
 	public void setSelected(boolean selected) {
 		this.selected = selected;
+		System.out.println(this + " - sélection : " + selected);
 	}
 
 	/**
@@ -270,7 +270,6 @@ public abstract class Forme implements Serializable {
 	}
 
 	public String toString() {
-		return "Forme [deb=" + pointDebut + ", arr=" + pointArrivee + ", type="
-				+ type + ", forme=" + objet + ", couleur=" + couleur + "]";
+		return "Forme [deb : " + pointDebut + ", arr : " + pointArrivee + "]";
 	}
 }

@@ -32,6 +32,18 @@ public class ListeDessin implements Serializable {
 		this.listeDessin.add(forme);
 	}
 	
+	public Forme get(int index) {
+		return this.listeDessin.get(index);
+	}
+	
+	public void remove(Forme f) {
+		this.listeDessin.remove(f);
+	}
+	
+	public void remove(int i) {
+		this.listeDessin.remove(i);
+	}
+	
 	/**
 	 * Supprime la dernière forme de l'arrayList
 	 */
