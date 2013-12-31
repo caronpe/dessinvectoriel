@@ -23,7 +23,10 @@ public class Model extends Observable {
 		private Color couleurCourante;
 		private String typeCourant, objetCourant;
 		private String extension;
-		private boolean travail_enregistre, keyGpressed;
+		private boolean travail_enregistre;
+		// Touches
+		private boolean keyShiftPressed,
+						keyControlPressed;
 
 	/**
 	 * Couleur : noire Objet : droite Type : plein Extension : .cth
@@ -74,7 +77,6 @@ public class Model extends Observable {
 			break;
 		}
 		listeDessin.add(courant);
-		System.out.println("Forme ajoutée"); // DEBUG
 
 		// Envoi de la notification aux vues
 		setChanged();
@@ -108,8 +110,8 @@ public class Model extends Observable {
 	 * pour qu'elle redessine les formes sans marqueur de sélection
 	 * (pointillés).
 	 * 
-	 * @param formes
-	 *            Tableau des formes sélectionnées
+	 * @param forme
+	 *            Formes sélectionnée
 	 */
 	public void selectionner(Forme forme) {
 		forme.setSelected(true);
@@ -130,6 +132,7 @@ public class Model extends Observable {
 		for (Forme f : formes) {
 			f.setSelected(true);
 		}
+		
 		// Envoi de la notification aux vues
 		setChanged();
 		notifyObservers();
@@ -138,10 +141,8 @@ public class Model extends Observable {
 	public void deselectionnerToutesLesFormes() {
 		ListIterator<Forme> it = this.listeDessin.iterator();
 		while (it.hasNext()) {
-			System.out.println("Dans la boucle de deselectionner");
 			it.next().setSelected(false);
 		}
-		System.out.println("Toutes les formes sont déselectionner"); // DEBUG
 
 		// Envoi de la notification aux vues
 		setChanged();
@@ -287,11 +288,28 @@ public class Model extends Observable {
 	 * @category accessor
 	 */
 	public boolean getShiftPressed() {
-		return this.keyGpressed;
+		return this.keyShiftPressed;
+	}
+	
+	/**
+	 * @category accessor
+	 */
+	public void setShiftPressed(boolean keyControlPressed) {
+		this.keyShiftPressed = keyControlPressed;
+	}
+	
+	/**
+	 * @category accessor
+	 */
+	public boolean getControlPressed() {
+		return this.keyControlPressed;
 	}
 
-	public void setGPressed(boolean keyGpressed) {
-		this.keyGpressed = keyGpressed;
+	/**
+	 * @category accessor
+	 */
+	public void setControlPressed(boolean keyShiftPressed) {
+		this.keyControlPressed = keyShiftPressed;
 	}
 
 	/**

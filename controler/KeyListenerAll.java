@@ -30,8 +30,13 @@ public class KeyListenerAll extends KeyAdapter {
 	 */
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_SHIFT) {
-			model.setGPressed(true);
+			model.setShiftPressed(true);
 			System.out.println("Shift appuyé");
+		}
+		
+		if (e.getKeyCode() == KeyEvent.VK_CONTROL) {
+			model.setControlPressed(true);
+			System.out.println("Control appuyé");
 		}
 				
 		if (e.getKeyCode() == KeyEvent.VK_S && e.isControlDown()) {
@@ -60,8 +65,13 @@ public class KeyListenerAll extends KeyAdapter {
 	 */
 	public void keyReleased(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_SHIFT) {
-			model.setGPressed(false);
+			model.setShiftPressed(false);
 			System.out.println("Shift relâché");
+		}
+		
+		if (e.getKeyCode() == KeyEvent.VK_CONTROL) {
+			model.setControlPressed(false);
+			System.out.println("Controle relâché");
 		}
 	}
 	

@@ -164,7 +164,6 @@ public class FenetrePrincipale extends JFrame implements Observer {
 	 */
 	public void update(Observable arg0, Object arg1) {
 		if (arg1 != null ) { // S'il y a un argument lors de la notification du modèle
-			System.out.println(arg1.toString()); // DEBUG
 			Forme courant = null;
 			
 			if (arg1 instanceof Forme) { // Si l'argument est une forme, on le caste
@@ -178,7 +177,6 @@ public class FenetrePrincipale extends JFrame implements Observer {
 		} else { // S'il n'y a pas d'argument
 			zoneDessin.setCourante(null);
 		}
-		System.out.println("update");
 		zoneDessin.repaint();
 	}
 }

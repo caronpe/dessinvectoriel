@@ -55,7 +55,7 @@ public class ActionMenuEnregistrer extends AbstractAction {
 		// FileChooser
 			String nom_du_fichier = "Nom du fichier" + extension;
 			File file = (new File(nom_du_fichier));
-			System.out.println(file.getAbsolutePath());
+			System.out.println("Enregistré : " + file.getAbsolutePath()); // DEBUG
 			JFileChooser filechoose = new JFileChooserOverwrite(new File(nom_du_fichier));
 			filechoose.setSelectedFile(new File(nom_du_fichier));
 			String approve = new String("Enregistrer"); // Le bouton d'enregistrement aura pour étiquette "Enregistrer"

@@ -29,14 +29,8 @@ import view.ZoneDessin;
  */
 public class DessinListener implements MouseListener, MouseMotionListener {
 	private Point pointDebut, pointArrivee;
-	/**
-	 * Lorsqu'une forme est déplacée, on la déplace dans cette variable.
-	 */
-	Forme draggingForme;
-	/**
-	 * Lorsque une forme est sélectionnée et déplacée, ce booléen est à vrai.
-	 */
-	boolean dragging;
+	Forme draggingForme; /**  Lorsqu'une forme est déplacée, on la déplace dans cette variable. */ 
+	boolean dragging; /** Lorsque une forme est sélectionnée et déplacée, ce booléen est à vrai. */
 	private Model model;
 	
 	/**
@@ -63,34 +57,38 @@ public class DessinListener implements MouseListener, MouseMotionListener {
 	 * @param e Coordonnées de la souris au clic.
 	 */
 	public void mousePressed(MouseEvent e) {
+		// Servira aux outils de création
 		this.pointDebut = new Point(e.getPoint());
-		System.out.println(this.pointDebut); // DEBUG	
 		
-		if (model.getObjetCourant().equals("selection")) { // Si l'outil est "sélection"
-				
+		// Vérification de la touche contrôle
+		if ( !model.getControlPressed() ) {
+			model.deselectionnerToutesLesFormes();
+		}
+		
+		// Si Sélection
+		if (model.getObjetCourant().equals("selection")) {
+			// Initialisation
 			boolean trouve = false;
 			ListIterator<Forme> it = model.getListeDessin().iterator();
+			while (it.hasNext()) it.next(); // On déroule la liste pour commencer par la fin
 			
-			while (it.hasNext()) { // On déroule la liste pour commencer par la fin
-				it.next();
-			}
-			
-			while (it.hasPrevious() && !trouve) { /* 	On parcours la liste de dessin à la recherche d'une 
-														forme correspondante si elle n'est pas déjà trouvée */
-				System.out.println("DessinListener.mousePressed#while(it.hasPrevious)");
+			// Parcours de la liste à la recherche d'une forme correspondante si elle n'est pas déjà trouvée
+			while (it.hasPrevious() && !trouve) {
 				Forme f = it.previous();
+				
+				// Une forme contient les coordonnées du clic
 				if ( f.contains((Point2D)e.getPoint())) {
-					System.out.println("trouvé + if (contains)");
-					draggingForme = f;
-					model.selectionner(draggingForme);
-					this.pointDebut = e.getPoint();
+					// Sélection				
+					model.selectionner(f);
 					
-					// Vérifications interne
+					// Définition du dragging ...
+					this.pointDebut = e.getPoint();
+					this.draggingForme = f;
 					this.dragging = true;
+					
+					// Fin de boucle
 					trouve = true;
-				} else {
-					 model.deselectionnerToutesLesFormes();
-		          }
+				}
 			}
 		}
 	}
@@ -100,25 +98,34 @@ public class DessinListener implements MouseListener, MouseMotionListener {
 	 * dessine une forme temporaire en récupérant les données du modèle,
 	 * le point d'origine (lorsque la souris est cliquée)  et le point final (l'actuel).
 	 * Quand l'outil est sélection, gère le déplacement de l'objet :
-	 * Appele la modification de forme du modèle avec la draggingForme courante.
+	 * Appelle la modification de forme du modèle avec la draggingForme courante.
 	 * 
 	 * @category mouseListeners
 	 * 
 	 * @param e Coordonnées de la souris pendant le déplacement.
 	 */
 	public void mouseDragged(MouseEvent e) {
-		if (!model.getObjetCourant().equals("selection")) { // Si l'outil n'est pas "sélection"
+		// Si pas Sélection
+		if (!model.getObjetCourant().equals("selection")) { 
 			pointArrivee = e.getPoint();
-			if ( model.getShiftPressed() ) { // Si c'est une forme parfaite
+			
+			// Si c'est une forme parfaite
+			if ( model.getShiftPressed() ) {
 				model.addTmpForme(this.pointDebut, e.getPoint(), true);
 			} else {
 				model.addTmpForme(this.pointDebut, e.getPoint(), false);
 			}
-			System.out.println(this.pointDebut);
-		} else { // Si l'outil est "sélection"
-			if ( this.dragging ) { // Si une forme est en train d'être déplacée
+		// Si Sélection
+		} else { 
+			// Si une forme est en train d'être déplacée
+			if ( this.dragging ) {
+				// ... Définition du dragging ...
 				this.pointArrivee = e.getPoint();
+				
+				// Envoi au model
 				model.formeModifiee(this.draggingForme, this.pointDebut, this.pointArrivee);
+				
+				// ... Redéfinition du dragging
 				this.pointDebut = this.pointArrivee;
 			}
 		}
@@ -135,14 +142,17 @@ public class DessinListener implements MouseListener, MouseMotionListener {
 	public void mouseReleased(MouseEvent e) {
 		pointArrivee = e.getPoint();
 		
-		if (!model.getObjetCourant().equals("selection")) { // Si l'outil n'est pas "sélection"
-			if ( model.getShiftPressed() ) { // Forme parfaite
+		// Si pas Sélection
+		if (!model.getObjetCourant().equals("selection")) {
+			// Si c'est une forme parfaite
+			if ( model.getShiftPressed() ) {
 				model.addForme(this.pointDebut, e.getPoint(), true);
-			} else if ( !model.getObjetCourant().equals("selection") ) {
+			} else {
 				model.addForme(this.pointDebut, e.getPoint(), false);
 			}
 		}
-				
+		
+		// Réinitialisation du dragging
 		this.dragging = false;
 		this.draggingForme = null;
 	}
