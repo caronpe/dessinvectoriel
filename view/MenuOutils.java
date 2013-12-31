@@ -78,7 +78,7 @@ public class MenuOutils extends JPanel {
 		vert.setFocusable(false);
 		
 		autres = new JButton("autres");
-		//autres.setAction(new ActionAutresCouleur();
+		autres.setAction(new ActionAutresCouleur(model));
 		autres.setPreferredSize(new Dimension(22,22));
 		autres.setFocusable(false);
 		
@@ -97,6 +97,7 @@ public class MenuOutils extends JPanel {
 		this.add(rouge);
 		this.add(bleu);
 		this.add(vert);
+		this.add(autres);
 	}
 	
 	/**
