@@ -218,15 +218,14 @@ public class Model extends Observable {
 		}
 		
 		// Définis le comportement du modèle
-		if (ilYaDesFormesSelectionnes) {
-			// Envoi de la notification aux vues
-			setChanged();
-			notifyObservers();
-			setEnregistre(false);
-		} else {
+		if (!ilYaDesFormesSelectionnes) {
 			this.couleurCourante = couleur;
 		}
-
+		
+		// Envoi de la notification aux vues
+		setChanged();
+		notifyObservers();
+		setEnregistre(false);
 	}
 	
 	/**
