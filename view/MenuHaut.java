@@ -25,7 +25,6 @@ public class MenuHaut extends JMenuBar {
 	private JMenuItem copy;
 	private JMenuItem paste;
 	
-	private Model model;
 	
 	public MenuHaut(Model model){
 		// Création Barre de menu

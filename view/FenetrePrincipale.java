@@ -4,10 +4,13 @@ import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.HeadlessException;
+import java.awt.ScrollPane;
 import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import model.Forme;
 //INTERNE
@@ -31,7 +34,7 @@ public class FenetrePrincipale extends JFrame implements Observer {
 		private Container container; // Container principal de la fenêtre
 		private MenuOutils outils; // Menu d'outils sur la gauche
 		private ZoneDessin zoneDessin; // Zone où le dessin s'effectuera.
-		private CalquePanel zoneCalque; // zone ou les calques apparaitrons
+		private MenuDroit menuDroit; // zone ou les calques apparaitrons
 	// MVC
 		private Model model;
 
@@ -81,6 +84,8 @@ public class FenetrePrincipale extends JFrame implements Observer {
 		
 		// Ajout des panels au container
 		outils = new MenuOutils(model);
+		//ajoute un panel que l'on pourra scroller
+		menuDroit = new MenuDroit(model);
 		zoneDessin = new ZoneDessin(model);
 		zoneDessin.addMouseListener(dessinListener);
 		zoneDessin.addMouseMotionListener(dessinListener);
@@ -88,6 +93,8 @@ public class FenetrePrincipale extends JFrame implements Observer {
 		zoneDessin.addKeyListener(keyListener);
 		container.add(outils, BorderLayout.WEST);
 		container.add(zoneDessin , BorderLayout.CENTER);
+		container.add(menuDroit , BorderLayout.EAST);
+		
 
 		// Configuration de la JFrame
 		this.setFocusable(true);
