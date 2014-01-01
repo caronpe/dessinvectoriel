@@ -1,12 +1,11 @@
 package model;
 
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Shape;
-import java.awt.Stroke;
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
 
 /**
@@ -27,8 +26,7 @@ public abstract class Forme implements Serializable {
 	protected String type, objet;
 	protected Color couleur;
 	protected boolean parfait, selected;
-
-	// Dashed
+	protected Rectangle2D.Double[] marqueurs;
 
 	/**
 	 * Constructeur basique de la forme à dessiner avec ses coordonnées
@@ -80,6 +78,32 @@ public abstract class Forme implements Serializable {
 		this(pointDebut, pointArrivee, type, objet, couleur, false);
 	}
 
+	
+	/**
+	 * Compare la position du curseur au rectangle de marqueurs de la sélection.
+	 * Utile les contains() des rectangle2D.Double.
+	 * 
+	 * @param position Position du curseur
+	 * 
+	 * @return Si le curseur est sur l'un des points de sélection
+	 * 
+	 * @see java.awt.geom.Rectangle2D#contains(Point2D)
+	 */
+	public abstract boolean containsPointDeSelection(Point2D position);
+	
+	/**
+	 * Dessine les marqueurs de sélection pour notifier à l'utilisateur qu'une
+	 * ou plusieurs formes ont été sélectionnés. Les marqueurs sont noirs, en pointillés
+	 * et sont bordés de carrés plein (4 par défaut).
+	 * Crée un stroke pointillé et l'applique au graphics. Sauvegarde préalablement la couleur
+	 * et le stroke courant de graphics pour les réappliquer après la création du marqueur :
+	 * évite d'appliquer le stroke pointillé aux formes redessinnées ensuite.
+	 * 
+	 * @param graphics
+	 *            Zone de dessin dans laquelle le tout sera dessiné.
+	 */
+	public abstract void selectionner(Graphics2D graphics);
+
 	/**
 	 * Utilise le comparateur du rectangle référentiel qui permet de savoir si
 	 * le curseur est dans la forme ou non.
@@ -88,7 +112,8 @@ public abstract class Forme implements Serializable {
 	 *            Position du curseur quand la forme est cliquée ou survolée.
 	 * @return Si le point est contenu ou non dans la forme.
 	 */
-
+	public abstract boolean contains(Point2D position);
+	
 	/**
 	 * Dessine les objets selon les formes qui lui sont envoyé. Définie
 	 * également le référentiel qui servira lors de la sélection d'une forme.
@@ -109,40 +134,7 @@ public abstract class Forme implements Serializable {
 		}
 	}
 
-	/**
-	 * Dessine les marqueurs de sélection pour notifier à l'utilisateur qu'une
-	 * ou plusieurs formes ont été sélectionnés. Les marqueurs sont noirs, en pointillés
-	 * et sont bordés de carrés plein (4 par défaut).
-	 * Crée un stroke pointillé et l'applique au graphics. Sauvegarde préalablement la couleur
-	 * et le stroke courant de graphics pour les réappliquer après la création du marqueur :
-	 * évite d'appliquer le stroke pointillé aux formes redessinnées ensuite.
-	 * 
-	 * @param graphics
-	 *            Zone de dessin dans laquelle le tout sera dessiné.
-	 */
-	public void selectionner(Graphics2D graphics) {
-		// Initialisation du stroke en pointillé
-		final float dash1[] = { 10.0f };
-		BasicStroke dashed = 	new BasicStroke(1.0f, BasicStroke.CAP_BUTT,
-								BasicStroke.JOIN_MITER, 10.0f, dash1, 0.0f);
-		Stroke strokeTmp = graphics.getStroke();
-		graphics.setStroke(dashed);
-		Color colorTmp = graphics.getColor();
-		graphics.setColor(Color.BLACK);
-
-		// Rectangle en pointillés
-		graphics.drawRect(oX - 10, oY - 10, width + 20, height + 20);
-
-		// Rectangles des extrémités
-		graphics.fillRect(oX - 13, oY - 13, 7, 7);
-		graphics.fillRect(oX + width + 7, oY - 13, 7, 7);
-		graphics.fillRect(oX - 13, oY + height + 7, 7, 7);
-		graphics.fillRect(oX + width + 7, oY + height + 7, 7, 7);
-
-		// Réinitialisation du graphics avec ses valeurs par défaut
-		graphics.setStroke(strokeTmp);
-		graphics.setColor(colorTmp); // Rétablissement de la couleur d'origine
-	}
+	
 
 	/**
 	 * Calcule selon les différentes positions du point d'arrivée. Réagis à la
@@ -150,8 +142,8 @@ public abstract class Forme implements Serializable {
 	 * comme parfait.
 	 */
 	protected abstract void initialiserVariables();
-
-	public abstract boolean contains(Point2D position);
+	
+	
 
 	/**
 	 * @category accessor

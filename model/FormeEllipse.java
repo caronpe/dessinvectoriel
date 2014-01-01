@@ -1,7 +1,10 @@
 package model;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Stroke;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
 import java.io.Serializable;
@@ -16,6 +19,7 @@ import java.io.Serializable;
  * @version 0.2
  */
 public class FormeEllipse extends Forme implements Serializable {
+	
 	
 	/**
 	 * Même constructeur que la classe abstraite Forme. 
@@ -78,6 +82,30 @@ public class FormeEllipse extends Forme implements Serializable {
 		}
 	}
 	
+	public void selectionner(Graphics2D graphics) {
+		// Initialisation du stroke en pointillé
+		final float dash1[] = { 10.0f };
+		BasicStroke dashed = 	new BasicStroke(1.0f, BasicStroke.CAP_BUTT,
+								BasicStroke.JOIN_MITER, 10.0f, dash1, 0.0f);
+		Stroke strokeTmp = graphics.getStroke();
+		graphics.setStroke(dashed);
+		Color colorTmp = graphics.getColor();
+		graphics.setColor(Color.BLACK);
+
+		// Rectangle en pointillés
+		graphics.drawRect(oX - 10, oY - 10, width + 20, height + 20);
+
+		// Rectangles des extrémités
+		graphics.fillRect(oX - 13, oY - 13, 7, 7);
+		graphics.fillRect(oX + width + 7, oY - 13, 7, 7);
+		graphics.fillRect(oX - 13, oY + height + 7, 7, 7);
+		graphics.fillRect(oX + width + 7, oY + height + 7, 7, 7);
+
+		// Réinitialisation du graphics avec ses valeurs par défaut
+		graphics.setStroke(strokeTmp);
+		graphics.setColor(colorTmp); // Rétablissement de la couleur d'origine
+	}
+	
 	public void setFin(Point pointArrivee) {
 		this.pointArrivee = pointArrivee;
 		this.initialiserVariables();
@@ -93,6 +121,12 @@ public class FormeEllipse extends Forme implements Serializable {
 		if (forme.contains(position)) {
 			return true;
 		}
+		return false;
+	}
+
+	@Override
+	public boolean containsPointDeSelection(Point2D position) {
+		// TODO Auto-generated method stub
 		return false;
 	}
 }

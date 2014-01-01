@@ -65,35 +65,8 @@ public class DessinListener implements MouseListener, MouseMotionListener {
 		}
 		
 		// Si Sélection
-		if (model.getObjetCourant().equals("selection")) {			
-			// Initialisation
-			boolean trouve = false;
-			ListIterator<Forme> it = model.getListeDessin().iterator();
-			while (it.hasNext()) it.next(); // On déroule la liste pour commencer par la fin
-			
-			// Parcours de la liste à la recherche d'une forme correspondante si elle n'est pas déjà trouvée
-			while (it.hasPrevious() && !trouve) {
-				Forme f = it.previous();
-				
-				// Une forme contient les coordonnées du clic
-				if ( f.contains((Point2D)e.getPoint())) {
-					// Sélection
-					if (f.isSelected()) {
-						model.deselectionner(f);
-					} else {
-						model.selectionner(f);
-					}
-					
-					
-					// Définition du dragging ...
-					this.pointDebut = e.getPoint();
-					this.draggingForme = f;
-					this.dragging = true;
-					
-					// Fin de boucle
-					trouve = true;
-				}
-			}
+		if (model.getObjetCourant().equals("selection")) {	
+			this.GestionSelection( (Point2D) e.getPoint() );
 		}
 	}
 
@@ -160,6 +133,43 @@ public class DessinListener implements MouseListener, MouseMotionListener {
 		this.dragging = false;
 		this.draggingForme = null;
 	}
+	
+	private void GestionSelection(Point2D position) {
+		// Initialisation
+		boolean trouve = false;
+		ListIterator<Forme> it = model.getListeDessin().iterator();
+		while (it.hasNext())
+			it.next(); // On déroule la liste pour commencer par la fin
+
+		// Parcours de la liste à la recherche d'une forme correspondante si
+		// elle n'est pas déjà trouvée
+		while (it.hasPrevious() && !trouve) {
+			Forme f = it.previous();
+
+			// Une forme contient les coordonnées du clic
+			if (f.contains(position)) {
+				// Sélection
+				if (f.isSelected()) {
+					model.deselectionner(f);
+				} else {
+					model.selectionner(f);
+				}
+				
+				if ( f.containsPointDeSelection(position)) {
+					System.out.println("Contenu !");
+				}
+				
+				// Définition du dragging ...
+				this.pointDebut = (Point) position;
+				this.draggingForme = f;
+				this.dragging = true;
+
+				// Fin de boucle
+				trouve = true;
+			}
+		}
+	}
+	
 	
 	/**
 	 * @category unused

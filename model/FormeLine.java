@@ -132,4 +132,10 @@ public class FormeLine extends Forme implements Serializable {
 		// Rétablissement de la couleur d'origine
 		graphics.setColor(tmp);
 	}
+
+	@Override
+	public boolean containsPointDeSelection(Point2D position) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

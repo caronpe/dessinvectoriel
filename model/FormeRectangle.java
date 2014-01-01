@@ -1,8 +1,10 @@
 package model;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Stroke;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
@@ -14,27 +16,29 @@ import java.io.Serializable;
  * @author Fabien Huitelec
  * @author Pierre-Édouard Caron
  * 
- * @version 0.2
+ * @version 0.3
  */
 public class FormeRectangle extends Forme implements Serializable {
 	
 	/**
 	 * Même constructeur que la classe abstraite Forme. 
-	 * Instancie les coordonnées et appelle une méthode de calcul privée pour les initialiser. 
+	 * Instancie les coordonnées et appelle une méthode de calcul privée pour les initialiser.
 	 * 
 	 * @see model.Forme
 	 * @see #initialiserVariables
 	 */
 	public FormeRectangle(Point pointDebut, Point pointArrivee, String type, String objet, Color couleur, boolean parfait) {
 		super(pointDebut, pointArrivee, type, objet, couleur, parfait);
-
+		
+		this.marqueurs = new Rectangle2D.Double[4];
 		initialiserVariables();
 		this.forme = new Rectangle2D.Double(oX, oY, width, height);
 	}
 	
 	/**
 	 * Calcule selon les différentes positions du point d'arrivée.
-	 * Réagis à la touche SHIFT appuyé pour le cercle et le rectangle
+	 * Réagis à la touche SHIFT appuyé pour le cercle et le rectangle.
+	 * Initialise les marqueurs de sélection du rectangle.
 	 * en les définissant comme parfait.
 	 */
 	protected void initialiserVariables() {
@@ -77,6 +81,36 @@ public class FormeRectangle extends Forme implements Serializable {
 			System.out.println("Shift + cercle"); // DEBUG
 			height = width;
 		}
+		
+		// Initialisation des marqueurs
+		// Rectangles des extrémités
+		this.marqueurs[0] = new Rectangle2D.Double(oX - 13, oY - 13, 7, 7);
+		this.marqueurs[1] = new Rectangle2D.Double(oX + width + 7, oY - 13, 7, 7);
+		this.marqueurs[2] = new Rectangle2D.Double(oX - 13, oY + height + 7, 7, 7);
+		this.marqueurs[3] = new Rectangle2D.Double(oX + width + 7, oY + height + 7, 7, 7);
+	}
+	
+	public void selectionner(Graphics2D graphics) {
+		// Initialisation du stroke en pointillé
+		final float dash1[] = { 10.0f };
+		BasicStroke dashed = 	new BasicStroke(1.0f, BasicStroke.CAP_BUTT,
+								BasicStroke.JOIN_MITER, 10.0f, dash1, 0.0f);
+		Stroke strokeTmp = graphics.getStroke();
+		graphics.setStroke(dashed);
+		Color colorTmp = graphics.getColor();
+		graphics.setColor(Color.BLACK);
+
+		// Rectangle en pointillés
+		graphics.drawRect(oX - 10, oY - 10, width + 20, height + 20);
+		
+		// Dessiner les marqueurs
+		for (Rectangle2D.Double rectangle : marqueurs) {
+			graphics.fill(rectangle);
+		}
+
+		// Réinitialisation du graphics avec ses valeurs par défaut
+		graphics.setStroke(strokeTmp);
+		graphics.setColor(colorTmp); // Rétablissement de la couleur d'origine
 	}
 	
 	public void setFin(Point pointArrivee) {
@@ -95,6 +129,19 @@ public class FormeRectangle extends Forme implements Serializable {
 			return true;
 		}
 		return false;
+	}
+	
+	public boolean containsPointDeSelection(Point2D position) {
+		boolean estContenu = false;
+		System.out.println("Dans le contains");
+		// Compare la position à tous les rectangle de pointsDeSelection
+		for (Rectangle2D.Double marqueur : marqueurs) {
+			if (marqueur.contains(position)) {
+				estContenu = true;
+			}
+		}
+		
+		return estContenu;
 	}
 	
 	public void draw(Graphics2D graphics) {
