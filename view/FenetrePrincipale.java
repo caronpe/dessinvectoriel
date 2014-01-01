@@ -31,6 +31,7 @@ public class FenetrePrincipale extends JFrame implements Observer {
 		private Container container; // Container principal de la fenêtre
 		private MenuOutils outils; // Menu d'outils sur la gauche
 		private ZoneDessin zoneDessin; // Zone où le dessin s'effectuera.
+		private CalquePanel zoneCalque; // zone ou les calques apparaitrons
 	// MVC
 		private Model model;
 	// Menu
