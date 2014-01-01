@@ -8,13 +8,13 @@ import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 
+import model.Forme;
 //INTERNE
-import model.*;
-import controler.*;
+import model.Model;
+import controler.ActionMenuQuitter;
+import controler.DessinListener;
+import controler.KeyListenerAll;
 
 /**
  * Fenêtre principale contenant tous les éléments graphiques.
@@ -34,17 +34,7 @@ public class FenetrePrincipale extends JFrame implements Observer {
 		private CalquePanel zoneCalque; // zone ou les calques apparaitrons
 	// MVC
 		private Model model;
-	// Menu
-		private JMenuBar menuBar;
-		private JMenu fileMenu;
-		private JMenu editMenu;
-		private JMenuItem nouveau;
-		private JMenuItem ouvrir;
-		private JMenuItem enregistrer;
-		private JMenuItem enregistrerSous;
-		private JMenuItem exitAction;
-		private JMenuItem copy;
-		private JMenuItem paste;
+
 	
 	/**
 	 * @param model Modèle du MVC
@@ -58,7 +48,7 @@ public class FenetrePrincipale extends JFrame implements Observer {
 		this.model.addObserver(this);
 		
 		this.initialiser();
-		this.creation_menu();
+		this.setJMenuBar(new MenuHaut(model));
 		this.pack();
 	}
 	
@@ -111,46 +101,6 @@ public class FenetrePrincipale extends JFrame implements Observer {
 		this.setLocationRelativeTo(null);
 	}
 	
-	/**
-	 * Crée la barre de menu
-	 * 
-	 * @category init
-	 */
-	private void creation_menu() { 
-		// Création Barre de menu
-		menuBar = new JMenuBar();
-		this.setJMenuBar(menuBar);
-		 
-		// Menus
-		fileMenu = new JMenu("Fichier");
-		editMenu = new JMenu("Édition");
-		
-		// Ajouts
-		menuBar.add(fileMenu);
-		menuBar.add(editMenu);
-		
-		// Items
-		nouveau = new JMenuItem(new ActionMenuNouveau(model));
-		ouvrir = new JMenuItem(new ActionMenuOuvrir(model));
-		enregistrer = new JMenuItem(new ActionMenuEnregistrer(model));
-		enregistrerSous = new JMenuItem(new ActionMenuEnregistrerSous(model));
-		exitAction = new JMenuItem(new ActionMenuQuitter(model));
-		copy = new JMenuItem(new ActionMenuCopier());
-		paste = new JMenuItem(new ActionMenuCouper());
-		
-		// Menu : Fichiers
-		fileMenu.addSeparator();
-		fileMenu.add(nouveau);
-		fileMenu.add(ouvrir);
-		fileMenu.add(enregistrer);
-		fileMenu.add(enregistrerSous);
-		fileMenu.add(exitAction);
-
-		// Menu : Édition
-		editMenu.addSeparator();
-		editMenu.add(copy);
-		editMenu.add(paste);
-	}
 	
 	/**
 	 * Si le paramètre est une forme, on la set dans la zone de dessin,
