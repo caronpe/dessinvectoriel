@@ -4,13 +4,10 @@ import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.HeadlessException;
-import java.awt.ScrollPane;
 import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 
 import model.Forme;
 //INTERNE
@@ -34,10 +31,11 @@ public class FenetrePrincipale extends JFrame implements Observer {
 		private Container container; // Container principal de la fenêtre
 		private MenuOutils outils; // Menu d'outils sur la gauche
 		private ZoneDessin zoneDessin; // Zone où le dessin s'effectuera.
+
 		private MenuDroit menuDroit; // zone ou les calques apparaitrons
+
 	// MVC
 		private Model model;
-
 	
 	/**
 	 * @param model Modèle du MVC
@@ -100,7 +98,7 @@ public class FenetrePrincipale extends JFrame implements Observer {
 		this.setFocusable(true);
 		this.requestFocus();
 		this.addKeyListener(keyListener);
-		this.setTitle("logiciel de dessin vectoriel");
+		this.setTitle("Logiciel de dessin vectoriel");
 		this.setResizable(true);
 		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		this.addWindowListener(new ActionMenuQuitter(model));
@@ -139,5 +137,6 @@ public class FenetrePrincipale extends JFrame implements Observer {
 			zoneDessin.setCourante(null);
 		}
 		zoneDessin.repaint();
+		outils.selectionCouleur.setBackground(model.getColor());
 	}
 }

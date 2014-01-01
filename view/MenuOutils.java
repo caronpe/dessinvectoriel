@@ -1,9 +1,6 @@
 package view;
 
-import java.awt.Color;
 import java.awt.Dimension;
-import javax.swing.BoxLayout;
-import javax.swing.JColorChooser;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 // INTERNE
@@ -23,12 +20,10 @@ import controler.*;
  * @version 0.2
  */
 public class MenuOutils extends JPanel {
-	BoxLayout box1;
-	JColorChooser bacacouleur;	
 	Model model;
 	// JButton
 		JButton selection, crayon, rectangle, cercle;
-		JButton	noir, rouge, bleu, vert, autres;
+		JButton	selectionCouleur;
 		
 	/**
 	 * Les boutons sont non focusable pour les keylistener fonctionnent
@@ -57,35 +52,10 @@ public class MenuOutils extends JPanel {
 		selection.setFocusable(false);
 		
 		// Boutons : Couleurs
-		noir = new JButton(new ActionOutilCouleur(model, Color.BLACK));
-		noir.setBackground(Color.BLACK);
-		noir.setPreferredSize(new Dimension(22,22));
-		noir.setFocusable(false);
-		
-		rouge= new JButton(new ActionOutilCouleur(model, Color.RED));
-		rouge.setBackground(Color.RED);
-		rouge.setPreferredSize(new Dimension(22,22));
-		rouge.setFocusable(false);
-		
-		bleu = new JButton(new ActionOutilCouleur(model, Color.BLUE));
-		bleu.setBackground(Color.BLUE);
-		bleu.setPreferredSize(new Dimension(22,22));
-		bleu.setFocusable(false);
-		
-		vert = new JButton(new ActionOutilCouleur(model, Color.GREEN));
-		vert.setBackground(Color.GREEN);
-		vert.setPreferredSize(new Dimension(22,22));
-		vert.setFocusable(false);
-		
-		autres = new JButton("autres");
-		autres.setAction(new ActionAutresCouleur(model));
-		autres.setPreferredSize(new Dimension(22,22));
-		autres.setFocusable(false);
-		
-		
-		
-		
-		
+		selectionCouleur = new JButton(new ActionOutilCouleurs(model));
+		selectionCouleur.setBackground(model.getColor());
+		selectionCouleur.setPreferredSize(new Dimension(22,22));
+		selectionCouleur.setFocusable(false);
 		
 		// Ajouts boutons outils
 		this.add(selection);
@@ -93,11 +63,7 @@ public class MenuOutils extends JPanel {
 		this.add(rectangle);
 		this.add(cercle);
 		// Ajouts boutons couleurs
-		this.add(noir);
-		this.add(rouge);
-		this.add(bleu);
-		this.add(vert);
-		this.add(autres);
+		this.add(selectionCouleur);
 	}
 	
 	/**
