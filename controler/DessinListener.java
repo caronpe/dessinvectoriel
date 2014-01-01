@@ -59,11 +59,6 @@ public class DessinListener implements MouseListener, MouseMotionListener {
 		// Servira aux outils de création
 		this.pointDebut = new Point(e.getPoint());
 		
-		// Vérification de la touche contrôle
-		if ( !model.getControlPressed() ) {
-			model.deselectionnerToutesLesFormes();
-		}
-		
 		// Si Sélection
 		if (model.getObjetCourant().equals("selection")) {	
 			this.GestionSelection( (Point2D) e.getPoint() );
@@ -139,8 +134,13 @@ public class DessinListener implements MouseListener, MouseMotionListener {
 		boolean trouve = false;
 		ListIterator<Forme> it = model.getListeDessin().iterator();
 		while (it.hasNext())
-			it.next(); // On déroule la liste pour commencer par la fin
-
+			it.next(); // On déroule la liste pour commencer par la fin		
+		
+		// Vérification de la touche contrôle
+		if ( !model.getControlPressed() ) {
+			model.deselectionnerToutesLesFormes();
+		}
+		
 		// Parcours de la liste à la recherche d'une forme correspondante si
 		// elle n'est pas déjà trouvée
 		while (it.hasPrevious() && !trouve) {
@@ -155,10 +155,19 @@ public class DessinListener implements MouseListener, MouseMotionListener {
 					model.selectionner(f);
 				}
 				
-				if ( f.containsPointDeSelection(position)) {
-					System.out.println("Contenu !");
+				// Si le curseur est sur un marqueur du rectangle
+				if ( f.isSelected() && f.containsPointDeSelection(position)) {
+					/* TODO
+					 * - Définir une méthode dans FormeRectangle qui envoie au modèle
+					 * 		une forme temporaire avec les bonnes coordonnées.
+					 * 		--> resize(Point2D position, boolean final)
+					 * - Appeler cette méthode ici avec le booléen final à false
+					 * - Créer un booléen "modifying"
+					 * - Dans #mouseReleased(), si modifying est à true appeler 
+					 * 		la méthode resize avec le booléen final à true.
+					 */
 				}
-				
+
 				// Définition du dragging ...
 				this.pointDebut = (Point) position;
 				this.draggingForme = f;

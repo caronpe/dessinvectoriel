@@ -4,9 +4,11 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Shape;
 import java.awt.Stroke;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.awt.geom.Rectangle2D.Double;
 import java.io.Serializable;
 
 /**
@@ -19,6 +21,13 @@ import java.io.Serializable;
  * @version 0.3
  */
 public class FormeRectangle extends Forme implements Serializable {
+	/**
+	 * Permets de renvoyer un contains correct. Sera Rectangle2D.Double et Path2D
+	 * puisqu'il contiendra des transformations (rotation et translations).
+	 * 
+	 * @see #initialiserReferentiel()
+	 */
+	private Shape referentielPosition;
 	
 	/**
 	 * Même constructeur que la classe abstraite Forme. 
@@ -33,6 +42,7 @@ public class FormeRectangle extends Forme implements Serializable {
 		this.marqueurs = new Rectangle2D.Double[4];
 		initialiserVariables();
 		this.forme = new Rectangle2D.Double(oX, oY, width, height);
+		this.referentielPosition = new Rectangle2D.Double(oX - 10, oY - 10, width + 20, height + 20);
 	}
 	
 	/**
@@ -101,9 +111,9 @@ public class FormeRectangle extends Forme implements Serializable {
 		graphics.setColor(Color.BLACK);
 
 		// Rectangle en pointillés
-		graphics.drawRect(oX - 10, oY - 10, width + 20, height + 20);
+		graphics.draw(referentielPosition);
 		
-		// Dessiner les marqueurs
+		// Marqueurs
 		for (Rectangle2D.Double rectangle : marqueurs) {
 			graphics.fill(rectangle);
 		}
@@ -117,6 +127,7 @@ public class FormeRectangle extends Forme implements Serializable {
 		this.pointArrivee = pointArrivee;
 		this.initialiserVariables();
 		this.forme = new Rectangle2D.Double(oX, oY, width, height);
+		this.referentielPosition = new Rectangle2D.Double(oX - 10, oY - 10, width + 20, height + 20);
 	}
 	
 	public void setOrigin(Point pointDebut) {
@@ -124,8 +135,15 @@ public class FormeRectangle extends Forme implements Serializable {
 		this.initialiserVariables();
 	}
 	
+	/**
+	 * Le contains se réfère aux contains du référentiel mais aussi aux marqueurs
+	 * pour permettre aux DessinListener d'appeler {@link #containsPointDeSelection(Point2D)}
+	 * quand nécessaire.
+	 * 
+	 * @see controler.DessinListener
+	 */
 	public boolean contains(Point2D position) {
-		if (forme.contains(position)) {
+		if (referentielPosition.contains(position) || this.containsPointDeSelection(position)) {
 			return true;
 		}
 		return false;
