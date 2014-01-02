@@ -8,7 +8,6 @@ import java.awt.Shape;
 import java.awt.Stroke;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.awt.geom.Rectangle2D.Double;
 import java.io.Serializable;
 
 /**
@@ -22,8 +21,7 @@ import java.io.Serializable;
  */
 public class FormeRectangle extends Forme implements Serializable {
 	/**
-	 * Permets de renvoyer un contains correct. Sera Rectangle2D.Double et Path2D
-	 * puisqu'il contiendra des transformations (rotation et translations).
+	 * Permets de renvoyer un contains correct.
 	 * 
 	 * @see #initialiserReferentiel()
 	 */
@@ -40,9 +38,7 @@ public class FormeRectangle extends Forme implements Serializable {
 		super(pointDebut, pointArrivee, type, objet, couleur, parfait);
 		
 		this.marqueurs = new Rectangle2D.Double[4];
-		initialiserVariables();
-		this.forme = new Rectangle2D.Double(oX, oY, width, height);
-		this.referentielPosition = new Rectangle2D.Double(oX - 10, oY - 10, width + 20, height + 20);
+		calculVariables();
 	}
 	
 	/**
@@ -51,54 +47,38 @@ public class FormeRectangle extends Forme implements Serializable {
 	 * Initialise les marqueurs de sélection du rectangle.
 	 * en les définissant comme parfait.
 	 */
-	protected void initialiserVariables() {
+	protected void calculVariables() {
 		// Calculs pour l'initialisation du référentiel
-		this.oX = (int) pointDebut.getX();
-		this.oY = (int) pointDebut.getY();
-		this.aX = (int) pointArrivee.getX();
-		this.aY = (int) pointArrivee.getY();
+		this.oX = Math.min( (int) pointDebut.getX(), (int) pointArrivee.getX() );
+		this.oY = Math.min( (int) pointDebut.getY(), (int) pointArrivee.getY() );
+		
+		this.aX = Math.max( (int) pointDebut.getX(), (int) pointArrivee.getX() );
+		this.aY = Math.max( (int) pointDebut.getY(), (int) pointArrivee.getY() );	
+		
 		this.width = (int) (aX - oX);
 		this.height = (int) (aY - oY);
-				
-		if ( height < 0 && width < 0 && parfait ) { // Si on va en haut à gauche du point d'origine
-			oY -= Math.abs(height);
-			oX -= Math.abs(height);
-			height = Math.abs(height);
-			width = height;
+		
+		System.out.println(oX + " " + oY + " " + aX + " " + aY + " " + width + " " + height);
+		
+		if ( this.parfait ) {
+			this.width = height;
 		}
 		
-		if (width < 0) { // Si on part à gauche du point d'origine
-			oX -= Math.abs(width);
-			width = Math.abs(width);
-			
-			if ( parfait ) { // Forme parfaite
-				System.out.println("Shift + cercle"); // DEBUG
-				height = width;
-			}
-		}
-		
-		if (height < 0) { // Si on part au dessus du point d'origine
-			oY -= Math.abs(height);
-			height = Math.abs(height);
-			
-			if ( parfait ) { // Forme parfait
-				System.out.println("Shift + cercle"); // DEBUG
-				width = height;
-			}
-		}
-		
-		if ( this.parfait ) { // Forme parfaite en bas à droite du point d'origine
-			System.out.println("Shift + cercle"); // DEBUG
-			height = width;
-		}
+		// On réinitialise les point de la forme
+		this.pointDebut = new Point(oX, oY);
+		this.pointArrivee = new Point(aX, aY);
 		
 		// Initialisation des marqueurs
-		// Rectangles des extrémités
-		this.marqueurs[0] = new Rectangle2D.Double(oX - 13, oY - 13, 7, 7);
-		this.marqueurs[1] = new Rectangle2D.Double(oX + width + 7, oY - 13, 7, 7);
-		this.marqueurs[2] = new Rectangle2D.Double(oX - 13, oY + height + 7, 7, 7);
-		this.marqueurs[3] = new Rectangle2D.Double(oX + width + 7, oY + height + 7, 7, 7);
+		this.marqueurs[0] = new Rectangle2D.Double(oX - 13, oY - 13, 7, 7); // En haut à gauche
+		this.marqueurs[1] = new Rectangle2D.Double(oX + width + 7, oY - 13, 7, 7); // En haut à droite
+		this.marqueurs[2] = new Rectangle2D.Double(oX - 13, oY + height + 7, 7, 7); // En bas à gauche
+		this.marqueurs[3] = new Rectangle2D.Double(oX + width + 7, oY + height + 7, 7, 7); // En bas à droite
+		
+		// Instanciation de la forme et du référentiel
+		this.forme = new Rectangle2D.Double(oX, oY, width, height);
+		this.referentielPosition = new Rectangle2D.Double(oX - 10, oY - 10, width + 20, height + 20);
 	}
+	
 	
 	public void selectionner(Graphics2D graphics) {
 		// Initialisation du stroke en pointillé
@@ -125,14 +105,12 @@ public class FormeRectangle extends Forme implements Serializable {
 	
 	public void setFin(Point pointArrivee) {
 		this.pointArrivee = pointArrivee;
-		this.initialiserVariables();
-		this.forme = new Rectangle2D.Double(oX, oY, width, height);
-		this.referentielPosition = new Rectangle2D.Double(oX - 10, oY - 10, width + 20, height + 20);
+		this.calculVariables();
 	}
 	
 	public void setOrigin(Point pointDebut) {
 		this.pointDebut = pointDebut;
-		this.initialiserVariables();
+		this.calculVariables();
 	}
 	
 	/**
@@ -160,6 +138,17 @@ public class FormeRectangle extends Forme implements Serializable {
 		}
 		
 		return estContenu;
+	}
+	
+	public int getMarqueurs(Point2D position) {
+		// Compare la position à tous les rectangle de pointsDeSelection
+		for (int i = 0; i < marqueurs.length; i++) {
+			if (marqueurs[i].contains(position)) {
+				return i;
+			}
+		}
+		
+		return -1;
 	}
 	
 	public void draw(Graphics2D graphics) {

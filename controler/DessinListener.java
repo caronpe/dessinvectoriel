@@ -28,8 +28,12 @@ import view.ZoneDessin;
  */
 public class DessinListener implements MouseListener, MouseMotionListener {
 	private Point pointDebut, pointArrivee;
-	Forme draggingForme; /**  Lorsqu'une forme est déplacée, on la déplace dans cette variable. */ 
-	boolean dragging; /** Lorsque une forme est sélectionnée et déplacée, ce booléen est à vrai. */
+	/**  Lorsqu'une forme est déplacée ou redimensionnée, on la déplace dans cette variable. */ 
+	Forme modifiedForme;
+	/** Lorsque une forme est sélectionnée et déplacée, ce booléen est à vrai. */
+	boolean dragging;
+	/** Lorsque une forme est sélectionnée et redimensionnée, ce booléen est à vrai. */
+	int resizing;
 	private Model model;
 	
 	/**
@@ -42,7 +46,8 @@ public class DessinListener implements MouseListener, MouseMotionListener {
 		super();
 		this.model = model;
 		this.dragging = false;
-		this.draggingForme = null;
+		this.resizing = -1;
+		this.modifiedForme = null; 
 	}
 
 	/**
@@ -89,16 +94,23 @@ public class DessinListener implements MouseListener, MouseMotionListener {
 			}
 		// Si Sélection
 		} else {
+			this.pointArrivee = e.getPoint();
+			
 			// Si une forme est en train d'être déplacée
 			if ( this.dragging ) {
-				// ... Définition du dragging ...
-				this.pointArrivee = e.getPoint();
-				
 				// Envoi au model
-				model.formeModifiee(this.draggingForme, this.pointDebut, this.pointArrivee);
+				model.deplacementForme(this.modifiedForme, this.pointDebut, this.pointArrivee);
 				
 				// ... Redéfinition du dragging
 				this.pointDebut = this.pointArrivee;
+				
+			// Si une forme est en train d'être redimensionnée
+			} else if ( this.resizing >= 0 ) {
+				// Envoi au model
+				System.out.println("Point arrivée : " + pointArrivee);
+				model.resizeForme(this.resizing, this.modifiedForme, this.pointArrivee);
+				
+				// ... Redéfinition du resizing
 			}
 		}
 	}
@@ -124,9 +136,10 @@ public class DessinListener implements MouseListener, MouseMotionListener {
 			}
 		}
 		
-		// Réinitialisation du dragging
+		// Réinitialisation des variables de modification
 		this.dragging = false;
-		this.draggingForme = null;
+		this.resizing = -1;
+		this.modifiedForme = null;
 	}
 	
 	private void GestionSelection(Point2D position) {
@@ -155,8 +168,9 @@ public class DessinListener implements MouseListener, MouseMotionListener {
 					model.selectionner(f);
 				}
 				
-				// Si le curseur est sur un marqueur du rectangle
+				// Si le curseur est sur un marqueur de la forme
 				if ( f.isSelected() && f.containsPointDeSelection(position)) {
+					this.resizing = f.getMarqueurs(position);
 					/* TODO
 					 * - Définir une méthode dans FormeRectangle qui envoie au modèle
 					 * 		une forme temporaire avec les bonnes coordonnées.
@@ -166,19 +180,19 @@ public class DessinListener implements MouseListener, MouseMotionListener {
 					 * - Dans #mouseReleased(), si modifying est à true appeler 
 					 * 		la méthode resize avec le booléen final à true.
 					 */
+				} else {
+					this.dragging = true;
 				}
 
-				// Définition du dragging ...
+				// Définition de la modification de forme...
 				this.pointDebut = (Point) position;
-				this.draggingForme = f;
-				this.dragging = true;
-
+				this.modifiedForme = f;
+				
 				// Fin de boucle
 				trouve = true;
 			}
 		}
 	}
-	
 	
 	/**
 	 * @category unused

@@ -115,6 +115,15 @@ public abstract class Forme implements Serializable {
 	public abstract boolean contains(Point2D position);
 	
 	/**
+	 * Renvoi le marqueur concerné par le resizing.
+	 * 
+	 * @param position
+	 *            Position du curseur quand un marqueur est cliqué.
+	 * @return Le marqueur provenant de la position du curseur.
+	 */
+	public abstract int getMarqueurs(Point2D position);
+	
+	/**
 	 * Dessine les objets selon les formes qui lui sont envoyé. Définie
 	 * également le référentiel qui servira lors de la sélection d'une forme.
 	 * 
@@ -141,10 +150,8 @@ public abstract class Forme implements Serializable {
 	 * touche SHIFT appuyé pour le cercle et le rectangle en les définissant
 	 * comme parfait.
 	 */
-	protected abstract void initialiserVariables();
+	protected abstract void calculVariables();
 	
-	
-
 	/**
 	 * @category accessor
 	 */
@@ -163,7 +170,21 @@ public abstract class Forme implements Serializable {
 	 * @category accessor
 	 */
 	public Point getOrigin() {
-		return pointDebut;
+		return this.pointDebut;
+	}
+	
+	/**
+	 * @category accessor
+	 */
+	public int getHeight() {
+		return this.height;
+	}
+	
+	/**
+	 * @category accessor
+	 */
+	public int getWidth() {
+		return this.width;
 	}
 
 	/**

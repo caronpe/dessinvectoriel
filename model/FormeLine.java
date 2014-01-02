@@ -35,11 +35,11 @@ public class FormeLine extends Forme implements Serializable {
 			String objet, Color couleur, boolean parfait) {
 		super(pointDebut, pointArrivee, type, objet, couleur, parfait);
 
-		initialiserVariables();
+		calculVariables();
 		this.forme = new Line2D.Double(oX, oY, aX, aY);
 	}
 
-	protected void initialiserVariables() {
+	protected void calculVariables() {
 		this.oX = (int) pointDebut.getX();
 		this.oY = (int) pointDebut.getY();
 		this.aX = (int) pointArrivee.getX();
@@ -102,7 +102,7 @@ public class FormeLine extends Forme implements Serializable {
 
 	public void setOrigin(Point pointDebut) {
 		this.pointDebut = pointDebut;
-		initialiserVariables();
+		calculVariables();
 	}
 
 	public void setFin(Point pointArrivee) {
@@ -110,7 +110,7 @@ public class FormeLine extends Forme implements Serializable {
 		
 		// Réinitialise la forme et le référentiel avec les nouvelles
 		// coordonnées.
-		initialiserVariables();
+		calculVariables();
 		initialiserReferentiel();
 		this.forme = new Line2D.Double(oX, oY, aX, aY);
 		

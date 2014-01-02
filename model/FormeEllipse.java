@@ -31,7 +31,7 @@ public class FormeEllipse extends Forme implements Serializable {
 	public FormeEllipse(Point pointDebut, Point pointArrivee, String type, String objet, Color couleur, boolean parfait) {
 		super(pointDebut, pointArrivee, type, objet, couleur, parfait);
 		
-		initialiserVariables();
+		calculVariables();
 		this.forme = new Ellipse2D.Double(oX, oY, width, height);
 	}
 	
@@ -40,7 +40,7 @@ public class FormeEllipse extends Forme implements Serializable {
 	 * Réagis à la touche SHIFT appuyé pour le cercle et le rectangle
 	 * en les définissant comme parfait.
 	 */
-	protected void initialiserVariables() {
+	protected void calculVariables() {
 		// Calculs pour l'initialisation du référentiel
 		this.oX = (int) pointDebut.getX();
 		this.oY = (int) pointDebut.getY();
@@ -108,13 +108,13 @@ public class FormeEllipse extends Forme implements Serializable {
 	
 	public void setFin(Point pointArrivee) {
 		this.pointArrivee = pointArrivee;
-		this.initialiserVariables();
+		this.calculVariables();
 		this.forme = new Ellipse2D.Double(oX, oY, width, height);
 	}
 	
 	public void setOrigin(Point pointDebut) {
 		this.pointDebut = pointDebut;
-		this.initialiserVariables();
+		this.calculVariables();
 	}
 	
 	public boolean contains(Point2D position) {

@@ -2,6 +2,7 @@ package model;
 
 import java.awt.Color;
 import java.awt.Point;
+import java.awt.geom.Rectangle2D;
 import java.util.ListIterator;
 import java.util.Observable;
 
@@ -177,14 +178,14 @@ public class Model extends Observable {
 	 * 
 	 * @see controler.DessinListener#mouseDragged
 	 */
-	public void formeModifiee(Forme forme, Point pointDebut, Point pointArrivee) {
+	public void deplacementForme(Forme forme, Point pointDebut, Point pointArrivee) {
 		// Initialisation distances
-		int distanceX = (int) (pointArrivee.getX() - pointDebut.getX()), distanceY = (int) (pointArrivee
-				.getY() - pointDebut.getY());
+		int 	distanceX = (int) (pointArrivee.getX() - pointDebut.getX()),
+				distanceY = (int) (pointArrivee.getY() - pointDebut.getY());
 
 		// Point Départ
-		int tmpX = (int) (forme.getOrigin().getX() + distanceX), tmpY = (int) (forme
-				.getOrigin().getY() + distanceY);
+		int 	tmpX = (int) (forme.getOrigin().getX() + distanceX),
+				tmpY = (int) (forme.getOrigin().getY() + distanceY);
 		forme.setOrigin(new Point(tmpX, tmpY));
 
 		// Point Arrivée
@@ -192,6 +193,50 @@ public class Model extends Observable {
 		tmpY = (int) (forme.getFin().getY() + distanceY);
 		forme.setFin(new Point(tmpX, tmpY));
 
+		// Envoi de l'objet au vues
+		setChanged();
+		notifyObservers();
+		setEnregistre(false);
+	}
+	
+	public void resizeForme(int marqueur, Forme forme, Point pointArrivee) {
+
+		// Modifications en fonction du marqueur
+		/*
+		 * TODO
+		 * - Dans chacun des cases, créer une forme temporaire, voir si le changement qu'on fait
+		 * 		rend une forme dont la longueur et la hauteur sont supérieurs à 20 dans un if.
+		 * - Faire ça pour chacune des instances : ` if (arg1 instanceof Forme) `
+		 * - Régler le souci avec les formes parfaites
+		 */
+		
+		switch (marqueur) {
+		case 0 : // En haut à gauche
+			pointArrivee.setLocation(pointArrivee.getX() + 10, pointArrivee.getY() + 10);
+			
+			if (forme.getHeight() > 20 && forme.getWidth() > 20 ) {
+				forme.setOrigin(pointArrivee);
+			}
+			break;
+		case 1 : // En haut à droite
+			forme.setOrigin(new Point((int) forme.getOrigin().getX(), (int) pointArrivee.getY() + 10));
+			forme.setFin(new Point( (int) pointArrivee.getX() - 10, (int) forme.getFin().getY()));
+			break;
+		case 2 : // En bas à gauche
+			forme.setOrigin(new Point((int) pointArrivee.getX() + 10, (int) forme.getOrigin().getY()));
+			forme.setFin(new Point((int) forme.getFin().getX(), (int) pointArrivee.getY() - 10));
+			break;
+		case 3 : // En bas à droite
+			pointArrivee.setLocation(pointArrivee.getX() - 10, pointArrivee.getY() - 10);
+			forme.setFin(pointArrivee);
+			break;
+		default :
+			System.err.println("Marqueur non trouvé, problème d'algorithmique.");
+			break;
+		}
+	
+		
+		
 		// Envoi de l'objet au vues
 		setChanged();
 		notifyObservers();
