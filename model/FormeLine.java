@@ -40,10 +40,10 @@ public class FormeLine extends Forme implements Serializable {
 	}
 
 	protected void calculVariables() {
-		this.oX = (int) pointDebut.getX();
-		this.oY = (int) pointDebut.getY();
-		this.aX = (int) pointArrivee.getX();
-		this.aY = (int) pointArrivee.getY();
+		this.oX = (int) pointOrigin.getX();
+		this.oY = (int) pointOrigin.getY();
+		this.aX = (int) pointFin.getX();
+		this.aY = (int) pointFin.getY();
 	}
 	
 	/**
@@ -58,10 +58,10 @@ public class FormeLine extends Forme implements Serializable {
 	 */
 	protected void initialiserReferentiel() {
 		// Initialisation par rapport aux 2 points
-		int 	oX = (int) pointDebut.getX(),
-				oY = (int) pointDebut.getY(),
-				aX = (int) pointArrivee.getX(),
-				aY = (int) pointArrivee.getY(),
+		int 	oX = (int) pointOrigin.getX(),
+				oY = (int) pointOrigin.getY(),
+				aX = (int) pointFin.getX(),
+				aY = (int) pointFin.getY(),
 				width = (int) (aX - oX),
 				height = (int) (aY - oY),
 				zoneDeClic = 40;
@@ -101,12 +101,12 @@ public class FormeLine extends Forme implements Serializable {
 	}
 
 	public void setOrigin(Point pointDebut) {
-		this.pointDebut = pointDebut;
+		this.pointOrigin = pointDebut;
 		calculVariables();
 	}
 
 	public void setFin(Point pointArrivee) {
-		this.pointArrivee = pointArrivee;
+		this.pointFin = pointArrivee;
 		
 		// Réinitialise la forme et le référentiel avec les nouvelles
 		// coordonnées.

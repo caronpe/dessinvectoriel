@@ -1,5 +1,6 @@
 package model;
 
+import java.awt.AlphaComposite;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -26,6 +27,11 @@ public class FormeRectangle extends Forme implements Serializable {
 	 * @see #initialiserReferentiel()
 	 */
 	private Shape referentielPosition;
+	/**
+	 * Points intermédiaires calculés à partir des points principaux (d'origine et de fin)
+	 */
+	private Point 	pointHautDroit,
+					pointBasGauche;
 	
 	/**
 	 * Même constructeur que la classe abstraite Forme. 
@@ -42,31 +48,31 @@ public class FormeRectangle extends Forme implements Serializable {
 	}
 	
 	/**
-	 * Calcule selon les différentes positions du point d'arrivée.
-	 * Réagis à la touche SHIFT appuyé pour le cercle et le rectangle.
+	 * Calcule selon les différentes positions du point d'arrivée et du point d'origine.
+	 * Réagis à la touche SHIFT appuyé pour créer une forme parfaite.
 	 * Initialise les marqueurs de sélection du rectangle.
 	 * en les définissant comme parfait.
 	 */
 	protected void calculVariables() {
 		// Calculs pour l'initialisation du référentiel
-		this.oX = Math.min( (int) pointDebut.getX(), (int) pointArrivee.getX() );
-		this.oY = Math.min( (int) pointDebut.getY(), (int) pointArrivee.getY() );
+		this.oX = Math.min( (int) pointOrigin.getX(), (int) pointFin.getX() );
+		this.oY = Math.min( (int) pointOrigin.getY(), (int) pointFin.getY() );
 		
-		this.aX = Math.max( (int) pointDebut.getX(), (int) pointArrivee.getX() );
-		this.aY = Math.max( (int) pointDebut.getY(), (int) pointArrivee.getY() );	
+		this.aX = Math.max( (int) pointOrigin.getX(), (int) pointFin.getX() );
+		this.aY = Math.max( (int) pointOrigin.getY(), (int) pointFin.getY() );	
 		
 		this.width = (int) (aX - oX);
 		this.height = (int) (aY - oY);
-		
-		System.out.println(oX + " " + oY + " " + aX + " " + aY + " " + width + " " + height);
 		
 		if ( this.parfait ) {
 			this.width = height;
 		}
 		
-		// On réinitialise les point de la forme
-		this.pointDebut = new Point(oX, oY);
-		this.pointArrivee = new Point(aX, aY);
+		// On réinitialise les points de la forme
+		this.pointOrigin = new Point(oX, oY);
+		this.pointFin = new Point(aX, aY);
+		this.pointBasGauche = new Point(oX, aY);
+		this.pointHautDroit= new Point(aX ,oY);
 		
 		// Initialisation des marqueurs
 		this.marqueurs[0] = new Rectangle2D.Double(oX - 13, oY - 13, 7, 7); // En haut à gauche
@@ -81,14 +87,18 @@ public class FormeRectangle extends Forme implements Serializable {
 	
 	
 	public void selectionner(Graphics2D graphics) {
+		// Sauvegarde des variables
+		Stroke strokeTmp = graphics.getStroke();
+		Color colorTmp = graphics.getColor();
+		
 		// Initialisation du stroke en pointillé
 		final float dash1[] = { 10.0f };
 		BasicStroke dashed = 	new BasicStroke(1.0f, BasicStroke.CAP_BUTT,
 								BasicStroke.JOIN_MITER, 10.0f, dash1, 0.0f);
-		Stroke strokeTmp = graphics.getStroke();
+		
+		graphics.setComposite(AlphaComposite.SrcOver.derive(0.9f));
 		graphics.setStroke(dashed);
-		Color colorTmp = graphics.getColor();
-		graphics.setColor(Color.BLACK);
+		graphics.setColor(Color.GRAY);
 
 		// Rectangle en pointillés
 		graphics.draw(referentielPosition);
@@ -101,15 +111,40 @@ public class FormeRectangle extends Forme implements Serializable {
 		// Réinitialisation du graphics avec ses valeurs par défaut
 		graphics.setStroke(strokeTmp);
 		graphics.setColor(colorTmp); // Rétablissement de la couleur d'origine
+		graphics.setComposite(AlphaComposite.SrcOver); // Rétablissement de la transparence d'origine
 	}
 	
 	public void setFin(Point pointArrivee) {
-		this.pointArrivee = pointArrivee;
+		this.pointFin = pointArrivee;
 		this.calculVariables();
 	}
 	
 	public void setOrigin(Point pointDebut) {
-		this.pointDebut = pointDebut;
+		this.pointOrigin = pointDebut;
+		this.calculVariables();
+	}
+	
+	/**
+	 * @param pointArrivee
+	 */
+	private void setHautDroit(Point pointArrivee) {
+		this.pointHautDroit = pointArrivee;
+		
+		this.pointOrigin = new Point( (int) this.pointOrigin.getX(), (int) this.pointHautDroit.getY() );
+		this.pointFin = new Point( (int) this.pointHautDroit.getX(), (int) this.pointFin.getY() );
+
+		this.calculVariables();
+	}
+	
+	/**
+	 * @param pointDebut
+	 */
+	private void setBasGauche(Point pointDebut) {
+		this.pointBasGauche = pointDebut;
+		
+		this.pointOrigin = new Point( (int) this.pointBasGauche.getX(), (int) this.pointOrigin.getY() );
+		this.pointFin = new Point( (int) this.pointFin.getX(), (int) this.pointBasGauche.getY() );
+		
 		this.calculVariables();
 	}
 	
@@ -151,6 +186,85 @@ public class FormeRectangle extends Forme implements Serializable {
 		return -1;
 	}
 	
+	/**
+	 * Pour chacun des marqueurs, il y a un algorithme différent.
+	 * Tout d'abord une sauvegarde des points du rectangle est faites.
+	 * On redéfinit les coordonnées en prenant en compte le fait que la position pointResize
+	 * n'est pas celle du point du rectangle (Ex pour le haut-gauche : X + 10 et Y + 10 puisque le rectangle référentiel a X - 10 et Y - 10).
+	 * On vérifie que les longueur et hauteur ne sont pas négative, sinon le redimensionnement est incorrect.
+	 * On vérifie également que le point opposé n'a pas été modifié, sinon lorsque le redimensionnement dépasse ce point, le rectangle
+	 * change de position.
+	 * 
+	 * @param marqueur Le marqueur sélectionné
+	 * @param pointResize Les nouvelles coordonnées du marqueur
+	 * @param parfait Détermine si c'est une forme parfait ou non
+	 * 
+	 * @see model.Forme#resize(int, java.awt.Point, boolean)
+	 */
+	public void resize(int marqueur, Point pointResize, boolean parfait) {
+		// Initialisation variables
+		this.parfait = parfait;
+		Point 	tmpOrigin = this.pointOrigin,
+				tmpFin = this.pointFin,
+				tmpHautDroit = this.pointHautDroit,
+				tmpBasGauche= this.pointBasGauche;
+		
+		switch (marqueur) {
+		
+		case 0 : // En haut à gauche
+			pointResize.setLocation(pointResize.getX() + 10, pointResize.getY() + 10);
+			this.setOrigin(pointResize);
+			
+			if ( ( !(this.getHeight() > 0) && !(this.getWidth() > 0) ) ) { // Test de la taille de la nouvelle forme
+				this.setOrigin(tmpOrigin);
+			} else if (!this.pointFin.equals(tmpFin)) { // Test du point opposé
+				this.setOrigin(tmpOrigin);
+				this.setFin(tmpFin);
+			}
+			break;
+			
+		case 1 : // En haut à droite
+			pointResize.setLocation(pointResize.getX() - 10, pointResize.getY() + 10);
+			this.setHautDroit(pointResize);
+			
+			if ( ( !(this.getHeight() > 0) && !(this.getWidth() > 0) ) ) { // Test de la taille de la nouvelle forme
+				this.setHautDroit(tmpHautDroit);
+			} else if (!this.pointBasGauche.equals(tmpBasGauche)) { // Test du point opposé
+				this.setOrigin(tmpOrigin);
+				this.setFin(tmpFin);
+			}
+			break;
+			
+		case 2 : // En bas à gauche
+			pointResize.setLocation(pointResize.getX() - 10, pointResize.getY() - 10);
+			this.setBasGauche(pointResize);
+						
+			if ( ( !(this.getHeight() > 0) && !(this.getWidth() > 0) ) ) { // Test de la taille de la nouvelle forme
+				this.setBasGauche(tmpBasGauche);
+			} else if (!this.pointHautDroit.equals(tmpHautDroit)) { // Test du point opposé
+				this.setOrigin(tmpOrigin);
+				this.setFin(tmpFin);
+			}
+			break;
+			
+		case 3 : // En bas à droite
+			pointResize.setLocation(pointResize.getX() - 10, pointResize.getY() - 10);
+			this.setFin(pointResize);
+
+			if ( ( !(this.getHeight() > 0) && !(this.getWidth() > 0) ) ) { // Test de la taille de la nouvelle forme
+				this.setFin(tmpFin);
+			} else if (!this.pointOrigin.equals(tmpOrigin)) { // Test du point opposé
+				this.setOrigin(tmpOrigin);
+				this.setFin(tmpFin);
+			}
+			break;
+			
+		default :
+			System.err.println("Marqueur non trouvé, problème d'algorithmique.");
+			break;
+		}
+	}
+
 	public void draw(Graphics2D graphics) {
 		super.draw(graphics);
 		graphics.draw(forme);

@@ -19,13 +19,25 @@ import java.io.Serializable;
  * 
  * @version 0.2
  */
+/**
+ * @author Fabien
+ *
+ */
 public abstract class Forme implements Serializable {
 	protected int oX, oY, aX, aY, width, height;
 	protected Shape forme;
-	protected Point pointDebut, pointArrivee;
+	protected Point pointOrigin, pointFin;
 	protected String type, objet;
 	protected Color couleur;
-	protected boolean parfait, selected;
+	/**
+	 * Ce booléen est utilisé comme appelation. L'algorithme vérifie régulièrement
+	 * s'il a affaire à une forme parfaite ou non puisque que ce booléen peut changer à tout moment.
+	 * /!\ Une fois les variables de la forme initialisées avec les coordonnées d'une forme parfaite,
+	 * ce booléen n'est plus utile dans le sens où il ne sert en aucun cas au dessin de la forme pour
+	 * permettre une certaine viabilité de l'algorithmique /!\
+	 */
+	protected boolean parfait;
+	protected boolean selected;
 	protected Rectangle2D.Double[] marqueurs;
 
 	/**
@@ -49,8 +61,8 @@ public abstract class Forme implements Serializable {
 	public Forme(Point pointDebut, Point pointArrivee, String type,
 			String objet, Color couleur, boolean parfait) {
 		super();
-		this.pointDebut = pointDebut;
-		this.pointArrivee = pointArrivee;
+		this.pointOrigin = pointDebut;
+		this.pointFin = pointArrivee;
 		this.type = type;
 		this.objet = objet;
 		this.couleur = couleur;
@@ -124,6 +136,15 @@ public abstract class Forme implements Serializable {
 	public abstract int getMarqueurs(Point2D position);
 	
 	/**
+	 * Redimensionne la forme en fonction du marqueur et des nouvelles coordonnées.
+	 * 
+	 * @param marqueur Le marqueur sélectionné
+	 * @param pointResize Les nouvelles coordonnées du marqueur
+	 * @param parfait Détermine si c'est une forme parfait ou non
+	 */
+	public abstract void resize(int marqueur, Point pointResize, boolean parfait);
+
+	/**
 	 * Dessine les objets selon les formes qui lui sont envoyé. Définie
 	 * également le référentiel qui servira lors de la sélection d'une forme.
 	 * 
@@ -142,8 +163,6 @@ public abstract class Forme implements Serializable {
 			break;
 		}
 	}
-
-	
 
 	/**
 	 * Calcule selon les différentes positions du point d'arrivée. Réagis à la
@@ -170,7 +189,7 @@ public abstract class Forme implements Serializable {
 	 * @category accessor
 	 */
 	public Point getOrigin() {
-		return this.pointDebut;
+		return this.pointOrigin;
 	}
 	
 	/**
@@ -203,7 +222,7 @@ public abstract class Forme implements Serializable {
 	 * @category accessor
 	 */
 	public Point getFin() {
-		return this.pointArrivee;
+		return this.pointFin;
 	}
 
 	/**
@@ -282,6 +301,6 @@ public abstract class Forme implements Serializable {
 	}
 
 	public String toString() {
-		return "Forme [deb : " + pointDebut + ", arr : " + pointArrivee + "]";
+		return "Forme [deb : " + pointOrigin + ", arr : " + pointFin + "]";
 	}
 }

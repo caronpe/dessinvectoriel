@@ -42,10 +42,10 @@ public class FormeEllipse extends Forme implements Serializable {
 	 */
 	protected void calculVariables() {
 		// Calculs pour l'initialisation du référentiel
-		this.oX = (int) pointDebut.getX();
-		this.oY = (int) pointDebut.getY();
-		this.aX = (int) pointArrivee.getX();
-		this.aY = (int) pointArrivee.getY();
+		this.oX = (int) pointOrigin.getX();
+		this.oY = (int) pointOrigin.getY();
+		this.aX = (int) pointFin.getX();
+		this.aY = (int) pointFin.getY();
 		this.width = (int) (aX - oX);
 		this.height = (int) (aY - oY);
 				
@@ -107,13 +107,13 @@ public class FormeEllipse extends Forme implements Serializable {
 	}
 	
 	public void setFin(Point pointArrivee) {
-		this.pointArrivee = pointArrivee;
+		this.pointFin = pointArrivee;
 		this.calculVariables();
 		this.forme = new Ellipse2D.Double(oX, oY, width, height);
 	}
 	
 	public void setOrigin(Point pointDebut) {
-		this.pointDebut = pointDebut;
+		this.pointOrigin = pointDebut;
 		this.calculVariables();
 	}
 	
