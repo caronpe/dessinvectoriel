@@ -1,11 +1,11 @@
-package view;
+package controler;
 
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 
 /**
- * Listener Bouton Calquer. Ordonne la création d'un calque.
+ * Listener sur les panel calque. gére toutes les action sur les calques (superposer , remplacer , supprimer , ...)
  * 
  * @author Alexandre Thorez
  * @author Fabien Huitelec
@@ -14,10 +14,10 @@ import javax.swing.AbstractAction;
  * @version 0.2
  */
 
-public class ActionCalquer extends AbstractAction{
+public class ActionCalque extends AbstractAction {
 
 	@Override
-	public void actionPerformed(ActionEvent arg0) {
+	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		
 	}

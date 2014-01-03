@@ -15,13 +15,13 @@ import java.util.ListIterator;
  * 
  * @version 0.1
  */
-public class ListeDessin implements Serializable {
+public class Calque implements Serializable {
 	
 
 	static final long serialVersionUID = 1L;
 	private ArrayList<Forme> listeDessin;
 	
-	public ListeDessin() {
+	public Calque() {
 		this.listeDessin = new ArrayList<Forme>();
 	}
 	
@@ -113,7 +113,7 @@ public class ListeDessin implements Serializable {
 	 * @return void
 	 * 
 	 */
-	public void setListeDessin(ListeDessin listeDessin) {
+	public void setListeDessin(Calque listeDessin) {
 		this.listeDessin = listeDessin.getListeDessin();
 	}
 	
@@ -123,7 +123,7 @@ public class ListeDessin implements Serializable {
 	 * @return void
 	 * 
 	 */
-	public void ajouteDevant(ListeDessin listeDessin) {
+	public void ajouteDevant(Calque listeDessin) {
 		this.listeDessin.addAll(listeDessin.getListeDessin());
 	}
 	
@@ -133,7 +133,7 @@ public class ListeDessin implements Serializable {
 	 * @return void
 	 * 
 	 */
-	public void ajouteDerriere(ListeDessin listeDessin) {
+	public void ajouteDerriere(Calque listeDessin) {
 		this.listeDessin.addAll(0 ,listeDessin.getListeDessin());
 	}
 	

@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
 
 
 //INTERNE
-import model.ListeDessin;
+import model.Calque;
 import model.Model;
 
 
@@ -108,7 +108,7 @@ public class ActionMenuOuvrir extends AbstractAction {
 		try {
 			FileInputStream fichier = new FileInputStream(monFichier);
 			ObjectInputStream input = new ObjectInputStream(fichier);
-			ListeDessin listeDessin = (ListeDessin) input.readObject();
+			Calque listeDessin = (Calque) input.readObject();
 			model.setListeDessin(listeDessin);
 		} catch (StreamCorruptedException e) {
 			System.err.println("Extension non correcte.");

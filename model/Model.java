@@ -16,7 +16,7 @@ import java.util.Observable;
  * @version 0.2
  */
 public class Model extends Observable {
-	private ListeDessin listeDessin;
+	private Calque listeDessin;
 	// Types de modification d'un objet forme
 	private Color couleurCourante;
 	private String typeCourant, objetCourant;
@@ -37,7 +37,7 @@ public class Model extends Observable {
 	 */
 	public Model() {
 		super();
-		this.listeDessin = new ListeDessin();
+		this.listeDessin = new Calque();
 		this.couleurCourante = Color.BLACK;
 		this.typeCourant = "plein";
 		this.objetCourant = "selection";
@@ -143,7 +143,7 @@ public class Model extends Observable {
 	/**
 	 * Supprime la dernière forme de la liste de formes
 	 * 
-	 * @see model.ListeDessin#removeLast
+	 * @see model.Calque#removeLast
 	 */
 	public void delLastForme() {
 		this.listeDessin.removeLast();
@@ -152,7 +152,7 @@ public class Model extends Observable {
 	/**
 	 * Supprime toutes les formes de la liste de formes
 	 * 
-	 * @see model.ListeDessin#removeAll
+	 * @see model.Calque#removeAll
 	 */
 	public void delAllFormes() {
 		this.listeDessin.removeAll();
@@ -270,14 +270,14 @@ public class Model extends Observable {
 	/**
 	 * @category accessor
 	 */
-	public ListeDessin getListeDessin() {
+	public Calque getListeDessin() {
 		return this.listeDessin;
 	}
 
 	/**
 	 * @category accessor
 	 */
-	public void setListeDessin(ListeDessin listeDessin) {
+	public void setListeDessin(Calque listeDessin) {
 		this.listeDessin = listeDessin;
 		setChanged();
 		notifyObservers();
