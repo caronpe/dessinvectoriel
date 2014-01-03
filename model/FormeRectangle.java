@@ -57,9 +57,18 @@ public class FormeRectangle extends Forme implements Serializable {
 	
 	/**
 	 * Calcule selon les différentes positions du point d'arrivée et du point d'origine.
-	 * Réagis à la touche SHIFT appuyé pour créer une forme parfaite.
+	 * Cette approche de la forme est optimisée pour le redimensionnement. En effet,
+	 * le point d'origine sera toujours celui le plus près du point (0, 0), tandis que
+	 * le point de fin sera toujours celui le plus loin. Cette approche permet en outre
+	 * de calculer les point haut-gauche et bas-droit de manière à ce que le redimensionnement
+	 * soit plus souple. 
+	 * Concernant le {@link #calculVariablesParfait()}, il en devient plus compliqué
+	 * puisque les seules variables sur lesquels les test sont viables sont la relativité de la 
+	 * longueur et celle de la hauteur.
+	 * 
 	 * Initialise les marqueurs de sélection du rectangle.
-	 * en les définissant comme parfait.
+	 * 
+	 * @see #calculVariablesParfait()
 	 */
 	protected void calculVariables() {
 		if (this.parfait) {
@@ -93,6 +102,23 @@ public class FormeRectangle extends Forme implements Serializable {
 		this.referentielPosition = new Rectangle2D.Double(oX - 10, oY - 10, width + 20, height + 20);
 	}
 	
+	/**
+	 * Initialise les variables de la forme en prenant en compte le fait qu'elle est parfaite.
+	 * On initialise les variables X et Y des points principaux de manière classique contrairement à
+	 * {@link #calculVariables()}. 
+	 * Ce sont les variables de hauteur et de longueur qui vont nous permettre dans les tests de détecter
+	 * la direction de la forme parfaite. Dans ces tests, nous vérifierons si ces variables sont positives
+	 * ou non.
+	 * Selon les cas, ensuite, nous travaillerons sur les X et les Y des points principaux pour rendre la forme
+	 * la plus conventionnelle possible : comme dans {@link #calculVariables()}, le point d'origine sera toujours 
+	 * celui le plus près du point (0, 0), tandis que le point de fin sera toujours celui le plus loin.
+	 * Dans le dernier cas : le curseur en bas à droite du point d'origine, nous avons besoin de connaître le marqueur
+	 * de redimensionnement pour connaître le comportement à adopter. En effet, une fois le premier appel du 
+	 * {@link #resize(int, Point, boolean)}, la forme devient conventionnelle.
+	 * 
+	 * @see #resize(int, Point, boolean)
+	 * @see #calculVariables()
+	 */
 	protected void calculVariablesParfait() {
 		// Variables initialisées par défaut
 		this.oX = (int) pointOrigin.getX();
@@ -104,27 +130,21 @@ public class FormeRectangle extends Forme implements Serializable {
 					
 		// Si on va en haut à gauche du point d'origine
 		if ( height < 0 && width < 0 ) { 
-			// Le point d'arrivée devient le point d'origine
 			this.aX = oX;
 			this.aY = oY;
 			
-			// On prend la valeur absolue de la hauteur
 			height = Math.abs(height);
 			
-			// On enlève la hauteur au point d'origine pour qu'il devienne le point d'arrivée.
 			this.oX -= height;
 			this.oY -= height;
 			
 			width = height;
+			
 		// Si on part en haut à droite du point d'origine
 		} else if ( height < 0 && width > 0) { 
-			// On prend la valeur absolue de la hauteur
 			height = Math.abs(height);
 			
-			// On enlève la hauteur au point d'origine 
-			oY -= height;
-			
-			// On ajoute la hauteur au point d'origine			
+			oY -= height;			
 			aX = oX + height;
 			aY += height;
 			
@@ -135,18 +155,17 @@ public class FormeRectangle extends Forme implements Serializable {
 			oX -= height;
 			
 			width = height;
-		// Si on part en bas à droite du point d'origine
 		} else if (width > 0 && height > 0) { 
-			if (marqueurCourant == 0) {
+			if (marqueurCourant == 0) { // Si marqueur en haut à gauche
 				width = height;
 				
 				oX = aX - width;
 				oY = aY - width;
-			} else if (marqueurCourant == 1) {
+			} else if (marqueurCourant == 1) { // Si marqueur en haut à droite
 				width = height;
 				aX = oX + width;
 				aY = oY + width;
-			} else {
+			} else { // Si le marqueur est en bas (droite ou gauche) ou s'il ne s'agit pas d'un redimensionnement
 				height = width;
 				
 				aX = oX + width;
