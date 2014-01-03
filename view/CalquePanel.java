@@ -27,8 +27,8 @@ public class CalquePanel  extends JPanel{
 			
 			this.model = model;
 			this.setLayout(new BoxLayout(this , 1));
-			this.add(new Calque(Color.black));
-			this.add(new Calque(Color.green));
+			this.add(new CalqueView(Color.black));
+			this.add(new CalqueView(Color.green));
 			
 		}
 

@@ -1,17 +1,7 @@
 package view;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.TextArea;
-
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-
-import ressources.DimensionMenuGauche;
-
 /**
- * Panel spécialisé correspondant à un calque.
+ * Contient une liste de dessin.
  * 
  * @author Alexandre Thorez
  * @author Fabien Huitelec
@@ -20,13 +10,6 @@ import ressources.DimensionMenuGauche;
  * @version 0.2
  */
 
+public class Calque {
 
-public class Calque extends JPanel{
-
-		public Calque(Color c){
-			this.setPreferredSize(new DimensionMenuGauche());
-			this.setBackground(c);
-			this.setMaximumSize(new DimensionMenuGauche());
-
-		}
 }
