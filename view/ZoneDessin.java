@@ -114,8 +114,6 @@ public class ZoneDessin extends JPanel {
 	 * Redimensionne une image.
 	 * 
 	 * @param source Image à redimensionner.
-	 * @param width Largeur de l'image cible.
-	 * @param height Hauteur de l'image cible.
 	 * @return Image redimensionnée.
 	 */
 	public static Image scale(Image source) {

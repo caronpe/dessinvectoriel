@@ -25,6 +25,7 @@ public class CalqueView extends JPanel{
 		public CalqueView(Calque calque , Image im){
 			this.setPreferredSize(new DimensionMenuDroit());
 			this.setMaximumSize(new DimensionMenuDroit());
+			//met l'image représentative du calque sur le panel
 			this.add(new JLabel(new ImageIcon(im)));
 		}
 }

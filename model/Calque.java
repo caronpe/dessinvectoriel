@@ -19,6 +19,7 @@ public class Calque implements Serializable {
 	
 
 	static final long serialVersionUID = 1L;
+	String name;
 	private ArrayList<Forme> listeDessin;
 	
 	public Calque() {

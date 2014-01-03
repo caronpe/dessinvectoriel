@@ -39,6 +39,10 @@ public class MenuDroit extends JPanel {
 		this.add(new JScrollPane(zoneCalque));
 	}
 
+		/**
+		 * ajoute un calque a la zone de calque
+		 * @param calque
+		 */
 	public void addCalque(Calque calque) {
 		// TODO Auto-generated method stub
 		zoneCalque.addCalque(calque);
