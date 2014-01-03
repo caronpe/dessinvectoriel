@@ -51,6 +51,7 @@ public class Model extends Observable {
 		this.extension = ".cth";
 		this.adresseEnregistrement = null;
 	}
+	
 
 	/**
 	 * Ajoute une figure à la liste des formes présentes. Crée une forme

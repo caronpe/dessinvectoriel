@@ -26,18 +26,39 @@ public class CalqueView extends JPanel{
 
 		Calque calque;
 		Model model;
+		JLabel image;
+		ZoneDessin zoneDessin;
 		
-		public CalqueView(Model model , Calque calque , Image im){
-			this.calque = calque;
+		
+		public CalqueView(Model model, ZoneDessin zoneDessin) {
+			super();
 			this.model = model;
+			this.zoneDessin = zoneDessin;
+
 			this.setPreferredSize(new DimensionMenuDroit());
 			this.setMaximumSize(new DimensionMenuDroit());
 			//met l'image représentative du calque sur le panel
-			this.add(new JLabel(new ImageIcon(im)));
+			this.image = new JLabel(new ImageIcon());
+			this.add(image);
+			this.addMouseListener(new CalqueListener(model , calque));
+		}
+
+		public CalqueView(Model model , Calque calque , ZoneDessin zoneDessin){
+			this.calque = calque;
+			this.model = model;
+			this.zoneDessin = zoneDessin;
+			this.setPreferredSize(new DimensionMenuDroit());
+			this.setMaximumSize(new DimensionMenuDroit());
+			//met l'image représentative du calque sur le panel
+			this.image = new JLabel(new ImageIcon(zoneDessin.getImage()));
+			this.add(image);
 			this.addMouseListener(new CalqueListener(model , calque));
 		}
 		
-		public update(){
-			
+		/**
+		 * met a jour l'image quand la zone de dessin est modifié
+		 */
+		public void update(){
+			image.setIcon(new ImageIcon(zoneDessin.getImage()));
 		}
 }

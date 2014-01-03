@@ -24,14 +24,14 @@ public class CalquePanel  extends JPanel{
 
 		Model model;
 		ZoneDessin zoneDessin;
+		CalqueView dernierCalque;
 
 		public CalquePanel(Model model , ZoneDessin zoneDessin){
 			
 			this.model = model;
 			this.zoneDessin = zoneDessin;
 			this.setLayout(new BoxLayout(this , 1));
-			
-			
+			dernierCalque = new CalqueView(model,  zoneDessin);		
 		}
 
 		/**
@@ -40,7 +40,15 @@ public class CalquePanel  extends JPanel{
 		 */
 		public void addCalque(Calque calque) {
 			// TODO Auto-generated method stub
-			this.add(new CalqueView(model, calque , zoneDessin.getImage()));
+			dernierCalque = new CalqueView(model, calque , zoneDessin);
+			this.add(dernierCalque);
+		}
+		
+		/**
+		 * met à jour l'affichage du Calqueview
+		 */
+		public void updateCalqueView(){
+			dernierCalque.update();
 		}
 		
 		

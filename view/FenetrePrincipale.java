@@ -32,7 +32,6 @@ public class FenetrePrincipale extends JFrame implements Observer {
 		private Container container; // Container principal de la fenêtre
 		private MenuOutils outils; // Menu d'outils sur la gauche
 		private ZoneDessin zoneDessin; // Zone où le dessin s'effectuera.
-
 		private MenuDroit menuDroit; // zone ou les calques apparaitrons
 
 	// MVC
@@ -131,6 +130,7 @@ public class FenetrePrincipale extends JFrame implements Observer {
 			
 			if (arg1 instanceof Forme) { // Si l'argument est une forme, on le caste
 				courant = (Forme) arg1;
+				
 			} else{
 			
 			if (arg1 instanceof Calque) {
@@ -140,6 +140,7 @@ public class FenetrePrincipale extends JFrame implements Observer {
 						"la méthode Update() de la fenêtre principale.");
 			}}
 			zoneDessin.setCourante(courant);
+			menuDroit.updateCalqueView();
 		} else { // S'il n'y a pas d'argument
 			zoneDessin.setCourante(null);
 		}

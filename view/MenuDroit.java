@@ -49,5 +49,11 @@ public class MenuDroit extends JPanel {
 		this.revalidate();
 	}
 	
+	/**
+	 * met à jour l'affichage du Calqueview
+	 */
+	public void updateCalqueView(){
+		zoneCalque.updateCalqueView();
+	}
 	
 }
