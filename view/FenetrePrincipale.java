@@ -9,6 +9,7 @@ import java.util.Observer;
 
 import javax.swing.JFrame;
 
+import model.Calque;
 import model.Forme;
 //INTERNE
 import model.Model;
@@ -127,15 +128,19 @@ public class FenetrePrincipale extends JFrame implements Observer {
 			
 			if (arg1 instanceof Forme) { // Si l'argument est une forme, on le caste
 				courant = (Forme) arg1;
-			} else {
-				System.err.println(	"Erreur lors du cast de la forme dans " +
-									"la méthode Update() de la fenêtre principale.");
-			}
-
+			} else{
+			
+			if (arg1 instanceof Calque) {
+				menuDroit.addCalque((Calque) arg1);
+			}else {
+				System.err.println(	"Erreur " +
+						"la méthode Update() de la fenêtre principale.");
+			}}
 			zoneDessin.setCourante(courant);
 		} else { // S'il n'y a pas d'argument
 			zoneDessin.setCourante(null);
 		}
+		
 		zoneDessin.repaint();
 		outils.selectionCouleur.setBackground(model.getColor());
 	}

@@ -6,6 +6,7 @@ import java.awt.GridLayout;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
+import model.Calque;
 import model.Model;
 
 /**
@@ -31,6 +32,14 @@ public class CalquePanel  extends JPanel{
 			this.add(new CalqueView(Color.green));
 			
 		}
+
+		public void addCalque(Calque calque) {
+			// TODO Auto-generated method stub
+			System.out.println("ajout de calque");
+			this.add(new CalqueView(Color.black));
+		}
+		
+		
 
 	
 }

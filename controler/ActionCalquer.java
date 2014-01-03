@@ -28,9 +28,8 @@ public class ActionCalquer extends AbstractAction{
 
 
 	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		
-		
+	public void actionPerformed(ActionEvent arg0) {		
+		model.calquer();
 	}
 
 }

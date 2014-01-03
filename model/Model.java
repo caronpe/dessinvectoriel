@@ -2,6 +2,7 @@ package model;
 
 import java.awt.Color;
 import java.awt.Point;
+import java.util.ArrayList;
 import java.util.ListIterator;
 import java.util.Observable;
 
@@ -16,7 +17,9 @@ import java.util.Observable;
  * @version 0.2
  */
 public class Model extends Observable {
-	private Calque listeDessin;
+	
+	private ArrayList<Calque> listCalque;
+	private Calque calqueCourant;
 	// Types de modification d'un objet forme
 	private Color couleurCourante;
 	private String typeCourant, objetCourant;
@@ -37,7 +40,10 @@ public class Model extends Observable {
 	 */
 	public Model() {
 		super();
-		this.listeDessin = new Calque();
+		this.calqueCourant = new Calque();
+		//crée la liste qui contiendra les differents calques
+		this.listCalque = new ArrayList<Calque>();
+		this.listCalque.add(calqueCourant);
 		this.couleurCourante = Color.BLACK;
 		this.typeCourant = "plein";
 		this.objetCourant = "selection";
@@ -77,7 +83,7 @@ public class Model extends Observable {
 					objetCourant, couleurCourante, parfait);
 			break;
 		}
-		listeDessin.add(courant);
+		calqueCourant.add(courant);
 
 		// Envoi de la notification aux vues
 		setChanged();
@@ -130,7 +136,7 @@ public class Model extends Observable {
 	}
 	
 	public void deselectionnerToutesLesFormes() {
-		ListIterator<Forme> it = this.listeDessin.iterator();
+		ListIterator<Forme> it = this.calqueCourant.iterator();
 		while (it.hasNext()) {
 			it.next().setSelected(false);
 		}
@@ -146,7 +152,7 @@ public class Model extends Observable {
 	 * @see model.Calque#removeLast
 	 */
 	public void delLastForme() {
-		this.listeDessin.removeLast();
+		this.calqueCourant.removeLast();
 	}
 
 	/**
@@ -155,7 +161,7 @@ public class Model extends Observable {
 	 * @see model.Calque#removeAll
 	 */
 	public void delAllFormes() {
-		this.listeDessin.removeAll();
+		this.calqueCourant.removeAll();
 
 		// Envoi de la notification aux vues
 		setChanged();
@@ -208,7 +214,7 @@ public class Model extends Observable {
 		boolean ilYaDesFormesSelectionnes = false;
 
 		// Parcours de toutes les formes
-		ListIterator<Forme> it = this.listeDessin.iterator();
+		ListIterator<Forme> it = this.calqueCourant.iterator();
 		while (it.hasNext()) {
 			Forme f = it.next();
 			if (f.isSelected()) {
@@ -236,7 +242,7 @@ public class Model extends Observable {
 		boolean ilYaDesFormesSelectionnes = false;
 		
 		// Parcours de toutes les formes
-		ListIterator<Forme> it = this.listeDessin.iterator();
+		ListIterator<Forme> it = this.calqueCourant.iterator();
 		while (it.hasNext()) {
 			Forme f = it.next();
 			if (f.isSelected()) {
@@ -271,14 +277,14 @@ public class Model extends Observable {
 	 * @category accessor
 	 */
 	public Calque getListeDessin() {
-		return this.listeDessin;
+		return this.calqueCourant;
 	}
 
 	/**
 	 * @category accessor
 	 */
 	public void setListeDessin(Calque listeDessin) {
-		this.listeDessin = listeDessin;
+		this.calqueCourant = listeDessin;
 		setChanged();
 		notifyObservers();
 	}
@@ -374,4 +380,15 @@ public class Model extends Observable {
 	public String getAdresseEnregistrement() {
 		return this.adresseEnregistrement;
 	}
+	
+	/**
+	 * place le nouveau calque en calque courant et le stock dans la liste de calque
+	 */
+	public void calquer(){
+		calqueCourant = new Calque(calqueCourant.getListeDessin());
+		listCalque.add(calqueCourant);
+		setChanged();
+		notifyObservers(calqueCourant);
+	}
+	
 }

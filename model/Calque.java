@@ -25,6 +25,10 @@ public class Calque implements Serializable {
 		this.listeDessin = new ArrayList<Forme>();
 	}
 	
+	public Calque(ArrayList<Forme> liste) {
+		this.listeDessin = liste;
+	}
+	
 	/**
 	 * Ajoute une forme à l'arrayList
 	 * 
