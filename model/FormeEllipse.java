@@ -61,7 +61,6 @@ public class FormeEllipse extends Forme implements Serializable {
 			width = Math.abs(width);
 			
 			if ( parfait ) { // Forme parfaite
-				System.out.println("Shift + cercle"); // DEBUG
 				height = width;
 			}
 		}
@@ -71,13 +70,11 @@ public class FormeEllipse extends Forme implements Serializable {
 			height = Math.abs(height);
 			
 			if ( parfait ) { // Forme parfait
-				System.out.println("Shift + cercle"); // DEBUG
 				width = height;
 			}
 		}
 		
 		if ( this.parfait ) { // Forme parfaite en bas à droite du point d'origine
-			System.out.println("Shift + cercle"); // DEBUG
 			height = width;
 		}
 	}

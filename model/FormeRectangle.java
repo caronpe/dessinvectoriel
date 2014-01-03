@@ -32,7 +32,14 @@ public class FormeRectangle extends Forme implements Serializable {
 	 */
 	private Point 	pointHautDroit,
 					pointBasGauche;
-	
+	/**
+	 * Ce marqueur est celui assigné lors de l'appel de la méthode {@link #resize(int, Point, boolean)}.
+	 * Il ne sert que pour le resize d'une forme parfaite. En effet, les marqueurs du haut ne fonctionnent pas
+	 * lors du resize si on fait un height = width au lieu de width = height
+	 * 
+	 * @see #calculVariablesParfait()
+	 */
+	private int marqueurCourant;
 	/**
 	 * Même constructeur que la classe abstraite Forme. 
 	 * Instancie les coordonnées et appelle une méthode de calcul privée pour les initialiser.
@@ -44,6 +51,7 @@ public class FormeRectangle extends Forme implements Serializable {
 		super(pointDebut, pointArrivee, type, objet, couleur, parfait);
 		
 		this.marqueurs = new Rectangle2D.Double[4];
+		this.marqueurCourant = -1;
 		calculVariables();
 	}
 	
@@ -54,18 +62,18 @@ public class FormeRectangle extends Forme implements Serializable {
 	 * en les définissant comme parfait.
 	 */
 	protected void calculVariables() {
-		// Calculs pour l'initialisation du référentiel
-		this.oX = Math.min( (int) pointOrigin.getX(), (int) pointFin.getX() );
-		this.oY = Math.min( (int) pointOrigin.getY(), (int) pointFin.getY() );
-		
-		this.aX = Math.max( (int) pointOrigin.getX(), (int) pointFin.getX() );
-		this.aY = Math.max( (int) pointOrigin.getY(), (int) pointFin.getY() );	
-		
-		this.width = (int) (aX - oX);
-		this.height = (int) (aY - oY);
-		
-		if ( this.parfait ) {
-			this.width = height;
+		if (this.parfait) {
+			calculVariablesParfait();
+		} else {
+			// Calculs pour l'initialisation du référentiel
+			this.oX = Math.min( (int) pointOrigin.getX(), (int) pointFin.getX() );
+			this.oY = Math.min( (int) pointOrigin.getY(), (int) pointFin.getY() );
+			
+			this.aX = Math.max( (int) pointOrigin.getX(), (int) pointFin.getX() );
+			this.aY = Math.max( (int) pointOrigin.getY(), (int) pointFin.getY() );
+			
+			this.width = (int) (aX - oX);
+			this.height = (int) (aY - oY);
 		}
 		
 		// On réinitialise les points de la forme
@@ -74,7 +82,7 @@ public class FormeRectangle extends Forme implements Serializable {
 		this.pointBasGauche = new Point(oX, aY);
 		this.pointHautDroit= new Point(aX ,oY);
 		
-		// Initialisation des marqueurs
+		// Instanciation des marqueurs
 		this.marqueurs[0] = new Rectangle2D.Double(oX - 13, oY - 13, 7, 7); // En haut à gauche
 		this.marqueurs[1] = new Rectangle2D.Double(oX + width + 7, oY - 13, 7, 7); // En haut à droite
 		this.marqueurs[2] = new Rectangle2D.Double(oX - 13, oY + height + 7, 7, 7); // En bas à gauche
@@ -85,6 +93,70 @@ public class FormeRectangle extends Forme implements Serializable {
 		this.referentielPosition = new Rectangle2D.Double(oX - 10, oY - 10, width + 20, height + 20);
 	}
 	
+	protected void calculVariablesParfait() {
+		// Variables initialisées par défaut
+		this.oX = (int) pointOrigin.getX();
+		this.oY = (int) pointOrigin.getY();
+		this.aX = (int) pointFin.getX();
+		this.aY = (int) pointFin.getY();
+		this.width = (int) (aX - oX);
+		this.height = (int) (aY - oY);
+					
+		// Si on va en haut à gauche du point d'origine
+		if ( height < 0 && width < 0 ) { 
+			// Le point d'arrivée devient le point d'origine
+			this.aX = oX;
+			this.aY = oY;
+			
+			// On prend la valeur absolue de la hauteur
+			height = Math.abs(height);
+			
+			// On enlève la hauteur au point d'origine pour qu'il devienne le point d'arrivée.
+			this.oX -= height;
+			this.oY -= height;
+			
+			width = height;
+		// Si on part en haut à droite du point d'origine
+		} else if ( height < 0 && width > 0) { 
+			// On prend la valeur absolue de la hauteur
+			height = Math.abs(height);
+			
+			// On enlève la hauteur au point d'origine 
+			oY -= height;
+			
+			// On ajoute la hauteur au point d'origine			
+			aX = oX + height;
+			aY += height;
+			
+			width = height;
+		// Si on part en bas à gauche du point d'origine
+		} else if ( width < 0 && height > 0) { 
+			aX = oX;
+			oX -= height;
+			
+			width = height;
+		// Si on part en bas à droite du point d'origine
+		} else if (width > 0 && height > 0) { 
+			if (marqueurCourant == 0) {
+				width = height;
+				
+				oX = aX - width;
+				oY = aY - width;
+			} else if (marqueurCourant == 1) {
+				width = height;
+				aX = oX + width;
+				aY = oY + width;
+			} else {
+				height = width;
+				
+				aX = oX + width;
+				aY = oY + width;
+			}
+		}
+		
+		// On réinitialise le marqueur courant
+		this.marqueurCourant = -1;
+	}
 	
 	public void selectionner(Graphics2D graphics) {
 		// Sauvegarde des variables
@@ -203,6 +275,7 @@ public class FormeRectangle extends Forme implements Serializable {
 	 */
 	public void resize(int marqueur, Point pointResize, boolean parfait) {
 		// Initialisation variables
+		this.marqueurCourant = marqueur;
 		this.parfait = parfait;
 		Point 	tmpOrigin = this.pointOrigin,
 				tmpFin = this.pointFin,
@@ -236,7 +309,7 @@ public class FormeRectangle extends Forme implements Serializable {
 			break;
 			
 		case 2 : // En bas à gauche
-			pointResize.setLocation(pointResize.getX() - 10, pointResize.getY() - 10);
+			pointResize.setLocation(pointResize.getX() + 10, pointResize.getY() - 10);
 			this.setBasGauche(pointResize);
 						
 			if ( ( !(this.getHeight() > 0) && !(this.getWidth() > 0) ) ) { // Test de la taille de la nouvelle forme
@@ -263,6 +336,8 @@ public class FormeRectangle extends Forme implements Serializable {
 			System.err.println("Marqueur non trouvé, problème d'algorithmique.");
 			break;
 		}
+		
+		System.out.println("Début : " + pointOrigin + "\nArrivé : " + pointFin); // DEBUG
 	}
 
 	public void draw(Graphics2D graphics) {

@@ -107,7 +107,6 @@ public class DessinListener implements MouseListener, MouseMotionListener {
 			// Si une forme est en train d'être redimensionnée
 			} else if ( this.resizing >= 0) {
 				// Envoi au model
-				System.out.println("Point arrivée : " + pointArrivee);
 				model.resizeForme(this.resizing, this.modifiedForme, this.pointArrivee);
 			}
 		}
@@ -169,15 +168,6 @@ public class DessinListener implements MouseListener, MouseMotionListener {
 				// Si le curseur est sur un marqueur de la forme
 				if ( f.isSelected() && f.containsPointDeSelection(position)) {
 					this.resizing = f.getMarqueurs(this.pointDebut);
-					/* TODO
-					 * - Définir une méthode dans FormeRectangle qui envoie au modèle
-					 * 		une forme temporaire avec les bonnes coordonnées.
-					 * 		--> resize(Point2D position, boolean final)
-					 * - Appeler cette méthode ici avec le booléen final à false
-					 * - Créer un booléen "modifying"
-					 * - Dans #mouseReleased(), si modifying est à true appeler 
-					 * 		la méthode resize avec le booléen final à true.
-					 */
 				} else {
 					this.dragging = true;
 				}
