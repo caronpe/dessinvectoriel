@@ -3,8 +3,17 @@ package view;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.RenderingHints;
+import java.awt.image.BufferedImage;
 import java.util.ListIterator;
+
 import javax.swing.JPanel;
+
+
+
+import ressources.DimensionMenuDroit;
+
 //INTERNE
 import model.Forme;
 import model.Model;
@@ -82,5 +91,46 @@ public class ZoneDessin extends JPanel {
 	public void setCourante(Forme courante) {
 		this.courante = courante;
 	}
+	
+	
+	/**
+	 * Transforme la zone le panel actuel en une image au format du calque view
+	 * 
+	 * @return Image
+	 */
+	public Image getImage(){
+		   int width = this.getWidth();
+		   int height = this.getHeight();
+		   BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+		   Graphics2D g = image.createGraphics();
+		   this.paintAll(g);
+		   g.dispose();
+		   
+		
+		   return scale(image);
+		}
 
+	/** 
+	 * Redimensionne une image.
+	 * 
+	 * @param source Image à redimensionner.
+	 * @param width Largeur de l'image cible.
+	 * @param height Hauteur de l'image cible.
+	 * @return Image redimensionnée.
+	 */
+	public static Image scale(Image source) {
+		int width = new DimensionMenuDroit().width;
+		int height = new DimensionMenuDroit().height;
+	    /* On crée une nouvelle image aux bonnes dimensions. */
+	    BufferedImage buf = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+	 
+	    /* On dessine sur le Graphics de l'image bufferisée. */
+	    Graphics2D g = buf.createGraphics();
+	    g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+	    g.drawImage(source, 0, 0, width, height, null);
+	    g.dispose();
+	 
+	    /* On retourne l'image bufferisée, qui est une image. */
+	    return buf;
+	}
 }

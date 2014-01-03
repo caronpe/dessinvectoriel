@@ -1,14 +1,13 @@
 package view;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.TextArea;
+import java.awt.Image;
 
-import javax.swing.JButton;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
-import ressources.DimensionMenuGauche;
+import model.Calque;
+import ressources.DimensionMenuDroit;
 
 /**
  * Panel spécialisé correspondant à un calque.
@@ -23,10 +22,9 @@ import ressources.DimensionMenuGauche;
 
 public class CalqueView extends JPanel{
 
-		public CalqueView(Color c){
-			this.setPreferredSize(new DimensionMenuGauche());
-			this.setBackground(c);
-			this.setMaximumSize(new DimensionMenuGauche());
-
+		public CalqueView(Calque calque , Image im){
+			this.setPreferredSize(new DimensionMenuDroit());
+			this.setMaximumSize(new DimensionMenuDroit());
+			this.add(new JLabel(new ImageIcon(im)));
 		}
 }

@@ -83,13 +83,16 @@ public class FenetrePrincipale extends JFrame implements Observer {
 		
 		// Ajout des panels au container
 		outils = new MenuOutils(model);
-		//ajoute un panel que l'on pourra scroller
-		menuDroit = new MenuDroit(model);
+		
+		//création de la zone de dessin
 		zoneDessin = new ZoneDessin(model);
 		zoneDessin.addMouseListener(dessinListener);
 		zoneDessin.addMouseMotionListener(dessinListener);
 		zoneDessin.setFocusable(true);
 		zoneDessin.addKeyListener(keyListener);
+		
+		//ajoute le menu droit (celui des calques)
+		menuDroit = new MenuDroit(model , zoneDessin);
 		container.add(outils, BorderLayout.WEST);
 		container.add(zoneDessin , BorderLayout.CENTER);
 		container.add(menuDroit , BorderLayout.EAST);

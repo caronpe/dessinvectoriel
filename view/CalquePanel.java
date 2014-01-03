@@ -23,20 +23,24 @@ import model.Model;
 public class CalquePanel  extends JPanel{
 
 		Model model;
+		ZoneDessin zoneDessin;
 
-		public CalquePanel(Model model){
+		public CalquePanel(Model model , ZoneDessin zoneDessin){
 			
 			this.model = model;
+			this.zoneDessin = zoneDessin;
 			this.setLayout(new BoxLayout(this , 1));
-			this.add(new CalqueView(Color.black));
-			this.add(new CalqueView(Color.green));
+			
 			
 		}
 
+		/**
+		 *crée une représentation du calque et l'ajoute au panel
+		 * @param calque
+		 */
 		public void addCalque(Calque calque) {
 			// TODO Auto-generated method stub
-			System.out.println("ajout de calque");
-			this.add(new CalqueView(Color.black));
+			this.add(new CalqueView(calque , zoneDessin.getImage()));
 		}
 		
 		

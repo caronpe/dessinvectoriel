@@ -12,9 +12,9 @@ import java.awt.Dimension;
  * @version 0.2
  */
 
-public class DimensionMenuGauche extends Dimension{
+public class DimensionMenuDroit extends Dimension{
 
-	public DimensionMenuGauche() {
+	public DimensionMenuDroit() {
 		super(200, 100);		
 	}
 
