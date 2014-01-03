@@ -40,7 +40,7 @@ public class CalquePanel  extends JPanel{
 		 */
 		public void addCalque(Calque calque) {
 			// TODO Auto-generated method stub
-			this.add(new CalqueView(calque , zoneDessin.getImage()));
+			this.add(new CalqueView(model, calque , zoneDessin.getImage()));
 		}
 		
 		

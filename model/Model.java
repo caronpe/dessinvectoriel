@@ -283,8 +283,8 @@ public class Model extends Observable {
 	/**
 	 * @category accessor
 	 */
-	public void setListeDessin(Calque listeDessin) {
-		this.calqueCourant = listeDessin;
+	public void setCalque(Calque calque) {
+		this.calqueCourant = calque;
 		setChanged();
 		notifyObservers();
 	}

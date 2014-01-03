@@ -27,6 +27,9 @@ public class ActionCalquer extends AbstractAction{
 		}
 
 
+	/**
+	 * calque la situation actuel
+	 */
 	@Override
 	public void actionPerformed(ActionEvent arg0) {		
 		model.calquer();

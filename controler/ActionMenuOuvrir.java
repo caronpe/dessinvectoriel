@@ -109,7 +109,7 @@ public class ActionMenuOuvrir extends AbstractAction {
 			FileInputStream fichier = new FileInputStream(monFichier);
 			ObjectInputStream input = new ObjectInputStream(fichier);
 			Calque listeDessin = (Calque) input.readObject();
-			model.setListeDessin(listeDessin);
+			model.setCalque(listeDessin);
 		} catch (StreamCorruptedException e) {
 			System.err.println("Extension non correcte.");
 			Object[] options = {"OK"};
