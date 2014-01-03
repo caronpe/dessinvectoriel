@@ -16,6 +16,8 @@ import java.util.ListIterator;
  * @version 0.1
  */
 public class ListeDessin implements Serializable {
+	
+
 	static final long serialVersionUID = 1L;
 	private ArrayList<Forme> listeDessin;
 	
@@ -32,7 +34,7 @@ public class ListeDessin implements Serializable {
 		this.listeDessin.add(forme);
 	}
 	
-	public Forme get(int index) {
+	public Forme getIdx(int index) {
 		return this.listeDessin.get(index);
 	}
 	
@@ -66,7 +68,7 @@ public class ListeDessin implements Serializable {
 	 * 
 	 * @see <a href="http://docs.oracle.com/javase/7/docs/api/java/util/ListIterator.html">java.util.ListIterator</a>
 	 */
-	public ListIterator iterator() {
+	public ListIterator<Forme> iterator() {
 		return this.listeDessin.listIterator();
 	}
 	
@@ -94,4 +96,46 @@ public class ListeDessin implements Serializable {
 	public int getSize() {
 		return listeDessin.size();
 	}
+	
+	
+	/**
+	 * 
+	 * @return la liste de Forme
+	 * @category accessor
+	 */
+	public ArrayList<Forme> getListeDessin() {
+		return listeDessin;
+	}
+
+	
+	/**
+	 *  remplace la liste de forme par une autre
+	 * @return void
+	 * 
+	 */
+	public void setListeDessin(ListeDessin listeDessin) {
+		this.listeDessin = listeDessin.getListeDessin();
+	}
+	
+	
+	/**
+	 *  rajoute une liste de forme devant la précedente
+	 * @return void
+	 * 
+	 */
+	public void ajouteDevant(ListeDessin listeDessin) {
+		this.listeDessin.addAll(listeDessin.getListeDessin());
+	}
+	
+	
+	/**
+	 *  rajoute une liste de forme derriere la précedente
+	 * @return void
+	 * 
+	 */
+	public void ajouteDerriere(ListeDessin listeDessin) {
+		this.listeDessin.addAll(0 ,listeDessin.getListeDessin());
+	}
+	
+
 }
