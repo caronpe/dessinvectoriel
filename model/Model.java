@@ -26,6 +26,9 @@ public class Model extends Observable {
 	// Touches
 	private boolean keyShiftPressed,
 					keyControlPressed;
+	// Curseur
+	public final int DEFAULT_CURSOR = 0, NORTH_WEST_CURSOR = 1, NORTH_EAST_CURSOR = 2;
+	private int redimensionnementPotentiel;
 
 	/**
 	 * Couleur : noire,
@@ -73,7 +76,7 @@ public class Model extends Observable {
 					objetCourant, couleurCourante, parfait);
 			break;
 		case "trait":
-			courant = new FormeLine(pointDebut, pointArrivee, typeCourant,
+			courant = new FormeLine(pointDebut, pointArrivee, "vide",
 					objetCourant, couleurCourante, parfait);
 			break;
 		}
@@ -373,6 +376,28 @@ public class Model extends Observable {
 	 */
 	public void setAdresseEnregistrement(String adresseEnregistrement) {
 		this.adresseEnregistrement = adresseEnregistrement;
+	}
+	
+	/**
+	 * @category accessor
+	 * 
+	 * @return S'il y a un redimensionnement potentiel et si différent de 0, quel type de redimensionnement
+	 */
+	public int getRedimensionnement() {
+		return this.redimensionnementPotentiel;
+	}
+	
+	/**
+	 * @category accessor
+	 * 
+	 * @param redimensionnementPotentiel Indique s'il y a un redimensionnement potentiel ou non
+	 * 
+	 */
+	public void setRedimensionnement(int redimensionnementPotentiel) {
+		this.redimensionnementPotentiel = redimensionnementPotentiel;
+		// Envoi de la notification aux vues
+		setChanged();
+		notifyObservers();
 	}
 	
 	/**

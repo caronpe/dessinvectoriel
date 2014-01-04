@@ -1,10 +1,13 @@
 package controler;
 
+import java.awt.Point;
 import java.awt.event.ActionEvent;
+
 import javax.swing.AbstractAction;
+
+import model.Model;
 // INTERNE
 import ressources.JColorChooserUnique;
-import model.Model;
 
 /**
  * Listener pour le bouton des couleurs.

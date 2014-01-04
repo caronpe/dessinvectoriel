@@ -3,12 +3,10 @@ package model;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
-import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Line2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.PathIterator;
-import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
 
@@ -23,27 +21,30 @@ import java.io.Serializable;
  */
 public class FormeLine extends Forme implements Serializable {
 
-	/**
-	 * Permets de renvoyer un contains correct. Sera Rectangle2D.Double et Path2D
-	 * puisqu'il contiendra des transformations (rotation et translations).
-	 * 
-	 * @see #initialiserReferentiel()
-	 */
-	private Shape referentielPosition;
-
 	public FormeLine(Point pointDebut, Point pointArrivee, String type,
 			String objet, Color couleur, boolean parfait) {
 		super(pointDebut, pointArrivee, type, objet, couleur, parfait);
 
-		calculVariables();
-		this.forme = new Line2D.Double(oX, oY, aX, aY);
+		this.marqueurs = new Rectangle2D.Double[2];
+		this.calculVariables();
 	}
 
+	@Override
 	protected void calculVariables() {
+		// Variables initialisées par défaut
 		this.oX = (int) pointOrigin.getX();
 		this.oY = (int) pointOrigin.getY();
 		this.aX = (int) pointFin.getX();
 		this.aY = (int) pointFin.getY();
+		
+		this.initialiserReferentiel();
+		
+		// Instanciation des marqueurs
+		this.marqueurs[0] = new Rectangle2D.Double(oX - 4, oY - 4, 8, 8); // Point d'origine
+		this.marqueurs[1] = new Rectangle2D.Double(aX - 4, aY - 4, 8, 8); // Point de fin
+		
+		// Instanciation de la forme et du référentiel
+		this.forme = new Line2D.Double(oX, oY, aX, aY);
 	}
 	
 	/**
@@ -92,47 +93,49 @@ public class FormeLine extends Forme implements Serializable {
 		referentielPosition = path;
 	}
 
-	/**
-	 * Utilise le contains du referentielPosition.
-	 */
-	public boolean contains(Point2D position) {
-		this.initialiserReferentiel();
-		return this.referentielPosition.contains(position);
-	}
 
+	@Override
 	public void setOrigin(Point pointDebut) {
 		this.pointOrigin = pointDebut;
+		
 		calculVariables();
 	}
 
+	@Override
 	public void setFin(Point pointArrivee) {
 		this.pointFin = pointArrivee;
 		
-		// Réinitialise la forme et le référentiel avec les nouvelles coordonnées.
 		calculVariables();
-		initialiserReferentiel();
-		this.forme = new Line2D.Double(oX, oY, aX, aY);
-		
 	}
-
-	
 
 	@Override
 	public void selectionner(Graphics2D graphics) {
 		Color tmp = graphics.getColor();
-		graphics.setColor(Color.BLACK);
+		graphics.setColor(Color.GRAY);
 
-		// Rectangles des extrémités
-		graphics.fillRect(oX - 4, oY - 4, 8, 8);
-		graphics.fillRect(aX - 4, aY - 4, 8, 8);
+		// Marqueurs
+		for (Rectangle2D.Double rectangle : marqueurs) {
+			graphics.fill(rectangle);
+		}
 		
 		// Rétablissement de la couleur d'origine
 		graphics.setColor(tmp);
 	}
-
+	
 	@Override
-	public boolean containsPointDeSelection(Point2D position) {
-		// TODO Auto-generated method stub
-		return false;
+	public void resize(int marqueur, Point pointResize, boolean parfait) {
+		// Initialisation variables
+		Point 	tmpOrigin = this.pointOrigin,
+				tmpFin = this.pointFin;
+		
+		switch (marqueur) {
+		case 0 : // Origine
+			this.setOrigin(pointResize);
+			break;
+			
+		case 1 : // Fin
+			this.setFin(pointResize);
+			break;
+		}
 	}
 }

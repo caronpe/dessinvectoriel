@@ -79,8 +79,4 @@ public class FormeRectangle extends Forme {
 		graphics.setColor(colorTmp); // Rétablissement de la couleur d'origine
 		graphics.setComposite(AlphaComposite.SrcOver); // Rétablissement de la transparence d'origine
 	}
-
-	
-	
-	
 }

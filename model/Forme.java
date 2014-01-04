@@ -20,11 +20,7 @@ import java.io.Serializable;
  * @author Fabien Huitelec
  * @author Pierre-Édouard Caron
  * 
- * @version 0.2
- */
-/**
- * @author Fabien
- *
+ * @version 0.3
  */
 public abstract class Forme implements Serializable {
 	protected int oX, oY, aX, aY, width, height;
