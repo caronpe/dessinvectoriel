@@ -1,27 +1,22 @@
 package view;
 
-import java.awt.Image;
-
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
 import model.Calque;
 import model.Model;
 import ressources.DimensionMenuDroit;
 import controler.CalqueListener;
 
 /**
- * Panel spécialisé correspondant à un calque.
+ * Panel spÃ©cialisÃ© correspondant Ã  un calque.
  * 
  * @author Alexandre Thorez
  * @author Fabien Huitelec
  * @author Pierre-Ã‰douard Caron
  * 
- * @version 0.2
+ * @version 0.3
  */
-
-
 public class CalqueView extends JPanel{
 
 		Calque calque;
@@ -37,7 +32,7 @@ public class CalqueView extends JPanel{
 
 			this.setPreferredSize(new DimensionMenuDroit());
 			this.setMaximumSize(new DimensionMenuDroit());
-			//met l'image représentative du calque sur le panel
+			//met l'image reprï¿½sentative du calque sur le panel
 			this.image = new JLabel(new ImageIcon());
 			this.add(image);
 			this.addMouseListener(new CalqueListener(model , calque));
@@ -49,14 +44,14 @@ public class CalqueView extends JPanel{
 			this.zoneDessin = zoneDessin;
 			this.setPreferredSize(new DimensionMenuDroit());
 			this.setMaximumSize(new DimensionMenuDroit());
-			//met l'image représentative du calque sur le panel
+			//met l'image reprï¿½sentative du calque sur le panel
 			this.image = new JLabel(new ImageIcon(zoneDessin.getImage()));
 			this.add(image);
 			this.addMouseListener(new CalqueListener(model , calque));
 		}
 		
 		/**
-		 * met a jour l'image quand la zone de dessin est modifié
+		 * met a jour l'image quand la zone de dessin est modifiï¿½
 		 */
 		public void update(){
 			image.setIcon(new ImageIcon(zoneDessin.getImage()));

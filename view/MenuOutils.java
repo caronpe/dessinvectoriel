@@ -1,11 +1,8 @@
 package view;
 
 import java.awt.Dimension;
-import java.awt.Point;
-
 import javax.swing.JButton;
 import javax.swing.JPanel;
-
 // INTERNE
 import model.Model;
 import controler.ActionOutilCouleurs;

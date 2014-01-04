@@ -24,7 +24,7 @@ public class MenuDroit extends JPanel {
 	private Model model;
 	public ZoneDessin zoneDessin;
 	private CalquePanel zoneCalque; // zone ou les calques apparaitrons
-	private JButton calquer; //bouton qui créera un calque et l'ajoutera à ma liste
+	private JButton calquer; //bouton qui crï¿½era un calque et l'ajoutera ï¿½ ma liste
 	
 	public MenuDroit(Model model , ZoneDessin zoneDessin) {
 		super();
@@ -50,7 +50,7 @@ public class MenuDroit extends JPanel {
 	}
 	
 	/**
-	 * met à jour l'affichage du Calqueview
+	 * met ï¿½ jour l'affichage du Calqueview
 	 */
 	public void updateCalqueView(){
 		zoneCalque.updateCalqueView();

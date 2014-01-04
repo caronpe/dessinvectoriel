@@ -1,8 +1,5 @@
 package view;
 
-import java.awt.Color;
-import java.awt.GridLayout;
-
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
@@ -35,7 +32,7 @@ public class CalquePanel  extends JPanel{
 		}
 
 		/**
-		 *crée une représentation du calque et l'ajoute au panel
+		 *crï¿½e une reprï¿½sentation du calque et l'ajoute au panel
 		 * @param calque
 		 */
 		public void addCalque(Calque calque) {
@@ -45,7 +42,7 @@ public class CalquePanel  extends JPanel{
 		}
 		
 		/**
-		 * met à jour l'affichage du Calqueview
+		 * met ï¿½ jour l'affichage du Calqueview
 		 */
 		public void updateCalqueView(){
 			dernierCalque.update();
