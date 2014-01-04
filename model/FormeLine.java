@@ -108,19 +108,16 @@ public class FormeLine extends Forme implements Serializable {
 	public void setFin(Point pointArrivee) {
 		this.pointFin = pointArrivee;
 		
-		// Réinitialise la forme et le référentiel avec les nouvelles
-		// coordonnées.
+		// Réinitialise la forme et le référentiel avec les nouvelles coordonnées.
 		calculVariables();
 		initialiserReferentiel();
 		this.forme = new Line2D.Double(oX, oY, aX, aY);
 		
 	}
 
-	public void draw(Graphics2D graphics) {
-		super.draw(graphics);
-		graphics.draw(forme);
-	}
+	
 
+	@Override
 	public void selectionner(Graphics2D graphics) {
 		Color tmp = graphics.getColor();
 		graphics.setColor(Color.BLACK);
