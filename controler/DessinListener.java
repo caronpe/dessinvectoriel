@@ -4,7 +4,6 @@ import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.awt.geom.Point2D;
 import java.util.ListIterator;
 //INTERNE
 import model.Forme;
@@ -28,8 +27,12 @@ import view.ZoneDessin;
  */
 public class DessinListener implements MouseListener, MouseMotionListener {
 	private Point pointDebut, pointArrivee;
-	Forme draggingForme; /**  Lorsqu'une forme est déplacée, on la déplace dans cette variable. */ 
-	boolean dragging; /** Lorsque une forme est sélectionnée et déplacée, ce booléen est à vrai. */
+	/**  Lorsqu'une forme est déplacée ou redimensionnée, on la déplace dans cette variable. */ 
+	Forme modifiedForme;
+	/** Lorsque une forme est sélectionnée et déplacée, ce booléen est à vrai. */
+	boolean dragging;
+	/** Lorsque une forme est sélectionnée et redimensionnée, ce booléen est à vrai. */
+	int resizing;
 	private Model model;
 	
 	/**
@@ -42,7 +45,8 @@ public class DessinListener implements MouseListener, MouseMotionListener {
 		super();
 		this.model = model;
 		this.dragging = false;
-		this.draggingForme = null;
+		this.resizing = -1;
+		this.modifiedForme = null; 
 	}
 
 	/**
@@ -59,41 +63,9 @@ public class DessinListener implements MouseListener, MouseMotionListener {
 		// Servira aux outils de création
 		this.pointDebut = new Point(e.getPoint());
 		
-		// Vérification de la touche contrôle
-		if ( !model.getControlPressed() ) {
-			model.deselectionnerToutesLesFormes();
-		}
-		
 		// Si Sélection
-		if (model.getObjetCourant().equals("selection")) {			
-			// Initialisation
-			boolean trouve = false;
-			ListIterator<Forme> it = model.getListeDessin().iterator();
-			while (it.hasNext()) it.next(); // On déroule la liste pour commencer par la fin
-			
-			// Parcours de la liste à la recherche d'une forme correspondante si elle n'est pas déjà trouvée
-			while (it.hasPrevious() && !trouve) {
-				Forme f = it.previous();
-				
-				// Une forme contient les coordonnées du clic
-				if ( f.contains((Point2D)e.getPoint())) {
-					// Sélection
-					if (f.isSelected()) {
-						model.deselectionner(f);
-					} else {
-						model.selectionner(f);
-					}
-					
-					
-					// Définition du dragging ...
-					this.pointDebut = e.getPoint();
-					this.draggingForme = f;
-					this.dragging = true;
-					
-					// Fin de boucle
-					trouve = true;
-				}
-			}
+		if (model.getObjetCourant().equals("selection")) {	
+			this.GestionSelection();
 		}
 	}
 
@@ -102,8 +74,9 @@ public class DessinListener implements MouseListener, MouseMotionListener {
 	 * dessine une forme temporaire en récupérant les données du modèle,
 	 * le point d'origine (lorsque la souris est cliquée)  et le point final (l'actuel).
 	 * Quand l'outil est sélection, gère le déplacement de l'objet :
-	 * Appelle la modification de forme du modèle avec la draggingForme courante.
-	 * 
+	 * Gère le resize et le déplacement pour un affichage dynamique.
+	 * Pour le déplacement, redéfinis le point de début dans le cas d'une déplacement. 
+	 *  
 	 * @category mouseListeners
 	 * 
 	 * @param e Coordonnées de la souris pendant le déplacement.
@@ -113,7 +86,7 @@ public class DessinListener implements MouseListener, MouseMotionListener {
 		if (!model.getObjetCourant().equals("selection")) { 
 			pointArrivee = e.getPoint();
 			
-			// Si c'est une forme parfaite
+			// Si c'est une forme parfaite ou non
 			if ( model.getShiftPressed() ) {
 				model.addTmpForme(this.pointDebut, e.getPoint(), true);
 			} else {
@@ -121,23 +94,27 @@ public class DessinListener implements MouseListener, MouseMotionListener {
 			}
 		// Si Sélection
 		} else {
+			this.pointArrivee = e.getPoint();
+			
 			// Si une forme est en train d'être déplacée
 			if ( this.dragging ) {
-				// ... Définition du dragging ...
-				this.pointArrivee = e.getPoint();
-				
 				// Envoi au model
-				model.formeModifiee(this.draggingForme, this.pointDebut, this.pointArrivee);
+				model.deplacementForme(this.modifiedForme, this.pointDebut, this.pointArrivee);
 				
-				// ... Redéfinition du dragging
+				// Redéfinition du dragging
 				this.pointDebut = this.pointArrivee;
+				
+			// Si une forme est en train d'être redimensionnée
+			} else if ( this.resizing >= 0) {
+				// Envoi au model
+				model.resizeForme(this.resizing, this.modifiedForme, this.pointArrivee);
 			}
 		}
 	}
 	
 	/**
 	 * Si un outil de création est sélectionné, dessine la forme avec le point d'arrivée final.
-	 * S'il y a eu un quelconque dragging de forme, les variables associées sont réinitialisés.
+	 * S'il y a eu un quelconque changement de forme, les variables associées sont réinitialisés.
 	 * 
 	 * @category mouseListeners
 	 * 
@@ -146,7 +123,7 @@ public class DessinListener implements MouseListener, MouseMotionListener {
 	public void mouseReleased(MouseEvent e) {
 		this.pointArrivee = e.getPoint();
 		
-		// Si pas Sélection
+		// Si pas l'outil Sélection
 		if (!model.getObjetCourant().equals("selection")) {
 			// Si c'est une forme parfaite
 			if ( model.getShiftPressed() ) {
@@ -156,16 +133,87 @@ public class DessinListener implements MouseListener, MouseMotionListener {
 			}
 		}
 		
-		// Réinitialisation du dragging
+		// Réinitialisation des variables de modification
 		this.dragging = false;
-		this.draggingForme = null;
+		this.resizing = -1;
+		this.modifiedForme = null;
 	}
 	
 	/**
-	 * @category unused
-	 * @deprecated
+	 * S'occupe de la Sélection lors du clic.
+	 * Vérifie si la touche Controle est pressée ou non et déselectionne toutes les forme si ce n'est pas le cas.
+	 * Parcours la liste de dessin à la recherche d'une forme qui contient les coordonnées du point de clic.
+	 * Gère la sélection/désélection de la forme en question si elle est trouvée.
+	 * Détermine si, lors du clic sur une forme, il s'agit d'un drag ou d'un resize.
+	 * 
+	 * @see #mouseClicked(MouseEvent)
+	 */
+	private void GestionSelection() {
+		// Initialisation
+		boolean trouve = false;
+		ListIterator<Forme> it = model.getListeDessin().iterator();
+		while (it.hasNext())
+			it.next(); // On déroule la liste pour commencer par la fin		
+		
+		// Vérification de la touche contrôle
+		if ( !model.getControlPressed() ) {
+			model.deselectionnerToutesLesFormes();
+		}
+		
+		// Parcours de la liste à la recherche d'une forme correspondante si
+		// elle n'est pas déjà trouvée
+		while (it.hasPrevious() && !trouve) {
+			Forme f = it.previous();
+
+			// Une forme contient les coordonnées du clic
+			if (f.contains(this.pointDebut)) {
+				// Sélection/Désélection
+				if (f.isSelected()) {
+					model.deselectionner(f);
+				} else {
+					model.selectionner(f);
+				}
+				
+				// Si le curseur est sur un marqueur de la forme ou non
+				if ( f.isSelected() && f.containsPointDeSelection(this.pointDebut)) {
+					this.resizing = f.getMarqueurs(this.pointDebut);
+				
+				} else {
+					this.dragging = true;
+				}
+
+				// Définition de la modification de forme...
+				this.modifiedForme = f;
+				
+				// Fin de boucle
+				trouve = true;
+			}
+		}
+	}
+	
+	/**
+	 * S'occupe du changement de curseur pour le redimensionnement.
+	 * Vérifie le marqueur sélectionné pour définir son orientation
+	 * (Nord-Ouest ou Nord-Est).
+	 * Pour la FormeLine, il ne se passe aucun changement de curseur.
+	 * 
+	 * @category mouseListeners
 	 */
 	public void mouseMoved(MouseEvent e) {
+		if (this.model.getObjetCourant().equals("selection")) { // Si l'outil courant est sélection
+			Forme f = null;
+			ListIterator<Forme> it = this.model.getListeDessin().iterator();
+			while (it.hasNext()) {
+				f = it.next();
+				if (f.getObjet() != "trait" && f.isSelected() && ( f.getMarqueurs(e.getPoint()) == 0 || f.getMarqueurs(e.getPoint()) == 3 )) {
+					this.model.setRedimensionnement(this.model.NORTH_WEST_CURSOR);
+				} else if (f.getObjet() != "trait" && f.isSelected() && ( f.getMarqueurs(e.getPoint()) == 1 || f.getMarqueurs(e.getPoint()) == 2 )) {
+					this.model.setRedimensionnement(this.model.NORTH_EAST_CURSOR);
+				} else {
+					this.model.setRedimensionnement(this.model.DEFAULT_CURSOR);
+				}
+			}
+		}
 	}
 	/**
 	 * @category unused
@@ -178,6 +226,7 @@ public class DessinListener implements MouseListener, MouseMotionListener {
 	 * @deprecated
 	 */
 	public void mouseEntered(MouseEvent e) {
+		
 	}
 	/**
 	 * @category unused

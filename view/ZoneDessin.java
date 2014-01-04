@@ -1,20 +1,16 @@
 package view;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.util.ListIterator;
-
 import javax.swing.JPanel;
-
-
-
-import ressources.DimensionMenuDroit;
-
 //INTERNE
+import ressources.DimensionMenuDroit;
 import model.Forme;
 import model.Model;
 
@@ -25,7 +21,7 @@ import model.Model;
  * @author Fabien Huitelec
  * @author Pierre-Édouard Caron
  * 
- * @version 0.2
+ * @version 0.3
  */
 public class ZoneDessin extends JPanel {
 	private Forme courante;
@@ -67,9 +63,19 @@ public class ZoneDessin extends JPanel {
 				forme.selectionner(g2d);
 			}
 		}
-
-		if (courante != null) { // Si courante n'a pas encore été initialisée
+		
+		// Si courante n'a pas encore été initialisée
+		if (courante != null) { 
 			courante.draw(g2d);
+		}
+		
+		// Gestion du curseur de redimensionnement
+		if (this.model.getRedimensionnement() == model.NORTH_WEST_CURSOR) {
+			this.setCursor(new Cursor(Cursor.NW_RESIZE_CURSOR));
+		} else if (this.model.getRedimensionnement() == model.NORTH_EAST_CURSOR ) {
+			this.setCursor(new Cursor(Cursor.NE_RESIZE_CURSOR));
+		} else {
+			this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 		}
 	}
 

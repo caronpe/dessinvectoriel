@@ -29,6 +29,9 @@ public class Model extends Observable {
 	// Touches
 	private boolean keyShiftPressed,
 					keyControlPressed;
+	// Curseur
+	public final int DEFAULT_CURSOR = 0, NORTH_WEST_CURSOR = 1, NORTH_EAST_CURSOR = 2;
+	private int redimensionnementPotentiel;
 
 	/**
 	 * Couleur : noire,
@@ -80,7 +83,7 @@ public class Model extends Observable {
 					objetCourant, couleurCourante, parfait);
 			break;
 		case "trait":
-			courant = new FormeLine(pointDebut, pointArrivee, typeCourant,
+			courant = new FormeLine(pointDebut, pointArrivee, "vide",
 					objetCourant, couleurCourante, parfait);
 			break;
 		}
@@ -184,14 +187,14 @@ public class Model extends Observable {
 	 * 
 	 * @see controler.DessinListener#mouseDragged
 	 */
-	public void formeModifiee(Forme forme, Point pointDebut, Point pointArrivee) {
+	public void deplacementForme(Forme forme, Point pointDebut, Point pointArrivee) {
 		// Initialisation distances
-		int distanceX = (int) (pointArrivee.getX() - pointDebut.getX()), distanceY = (int) (pointArrivee
-				.getY() - pointDebut.getY());
+		int 	distanceX = (int) (pointArrivee.getX() - pointDebut.getX()),
+				distanceY = (int) (pointArrivee.getY() - pointDebut.getY());
 
 		// Point Départ
-		int tmpX = (int) (forme.getOrigin().getX() + distanceX), tmpY = (int) (forme
-				.getOrigin().getY() + distanceY);
+		int 	tmpX = (int) (forme.getOrigin().getX() + distanceX),
+				tmpY = (int) (forme.getOrigin().getY() + distanceY);
 		forme.setOrigin(new Point(tmpX, tmpY));
 
 		// Point Arrivée
@@ -199,6 +202,15 @@ public class Model extends Observable {
 		tmpY = (int) (forme.getFin().getY() + distanceY);
 		forme.setFin(new Point(tmpX, tmpY));
 
+		// Envoi de l'objet au vues
+		setChanged();
+		notifyObservers();
+		setEnregistre(false);
+	}
+	
+	public void resizeForme(int marqueur, Forme forme, Point pointArrivee) {
+		forme.resize(marqueur, pointArrivee, this.getShiftPressed());
+		
 		// Envoi de l'objet au vues
 		setChanged();
 		notifyObservers();
@@ -371,6 +383,28 @@ public class Model extends Observable {
 	 */
 	public void setAdresseEnregistrement(String adresseEnregistrement) {
 		this.adresseEnregistrement = adresseEnregistrement;
+	}
+	
+	/**
+	 * @category accessor
+	 * 
+	 * @return S'il y a un redimensionnement potentiel et si différent de 0, quel type de redimensionnement
+	 */
+	public int getRedimensionnement() {
+		return this.redimensionnementPotentiel;
+	}
+	
+	/**
+	 * @category accessor
+	 * 
+	 * @param redimensionnementPotentiel Indique s'il y a un redimensionnement potentiel ou non
+	 * 
+	 */
+	public void setRedimensionnement(int redimensionnementPotentiel) {
+		this.redimensionnementPotentiel = redimensionnementPotentiel;
+		// Envoi de la notification aux vues
+		setChanged();
+		notifyObservers();
 	}
 	
 	/**

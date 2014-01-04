@@ -1,11 +1,18 @@
 package view;
 
 import java.awt.Dimension;
+import java.awt.Point;
+
 import javax.swing.JButton;
 import javax.swing.JPanel;
+
 // INTERNE
-import model.*;
-import controler.*;
+import model.Model;
+import controler.ActionOutilCouleurs;
+import controler.ActionOutilEllipse;
+import controler.ActionOutilRectangle;
+import controler.ActionOutilSelection;
+import controler.ActionOutilTrait;
 
 /**
  * Menu de gauche contenant tous les outils de couleur,
