@@ -494,23 +494,23 @@ public class Model extends Observable {
 	}
 	
 	/**
-	 * Supprime le calque courant. Le calque courant devient l'avant dernier.
+	 * Supprime le calque qui lui est envoyé.
+	 * Peu importe le calque supprimé, il y aura
+	 * toujours un calque de sélectionné.
 	 */
-	public Calque removeCalque() {
-		Calque calque = null;
-		
+	public void  delCalque(Calque calque) {
+		this.listCalque.remove(calque);
 		this.deselectionnerToutesLesFormes();
-		if (listCalque.size() != 1) {
-			calque = calqueCourant;
-			listCalque.remove(calqueCourant);
-			calqueCourant = listCalque.get(listCalque.size() - 1);
-		}
-				
+			
 		// Envoi de la notification aux vues
 		setChanged();
+		if (listCalque.size() < 1) {
+			System.out.println("here"); // DEBUG
+			this.calqueCourant = new Calque();
+			notifyObservers(calqueCourant);
+		} 
+		this.calqueCourant = listCalque.get(listCalque.size() - 1);
 		notifyObservers();
-		
-		return calque;
 	}
 	
 	@Override

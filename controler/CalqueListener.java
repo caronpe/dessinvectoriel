@@ -42,18 +42,20 @@ public class CalqueListener implements MouseListener {
 	 */
 	@Override
 	public void mousePressed(MouseEvent arg0) {
+		// Clic gauche
 		if(arg0.getButton() == MouseEvent.BUTTON1){
-		model.deselectionnerToutesLesFormes();
-		model.setCalque(calque);
-		System.out.println("clic gauche");
+			model.deselectionnerToutesLesFormes();
+			model.setCalque(calque);
+			System.out.println("Clic gauche"); // DEBUG
 		}
 		
-		// Si clic droit
-		if(arg0.getButton() == MouseEvent.BUTTON3){
+		// Clic droit
+		if(arg0.getButton() == MouseEvent.BUTTON3) {
 			JPopupMenu menu = new JPopupMenu();
 			JMenuItem rem = new JMenuItem("Supprimer");
+			rem.addActionListener(new ActionCalqueRemove(calquePanel, model, calque));
 			menu.add(rem);
-			rem.addActionListener(new ActionCalqueRemove(calquePanel ,model));
+			
 			menu.show(calqueView, arg0.getX(), arg0.getY());
 		}
 	}
