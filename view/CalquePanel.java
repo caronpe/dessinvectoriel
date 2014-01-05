@@ -43,7 +43,7 @@ public class CalquePanel extends JPanel implements Observer {
 	 * @param calque
 	 */
 	public void addCalque(Calque calque) {
-		CalqueView tmp = new CalqueView(model, calque, zoneDessin);
+		CalqueView tmp = new CalqueView(model, calque, zoneDessin , this);
 		this.listCalquesView.add(tmp);
 		this.add(tmp);
 	}
