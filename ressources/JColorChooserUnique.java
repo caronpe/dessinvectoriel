@@ -89,7 +89,7 @@ public class JColorChooserUnique extends JFrame implements ActionListener {
 		this.pack();
 		this.setTitle("Sélection de la couleur");
 		this.setResizable(false);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		this.setLocationRelativeTo(null);
 		
 	}

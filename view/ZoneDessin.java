@@ -47,6 +47,7 @@ public class ZoneDessin extends JPanel {
 	 * initialisé, on ne dessine rien Cela permet d'éviter les erreurs du type
 	 * NullPointerException à la construction de zoneDessin dans la fenêtre
 	 * principale.
+	 * Gère également la modification du curseur
 	 * 
 	 * @category accessor
 	 * 
@@ -75,6 +76,8 @@ public class ZoneDessin extends JPanel {
 			this.setCursor(new Cursor(Cursor.NW_RESIZE_CURSOR));
 		} else if (this.model.getRedimensionnement() == model.NORTH_EAST_CURSOR ) {
 			this.setCursor(new Cursor(Cursor.NE_RESIZE_CURSOR));
+		} else if (this.model.getCreation()) {
+			this.setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
 		} else {
 			this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 		}

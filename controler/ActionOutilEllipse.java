@@ -1,10 +1,18 @@
 package controler;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+
+
+
 // INTERNE
-import model.*;
+import model.Model;
 
 /**
  * Listener pour le bouton cercle.
@@ -40,5 +48,3 @@ public class ActionOutilEllipse extends AbstractAction {
 		model.deselectionnerToutesLesFormes();
 	}
 }
-
-

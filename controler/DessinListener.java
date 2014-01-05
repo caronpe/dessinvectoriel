@@ -68,6 +68,58 @@ public class DessinListener implements MouseListener, MouseMotionListener {
 			this.GestionSelection();
 		}
 	}
+	
+	/**
+	 * S'occupe de la Sélection lors du clic.
+	 * Vérifie si la touche Controle est pressée ou non et déselectionne toutes les forme si ce n'est pas le cas.
+	 * Parcours la liste de dessin à la recherche d'une forme qui contient les coordonnées du point de clic.
+	 * Gère la sélection/désélection de la forme en question si elle est trouvée.
+	 * Détermine si, lors du clic sur une forme, il s'agit d'un drag ou d'un resize.
+	 * 
+	 * @see #mouseClicked(MouseEvent)
+	 */
+	private void GestionSelection() {
+		// Initialisation
+		boolean trouve = false;
+		ListIterator<Forme> it = model.getCalque().listIterator();
+		while (it.hasNext())
+			it.next(); // On déroule la liste pour commencer par la fin	
+		
+		// Vérification de la touche contrôle
+		if ( !model.getControlPressed() ) {
+			model.deselectionnerToutesLesFormes();
+		}
+		
+		// Parcours de la liste à la recherche d'une forme correspondante si
+		// elle n'est pas déjà trouvée
+		while (it.hasPrevious() && !trouve) {
+			Forme f = it.previous();
+
+			// Une forme contient les coordonnées du clic
+			if (f.contains(this.pointDebut)) {
+				// Sélection/Désélection
+				if (f.isSelected()) {
+					model.deselectionner(f);
+				} else {
+					model.selectionner(f);
+				}
+				
+				// Si le curseur est sur un marqueur de la forme ou non
+				if ( f.isSelected() && f.containsPointDeSelection(this.pointDebut)) {
+					this.resizing = f.getMarqueurs(this.pointDebut);
+				
+				} else {
+					this.dragging = true;
+				}
+
+				// Définition de la modification de forme...
+				this.modifiedForme = f;
+				
+				// Fin de boucle
+				trouve = true;
+			}
+		}
+	}
 
 	/**
 	 * Lorqu'un outil de création est sélectionné dans le modèle,
@@ -140,58 +192,6 @@ public class DessinListener implements MouseListener, MouseMotionListener {
 	}
 	
 	/**
-	 * S'occupe de la Sélection lors du clic.
-	 * Vérifie si la touche Controle est pressée ou non et déselectionne toutes les forme si ce n'est pas le cas.
-	 * Parcours la liste de dessin à la recherche d'une forme qui contient les coordonnées du point de clic.
-	 * Gère la sélection/désélection de la forme en question si elle est trouvée.
-	 * Détermine si, lors du clic sur une forme, il s'agit d'un drag ou d'un resize.
-	 * 
-	 * @see #mouseClicked(MouseEvent)
-	 */
-	private void GestionSelection() {
-		// Initialisation
-		boolean trouve = false;
-		ListIterator<Forme> it = model.getCalque().listIterator();
-		while (it.hasNext())
-			it.next(); // On déroule la liste pour commencer par la fin		
-		
-		// Vérification de la touche contrôle
-		if ( !model.getControlPressed() ) {
-			model.deselectionnerToutesLesFormes();
-		}
-		
-		// Parcours de la liste à la recherche d'une forme correspondante si
-		// elle n'est pas déjà trouvée
-		while (it.hasPrevious() && !trouve) {
-			Forme f = it.previous();
-
-			// Une forme contient les coordonnées du clic
-			if (f.contains(this.pointDebut)) {
-				// Sélection/Désélection
-				if (f.isSelected()) {
-					model.deselectionner(f);
-				} else {
-					model.selectionner(f);
-				}
-				
-				// Si le curseur est sur un marqueur de la forme ou non
-				if ( f.isSelected() && f.containsPointDeSelection(this.pointDebut)) {
-					this.resizing = f.getMarqueurs(this.pointDebut);
-				
-				} else {
-					this.dragging = true;
-				}
-
-				// Définition de la modification de forme...
-				this.modifiedForme = f;
-				
-				// Fin de boucle
-				trouve = true;
-			}
-		}
-	}
-	
-	/**
 	 * S'occupe du changement de curseur pour le redimensionnement.
 	 * Vérifie le marqueur sélectionné pour définir son orientation
 	 * (Nord-Ouest ou Nord-Est).
@@ -215,18 +215,25 @@ public class DessinListener implements MouseListener, MouseMotionListener {
 			}
 		}
 	}
+	
+	/**
+	 * Gère le curseur de création (croix)
+	 * 
+	 * @category mouseListeners
+	 */
+	public void mouseEntered(MouseEvent e) {
+		if (!model.getObjetCourant().equals("selection")) {
+			this.model.setCreation(true);
+		} else {
+			this.model.setCreation(false);
+		}
+	}
+	
 	/**
 	 * @category unused
 	 * @deprecated
 	 */
 	public void mouseClicked(MouseEvent e) {
-	}
-	/**
-	 * @category unused
-	 * @deprecated
-	 */
-	public void mouseEntered(MouseEvent e) {
-		
 	}
 	/**
 	 * @category unused

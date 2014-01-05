@@ -51,6 +51,7 @@ public class MenuOutils extends JPanel {
 		cercle.setPreferredSize(new Dimension(22,22));
 		cercle.setFocusable(false);
 		
+		
 		selection = new JButton(new ActionOutilSelection(model));
 		selection.setPreferredSize(new Dimension(22,22));
 		selection.setFocusable(false);
@@ -81,4 +82,5 @@ public class MenuOutils extends JPanel {
         this.setMaximumSize(new Dimension(taille,taille));
 	}
 }
+
 

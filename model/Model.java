@@ -32,6 +32,7 @@ public class Model extends Observable {
 	// Curseur
 	public final int DEFAULT_CURSOR = 0, NORTH_WEST_CURSOR = 1, NORTH_EAST_CURSOR = 2;
 	private int redimensionnementPotentiel;
+	private boolean creationPotentielle;
 
 	/**
 	 * Couleur : noire,
@@ -422,6 +423,29 @@ public class Model extends Observable {
 	 */
 	public void setRedimensionnement(int redimensionnementPotentiel) {
 		this.redimensionnementPotentiel = redimensionnementPotentiel;
+		
+		// Envoi de la notification aux vues
+		setChanged();
+		notifyObservers();
+	}
+	
+	/**
+	 * @category accessor
+	 * 
+	 * @return S'il y a une création potentielle ou non
+	 */
+	public boolean getCreation() {
+		return this.creationPotentielle;
+	}
+	
+	/**
+	 * @category accessor
+	 * 
+	 * @param redimensionnementPotentiel Indique s'il y a une création potentielle ou non
+	 * 
+	 */
+	public void setCreation(boolean creationPotentielle) {
+		this.creationPotentielle = creationPotentielle;
 		
 		// Envoi de la notification aux vues
 		setChanged();
