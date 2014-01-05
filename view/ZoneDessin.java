@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Graphics;
@@ -8,7 +9,9 @@ import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.util.ListIterator;
+
 import javax.swing.JPanel;
+
 import model.Calque;
 import model.Forme;
 import model.Model;
@@ -144,16 +147,20 @@ public class ZoneDessin extends JPanel {
 		   this.paintCalque(g, calque);
 		   g.dispose();
 
-		   return scale(image);
+		   return scale(image, calque);
 		}
 
 	/** 
 	 * Redimensionne une image.
+	 * Crée un voile transparent si le calque reçu
+	 * est le même que le calque courant du modèle.
 	 * 
 	 * @param source Image à redimensionner.
+	 * @param calque Calque qui est à dessiner sur l'image
+	 * 
 	 * @return Image redimensionnée.
 	 */
-	public static Image scale(Image source) {
+	public Image scale(Image source, Calque calque) {
 		int width = new DimensionMenuDroit().width;
 		int height = new DimensionMenuDroit().height;
 	    // On crée une nouvelle image aux bonnes dimensions
@@ -161,9 +168,16 @@ public class ZoneDessin extends JPanel {
 	 
 	    // On dessine sur le Graphics de l'image bufferisée
 	    Graphics2D g = buf.createGraphics();
-	    
+	    	    
 	    g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
 	    g.drawImage(source, 0, 0, width, height, null);
+	    
+	    // Dessin d'un voile transparent pour notifier le calque courant
+	    if (calque == this.model.getCalqueCourant()) {
+	    	g.setComposite(AlphaComposite.SrcOver.derive(0.5f));
+	    	g.setColor(Color.GRAY);
+			g.fillRect(0, 0, width, height);
+	    }
 	    g.dispose();
 	 
 	    // On retourne l'image bufferis�e, qui est une image

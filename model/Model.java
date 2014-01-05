@@ -288,7 +288,7 @@ public class Model extends Observable {
 	 * 
 	 * @return Le calque courant
 	 */
-	public Calque getCalque() {
+	public Calque getCalqueCourant() {
 		return this.calqueCourant;
 	}
 	

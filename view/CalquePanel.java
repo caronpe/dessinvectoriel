@@ -33,7 +33,7 @@ public class CalquePanel extends JPanel implements Observer {
 		this.zoneDessin = zoneDessin;
 		this.setLayout(new BoxLayout(this, 1));
 		this.listCalquesView = new ArrayList<CalqueView>();
-		this.addCalque(model.getCalque());
+		this.addCalque(model.getCalqueCourant());
 	}
 
 	/**

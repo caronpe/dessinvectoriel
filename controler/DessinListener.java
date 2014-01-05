@@ -81,7 +81,7 @@ public class DessinListener implements MouseListener, MouseMotionListener {
 	private void GestionSelection() {
 		// Initialisation
 		boolean trouve = false;
-		ListIterator<Forme> it = model.getCalque().listIterator();
+		ListIterator<Forme> it = model.getCalqueCourant().listIterator();
 		while (it.hasNext())
 			it.next(); // On déroule la liste pour commencer par la fin	
 		
@@ -202,7 +202,7 @@ public class DessinListener implements MouseListener, MouseMotionListener {
 	public void mouseMoved(MouseEvent e) {
 		if (this.model.getObjetCourant().equals("selection")) { // Si l'outil courant est sélection
 			Forme f = null;
-			ListIterator<Forme> it = this.model.getCalque().listIterator();
+			ListIterator<Forme> it = this.model.getCalqueCourant().listIterator();
 			while (it.hasNext()) {
 				f = it.next();
 				if (f.getObjet() != "trait" && f.isSelected() && ( f.getMarqueurs(e.getPoint()) == 0 || f.getMarqueurs(e.getPoint()) == 3 )) {
