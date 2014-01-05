@@ -2,11 +2,12 @@ package controler;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
-
+import java.util.Observable;
+import java.util.Observer;
 import javax.swing.AbstractAction;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-
 // INTERNE
 import model.Model;
 
@@ -17,9 +18,9 @@ import model.Model;
  * @author Fabien Huitelec
  * @author Pierre-Édouard Caron
  * 
- * @version 0.2
+ * @version 0.4
  */
-public class ActionOutilTrait extends AbstractAction {
+public class ActionOutilTrait extends AbstractAction implements Observer {
 	private Model model;
 	private JButton bouton;
 	
@@ -30,11 +31,12 @@ public class ActionOutilTrait extends AbstractAction {
 	 */
 	public ActionOutilTrait(Model model, JButton bouton) {
 		this.model = model;
+		model.addObserver(this);
 		this.bouton = bouton;
 		
 		// Values
 		this.putValue(SHORT_DESCRIPTION, "Sélectionne l'outil trait");
-		this.putValue(SMALL_ICON, new ImageIcon("dessinvectoriel/ressources/crayon.jpg"));
+		this.putValue(SMALL_ICON, new ImageIcon("dessinvectoriel/ressources/crayon.png"));
 	}
 
 	/**
@@ -43,6 +45,16 @@ public class ActionOutilTrait extends AbstractAction {
 	public void actionPerformed(ActionEvent e) {
 		model.setObjetCourant("trait");
 		model.deselectionnerToutesLesFormes();
-		bouton.setBackground(Color.GRAY);
+	}
+
+	@Override
+	public void update(Observable arg0, Object arg1) {
+		if (model.getObjetCourant().equals("trait")) {
+			bouton.setBackground(new Color(220, 220, 220));
+			bouton.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.GRAY));
+		} else {
+			bouton.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.GRAY));
+			bouton.setBackground(Color.WHITE);
+		}
 	}
 }

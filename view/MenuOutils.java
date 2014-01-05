@@ -26,7 +26,7 @@ import controler.ActionOutilTrait;
 public class MenuOutils extends JPanel {
 	Model model;
 	// JButton
-		JButton selection, crayon, rectangle, cercle;
+		JButton selection, crayon, rectangle, ellipse;
 		JButton	selectionCouleur;
 		
 	/**
@@ -46,16 +46,22 @@ public class MenuOutils extends JPanel {
 		crayon.setPreferredSize(new Dimension(22,22));
 		crayon.setFocusable(false);
 		
-		rectangle = new JButton(new ActionOutilRectangle(model));
+		
+		rectangle = new JButton();
+		ActionOutilRectangle rectangleAction = new ActionOutilRectangle(model, rectangle);
+		rectangle.setAction(rectangleAction);
 		rectangle.setPreferredSize(new Dimension(22,22));
 		rectangle.setFocusable(false);
 		
-		cercle = new JButton(new ActionOutilEllipse(model));
-		cercle.setPreferredSize(new Dimension(22,22));
-		cercle.setFocusable(false);
+		ellipse = new JButton();
+		ActionOutilEllipse ellipseAction = new ActionOutilEllipse(model, ellipse);
+		ellipse.setAction(ellipseAction);
+		ellipse.setPreferredSize(new Dimension(22,22));
+		ellipse.setFocusable(false);
 		
-		
-		selection = new JButton(new ActionOutilSelection(model));
+		selection = new JButton();
+		ActionOutilSelection selectionAction = new ActionOutilSelection(model, selection);
+		selection.setAction(selectionAction);
 		selection.setPreferredSize(new Dimension(22,22));
 		selection.setFocusable(false);
 		
@@ -69,7 +75,7 @@ public class MenuOutils extends JPanel {
 		this.add(selection);
 		this.add(crayon);
 		this.add(rectangle);
-		this.add(cercle);
+		this.add(ellipse);
 		// Ajouts boutons couleurs
 		this.add(selectionCouleur);
 	}
