@@ -24,16 +24,14 @@ public class MenuDroit extends JPanel {
 	private JButton addCalque; // Bouton qui créera un calque et l'ajoutera à la liste
 	
 	public MenuDroit(Model model , ZoneDessin zoneDessin) {
-
 		this.setLayout(new BorderLayout());
-		this.setPreferredSize(new DimensionMenuDroit());
 		
 		// Zone où les calques apparaitront
 		CalquePanel calquePanel = new CalquePanel(model, zoneDessin);
 		
 		// JButton
 		addCalque = new JButton(new ActionCalqueAdd(model));
-		addCalque.setPreferredSize(new Dimension(DimensionMenuDroit.width,22));
+		addCalque.setPreferredSize(new Dimension(DimensionMenuDroit.width, 22));
 		addCalque.setFocusable(false);
 		
 		// Panel boutons
@@ -41,10 +39,12 @@ public class MenuDroit extends JPanel {
 		initialiserPanelBouton();
 		buttons.add(addCalque);
 	
+		// JScrollPane
+		JScrollPane scrollPane = new JScrollPane(calquePanel);
+		
 		// Ajouts
 		this.add(buttons, BorderLayout.NORTH);
-		this.add(new JScrollPane(calquePanel), BorderLayout.CENTER);
-
+		this.add(scrollPane, BorderLayout.CENTER);
 	}
 	
 	/**
@@ -53,11 +53,11 @@ public class MenuDroit extends JPanel {
 	 */
 	public void initialiserPanelBouton() {
 		// Taille
-		int width = 45,
-			height = 33;
+		int 	width = DimensionMenuDroit.width,
+				height = 33;
 		
-		buttons.setPreferredSize(new Dimension(DimensionMenuDroit.width, height));
-		buttons.setMinimumSize(new Dimension(DimensionMenuDroit.width, height));
-		buttons.setMaximumSize(new Dimension(DimensionMenuDroit.width, height));
+		buttons.setPreferredSize(new Dimension(width, height));
+		buttons.setMinimumSize(new Dimension(width, height));
+		buttons.setMaximumSize(new Dimension(width, height));
 	}
 }
