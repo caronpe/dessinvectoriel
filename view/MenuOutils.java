@@ -39,7 +39,10 @@ public class MenuOutils extends JPanel {
 		initialiser();
 		
 		// Boutons : Outils
-		crayon = new JButton(new ActionOutilTrait(model));
+		
+		crayon = new JButton();
+		ActionOutilTrait actionTrait = new ActionOutilTrait(model, crayon);
+		crayon.setAction(actionTrait);
 		crayon.setPreferredSize(new Dimension(22,22));
 		crayon.setFocusable(false);
 		
