@@ -25,6 +25,7 @@ public class MenuDroit extends JPanel {
 	private JButton addCalque, removeCalque; // Bouton qui créera un calque et l'ajoutera à la liste
 	
 	public MenuDroit(Model model , ZoneDessin zoneDessin) {
+
 		this.setLayout(new BorderLayout());
 		this.setPreferredSize(new DimensionMenuDroit());
 		
@@ -48,6 +49,7 @@ public class MenuDroit extends JPanel {
 		// Ajouts
 		this.add(buttons, BorderLayout.NORTH);
 		this.add(new JScrollPane(calquePanel), BorderLayout.CENTER);
+
 	}
 	
 	/**
