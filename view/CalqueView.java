@@ -21,14 +21,13 @@ public class CalqueView extends JPanel {
 	private Calque calque;
 	private JLabel image;
 	private ZoneDessin zoneDessin;
-	private CalquePanel calquePanel;
 
-	public CalqueView(Model model, Calque calque, ZoneDessin zoneDessin , CalquePanel calquepanel) {
+	public CalqueView(Model model, Calque calque, ZoneDessin zoneDessin , CalquePanel calquePanel) {
 		this.calque = calque;
 		this.zoneDessin = zoneDessin;
-		this.calquePanel= calquePanel;
-		//ajoute les actions possibles sur les calques
-		this.addMouseListener(new CalqueListener(model, calque , calquePanel , this));
+		
+		// Ajoute les actions possibles sur les calques
+		this.addMouseListener(new CalqueListener(model, calque, calquePanel, this));
 		
 		// Initialisation
 		this.setPreferredSize(new DimensionMenuDroit());

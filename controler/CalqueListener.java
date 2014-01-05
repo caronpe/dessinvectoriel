@@ -29,13 +29,17 @@ public class CalqueListener implements MouseListener {
 	private CalquePanel calquePanel;
 	private CalqueView calqueView;
 
-	public CalqueListener(Model model, Calque calque , CalquePanel calquePanel , CalqueView calqueView ) {
+	public CalqueListener(Model model, Calque calque, CalquePanel calquePanel, CalqueView calqueView ) {
 		this.model = model;
 		this.calque = calque;
 		this.calquePanel= calquePanel;
 		this.calqueView = calqueView;
 	}
 
+	/** Ouverture d'un menu Contextuel sur clic droit donnant la possibilitÃ© de supprimer le calque.
+	 * 
+	 * @see java.awt.event.MouseListener#mousePressed(java.awt.event.MouseEvent)
+	 */
 	@Override
 	public void mousePressed(MouseEvent arg0) {
 		if(arg0.getButton() == MouseEvent.BUTTON1){
@@ -44,14 +48,13 @@ public class CalqueListener implements MouseListener {
 		System.out.println("clic gauche");
 		}
 		
-		//ouverture d'un menu Contextuel sur clic droit donnant la possibilité de supprimer le calque
+		// Si clic droit
 		if(arg0.getButton() == MouseEvent.BUTTON3){
 			JPopupMenu menu = new JPopupMenu();
-			JMenuItem rem = new JMenuItem("supprimer");
+			JMenuItem rem = new JMenuItem("Supprimer");
 			menu.add(rem);
-			rem.addActionListener(new ActionRemoveCalque(calquePanel ,model));
+			rem.addActionListener(new ActionCalqueRemove(calquePanel ,model));
 			menu.show(calqueView, arg0.getX(), arg0.getY());
-			
 		}
 	}
 	

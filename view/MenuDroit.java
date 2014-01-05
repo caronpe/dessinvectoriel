@@ -9,7 +9,7 @@ import javax.swing.JScrollPane;
 import model.Model;
 import ressources.DimensionMenuDroit;
 import controler.ActionCalqueAdd;
-import controler.ActionRemoveCalque;
+import controler.ActionCalqueRemove;
 
 /**
  * Partie droite de la fenêtre
@@ -36,7 +36,7 @@ public class MenuDroit extends JPanel {
 		addCalque = new JButton(new ActionCalqueAdd(model));
 		addCalque.setPreferredSize(new Dimension(22,22));
 		addCalque.setFocusable(false);
-		removeCalque = new JButton(new ActionRemoveCalque(calquePanel, model));
+		removeCalque = new JButton(new ActionCalqueRemove(calquePanel, model));
 		removeCalque.setPreferredSize(new Dimension(22,22));
 		removeCalque.setFocusable(false);
 		
