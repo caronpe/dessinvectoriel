@@ -26,8 +26,7 @@ import controler.ActionOutilTrait;
 public class MenuOutils extends JPanel {
 	Model model;
 	// JButton
-		JButton selection, crayon, rectangle, ellipse;
-		JButton	selectionCouleur;
+		JButton selection, crayon, rectangle, ellipse, selectionCouleur;
 		
 	/**
 	 * Les boutons sont non focusable pour les keylistener fonctionnent
@@ -36,16 +35,16 @@ public class MenuOutils extends JPanel {
 	 */
 	public MenuOutils(Model model){
 		this.model = model;
-		initialiser();
-		
-		// Boutons : Outils
-		
+		initialiserBoutons();
+		initialiserPanel();
+	}
+	
+	private void initialiserBoutons() {
 		crayon = new JButton();
 		ActionOutilTrait actionTrait = new ActionOutilTrait(model, crayon);
 		crayon.setAction(actionTrait);
 		crayon.setPreferredSize(new Dimension(22,22));
 		crayon.setFocusable(false);
-		
 		
 		rectangle = new JButton();
 		ActionOutilRectangle rectangleAction = new ActionOutilRectangle(model, rectangle);
@@ -84,7 +83,7 @@ public class MenuOutils extends JPanel {
 	 * Initialise la taille du panel à 45x45
 	 * @category init
 	 */
-	public void initialiser() {
+	public void initialiserPanel() {
 		int taille = 45;
 		this.setPreferredSize(new Dimension(taille,taille));
         this.setMinimumSize(new Dimension(taille,taille));

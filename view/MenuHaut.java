@@ -1,5 +1,6 @@
 package view;
 
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -12,35 +13,34 @@ import controler.ActionMenuEnregistrerSous;
 import controler.ActionMenuNouveau;
 import controler.ActionMenuOuvrir;
 import controler.ActionMenuQuitter;
+import controler.ActionMenuType;
 
 public class MenuHaut extends JMenuBar {
-	private JMenu fileMenu;
-	private JMenu editMenu;
-	private JMenuItem nouveau;
-	private JMenuItem ouvrir;
-	private JMenuItem enregistrer;
-	private JMenuItem enregistrerSous;
-	private JMenuItem exitAction;
-	private JMenuItem copy;
-	private JMenuItem paste;
+	private JMenu fileMenu, editMenu, formeMenu;
+	private JMenuItem nouveau, ouvrir, enregistrer, enregistrerSous, exit;
+	private JMenuItem copy, paste;
+	private JMenuItem plein;
 
 	public MenuHaut(Model model){
 		// Menus
 		fileMenu = new JMenu("Fichier");
 		editMenu = new JMenu("Édition");
+		formeMenu = new JMenu("Forme");
 		
 		// Ajouts
 		this.add(fileMenu);
 		this.add(editMenu);
+		this.add(formeMenu);
 		
 		// Items
 		nouveau = new JMenuItem(new ActionMenuNouveau(model));
 		ouvrir = new JMenuItem(new ActionMenuOuvrir(model));
 		enregistrer = new JMenuItem(new ActionMenuEnregistrer(model));
 		enregistrerSous = new JMenuItem(new ActionMenuEnregistrerSous(model));
-		exitAction = new JMenuItem(new ActionMenuQuitter(model));
+		exit = new JMenuItem(new ActionMenuQuitter(model));
 		copy = new JMenuItem(new ActionMenuCopier());
 		paste = new JMenuItem(new ActionMenuCouper());
+		plein = new JCheckBoxMenuItem(new ActionMenuType(model));
 		
 		// Menu : Fichiers
 		fileMenu.addSeparator();
@@ -48,11 +48,14 @@ public class MenuHaut extends JMenuBar {
 		fileMenu.add(ouvrir);
 		fileMenu.add(enregistrer);
 		fileMenu.add(enregistrerSous);
-		fileMenu.add(exitAction);
+		fileMenu.add(exit);
 
 		// Menu : Édition
 		editMenu.addSeparator();
 		editMenu.add(copy);
 		editMenu.add(paste);
+		
+		// Menu : Forme
+		formeMenu.add(plein);
 	}
 }

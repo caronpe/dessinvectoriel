@@ -8,8 +8,8 @@ import java.util.Observable;
 import java.util.Observer;
 import javax.swing.JFrame;
 //INTERNE
-import model.Model;
 import model.Forme;
+import model.Model;
 import controler.ActionMenuQuitter;
 import controler.DessinListener;
 import controler.KeyListenerAll;
@@ -45,7 +45,6 @@ public class FenetrePrincipale extends JFrame implements Observer {
 		this.model.addObserver(this);
 		
 		this.initialiser();
-		
 		this.pack();
 	}
 	
@@ -74,10 +73,7 @@ public class FenetrePrincipale extends JFrame implements Observer {
 		// Listeners
 		DessinListener dessinListener = new DessinListener(zoneDessin, model);
 		KeyListenerAll keyListener = new KeyListenerAll(model);
-		
-		// Ajout des panels au container
-		outils = new MenuOutils(model);
-		
+			
 		// Création de la zone de dessin
 		zoneDessin = new ZoneDessin(model);
 		zoneDessin.addMouseListener(dessinListener);
@@ -87,7 +83,10 @@ public class FenetrePrincipale extends JFrame implements Observer {
 		
 		// Création le menu droit (celui des calques)
 		menuDroit = new MenuDroit(model, zoneDessin);
-		
+				
+		// Ajout des panels au container
+		outils = new MenuOutils(model);
+				
 		// Ajouts
 		container.add(outils, BorderLayout.WEST);
 		container.add(zoneDessin , BorderLayout.CENTER);

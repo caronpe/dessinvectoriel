@@ -15,14 +15,14 @@ import model.Model;
  * @version 0.2
  */
 
-public class ActionCalqueAdd extends AbstractAction {
+public class ActionMenuType extends AbstractAction {
 	Model model;
 
-	public ActionCalqueAdd(Model model) {
+	public ActionMenuType(Model model) {
 		this.model = model;
 		
 		// Values
-		this.putValue(NAME, "Nouveau Calque");
+		this.putValue(NAME, "Forme pleine");
 		putValue(SHORT_DESCRIPTION, "Ajoute un calque");
 	}
 
@@ -31,6 +31,10 @@ public class ActionCalqueAdd extends AbstractAction {
 	 */
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		model.addCalque();
+		if (model.getTypeCourant().equals("vide")) {
+			model.setTypeCourant("plein");
+		} else {
+			model.setTypeCourant("vide");
+		}
 	}
 }

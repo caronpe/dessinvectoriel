@@ -131,8 +131,8 @@ public class ZoneDessin extends JPanel {
 		   
 		   // Si la zone de dessin est vide, elle a des dimensions nulles, On corrige donc ce problème
 		   if (width == 0 || height == 0) {
-			   width = new DimensionMenuDroit().width;
-			   height = new DimensionMenuDroit().height;
+			   width = DimensionMenuDroit.width;
+			   height = DimensionMenuDroit.height;
 		   }
 		   
 		   // Création de l'image
@@ -161,8 +161,8 @@ public class ZoneDessin extends JPanel {
 	 * @return Image redimensionnée.
 	 */
 	public Image scale(Image source, Calque calque) {
-		int width = new DimensionMenuDroit().width;
-		int height = new DimensionMenuDroit().height;
+		int width = DimensionMenuDroit.width;
+		int height = DimensionMenuDroit.height;
 	    // On crée une nouvelle image aux bonnes dimensions
 	    BufferedImage buf = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 	 

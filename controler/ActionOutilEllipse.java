@@ -61,5 +61,11 @@ public class ActionOutilEllipse extends AbstractAction  implements Observer {
 			bouton.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.GRAY));
 			bouton.setBackground(Color.WHITE);
 		}
+		
+		if (model.getTypeCourant().equals("vide")) {
+			bouton.setIcon(new ImageIcon("dessinvectoriel/ressources/cercleVide.png"));
+		} else {
+			bouton.setIcon(new ImageIcon("dessinvectoriel/ressources/cerclePlein.png"));
+		}
 	}
 }

@@ -48,8 +48,8 @@ public class Model extends Observable {
 		// Crée la liste qui contiendra les differents calques
 		this.listCalque = new ArrayList<Calque>();
 		this.listCalque.add(calqueCourant);
-		this.couleurCourante = Color.BLACK;
-		this.typeCourant = "plein";
+		this.couleurCourante = Color.GRAY;
+		this.typeCourant = "vide";
 		this.objetCourant = "selection";
 		this.setEnregistre(true);
 		this.extension = ".cth";
@@ -377,6 +377,24 @@ public class Model extends Observable {
 	 */
 	public void setObjetCourant(String objetCourant) {
 		this.objetCourant = objetCourant;
+		
+		// Envoi de la notification aux vues
+		setChanged();
+		notifyObservers();
+	}
+	
+	/**
+	 * @category accessor
+	 * 
+	 * @param objetCourant
+	 *            L'objet à modifier
+	 */
+	public void setTypeCourant(String typeCourant) {
+		this.typeCourant = typeCourant;
+		
+		// Envoi de la notification aux vues
+		setChanged();
+		notifyObservers();
 	}
 
 	/**

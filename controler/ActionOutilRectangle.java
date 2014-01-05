@@ -4,13 +4,10 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.util.Observable;
 import java.util.Observer;
-
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-
-
 // INTERNE
 import model.Model;
 
@@ -50,7 +47,7 @@ public class ActionOutilRectangle extends AbstractAction implements Observer {
 	public void actionPerformed(ActionEvent e) {
 		model.setObjetCourant("rectangle");
 		model.deselectionnerToutesLesFormes();
-	}
+ 	}
 	
 	@Override
 	public void update(Observable arg0, Object arg1) {
@@ -60,6 +57,12 @@ public class ActionOutilRectangle extends AbstractAction implements Observer {
 		} else {
 			bouton.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.GRAY));
 			bouton.setBackground(Color.WHITE);
+		}
+		
+		if (model.getTypeCourant().equals("vide")) {
+			bouton.setIcon(new ImageIcon("dessinvectoriel/ressources/rectangleVide.png"));
+		} else {
+			bouton.setIcon(new ImageIcon("dessinvectoriel/ressources/rectanglePlein.png"));
 		}
 	}
 }
