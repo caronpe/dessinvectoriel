@@ -46,7 +46,6 @@ public class CalqueListener implements MouseListener {
 		if(arg0.getButton() == MouseEvent.BUTTON1){
 			model.deselectionnerToutesLesFormes();
 			model.setCalque(calque);
-			System.out.println("Clic gauche"); // DEBUG
 		}
 		
 		// Clic droit

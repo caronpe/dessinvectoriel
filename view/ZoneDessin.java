@@ -67,11 +67,27 @@ public class ZoneDessin extends JPanel {
 			if (forme.isSelected()) {
 				forme.selectionner(g2d);
 			}
+			if (forme == courante) {
+				System.out.println("yo"); // DEBUG
+				System.out.println(courante);
+			}
 		}
 		
-		// Si courante n'a pas encore été initialisée
+		// Si courante a été initialisée
 		if (courante != null) {
 			courante.draw(g2d);
+		}
+		
+		while (it.hasNext()) {
+			Forme forme = it.next();
+			forme.draw(g2d);
+			if (forme.isSelected()) {
+				forme.selectionner(g2d);
+			}
+			if (forme == courante) {
+				System.out.println("yo"); // DEBUG
+				courante.draw(g2d);
+			}
 		}
 		
 		// Gestion du curseur de redimensionnement

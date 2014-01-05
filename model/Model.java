@@ -48,7 +48,7 @@ public class Model extends Observable {
 		// Crée la liste qui contiendra les differents calques
 		this.listCalque = new ArrayList<Calque>();
 		this.listCalque.add(calqueCourant);
-		this.couleurCourante = Color.GRAY;
+		this.couleurCourante = Color.BLACK;
 		this.typeCourant = "plein";
 		this.objetCourant = "selection";
 		this.setEnregistre(true);
@@ -505,7 +505,6 @@ public class Model extends Observable {
 		// Envoi de la notification aux vues
 		setChanged();
 		if (listCalque.size() < 1) {
-			System.out.println("here"); // DEBUG
 			this.calqueCourant = new Calque();
 			notifyObservers(calqueCourant);
 		} 
