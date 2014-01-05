@@ -40,7 +40,8 @@ public class MenuHaut extends JMenuBar {
 		exit = new JMenuItem(new ActionMenuQuitter(model));
 		copy = new JMenuItem(new ActionMenuCopier());
 		paste = new JMenuItem(new ActionMenuCouper());
-		plein = new JCheckBoxMenuItem(new ActionMenuType(model));
+		plein = new JCheckBoxMenuItem("Forme pleine", true);
+		plein.setAction(new ActionMenuType(model));
 		
 		// Menu : Fichiers
 		fileMenu.addSeparator();

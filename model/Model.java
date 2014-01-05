@@ -49,7 +49,7 @@ public class Model extends Observable {
 		this.listCalque = new ArrayList<Calque>();
 		this.listCalque.add(calqueCourant);
 		this.couleurCourante = Color.GRAY;
-		this.typeCourant = "vide";
+		this.typeCourant = "plein";
 		this.objetCourant = "selection";
 		this.setEnregistre(true);
 		this.extension = ".cth";
