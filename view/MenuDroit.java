@@ -34,7 +34,7 @@ public class MenuDroit extends JPanel {
 		
 		// JButton
 		addCalque = new JButton(new ActionCalqueAdd(model));
-		addCalque.setPreferredSize(new Dimension(22,22));
+		addCalque.setPreferredSize(new Dimension(DimensionMenuDroit.width,22));
 		addCalque.setFocusable(false);
 		removeCalque = new JButton(new ActionCalqueRemove(calquePanel, model));
 		removeCalque.setPreferredSize(new Dimension(22,22));
@@ -44,7 +44,6 @@ public class MenuDroit extends JPanel {
 		buttons = new JPanel();
 		initialiserPanelBouton();
 		buttons.add(addCalque);
-		buttons.add(removeCalque);
 	
 		// Ajouts
 		this.add(buttons, BorderLayout.NORTH);
@@ -61,8 +60,8 @@ public class MenuDroit extends JPanel {
 		int width = 45,
 			height = 33;
 		
-		buttons.setPreferredSize(new Dimension(width,height));
-		buttons.setMinimumSize(new Dimension(width,height));
-		buttons.setMaximumSize(new Dimension(width,height));
+		buttons.setPreferredSize(new Dimension(DimensionMenuDroit.width, height));
+		buttons.setMinimumSize(new Dimension(DimensionMenuDroit.width, height));
+		buttons.setMaximumSize(new Dimension(DimensionMenuDroit.width, height));
 	}
 }

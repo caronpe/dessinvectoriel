@@ -22,7 +22,8 @@ public class ActionCalqueAdd extends AbstractAction {
 	public ActionCalqueAdd(Model model) {
 		this.model = model;
 		
-		this.putValue(SMALL_ICON, new ImageIcon("dessinvectoriel/ressources/addCalque.png"));
+		// Values
+		this.putValue(NAME, "Nouveau Calque");
 		putValue(SHORT_DESCRIPTION, "Ajoute un calque");
 	}
 

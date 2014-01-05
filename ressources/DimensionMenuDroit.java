@@ -13,10 +13,13 @@ import java.awt.Dimension;
  */
 
 public class DimensionMenuDroit extends Dimension{
-
-	public DimensionMenuDroit() {
-		super(200, 100);		
-	}
-
+	public static int width;
+	public static int height;
 	
+	
+	public DimensionMenuDroit() {
+		super(200, 100);
+		width = 200;
+		height = 100;
+	}
 }
