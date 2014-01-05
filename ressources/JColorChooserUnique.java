@@ -85,11 +85,13 @@ public class JColorChooserUnique extends JFrame implements ActionListener {
 		container.add(buttons, BorderLayout.SOUTH);
 		
 		// Frame
+		this.setUndecorated(true);
 		this.pack();
 		this.setTitle("Sélection de la couleur");
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
+		
 	}
 
 	/**
@@ -110,7 +112,7 @@ public class JColorChooserUnique extends JFrame implements ActionListener {
 		if (e.getSource() == this.ok) {
 			model.setColor(colorChooser.getColor());
 		}
-		this.setVisible(false);
+		this.dispose();
 	}
 }
 

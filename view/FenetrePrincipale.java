@@ -30,7 +30,6 @@ public class FenetrePrincipale extends JFrame implements Observer {
 		private MenuOutils outils; // Menu d'outils sur la gauche
 		private ZoneDessin zoneDessin; // Zone où le dessin s'effectuera.
 		private MenuDroit menuDroit; // zone ou les calques apparaitrons
-
 	// MVC
 		private Model model;
 	
@@ -46,7 +45,7 @@ public class FenetrePrincipale extends JFrame implements Observer {
 		this.model.addObserver(this);
 		
 		this.initialiser();
-		this.setJMenuBar(new MenuHaut(model));
+		
 		this.pack();
 	}
 	
@@ -87,13 +86,14 @@ public class FenetrePrincipale extends JFrame implements Observer {
 		zoneDessin.setFocusable(true);
 		zoneDessin.addKeyListener(keyListener);
 		
-		// Ajoute le menu droit (celui des calques)
+		// Création le menu droit (celui des calques)
 		menuDroit = new MenuDroit(model, zoneDessin);
+		
+		// Ajouts
 		container.add(outils, BorderLayout.WEST);
 		container.add(zoneDessin , BorderLayout.CENTER);
 		container.add(menuDroit , BorderLayout.EAST);
 		
-
 		// Configuration de la JFrame
 		this.setFocusable(true);
 		this.requestFocus();
@@ -104,6 +104,9 @@ public class FenetrePrincipale extends JFrame implements Observer {
 		this.addWindowListener(new ActionMenuQuitter(model));
 		this.setMinimumSize(new Dimension(1280, 720));
 		this.setLocationRelativeTo(null);
+		
+		// Barre de menu
+		this.setJMenuBar(new MenuHaut(model)); 
 	}
 	
 	

@@ -17,11 +17,11 @@ import view.CalquePanel;
  * @version 0.2
  */
 
-public class ActionCalqueRemove extends AbstractAction {
+public class ActionRemoveCalque extends AbstractAction {
 	private Model model;
 	private CalquePanel calquePanel;
 
-	public ActionCalqueRemove(CalquePanel calquePanel, Model model) {
+	public ActionRemoveCalque(CalquePanel calquePanel, Model model) {
 		this.model = model;
 		this.calquePanel = calquePanel;
 		
