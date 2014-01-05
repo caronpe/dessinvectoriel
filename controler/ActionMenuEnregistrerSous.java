@@ -87,7 +87,7 @@ public class ActionMenuEnregistrerSous extends AbstractAction {
 		try {
 			FileOutputStream fichier = new FileOutputStream(adresse_du_fichier);
 			ObjectOutputStream output = new ObjectOutputStream(fichier);
-			output.writeObject(model.getListeDessin());
+			output.writeObject(model.getCalque());
 			output.flush();
 			output.close();
 		} catch (java.io.IOException e) {

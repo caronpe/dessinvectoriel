@@ -33,7 +33,7 @@ public class KeyListenerAll extends KeyAdapter {
 		
 		if (e.getKeyCode() == KeyEvent.VK_CONTROL) model.setControlPressed(true);
 		
-		if (e.getKeyCode() == KeyEvent.VK_DELETE) model.supprimerFormes();
+		if (e.getKeyCode() == KeyEvent.VK_DELETE) model.delFormes();
 		
 		// Raccourcis
 		if (e.getKeyCode() == KeyEvent.VK_S && e.isControlDown()) {

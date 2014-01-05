@@ -2,63 +2,42 @@ package controler;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-
+// INTERNE
 import model.Calque;
 import model.Model;
 
 
 /**
- * Listener sur les panel calque. g�re toutes les action sur les calques (superposer , remplacer , supprimer , ...)
+ * Listener sur les panel calque. Gère toutes les action sur les calques : 
+ * superposer, remplacer, supprimer, etc.
  * 
  * @author Alexandre Thorez
  * @author Fabien Huitelec
  * @author Pierre-Édouard Caron
  * 
- * @version 0.2
+ * @version 0.3
  */
-
 public class CalqueListener implements MouseListener {
-
-	Model model;
-	Calque calque;
-	
+	private Model model;
+	private Calque calque;
 
 	public CalqueListener(Model model, Calque calque) {
-		super();
 		this.model = model;
 		this.calque = calque;
 	}
 
 	@Override
-	public void mouseClicked(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		model.setCalque(calque);
-		System.out.println("click ");
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseExited(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public void mousePressed(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
+		model.deselectionnerToutesLesFormes();
+		model.setCalque(calque);
 	}
-
-	@Override
+	
+	public void mouseClicked(MouseEvent arg0) {
+	}
+	public void mouseEntered(MouseEvent arg0) {	
+	}
+	public void mouseExited(MouseEvent arg0) {
+	}
 	public void mouseReleased(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
 	}
-
-
 }

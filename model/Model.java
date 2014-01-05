@@ -44,7 +44,7 @@ public class Model extends Observable {
 	public Model() {
 		super();
 		this.calqueCourant = new Calque();
-		//cr�e la liste qui contiendra les differents calques
+		// Crée la liste qui contiendra les differents calques
 		this.listCalque = new ArrayList<Calque>();
 		this.listCalque.add(calqueCourant);
 		this.couleurCourante = Color.BLACK;
@@ -55,7 +55,6 @@ public class Model extends Observable {
 		this.adresseEnregistrement = null;
 	}
 	
-
 	/**
 	 * Ajoute une figure à la liste des formes présentes. Crée une forme
 	 * spécifique selon l'objet courant. Lorsqu'une forme est ajoutée, l'objet
@@ -92,7 +91,6 @@ public class Model extends Observable {
 		// Envoi de la notification aux vues
 		setChanged();
 		notifyObservers(courant);
-		setEnregistre(false);
 	}
 
 	/**
@@ -126,6 +124,7 @@ public class Model extends Observable {
 	 */
 	public void selectionner(Forme forme) {
 		forme.setSelected(true);
+		
 		// Envoi de la notification aux vues
 		setChanged();
 		notifyObservers();
@@ -140,7 +139,7 @@ public class Model extends Observable {
 	}
 	
 	public void deselectionnerToutesLesFormes() {
-		ListIterator<Forme> it = this.calqueCourant.iterator();
+		ListIterator<Forme> it = this.calqueCourant.listIterator();
 		while (it.hasNext()) {
 			it.next().setSelected(false);
 		}
@@ -149,7 +148,32 @@ public class Model extends Observable {
 		setChanged();
 		notifyObservers();
 	}
-
+	
+	/**
+	 * Supprimes toutes les formes sélectionnées. Si aucune forme n'est sélectionné,
+	 * il n'y a aucune notifications aux vues.
+	 */
+	public void delFormes() {
+		System.out.println("ici");
+		boolean ilYaDesFormesSelectionnes = false;
+		
+		// Parcours de toutes les formes
+		ListIterator<Forme> it = this.calqueCourant.listIterator();
+		while (it.hasNext()) {
+			Forme f = it.next();
+			if (f.isSelected()) {
+				it.remove();
+				ilYaDesFormesSelectionnes = true;
+			}
+		}
+		
+		if (ilYaDesFormesSelectionnes) {
+			// Envoi de la notification aux vues
+			setChanged();
+			notifyObservers();
+		}
+	}
+	
 	/**
 	 * Supprime la dernière forme de la liste de formes
 	 * 
@@ -205,7 +229,6 @@ public class Model extends Observable {
 		// Envoi de l'objet au vues
 		setChanged();
 		notifyObservers();
-		setEnregistre(false);
 	}
 	
 	public void resizeForme(int marqueur, Forme forme, Point pointArrivee) {
@@ -214,7 +237,6 @@ public class Model extends Observable {
 		// Envoi de l'objet au vues
 		setChanged();
 		notifyObservers();
-		setEnregistre(false);
 	}
 
 	/**
@@ -227,7 +249,7 @@ public class Model extends Observable {
 		boolean ilYaDesFormesSelectionnes = false;
 
 		// Parcours de toutes les formes
-		ListIterator<Forme> it = this.calqueCourant.iterator();
+		ListIterator<Forme> it = this.calqueCourant.listIterator();
 		while (it.hasNext()) {
 			Forme f = it.next();
 			if (f.isSelected()) {
@@ -244,32 +266,6 @@ public class Model extends Observable {
 		// Envoi de la notification aux vues
 		setChanged();
 		notifyObservers();
-		setEnregistre(false);
-	}
-	
-	/**
-	 * Supprimes toutes les formes sélectionnées. Si aucune forme n'est sélectionné,
-	 * il n'y a aucune notifications aux vues.
-	 */
-	public void supprimerFormes() {
-		boolean ilYaDesFormesSelectionnes = false;
-		
-		// Parcours de toutes les formes
-		ListIterator<Forme> it = this.calqueCourant.iterator();
-		while (it.hasNext()) {
-			Forme f = it.next();
-			if (f.isSelected()) {
-				it.remove();
-				ilYaDesFormesSelectionnes = true;
-			}
-		}
-		
-		if (ilYaDesFormesSelectionnes) {
-			// Envoi de la notification aux vues
-			setChanged();
-			notifyObservers();
-			setEnregistre(false);
-		}
 	}
 
 	/**
@@ -288,16 +284,40 @@ public class Model extends Observable {
 
 	/**
 	 * @category accessor
+	 * 
+	 * @return Le calque courant
 	 */
-	public Calque getListeDessin() {
+	public Calque getCalque() {
 		return this.calqueCourant;
+	}
+	
+	/**
+	 * @category accessor
+	 * 
+	 * @return Toutes les formes de tous les calques
+	 */
+	public ArrayList getAllFormes() {
+		ArrayList<Forme> formes = new ArrayList<Forme>();
+		ListIterator<Calque> it = listCalque.listIterator();
+		while (it.hasNext()) {
+			ListIterator<Forme> itF = it.next().listIterator();
+			while (itF.hasNext()) {
+				formes.add(itF.next());
+			}
+		}
+		
+		return formes;
 	}
 
 	/**
 	 * @category accessor
+	 * 
+	 * @param calque Calque que l'on souhaite définir comme courant
 	 */
 	public void setCalque(Calque calque) {
 		this.calqueCourant = calque;
+		
+		// Envoi de la notification aux vues
 		setChanged();
 		notifyObservers();
 	}
@@ -402,6 +422,7 @@ public class Model extends Observable {
 	 */
 	public void setRedimensionnement(int redimensionnementPotentiel) {
 		this.redimensionnementPotentiel = redimensionnementPotentiel;
+		
 		// Envoi de la notification aux vues
 		setChanged();
 		notifyObservers();
@@ -417,13 +438,42 @@ public class Model extends Observable {
 	}
 	
 	/**
-	 * place le nouveau calque en calque courant et le stock dans la liste de calque
+	 * Place le nouveau calque en calque courant et l'ajoute dans la liste de calque.
+	 * Il ajoute donc un calque vide.
 	 */
-	public void calquer(){
-		calqueCourant = new Calque(calqueCourant.getListeDessin());
+	public void addCalque() {
+		this.deselectionnerToutesLesFormes();
+		calqueCourant = new Calque();
 		listCalque.add(calqueCourant);
+				
+		// Envoi de la notification aux vues
 		setChanged();
 		notifyObservers(calqueCourant);
 	}
 	
+	/**
+	 * Supprime le calque courant. Le calque courant devient l'avant dernier.
+	 */
+	public Calque removeCalque() {
+		Calque calque = null;
+		
+		this.deselectionnerToutesLesFormes();
+		if (listCalque.size() != 1) {
+			calque = calqueCourant;
+			listCalque.remove(calqueCourant);
+			calqueCourant = listCalque.get(listCalque.size() - 1);
+		}
+				
+		// Envoi de la notification aux vues
+		setChanged();
+		notifyObservers();
+		
+		return calque;
+	}
+	
+	@Override
+	public void setChanged() {
+		super.setChanged();
+		setEnregistre(false);
+	}
 }

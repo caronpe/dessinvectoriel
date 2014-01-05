@@ -17,43 +17,34 @@ import controler.CalqueListener;
  * 
  * @version 0.3
  */
-public class CalqueView extends JPanel{
+public class CalqueView extends JPanel {
+	private Calque calque;
+	private JLabel image;
+	private ZoneDessin zoneDessin;
 
-		Calque calque;
-		Model model;
-		JLabel image;
-		ZoneDessin zoneDessin;
+	public CalqueView(Model model, Calque calque, ZoneDessin zoneDessin) {
+		this.calque = calque;
+		this.zoneDessin = zoneDessin;
+		this.addMouseListener(new CalqueListener(model, calque));
 		
+		// Initialisation
+		this.setPreferredSize(new DimensionMenuDroit());
+		this.setMaximumSize(new DimensionMenuDroit());
 		
-		public CalqueView(Model model, ZoneDessin zoneDessin) {
-			super();
-			this.model = model;
-			this.zoneDessin = zoneDessin;
+		// Met l'image représentative du calque sur le panel
+		this.image = new JLabel(new ImageIcon(zoneDessin.getImage(calque)));
+		this.add(image);
+	}
+	
+	public Calque getCalque() {
+		return this.calque;
+	}
 
-			this.setPreferredSize(new DimensionMenuDroit());
-			this.setMaximumSize(new DimensionMenuDroit());
-			//met l'image repr�sentative du calque sur le panel
-			this.image = new JLabel(new ImageIcon());
-			this.add(image);
-			this.addMouseListener(new CalqueListener(model , calque));
-		}
-
-		public CalqueView(Model model , Calque calque , ZoneDessin zoneDessin){
-			this.calque = calque;
-			this.model = model;
-			this.zoneDessin = zoneDessin;
-			this.setPreferredSize(new DimensionMenuDroit());
-			this.setMaximumSize(new DimensionMenuDroit());
-			//met l'image repr�sentative du calque sur le panel
-			this.image = new JLabel(new ImageIcon(zoneDessin.getImage()));
-			this.add(image);
-			this.addMouseListener(new CalqueListener(model , calque));
-		}
-		
-		/**
-		 * met a jour l'image quand la zone de dessin est modifi�
-		 */
-		public void update(){
-			image.setIcon(new ImageIcon(zoneDessin.getImage()));
-		}
+	/**
+	 * Met a jour l'image quand la zone de dessin est modifié.
+	 * À chaque modification, la prévisualisation du calque est mise à jour.
+	 */
+	public void update() {
+		image.setIcon(new ImageIcon(zoneDessin.getImage(calque)));
+	}
 }

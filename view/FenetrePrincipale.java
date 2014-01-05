@@ -6,13 +6,10 @@ import java.awt.Dimension;
 import java.awt.HeadlessException;
 import java.util.Observable;
 import java.util.Observer;
-
 import javax.swing.JFrame;
-
-import model.Calque;
-import model.Forme;
 //INTERNE
 import model.Model;
+import model.Forme;
 import controler.ActionMenuQuitter;
 import controler.DessinListener;
 import controler.KeyListenerAll;
@@ -83,15 +80,15 @@ public class FenetrePrincipale extends JFrame implements Observer {
 		// Ajout des panels au container
 		outils = new MenuOutils(model);
 		
-		//cr�ation de la zone de dessin
+		// Création de la zone de dessin
 		zoneDessin = new ZoneDessin(model);
 		zoneDessin.addMouseListener(dessinListener);
 		zoneDessin.addMouseMotionListener(dessinListener);
 		zoneDessin.setFocusable(true);
 		zoneDessin.addKeyListener(keyListener);
 		
-		//ajoute le menu droit (celui des calques)
-		menuDroit = new MenuDroit(model , zoneDessin);
+		// Ajoute le menu droit (celui des calques)
+		menuDroit = new MenuDroit(model, zoneDessin);
 		container.add(outils, BorderLayout.WEST);
 		container.add(zoneDessin , BorderLayout.CENTER);
 		container.add(menuDroit , BorderLayout.EAST);
@@ -125,27 +122,13 @@ public class FenetrePrincipale extends JFrame implements Observer {
 	 * @param arg1 Forme qui va être relayée à ZoneDessin
 	 */
 	public void update(Observable arg0, Object arg1) {
-		if (arg1 != null ) { // S'il y a un argument lors de la notification du modèle
-			Forme courant = null;
-			
-			if (arg1 instanceof Forme) { // Si l'argument est une forme, on le caste
-				courant = (Forme) arg1;
-				
-			} else{
-			
-			if (arg1 instanceof Calque) {
-				menuDroit.addCalque((Calque) arg1);
-			}else {
-				System.err.println(	"Erreur " +
-						"la méthode Update() de la fenêtre principale.");
-			}}
-			zoneDessin.setCourante(courant);
-			menuDroit.updateCalqueView();
-		} else { // S'il n'y a pas d'argument
+		if (arg1 instanceof Forme) { // Si l'argument est une forme, on le caste
+			zoneDessin.setCourante((Forme) arg1); 
+		} else {
 			zoneDessin.setCourante(null);
 		}
-		
-		zoneDessin.repaint();
+
 		outils.selectionCouleur.setBackground(model.getColor());
+		zoneDessin.repaint();
 	}
 }

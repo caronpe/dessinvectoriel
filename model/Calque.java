@@ -74,7 +74,7 @@ public class Calque implements Serializable {
 	 * 
 	 * @see <a href="http://docs.oracle.com/javase/7/docs/api/java/util/ListIterator.html">java.util.ListIterator</a>
 	 */
-	public ListIterator<Forme> iterator() {
+	public ListIterator<Forme> listIterator() {
 		return this.listeDessin.listIterator();
 	}
 	
@@ -125,7 +125,7 @@ public class Calque implements Serializable {
 	
 	
 	/**
-	 *  rajoute une liste de forme devant la précedente
+	 *  rajoute une liste de forme devant la prï¿½cedente
 	 * @return void
 	 * 
 	 */
@@ -135,7 +135,7 @@ public class Calque implements Serializable {
 	
 	
 	/**
-	 *  rajoute une liste de forme derriere la précedente
+	 *  rajoute une liste de forme derriere la prï¿½cedente
 	 * @return void
 	 * 
 	 */

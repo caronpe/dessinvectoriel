@@ -71,7 +71,7 @@ public class MenuOutils extends JPanel {
 	}
 	
 	/**
-	 * Initialise la taille des boutons à 45x45
+	 * Initialise la taille du panel à 45x45
 	 * @category init
 	 */
 	public void initialiser() {

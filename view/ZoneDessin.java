@@ -9,13 +9,14 @@ import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.util.ListIterator;
 import javax.swing.JPanel;
-//INTERNE
-import ressources.DimensionMenuDroit;
+import model.Calque;
 import model.Forme;
 import model.Model;
+//INTERNE
+import ressources.DimensionMenuDroit;
 
 /**
- * Listener qui régit les actions de la souris sur la zone de dessin
+ * Listener qui régit les actions de la souris sur la zone de dessin.
  * 
  * @author Alexandre Thorez
  * @author Fabien Huitelec
@@ -53,10 +54,10 @@ public class ZoneDessin extends JPanel {
 	public void paintComponent(Graphics g) {
 		Graphics2D g2d = (Graphics2D) g;
 		super.paintComponent(g);
-		ListIterator<Forme> it = model.getListeDessin().iterator();
+		ListIterator<Forme> it = model.getAllFormes().listIterator();
 		
 		// Parcours de la liste pour redessiner toutes les formes
-		while (model.getListeDessin().getSize() != 0 && it.hasNext()) {
+		while (it.hasNext()) {
 			Forme forme = it.next();
 			forme.draw(g2d);
 			if (forme.isSelected()) {
@@ -65,7 +66,7 @@ public class ZoneDessin extends JPanel {
 		}
 		
 		// Si courante n'a pas encore été initialisée
-		if (courante != null) { 
+		if (courante != null) {
 			courante.draw(g2d);
 		}
 		
@@ -76,6 +77,18 @@ public class ZoneDessin extends JPanel {
 			this.setCursor(new Cursor(Cursor.NE_RESIZE_CURSOR));
 		} else {
 			this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+		}
+	}
+	
+	private void paintCalque(Graphics g, Calque calque) {
+		Graphics2D g2d = (Graphics2D) g;
+		super.paintComponent(g);
+		ListIterator<Forme> it = calque.listIterator();
+		
+		// Parcours de la liste pour redessiner toutes les formes
+		while (it.hasNext()) {
+			Forme forme = it.next();
+			forme.draw(g2d);
 		}
 	}
 
@@ -100,41 +113,57 @@ public class ZoneDessin extends JPanel {
 	
 	
 	/**
-	 * Transforme la zone le panel actuel en une image au format du calque view
+	 * Transforme la zone le panel actuelle en une image au format du calque view.
+	 * Elle est initialisée de sorte de créer un rectangle bland si le calque est
+	 * vide (comme au démarrage de l'application).
 	 * 
 	 * @return Image
 	 */
-	public Image getImage(){
+	public Image getImage(Calque calque){
 		   int width = this.getWidth();
 		   int height = this.getHeight();
-		   BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-		   Graphics2D g = image.createGraphics();
-		   this.paintAll(g);
-		   g.dispose();
 		   
-		
+		   // Si la zone de dessin est vide, elle a des dimensions nulles, On corrige donc ce problème
+		   if (width == 0 || height == 0) {
+			   width = new DimensionMenuDroit().width;
+			   height = new DimensionMenuDroit().height;
+		   }
+		   
+		   // Création de l'image
+		   BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+		   
+		   // Initialisation du graphics
+		   Graphics2D g = image.createGraphics();
+		   g.setColor(Color.WHITE);
+		   g.fillRect(0, 0, width, height);
+		   
+		   // On applique le calque au graphics
+		   this.paintCalque(g, calque);
+		   g.dispose();
+
 		   return scale(image);
 		}
 
 	/** 
 	 * Redimensionne une image.
 	 * 
-	 * @param source Image � redimensionner.
-	 * @return Image redimensionn�e.
+	 * @param source Image à redimensionner.
+	 * @return Image redimensionnée.
 	 */
 	public static Image scale(Image source) {
 		int width = new DimensionMenuDroit().width;
 		int height = new DimensionMenuDroit().height;
-	    /* On cr�e une nouvelle image aux bonnes dimensions. */
+	    // On crée une nouvelle image aux bonnes dimensions
 	    BufferedImage buf = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 	 
-	    /* On dessine sur le Graphics de l'image bufferis�e. */
+	    // On dessine sur le Graphics de l'image bufferisée
 	    Graphics2D g = buf.createGraphics();
+	    
 	    g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
 	    g.drawImage(source, 0, 0, width, height, null);
 	    g.dispose();
 	 
-	    /* On retourne l'image bufferis�e, qui est une image. */
+	    // On retourne l'image bufferis�e, qui est une image
 	    return buf;
 	}
 }
