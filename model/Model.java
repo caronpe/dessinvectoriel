@@ -26,6 +26,7 @@ public class Model extends Observable {
 	// Enregistrement
 	private String adresseEnregistrement, extension;
 	private boolean travail_enregistre;
+	private ArrayList<Forme> formePending;
 	// Touches
 	private boolean keyShiftPressed,
 					keyControlPressed;
@@ -94,7 +95,15 @@ public class Model extends Observable {
 		} else {
 			notifyObservers();
 		}
+	}
+	
+	public void addForme(Forme f) {
+		calqueCourant.add((Forme) f.clone());
+		System.out.println("adding : " + f); // DEBUG
 		
+		// Envoi de la notification aux vues
+		setChanged();
+		notifyObservers();
 	}
 
 	/**
@@ -283,6 +292,26 @@ public class Model extends Observable {
 	 */
 	public void setEnregistre(boolean travail) {
 		this.travail_enregistre = travail;
+	}
+	
+	/**
+	 * @category accessor
+	 */
+	public ArrayList<Forme> getFormePending() {
+		return this.formePending;
+	}
+
+	/**
+	 * @category accessor
+	 */
+	public void setFormePending(ArrayList formePending) {
+		if (formePending != null) {
+			this.formePending = formePending;
+		}
+		
+		// Envoi de la notification aux vues
+		setChanged();
+		notifyObservers();
 	}
 
 	/**

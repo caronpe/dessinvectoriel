@@ -6,6 +6,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
 import model.Model;
+import controler.ActionMenuColler;
 import controler.ActionMenuCopier;
 import controler.ActionMenuCouper;
 import controler.ActionMenuEnregistrer;
@@ -18,7 +19,7 @@ import controler.ActionMenuType;
 public class MenuHaut extends JMenuBar {
 	private JMenu fileMenu, editMenu, formeMenu;
 	private JMenuItem nouveau, ouvrir, enregistrer, enregistrerSous, exit;
-	private JMenuItem copy, paste;
+	private JMenuItem copy, cut, paste;
 	private JMenuItem plein;
 
 	public MenuHaut(Model model){
@@ -38,8 +39,9 @@ public class MenuHaut extends JMenuBar {
 		enregistrer = new JMenuItem(new ActionMenuEnregistrer(model));
 		enregistrerSous = new JMenuItem(new ActionMenuEnregistrerSous(model));
 		exit = new JMenuItem(new ActionMenuQuitter(model));
-		copy = new JMenuItem(new ActionMenuCopier());
-		paste = new JMenuItem(new ActionMenuCouper());
+		copy = new JMenuItem(new ActionMenuCopier(model));
+		cut = new JMenuItem(new ActionMenuCouper(model));
+		paste = new JMenuItem(new ActionMenuColler(model));
 		plein = new JCheckBoxMenuItem("Forme pleine", true);
 		plein.setAction(new ActionMenuType(model));
 		
@@ -53,6 +55,7 @@ public class MenuHaut extends JMenuBar {
 
 		// Menu : Édition
 		editMenu.addSeparator();
+		editMenu.add(cut);	
 		editMenu.add(copy);
 		editMenu.add(paste);
 		

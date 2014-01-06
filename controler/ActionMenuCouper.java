@@ -1,8 +1,13 @@
 package controler;
 
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+import java.util.ListIterator;
 
 import javax.swing.AbstractAction;
+
+import model.Forme;
+import model.Model;
 
 /**
  * Listener pour le menu Couper. Contient toutes les fonctions de coupage de forme.
@@ -14,14 +19,29 @@ import javax.swing.AbstractAction;
  * @version 0.2
  */
 public class ActionMenuCouper extends AbstractAction {
-
-	public ActionMenuCouper() {
+	private Model model;
+	
+	public ActionMenuCouper(Model model) {
+		this.model = model;
+		
+		// Values
 		putValue(NAME, "Couper");
 		putValue(SHORT_DESCRIPTION, "Coupe l'objet actuel");
 	}
 	
 	public void actionPerformed(ActionEvent arg0) {
+		ArrayList<Forme> formePending = new ArrayList<Forme>();
 		
+		Forme f = null;
+		ListIterator<Forme> it = model.getCalqueCourant().listIterator();
+		while (it.hasNext()) {
+			f = it.next();
+			if (f.isSelected()) {
+				formePending.add(f);
+				it.remove();
+			}
+		}
+		this.model.setFormePending(formePending);
 	}
 
 }

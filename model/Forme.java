@@ -22,7 +22,7 @@ import java.io.Serializable;
  * 
  * @version 0.3
  */
-public abstract class Forme implements Serializable {
+public abstract class Forme implements Serializable, Cloneable {
 	protected int oX, oY, aX, aY, width, height;
 	protected Shape forme;
 	/**
@@ -34,7 +34,7 @@ public abstract class Forme implements Serializable {
 	/**
 	 * Points intermédiaires calculés à partir des points principaux (d'origine et de fin)
 	 */
-	protected Point 	pointHautDroit, pointBasGauche;
+	protected Point pointHautDroit, pointBasGauche;
 	protected Point pointOrigin, pointFin;
 	protected String type, objet;
 	protected Color couleur;
@@ -621,6 +621,32 @@ public abstract class Forme implements Serializable {
 			return true;
 		}
 		return false;
+	}
+	
+	public Object clone() {
+		Forme forme = null;
+		try {
+	    	// On récupère l'instance à renvoyer par l'appel de la 
+	      	// méthode super.clone()
+			forme  = (Forme) super.clone();
+	    } catch(CloneNotSupportedException cnse) {
+	      	// Ne devrait jamais arriver car nous implémentons 
+	      	// l'interface Cloneable
+	      	cnse.printStackTrace(System.err);
+	    }
+		
+		forme.marqueurs = (Rectangle2D.Double[]) marqueurs.clone();
+		forme.marqueurCourant = (int) marqueurCourant;
+		forme.selected = (boolean) selected;
+		forme.parfait = (boolean) parfait;
+		forme.pointOrigin = (Point) pointOrigin.clone();
+		forme.pointHautDroit = (Point) pointBasGauche.clone();
+		forme.pointFin = (Point) pointFin.clone();
+		forme.type = (String) type;
+		forme.objet = (String) objet;
+		forme.couleur = (Color) couleur;
+		forme.calculVariables();
+		return forme;
 	}
 	
 	public String toString() {
