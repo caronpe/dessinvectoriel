@@ -63,7 +63,8 @@ public class ZoneDessin extends JPanel {
 		Graphics2D g2d = (Graphics2D) g;
 		super.paintComponent(g2d);
 		ListIterator<Forme> it = model.getAllFormes().listIterator();
-		
+		ListIterator<Image> it2 = model.getAllImages().listIterator();
+
 		// Parcours de la liste pour redessiner toutes les formes
 		while (it.hasNext()) {
 			Forme forme = it.next();
@@ -71,6 +72,14 @@ public class ZoneDessin extends JPanel {
 			if (forme.isSelected()) {
 				forme.selectionner(g2d);
 			}
+		}
+		
+		while(it2.hasNext()){
+			super.paintComponent(g);
+
+			Image image = it2.next(); 
+			System.out.println(it2);
+			g.drawImage(image,0,0,this);	
 		}
 		
 		// Si courante a été initialisée
@@ -100,13 +109,21 @@ public class ZoneDessin extends JPanel {
 		Graphics2D g2d = (Graphics2D) g;
 		super.paintComponent(g);
 		ListIterator<Forme> it = calque.listIterator();
-		
+		ListIterator<Image> it2 = calque.listIteratorImg();
+
 		// Parcours de la liste pour redessiner toutes les formes
 		while (it.hasNext()) {
 			Forme forme = it.next();
 			forme.draw(g2d);
 		}
+		
+		while(it2.hasNext()){
+			super.paintComponent(g);
+			Image image = it2.next();
+			g.drawImage(image,0,0,this);	
+		}
 	}
+	
 
 	/**
 	 * @category accessor
