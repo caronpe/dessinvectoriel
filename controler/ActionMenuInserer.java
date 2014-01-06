@@ -1,5 +1,6 @@
 package controler;
 
+import java.awt.Component;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.io.File;
@@ -7,7 +8,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
-import javax.swing.JPanel;
+import javax.swing.JFileChooser;
 
 import model.Model;
 
@@ -22,8 +23,8 @@ import model.Model;
  */
 public class ActionMenuInserer extends AbstractAction {
 	private Model model;
-
 	private Image photo ;
+	Component parent;          //ouvre une boîte de dialogue d’ouverture de fichier.
 
 	public ActionMenuInserer(Model model) {
 		this.model=model;
@@ -32,9 +33,13 @@ public class ActionMenuInserer extends AbstractAction {
 	}
 
 	public void actionPerformed(ActionEvent arg0) {
-		
+		photo=null;
 		try {
-			photo=ImageIO.read(new File("ressources/selection.png"));
+			JFileChooser choix = new JFileChooser();
+			int retour = choix.showOpenDialog(parent);
+			if(retour == JFileChooser.APPROVE_OPTION) {
+				photo=ImageIO.read(new File(choix.getSelectedFile().getAbsolutePath()));
+			} else ;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
