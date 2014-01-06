@@ -9,6 +9,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileFilter;
 
 import model.Model;
 
@@ -24,7 +25,7 @@ import model.Model;
 public class ActionMenuInserer extends AbstractAction {
 	private Model model;
 	private Image photo ;
-	Component parent;          //ouvre une boîte de dialogue d’ouverture de fichier.
+	private Component parent;          //ouvre une boîte de dialogue d’ouverture de fichier.
 
 	public ActionMenuInserer(Model model) {
 		this.model=model;
@@ -34,12 +35,36 @@ public class ActionMenuInserer extends AbstractAction {
 
 	public void actionPerformed(ActionEvent arg0) {
 		photo=null;
+
 		try {
+
 			JFileChooser choix = new JFileChooser();
+			FileFilter ff = new FileFilter(){
+
+				public boolean accept(File f){
+
+					if(f.isDirectory()) return true;
+					else if(f.getName().endsWith(".jpg")) return true;
+					else if(f.getName().endsWith(".png")) return true;
+					else if(f.getName().endsWith(".gif")) return true;
+					else if(f.getName().endsWith(".bmp")) return true;
+					else return false;
+				}
+
+				public String getDescription(){
+					return ".jpg .png .gif .bmp";
+
+				}
+			};
+
+			choix.removeChoosableFileFilter(choix.getAcceptAllFileFilter());
+			choix.setFileFilter(ff);
+
 			int retour = choix.showOpenDialog(parent);
 			if(retour == JFileChooser.APPROVE_OPTION) {
 				photo=ImageIO.read(new File(choix.getSelectedFile().getAbsolutePath()));
 			} else ;
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
