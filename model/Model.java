@@ -1,6 +1,7 @@
 package model;
 
 import java.awt.Color;
+import java.awt.Image;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.ListIterator;
@@ -549,4 +550,25 @@ public class Model extends Observable {
 		super.setChanged();
 		setEnregistre(false);
 	}
+
+	public void add(Image image) {
+		// TODO Auto-generated method stub
+		calqueCourant.add(image);
+		setChanged();
+		notifyObservers();
+	}
+
+	public ArrayList<Image> getAllImages() {
+		ArrayList<Image> formes = new ArrayList<Image>();
+		ListIterator<Calque> it = listCalque.listIterator();
+		while (it.hasNext()) {
+			ListIterator<Image> itF = it.next().listIteratorImg();
+			while (itF.hasNext()) {
+				formes.add(itF.next());
+			}
+		}
+		System.out.println("passe4");
+		return formes;
+	}
+	
 }
