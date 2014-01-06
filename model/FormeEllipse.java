@@ -23,8 +23,8 @@ public class FormeEllipse extends Forme {
 	 * @see model.Forme
 	 * @see #initialiserVariables
 	 */
-	public FormeEllipse(Point pointDebut, Point pointArrivee, String type, Color couleur, boolean parfait) {
-		super(pointDebut, pointArrivee, type, couleur, parfait);
+	public FormeEllipse(Point pointDebut, Point pointArrivee, String type, String objet, Color couleur, boolean parfait) {
+		super(pointDebut, pointArrivee, type, objet,couleur, parfait);
 
 		this.marqueurs = new Rectangle2D.Double[4];
 		calculVariables();

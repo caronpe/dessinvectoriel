@@ -75,13 +75,13 @@ public class Model extends Observable {
 
 		switch (this.objetCourant) {
 		case "rectangle":
-			courant = new FormeRectangle(pointDebut, pointArrivee, typeCourant, couleurCourante, parfait);
+			courant = new FormeRectangle(pointDebut, pointArrivee, typeCourant, objetCourant,couleurCourante, parfait);
 			break;
 		case "ellipse":
-			courant = new FormeEllipse(pointDebut, pointArrivee, typeCourant, couleurCourante, parfait);
+			courant = new FormeEllipse(pointDebut, pointArrivee, typeCourant, objetCourant, couleurCourante, parfait);
 			break;
 		case "trait":
-			courant = new FormeLine(pointDebut, pointArrivee, "vide", couleurCourante, parfait);
+			courant = new FormeLine(pointDebut, pointArrivee, "vide", objetCourant,couleurCourante, parfait);
 			break;
 		}
 		calqueCourant.add(courant);
@@ -143,7 +143,7 @@ public class Model extends Observable {
 	}
 	
 	public void deselectionnerToutesLesFormes() {
-		ListIterator<Forme> it = this.calqueCourant.listIterator();
+		ListIterator<Forme> it = this.getAllFormes().listIterator();
 		while (it.hasNext()) {
 			it.next().setSelected(false);
 		}

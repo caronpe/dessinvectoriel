@@ -3,10 +3,12 @@ package model;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Line2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.PathIterator;
+import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
 
@@ -20,9 +22,10 @@ import java.io.Serializable;
  * @version 0.2
  */
 public class FormeLine extends Forme implements Serializable {
-
-	public FormeLine(Point pointDebut, Point pointArrivee, String type, Color couleur, boolean parfait) {
-		super(pointDebut, pointArrivee, type, couleur, parfait);
+	private Shape referentielPositionLine;
+	
+	public FormeLine(Point pointDebut, Point pointArrivee, String type, String objet, Color couleur, boolean parfait) {
+		super(pointDebut, pointArrivee, type, objet, couleur, parfait);
 
 		this.marqueurs = new Rectangle2D.Double[2];
 		this.calculVariables();
@@ -71,7 +74,11 @@ public class FormeLine extends Forme implements Serializable {
 		width = zoneDeClic; // Épaisseur de la zone de clic pour le contains
 		
 		// Première initialisation du référentiel en rectangle classique
-		this.referentielPosition = new Rectangle2D.Double(oX, oY, width, height);
+		this.referentielPositionLine = new Rectangle2D.Double(oX, oY, width, height);
+		
+		// Initialisation du référentiel en rectangle classique
+		FormeRectangle tmp = new FormeRectangle(pointOrigin, pointFin, "plein", "rectangle", Color.black, false);
+		this.referentielPosition = (Rectangle2D.Double)tmp.getShape();
 		
 		// Calcul de langle
 		float angle = (float) Math.atan2(oX - aX, aY - oY);
@@ -84,12 +91,12 @@ public class FormeLine extends Forme implements Serializable {
         at.translate(zoneDeClic / (-2), 0);
         
         // Application des transformation
-        PathIterator pi = referentielPosition.getPathIterator(at);
+        PathIterator pi = referentielPositionLine.getPathIterator(at);
         Path2D path = new Path2D.Float();
         path.append(pi, true);
               
         // Redéfinition du référentiel
-		referentielPosition = path;
+		referentielPositionLine = path;
 	}
 
 
@@ -136,5 +143,10 @@ public class FormeLine extends Forme implements Serializable {
 			this.setFin(pointResize);
 			break;
 		}
+	}
+	
+	@Override
+	public boolean contains(Point2D point) {
+		return referentielPositionLine.contains(point);
 	}
 }

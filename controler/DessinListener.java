@@ -1,14 +1,19 @@
 package controler;
 
+import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ListIterator;
 
+
+
+
 //INTERNE
 import model.Forme;
 import model.FormeLine;
+import model.FormeRectangle;
 import model.Model;
 import view.ZoneDessin;
 
@@ -37,6 +42,7 @@ public class DessinListener implements MouseListener, MouseMotionListener {
 	int resizing;
 	private Model model;
 	private ZoneDessin zoneDessin;
+	private FormeRectangle rectangleSelection;
 	
 	/**
 	 * Initialise le booléen dragging à faux et la draggingForme à null.
@@ -105,6 +111,7 @@ public class DessinListener implements MouseListener, MouseMotionListener {
 				if (f.isSelected()) {
 					model.deselectionner(f);
 				} else {
+					model.deselectionnerToutesLesFormes();
 					model.selectionner(f);
 				}
 				
@@ -165,7 +172,8 @@ public class DessinListener implements MouseListener, MouseMotionListener {
 				// Envoi au model
 				model.resizeForme(this.resizing, this.modifiedForme, this.pointArrivee);
 			} else {
-				this.zoneDessin.dessinMultiSelection(pointDebut, pointArrivee);
+				rectangleSelection = new FormeRectangle(pointDebut, pointArrivee, "plein", "rectangle",Color.GRAY, false);
+				this.zoneDessin.dessinMultiSelection(rectangleSelection);
 			}
 		}
 	}
@@ -189,13 +197,25 @@ public class DessinListener implements MouseListener, MouseMotionListener {
 			} else {
 				model.addForme(this.pointDebut, this.pointArrivee, false, false);
 			}
+		} else {
+			if (rectangleSelection != null) {
+				ListIterator<Forme> it = model.getCalqueCourant().listIterator();
+				Forme f = null;
+				while (it.hasNext()) {
+					f = it.next();
+					if (rectangleSelection.contains(f.getReferentiel())) {
+						model.selectionner(f);
+					}
+				}
+			}
 		}
-		
+				
 		// Réinitialisation des variables de modification
 		this.dragging = false;
 		this.resizing = -1;
 		this.modifiedForme = null;
-		this.zoneDessin.dessinMultiSelectionFin();
+		this.rectangleSelection = null;
+		this.zoneDessin.dessinMultiSelection(rectangleSelection);
 	}
 	
 	/**

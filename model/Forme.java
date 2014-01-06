@@ -30,13 +30,13 @@ public abstract class Forme implements Serializable {
 	 * 
 	 * @see #initialiserReferentiel()
 	 */
-	protected Shape referentielPosition;
+	protected Rectangle2D.Double referentielPosition;
 	/**
 	 * Points intermédiaires calculés à partir des points principaux (d'origine et de fin)
 	 */
 	protected Point 	pointHautDroit, pointBasGauche;
 	protected Point pointOrigin, pointFin;
-	protected String type;
+	protected String type, objet;
 	protected Color couleur;
 	/**
 	 * Ce booléen est utilisé comme appelation. L'algorithme vérifie régulièrement
@@ -75,10 +75,11 @@ public abstract class Forme implements Serializable {
 	 * @param parfait
 	 *            Définit si la forme est temporaire
 	 */
-	public Forme(Point pointDebut, Point pointArrivee, String type, Color couleur, boolean parfait) {
+	public Forme(Point pointDebut, Point pointArrivee, String type, String objet,Color couleur, boolean parfait) {
 		this.pointOrigin = pointDebut;
 		this.pointFin = pointArrivee;
 		this.type = type;
+		this.objet = objet;
 		this.couleur = couleur;
 		this.parfait = parfait;
 		this.marqueurCourant = -1;
@@ -100,8 +101,8 @@ public abstract class Forme implements Serializable {
 	 * @param couleur
 	 *            Couleur de l'objet
 	 */
-	public Forme(Point pointDebut, Point pointArrivee, String type, Color couleur) {
-		this(pointDebut, pointArrivee, type, couleur, false);
+	public Forme(Point pointDebut, Point pointArrivee, String type, String objet,Color couleur) {
+		this(pointDebut, pointArrivee, type, objet, couleur, false);
 	}
 	
 	/**
@@ -488,6 +489,20 @@ public abstract class Forme implements Serializable {
 	
 	/**
 	 * @category accessor
+	 */
+	public String getObjet() {
+		return this.objet;
+	}
+
+	/**
+	 * @category accessor
+	 */
+	public void setObjet(String objet) {
+		this.objet = objet;
+	}
+	
+	/**
+	 * @category accessor
 	 * 
 	 * Compare la position du curseur au rectangle de marqueurs de la sélection.
 	 * Utile les contains() des rectangle2D.Double.
@@ -509,6 +524,22 @@ public abstract class Forme implements Serializable {
 		}
 		
 		return estContenu;
+	}
+	
+	/**
+	 * @category accessor
+	 * 
+	 * Compare la position du curseur au rectangle de marqueurs de la sélection.
+	 * Utile les contains() des rectangle2D.Double.
+	 * 
+	 * @param position Position du curseur
+	 * 
+	 * @return Si le curseur est sur l'un des points de sélection
+	 * 
+	 * @see java.awt.geom.Rectangle2D#contains(Point2D)
+	 */
+	public boolean contains(Rectangle2D referentiel) {
+		return this.referentielPosition.contains(referentiel);
 	}
 	
 	/**
@@ -564,6 +595,13 @@ public abstract class Forme implements Serializable {
 	 */
 	public Shape getShape() {
 		return this.forme;
+	}
+	
+	/**
+	 * @category accessor
+	 */
+	public Rectangle2D.Double getReferentiel() {
+		return this.referentielPosition;
 	}
 
 	/**

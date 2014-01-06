@@ -26,8 +26,8 @@ public class FormeRectangle extends Forme {
 	 * @see model.Forme
 	 * @see #initialiserVariables
 	 */
-	public FormeRectangle(Point pointDebut, Point pointArrivee, String type, Color couleur, boolean parfait) {
-		super(pointDebut, pointArrivee, type, couleur, parfait);
+	public FormeRectangle(Point pointDebut, Point pointArrivee, String type, String objet, Color couleur, boolean parfait) {
+		super(pointDebut, pointArrivee, type, objet, couleur, parfait);
 		
 		this.marqueurs = new Rectangle2D.Double[4];
 		calculVariables();
