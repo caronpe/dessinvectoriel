@@ -36,7 +36,7 @@ public abstract class Forme implements Serializable {
 	 */
 	protected Point 	pointHautDroit, pointBasGauche;
 	protected Point pointOrigin, pointFin;
-	protected String type, objet;
+	protected String type;
 	protected Color couleur;
 	/**
 	 * Ce booléen est utilisé comme appelation. L'algorithme vérifie régulièrement
@@ -75,12 +75,10 @@ public abstract class Forme implements Serializable {
 	 * @param parfait
 	 *            Définit si la forme est temporaire
 	 */
-	public Forme(Point pointDebut, Point pointArrivee, String type,
-			String objet, Color couleur, boolean parfait) {
+	public Forme(Point pointDebut, Point pointArrivee, String type, Color couleur, boolean parfait) {
 		this.pointOrigin = pointDebut;
 		this.pointFin = pointArrivee;
 		this.type = type;
-		this.objet = objet;
 		this.couleur = couleur;
 		this.parfait = parfait;
 		this.marqueurCourant = -1;
@@ -102,9 +100,8 @@ public abstract class Forme implements Serializable {
 	 * @param couleur
 	 *            Couleur de l'objet
 	 */
-	public Forme(Point pointDebut, Point pointArrivee, String type,
-			String objet, Color couleur) {
-		this(pointDebut, pointArrivee, type, objet, couleur, false);
+	public Forme(Point pointDebut, Point pointArrivee, String type, Color couleur) {
+		this(pointDebut, pointArrivee, type, couleur, false);
 	}
 	
 	/**
@@ -487,20 +484,6 @@ public abstract class Forme implements Serializable {
 	 */
 	public void setType(String type) {
 		this.type = type;
-	}
-
-	/**
-	 * @category accessor
-	 */
-	public String getObjet() {
-		return this.objet;
-	}
-
-	/**
-	 * @category accessor
-	 */
-	public void setForme(String forme) {
-		this.objet = forme;
 	}
 	
 	/**

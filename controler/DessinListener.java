@@ -5,8 +5,10 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ListIterator;
+
 //INTERNE
 import model.Forme;
+import model.FormeLine;
 import model.Model;
 import view.ZoneDessin;
 
@@ -34,6 +36,7 @@ public class DessinListener implements MouseListener, MouseMotionListener {
 	/** Lorsque une forme est sélectionnée et redimensionnée, ce booléen est à vrai. */
 	int resizing;
 	private Model model;
+	private ZoneDessin zoneDessin;
 	
 	/**
 	 * Initialise le booléen dragging à faux et la draggingForme à null.
@@ -47,6 +50,7 @@ public class DessinListener implements MouseListener, MouseMotionListener {
 		this.dragging = false;
 		this.resizing = -1;
 		this.modifiedForme = null; 
+		this.zoneDessin = zoneDessin;
 	}
 
 	/**
@@ -160,6 +164,8 @@ public class DessinListener implements MouseListener, MouseMotionListener {
 			} else if ( this.resizing >= 0) {
 				// Envoi au model
 				model.resizeForme(this.resizing, this.modifiedForme, this.pointArrivee);
+			} else {
+				this.zoneDessin.dessinMultiSelection(pointDebut, pointArrivee);
 			}
 		}
 	}
@@ -189,6 +195,7 @@ public class DessinListener implements MouseListener, MouseMotionListener {
 		this.dragging = false;
 		this.resizing = -1;
 		this.modifiedForme = null;
+		this.zoneDessin.dessinMultiSelectionFin();
 	}
 	
 	/**
@@ -205,9 +212,9 @@ public class DessinListener implements MouseListener, MouseMotionListener {
 			ListIterator<Forme> it = this.model.getCalqueCourant().listIterator();
 			while (it.hasNext()) {
 				f = it.next();
-				if (f.getObjet() != "trait" && f.isSelected() && ( f.getMarqueurs(e.getPoint()) == 0 || f.getMarqueurs(e.getPoint()) == 3 )) {
+				if (f instanceof FormeLine && f.isSelected() && ( f.getMarqueurs(e.getPoint()) == 0 || f.getMarqueurs(e.getPoint()) == 3 )) {
 					this.model.setRedimensionnement(this.model.NORTH_WEST_CURSOR);
-				} else if (f.getObjet() != "trait" && f.isSelected() && ( f.getMarqueurs(e.getPoint()) == 1 || f.getMarqueurs(e.getPoint()) == 2 )) {
+				} else if (f instanceof FormeLine && f.isSelected() && ( f.getMarqueurs(e.getPoint()) == 1 || f.getMarqueurs(e.getPoint()) == 2 )) {
 					this.model.setRedimensionnement(this.model.NORTH_EAST_CURSOR);
 				} else {
 					this.model.setRedimensionnement(this.model.DEFAULT_CURSOR);

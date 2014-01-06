@@ -6,6 +6,7 @@ import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.util.ListIterator;
@@ -14,6 +15,7 @@ import javax.swing.JPanel;
 
 import model.Calque;
 import model.Forme;
+import model.FormeRectangle;
 import model.Model;
 //INTERNE
 import ressources.DimensionMenuDroit;
@@ -30,6 +32,9 @@ import ressources.DimensionMenuDroit;
 public class ZoneDessin extends JPanel {
 	private Forme courante;
 	private Model model;
+	// Selection
+	private Point pointDebutSelection, pointArriveSelection;
+	private FormeRectangle rectangleSelection;
 
 	/**
 	 * Panel de couleur blanche Aucune forme n'est sélectionnée par défaut
@@ -42,6 +47,9 @@ public class ZoneDessin extends JPanel {
 		this.courante = null;
 		this.model = model;
 		this.setBackground(Color.WHITE);
+		pointDebutSelection = new Point();
+		pointArriveSelection = new Point();
+		rectangleSelection = new FormeRectangle(pointDebutSelection, pointArriveSelection, "plein", Color.BLUE, false);
 	}
 
 	/**
@@ -84,6 +92,12 @@ public class ZoneDessin extends JPanel {
 		} else {
 			this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 		}
+		
+		if (model.getObjetCourant().equals("selection") && this.rectangleSelection != null) {
+			g2d.setComposite(AlphaComposite.SrcOver.derive(0.5f));
+			rectangleSelection.draw(g2d);
+			g2d.setComposite(AlphaComposite.SrcOver.derive(1.0f));
+		}
 	}
 	
 	private void paintCalque(Graphics g, Calque calque) {
@@ -117,6 +131,19 @@ public class ZoneDessin extends JPanel {
 		this.courante = courante;
 	}
 	
+	public void dessinMultiSelection(Point pointDebut, Point pointArrivee) {
+		this.pointDebutSelection = pointDebut;
+		this.pointArriveSelection = pointArrivee;
+		rectangleSelection = new FormeRectangle(pointDebutSelection, pointArriveSelection, "plein", Color.BLUE, false);
+		this.repaint();
+	}
+	
+	public void dessinMultiSelectionFin() {
+		this.pointDebutSelection = null;
+		this.pointArriveSelection = null;
+		this.rectangleSelection = null;
+		this.repaint();
+	}
 	
 	/**
 	 * Transforme la zone le panel actuelle en une image au format du calque view.

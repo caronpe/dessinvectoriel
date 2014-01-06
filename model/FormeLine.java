@@ -21,9 +21,8 @@ import java.io.Serializable;
  */
 public class FormeLine extends Forme implements Serializable {
 
-	public FormeLine(Point pointDebut, Point pointArrivee, String type,
-			String objet, Color couleur, boolean parfait) {
-		super(pointDebut, pointArrivee, type, objet, couleur, parfait);
+	public FormeLine(Point pointDebut, Point pointArrivee, String type, Color couleur, boolean parfait) {
+		super(pointDebut, pointArrivee, type, couleur, parfait);
 
 		this.marqueurs = new Rectangle2D.Double[2];
 		this.calculVariables();

@@ -70,12 +70,13 @@ public class FenetrePrincipale extends JFrame implements Observer {
 		// Configuration du container
 		container = this.getContentPane();
 		container.setLayout(new BorderLayout());		
+		
 		// Listeners
-		DessinListener dessinListener = new DessinListener(zoneDessin, model);
 		KeyListenerAll keyListener = new KeyListenerAll(model);
 			
 		// Création de la zone de dessin
 		zoneDessin = new ZoneDessin(model);
+		DessinListener dessinListener = new DessinListener(zoneDessin, model);
 		zoneDessin.addMouseListener(dessinListener);
 		zoneDessin.addMouseMotionListener(dessinListener);
 		zoneDessin.setFocusable(true);

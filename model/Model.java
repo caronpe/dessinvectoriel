@@ -75,16 +75,13 @@ public class Model extends Observable {
 
 		switch (this.objetCourant) {
 		case "rectangle":
-			courant = new FormeRectangle(pointDebut, pointArrivee, typeCourant,
-					objetCourant, couleurCourante, parfait);
+			courant = new FormeRectangle(pointDebut, pointArrivee, typeCourant, couleurCourante, parfait);
 			break;
 		case "ellipse":
-			courant = new FormeEllipse(pointDebut, pointArrivee, typeCourant,
-					objetCourant, couleurCourante, parfait);
+			courant = new FormeEllipse(pointDebut, pointArrivee, typeCourant, couleurCourante, parfait);
 			break;
 		case "trait":
-			courant = new FormeLine(pointDebut, pointArrivee, "vide",
-					objetCourant, couleurCourante, parfait);
+			courant = new FormeLine(pointDebut, pointArrivee, "vide", couleurCourante, parfait);
 			break;
 		}
 		calqueCourant.add(courant);
@@ -161,7 +158,6 @@ public class Model extends Observable {
 	 * il n'y a aucune notifications aux vues.
 	 */
 	public void delFormes() {
-		System.out.println("ici");
 		boolean ilYaDesFormesSelectionnes = false;
 		
 		// Parcours de toutes les formes
