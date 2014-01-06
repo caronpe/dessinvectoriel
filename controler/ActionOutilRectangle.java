@@ -23,6 +23,7 @@ import model.Model;
 public class ActionOutilRectangle extends AbstractAction implements Observer {
 	private Model model;
 	private JButton bouton;
+	private String type;
 	
 	/**
 	 * Ne comporte pas de nom, autrement
@@ -34,10 +35,11 @@ public class ActionOutilRectangle extends AbstractAction implements Observer {
 		this.model = model;
 		this.model.addObserver(this);
 		this.bouton = bouton;
+		this.type = "vide";
 		
 		// Values
 		this.putValue(SHORT_DESCRIPTION, "Sélectionne l'outil rectangle");
-		this.putValue(SMALL_ICON, new ImageIcon("dessinvectoriel/ressources/rectangle.png"));
+		this.putValue(SMALL_ICON, new ImageIcon("dessinvectoriel/ressources/rectangleVide.png"));
 	}
 
 	/**
@@ -45,7 +47,14 @@ public class ActionOutilRectangle extends AbstractAction implements Observer {
 	 * 
 	 */
 	public void actionPerformed(ActionEvent e) {
+		if (model.getObjetCourant().equals("rectangle") && this.type.equals("plein")) {
+			this.type = "vide";
+		} else if (model.getObjetCourant().equals("rectangle") && this.type.equals("vide")) {
+			this.type = "plein";
+		}
+		
 		model.setObjetCourant("rectangle");
+		model.setTypeCourant(this.type);
 		model.deselectionnerToutesLesFormes();
  	}
 	
@@ -59,10 +68,10 @@ public class ActionOutilRectangle extends AbstractAction implements Observer {
 			bouton.setBackground(Color.WHITE);
 		}
 		
-		if (model.getTypeCourant().equals("vide")) {
-			bouton.setIcon(new ImageIcon("dessinvectoriel/ressources/rectangleVide.png"));
-		} else {
+		if (model.getObjetCourant().equals("rectangle") && model.getTypeCourant().equals("plein")) {
 			bouton.setIcon(new ImageIcon("dessinvectoriel/ressources/rectanglePlein.png"));
+		} else if (model.getObjetCourant().equals("rectangle") && model.getTypeCourant().equals("vide")) {
+			bouton.setIcon(new ImageIcon("dessinvectoriel/ressources/rectangleVide.png"));
 		}
 	}
 }

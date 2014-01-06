@@ -117,11 +117,11 @@ public class FormeLine extends Forme implements Serializable {
 	@Override
 	public void selectionner(Graphics2D graphics) {
 		Color tmp = graphics.getColor();
-		graphics.setColor(Color.GRAY);
+		graphics.setColor(Color.BLACK);
 
 		// Marqueurs
 		for (Rectangle2D.Double rectangle : marqueurs) {
-			graphics.fill(rectangle);
+			graphics.draw(rectangle);
 		}
 		
 		// Rétablissement de la couleur d'origine

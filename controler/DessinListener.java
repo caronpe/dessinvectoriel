@@ -30,7 +30,7 @@ import view.ZoneDessin;
  * 
  * @see view.FenetrePrincipale#initialiser
  * 
- * @version 0.2
+ * @version 0.4
  */
 public class DessinListener implements MouseListener, MouseMotionListener {
 	private Point pointDebut, pointArrivee;
@@ -117,8 +117,8 @@ public class DessinListener implements MouseListener, MouseMotionListener {
 				
 				// Si le curseur est sur un marqueur de la forme ou non
 				if ( f.isSelected() && f.containsPointDeSelection(this.pointDebut)) {
+					System.out.println("here"); // DEBUG
 					this.resizing = f.getMarqueurs(this.pointDebut);
-				
 				} else {
 					this.dragging = true;
 				}
@@ -232,9 +232,9 @@ public class DessinListener implements MouseListener, MouseMotionListener {
 			ListIterator<Forme> it = this.model.getCalqueCourant().listIterator();
 			while (it.hasNext()) {
 				f = it.next();
-				if (f instanceof FormeLine && f.isSelected() && ( f.getMarqueurs(e.getPoint()) == 0 || f.getMarqueurs(e.getPoint()) == 3 )) {
+				if (!(f instanceof FormeLine) && f.isSelected() && ( f.getMarqueurs(e.getPoint()) == 0 || f.getMarqueurs(e.getPoint()) == 3 )) {
 					this.model.setRedimensionnement(this.model.NORTH_WEST_CURSOR);
-				} else if (f instanceof FormeLine && f.isSelected() && ( f.getMarqueurs(e.getPoint()) == 1 || f.getMarqueurs(e.getPoint()) == 2 )) {
+				} else if (!(f instanceof FormeLine) && f.isSelected() && ( f.getMarqueurs(e.getPoint()) == 1 || f.getMarqueurs(e.getPoint()) == 2 )) {
 					this.model.setRedimensionnement(this.model.NORTH_EAST_CURSOR);
 				} else {
 					this.model.setRedimensionnement(this.model.DEFAULT_CURSOR);

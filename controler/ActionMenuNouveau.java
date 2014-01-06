@@ -1,9 +1,12 @@
 package controler;
 
 import java.awt.event.ActionEvent;
+
 import javax.swing.AbstractAction;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+
 // INTERNE
 import model.Model;
 
@@ -30,6 +33,7 @@ public class ActionMenuNouveau extends AbstractAction {
 		// Values
 		putValue(NAME, "Nouveau");
 		putValue(SHORT_DESCRIPTION, "Crée un nouveau fichier");
+		this.putValue(SMALL_ICON, new ImageIcon("dessinvectoriel/ressources/open.png"));
 	}
 	
 	/**

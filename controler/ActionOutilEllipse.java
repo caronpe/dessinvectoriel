@@ -10,8 +10,6 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
-
-
 // INTERNE
 import model.Model;
 
@@ -27,6 +25,7 @@ import model.Model;
 public class ActionOutilEllipse extends AbstractAction  implements Observer {
 	private Model model;
 	private JButton bouton;
+	private String type;
 	
 	/**
 	 * Ne comporte pas de nom, autrement
@@ -38,17 +37,25 @@ public class ActionOutilEllipse extends AbstractAction  implements Observer {
 		this.model = model;
 		this.model.addObserver(this);
 		this.bouton = bouton;
+		this.type = "vide";
 		
 		// Values
 		this.putValue(SHORT_DESCRIPTION, "Sélectionne l'outil cercle");
-		this.putValue(SMALL_ICON, new ImageIcon("dessinvectoriel/ressources/cercle.png"));
+		this.putValue(SMALL_ICON, new ImageIcon("dessinvectoriel/ressources/cercleVide.png"));
 	}
 	
 	/**
 	 * Sélectionne l'outil cercle dans le modèle
 	 */
 	public void actionPerformed(ActionEvent e) {
+		if (model.getObjetCourant().equals("ellipse") && this.type.equals("plein")) {
+			this.type = "vide";
+		} else if (model.getObjetCourant().equals("ellipse") && this.type.equals("vide")) {
+			this.type = "plein";
+		}
+		
 		model.setObjetCourant("ellipse");
+		model.setTypeCourant(this.type);
 		model.deselectionnerToutesLesFormes();
 	}
 
@@ -62,10 +69,11 @@ public class ActionOutilEllipse extends AbstractAction  implements Observer {
 			bouton.setBackground(Color.WHITE);
 		}
 		
-		if (model.getTypeCourant().equals("vide")) {
-			bouton.setIcon(new ImageIcon("dessinvectoriel/ressources/cercleVide.png"));
-		} else {
+		if (model.getObjetCourant().equals("ellipse") && model.getTypeCourant().equals("plein")) {
 			bouton.setIcon(new ImageIcon("dessinvectoriel/ressources/cerclePlein.png"));
+			System.out.println("test"); // DEBUG
+		} else if (model.getObjetCourant().equals("ellipse") && model.getTypeCourant().equals("vide")) {
+			bouton.setIcon(new ImageIcon("dessinvectoriel/ressources/cercleVide.png"));
 		}
 	}
 }

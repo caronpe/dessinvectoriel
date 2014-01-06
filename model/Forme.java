@@ -1,12 +1,10 @@
 package model;
 
 import java.awt.AlphaComposite;
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Shape;
-import java.awt.Stroke;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
@@ -242,7 +240,7 @@ public abstract class Forme implements Serializable, Cloneable {
 		switch (marqueur) {
 		
 		case 0 : // En haut à gauche
-			pointResize.setLocation(pointResize.getX() + 10, pointResize.getY() + 10);
+			pointResize.setLocation(pointResize.getX(), pointResize.getY());
 			this.setOrigin(pointResize);
 			
 			if ( ( !(this.getHeight() > 0) && !(this.getWidth() > 0) ) ) { // Test de la taille de la nouvelle forme
@@ -254,7 +252,7 @@ public abstract class Forme implements Serializable, Cloneable {
 			break;
 			
 		case 1 : // En haut à droite
-			pointResize.setLocation(pointResize.getX() - 10, pointResize.getY() + 10);
+			pointResize.setLocation(pointResize.getX(), pointResize.getY());
 			this.setHautDroit(pointResize);
 			
 			if ( ( !(this.getHeight() > 0) && !(this.getWidth() > 0) ) ) { // Test de la taille de la nouvelle forme
@@ -266,7 +264,7 @@ public abstract class Forme implements Serializable, Cloneable {
 			break;
 			
 		case 2 : // En bas à gauche
-			pointResize.setLocation(pointResize.getX() + 10, pointResize.getY() - 10);
+			pointResize.setLocation(pointResize.getX(), pointResize.getY());
 			this.setBasGauche(pointResize);
 						
 			if ( ( !(this.getHeight() > 0) && !(this.getWidth() > 0) ) ) { // Test de la taille de la nouvelle forme
@@ -278,7 +276,7 @@ public abstract class Forme implements Serializable, Cloneable {
 			break;
 			
 		case 3 : // En bas à droite
-			pointResize.setLocation(pointResize.getX() - 10, pointResize.getY() - 10);
+			pointResize.setLocation(pointResize.getX(), pointResize.getY());
 			this.setFin(pointResize);
 
 			if ( ( !(this.getHeight() > 0) && !(this.getWidth() > 0) ) ) { // Test de la taille de la nouvelle forme
@@ -308,28 +306,20 @@ public abstract class Forme implements Serializable, Cloneable {
 	 */
 	public void selectionner(Graphics2D graphics) {
 		// Sauvegarde des variables
-		Stroke strokeTmp = graphics.getStroke();
 		Color colorTmp = graphics.getColor();
 		
-		// Initialisation du stroke en pointillé
-		final float dash1[] = { 10.0f };
-		BasicStroke dashed = 	new BasicStroke(1.0f, BasicStroke.CAP_BUTT,
-								BasicStroke.JOIN_MITER, 10.0f, dash1, 0.0f);
-		
-		graphics.setComposite(AlphaComposite.SrcOver.derive(0.9f));
-		graphics.setStroke(dashed);
-		graphics.setColor(Color.GRAY);
+		graphics.setComposite(AlphaComposite.SrcOver.derive(0.7f));
+		graphics.setColor(Color.BLACK);
 
 		// Rectangle en pointillés
 		graphics.draw(referentielPosition);
 		
 		// Marqueurs
 		for (Rectangle2D.Double rectangle : marqueurs) {
-			graphics.fill(rectangle);
+			graphics.draw(rectangle);
 		}
 
 		// Réinitialisation du graphics avec ses valeurs par défaut
-		graphics.setStroke(strokeTmp);
 		graphics.setColor(colorTmp); // Rétablissement de la couleur d'origine
 		graphics.setComposite(AlphaComposite.SrcOver); // Rétablissement de la transparence d'origine
 	}
