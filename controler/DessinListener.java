@@ -179,9 +179,9 @@ public class DessinListener implements MouseListener, MouseMotionListener {
 		if (!model.getObjetCourant().equals("selection")) {
 			// Si c'est une forme parfaite
 			if ( model.getShiftPressed() ) {
-				model.addForme(this.pointDebut, this.pointArrivee, true);
+				model.addForme(this.pointDebut, this.pointArrivee, true, false);
 			} else {
-				model.addForme(this.pointDebut, this.pointArrivee, false);
+				model.addForme(this.pointDebut, this.pointArrivee, false, false);
 			}
 		}
 		

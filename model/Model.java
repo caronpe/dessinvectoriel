@@ -70,7 +70,7 @@ public class Model extends Observable {
 	 * 
 	 * @see view.FenetrePrincipale#update
 	 */
-	public void addForme(Point pointDebut, Point pointArrivee, boolean parfait) {
+	public void addForme(Point pointDebut, Point pointArrivee, boolean parfait, boolean tmp) {
 		Forme courant = null;
 
 		switch (this.objetCourant) {
@@ -88,10 +88,16 @@ public class Model extends Observable {
 			break;
 		}
 		calqueCourant.add(courant);
-
+		
 		// Envoi de la notification aux vues
 		setChanged();
-		notifyObservers(courant);
+		if (tmp) {
+			
+			notifyObservers(courant);
+		} else {
+			notifyObservers();
+		}
+		
 	}
 
 	/**
@@ -111,7 +117,7 @@ public class Model extends Observable {
 	 */
 	public void addTmpForme(Point pointDebut, Point pointArrivee,
 			boolean parfait) {
-		this.addForme(pointDebut, pointArrivee, parfait);
+		this.addForme(pointDebut, pointArrivee, parfait, true);
 		this.delLastForme();
 	}
 
@@ -309,6 +315,7 @@ public class Model extends Observable {
 		
 		return formes;
 	}
+
 
 	/**
 	 * @category accessor

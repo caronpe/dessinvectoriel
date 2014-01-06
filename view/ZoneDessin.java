@@ -57,7 +57,7 @@ public class ZoneDessin extends JPanel {
 	 */
 	public void paintComponent(Graphics g) {
 		Graphics2D g2d = (Graphics2D) g;
-		super.paintComponent(g);
+		super.paintComponent(g2d);
 		ListIterator<Forme> it = model.getAllFormes().listIterator();
 		
 		// Parcours de la liste pour redessiner toutes les formes
@@ -67,27 +67,11 @@ public class ZoneDessin extends JPanel {
 			if (forme.isSelected()) {
 				forme.selectionner(g2d);
 			}
-			if (forme == courante) {
-				System.out.println("yo"); // DEBUG
-				System.out.println(courante);
-			}
 		}
 		
 		// Si courante a été initialisée
 		if (courante != null) {
 			courante.draw(g2d);
-		}
-		
-		while (it.hasNext()) {
-			Forme forme = it.next();
-			forme.draw(g2d);
-			if (forme.isSelected()) {
-				forme.selectionner(g2d);
-			}
-			if (forme == courante) {
-				System.out.println("yo"); // DEBUG
-				courante.draw(g2d);
-			}
 		}
 		
 		// Gestion du curseur de redimensionnement
