@@ -14,10 +14,11 @@ import javax.swing.JPanel;
 
 import model.Calque;
 import model.Forme;
+import model.FormeImage;
 import model.FormeRectangle;
 import model.Model;
-//INTERNE
 import ressources.DimensionMenuDroit;
+//INTERNE
 
 /**
  * Listener qui régit les actions de la souris sur la zone de dessin.
@@ -59,11 +60,10 @@ public class ZoneDessin extends JPanel {
 	 * @category accessor
 	 * 
 	 */
-	public void paintComponent(Graphics g) {
+	public void paintComponent(Graphics g) {	
 		Graphics2D g2d = (Graphics2D) g;
 		super.paintComponent(g2d);
 		ListIterator<Forme> it = model.getAllFormes().listIterator();
-		ListIterator<Image> it2 = model.getAllImages().listIterator();
 
 		// Parcours de la liste pour redessiner toutes les formes
 		while (it.hasNext()) {
@@ -73,20 +73,12 @@ public class ZoneDessin extends JPanel {
 				forme.selectionner(g2d);
 			}
 		}
-		
-		while(it2.hasNext()){
-			super.paintComponent(g);
 
-			Image image = it2.next(); 
-			System.out.println(it2);
-			g.drawImage(image,0,0,this);	
-		}
-		
 		// Si courante a été initialisée
 		if (courante != null) {
 			courante.draw(g2d);
 		}
-		
+
 		// Gestion du curseur de redimensionnement
 		if (this.model.getRedimensionnement() == model.NORTH_WEST_CURSOR) {
 			this.setCursor(new Cursor(Cursor.NW_RESIZE_CURSOR));
@@ -97,33 +89,27 @@ public class ZoneDessin extends JPanel {
 		} else {
 			this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 		}
-		
+
 		if (this.rectangleSelection != null) {
 			g2d.setComposite(AlphaComposite.SrcOver.derive(0.5f));
 			rectangleSelection.draw(g2d);
 			g2d.setComposite(AlphaComposite.SrcOver.derive(1.0f));
 		}
 	}
-	
+
 	private void paintCalque(Graphics g, Calque calque) {
 		Graphics2D g2d = (Graphics2D) g;
 		super.paintComponent(g);
 		ListIterator<Forme> it = calque.listIterator();
-		ListIterator<Image> it2 = calque.listIteratorImg();
 
 		// Parcours de la liste pour redessiner toutes les formes
 		while (it.hasNext()) {
 			Forme forme = it.next();
 			forme.draw(g2d);
-		}
-		
-		while(it2.hasNext()){
-			super.paintComponent(g);
-			Image image = it2.next();
-			g.drawImage(image,0,0,this);	
+			
 		}
 	}
-	
+
 
 	/**
 	 * @category accessor
@@ -143,12 +129,12 @@ public class ZoneDessin extends JPanel {
 	public void setCourante(Forme courante) {
 		this.courante = courante;
 	}
-	
+
 	public void dessinMultiSelection(FormeRectangle rectangleSelection) {
 		this.rectangleSelection = rectangleSelection;
 		this.repaint();
 	}
-	
+
 	/**
 	 * Transforme la zone le panel actuelle en une image au format du calque view.
 	 * Elle est initialisée de sorte de créer un rectangle bland si le calque est
@@ -157,29 +143,29 @@ public class ZoneDessin extends JPanel {
 	 * @return Image
 	 */
 	public Image getImage(Calque calque){
-		   int width = this.getWidth();
-		   int height = this.getHeight();
-		   
-		   // Si la zone de dessin est vide, elle a des dimensions nulles, On corrige donc ce problème
-		   if (width == 0 || height == 0) {
-			   width = DimensionMenuDroit.width;
-			   height = DimensionMenuDroit.height;
-		   }
-		   
-		   // Création de l'image
-		   BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-		   
-		   // Initialisation du graphics
-		   Graphics2D g = image.createGraphics();
-		   g.setColor(Color.WHITE);
-		   g.fillRect(0, 0, width, height);
-		   
-		   // On applique le calque au graphics
-		   this.paintCalque(g, calque);
-		   g.dispose();
+		int width = this.getWidth();
+		int height = this.getHeight();
 
-		   return scale(image, calque);
+		// Si la zone de dessin est vide, elle a des dimensions nulles, On corrige donc ce problème
+		if (width == 0 || height == 0) {
+			width = DimensionMenuDroit.width;
+			height = DimensionMenuDroit.height;
 		}
+
+		// Création de l'image
+		BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+
+		// Initialisation du graphics
+		Graphics2D g = image.createGraphics();
+		g.setColor(Color.WHITE);
+		g.fillRect(0, 0, width, height);
+
+		// On applique le calque au graphics
+		this.paintCalque(g, calque);
+		g.dispose();
+
+		return scale(image, calque);
+	}
 
 	/** 
 	 * Redimensionne une image.
@@ -194,24 +180,24 @@ public class ZoneDessin extends JPanel {
 	public Image scale(Image source, Calque calque) {
 		int width = DimensionMenuDroit.width;
 		int height = DimensionMenuDroit.height;
-	    // On crée une nouvelle image aux bonnes dimensions
-	    BufferedImage buf = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-	 
-	    // On dessine sur le Graphics de l'image bufferisée
-	    Graphics2D g = buf.createGraphics();
-	    	    
-	    g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-	    g.drawImage(source, 0, 0, width, height, null);
-	    
-	    // Dessin d'un voile transparent pour notifier le calque courant
-	    if (calque == this.model.getCalqueCourant()) {
-	    	g.setComposite(AlphaComposite.SrcOver.derive(0.5f));
-	    	g.setColor(Color.GRAY);
+		// On crée une nouvelle image aux bonnes dimensions
+		BufferedImage buf = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+
+		// On dessine sur le Graphics de l'image bufferisée
+		Graphics2D g = buf.createGraphics();
+
+		g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+		g.drawImage(source, 0, 0, width, height, null);
+
+		// Dessin d'un voile transparent pour notifier le calque courant
+		if (calque == this.model.getCalqueCourant()) {
+			g.setComposite(AlphaComposite.SrcOver.derive(0.5f));
+			g.setColor(Color.GRAY);
 			g.fillRect(0, 0, width, height);
-	    }
-	    g.dispose();
-	 
-	    // On retourne l'image bufferis�e, qui est une image
-	    return buf;
+		}
+		g.dispose();
+
+		// On retourne l'image bufferis�e, qui est une image
+		return buf;
 	}
 }

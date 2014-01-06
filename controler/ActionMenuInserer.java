@@ -11,6 +11,7 @@ import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 
+import model.FormeImage;
 import model.Model;
 
 /**
@@ -69,7 +70,7 @@ public class ActionMenuInserer extends AbstractAction {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		model.add(photo);
+		model.addForme(new FormeImage(photo));
 		System.out.println("passe1");
 	}
 

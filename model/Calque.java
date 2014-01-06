@@ -22,12 +22,9 @@ public class Calque implements Serializable {
 	static final long serialVersionUID = 1L;
 	String name;
 	private ArrayList<Forme> listeDessin;
-	private ArrayList<Image> listeImage;
-
+	
 	public Calque() {
 		this.listeDessin = new ArrayList<Forme>();
-		this.listeImage = new ArrayList<Image>();
-
 	}
 	
 	public Calque(ArrayList<Forme> liste) {
@@ -80,10 +77,6 @@ public class Calque implements Serializable {
 	 */
 	public ListIterator<Forme> listIterator() {
 		return this.listeDessin.listIterator();
-	}
-	
-	public ListIterator<Image> listIteratorImg(){
-		return this.listeImage.listIterator();
 	}
 	
 	public String toString() {
@@ -150,12 +143,5 @@ public class Calque implements Serializable {
 	public void ajouteDerriere(Calque listeDessin) {
 		this.listeDessin.addAll(0 ,listeDessin.getListeDessin());
 	}
-
-	public void add(Image image) {
-		// TODO Auto-generated method stub
-		this.listeImage.add(image);
-		System.out.println("passe3");
-	}
-	
 
 }
