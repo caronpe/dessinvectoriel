@@ -41,7 +41,7 @@ public class ActionOutilEllipse extends AbstractAction  implements Observer {
 		
 		// Values
 		this.putValue(SHORT_DESCRIPTION, "Sélectionne l'outil cercle");
-		this.putValue(SMALL_ICON, new ImageIcon("dessinvectoriel/ressources/cercleVide.png"));
+		this.putValue(SMALL_ICON, new ImageIcon("ressources/cercleVide.png"));
 	}
 	
 	/**
@@ -70,10 +70,10 @@ public class ActionOutilEllipse extends AbstractAction  implements Observer {
 		}
 		
 		if (model.getObjetCourant().equals("ellipse") && model.getTypeCourant().equals("plein")) {
-			bouton.setIcon(new ImageIcon("dessinvectoriel/ressources/cerclePlein.png"));
+			bouton.setIcon(new ImageIcon("ressources/cerclePlein.png"));
 			System.out.println("test"); // DEBUG
 		} else if (model.getObjetCourant().equals("ellipse") && model.getTypeCourant().equals("vide")) {
-			bouton.setIcon(new ImageIcon("dessinvectoriel/ressources/cercleVide.png"));
+			bouton.setIcon(new ImageIcon("ressources/cercleVide.png"));
 		}
 	}
 }

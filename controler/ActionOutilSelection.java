@@ -41,7 +41,7 @@ public class ActionOutilSelection extends AbstractAction implements Observer {
 		
 		// Values
 		this.putValue(SHORT_DESCRIPTION, "Sélectionne l'outil sélection");
-		this.putValue(SMALL_ICON, new ImageIcon("dessinvectoriel/ressources/selection.png"));
+		this.putValue(SMALL_ICON, new ImageIcon("ressources/selection.png"));
 	}
 
 	/**

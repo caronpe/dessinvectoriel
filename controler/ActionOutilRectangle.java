@@ -39,7 +39,7 @@ public class ActionOutilRectangle extends AbstractAction implements Observer {
 		
 		// Values
 		this.putValue(SHORT_DESCRIPTION, "Sélectionne l'outil rectangle");
-		this.putValue(SMALL_ICON, new ImageIcon("dessinvectoriel/ressources/rectangleVide.png"));
+		this.putValue(SMALL_ICON, new ImageIcon("ressources/rectangleVide.png"));
 	}
 
 	/**
@@ -69,9 +69,9 @@ public class ActionOutilRectangle extends AbstractAction implements Observer {
 		}
 		
 		if (model.getObjetCourant().equals("rectangle") && model.getTypeCourant().equals("plein")) {
-			bouton.setIcon(new ImageIcon("dessinvectoriel/ressources/rectanglePlein.png"));
+			bouton.setIcon(new ImageIcon("ressources/rectanglePlein.png"));
 		} else if (model.getObjetCourant().equals("rectangle") && model.getTypeCourant().equals("vide")) {
-			bouton.setIcon(new ImageIcon("dessinvectoriel/ressources/rectangleVide.png"));
+			bouton.setIcon(new ImageIcon("ressources/rectangleVide.png"));
 		}
 	}
 }

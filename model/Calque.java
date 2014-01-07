@@ -1,6 +1,5 @@
 package model;
 
-import java.awt.Image;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.ListIterator;
