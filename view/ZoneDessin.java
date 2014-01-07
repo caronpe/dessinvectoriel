@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.AlphaComposite;
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Graphics;
@@ -9,7 +10,9 @@ import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.util.ListIterator;
+
 import javax.swing.JPanel;
+
 // INTERNE
 import model.Calque;
 import model.Forme;
@@ -96,16 +99,22 @@ public class ZoneDessin extends JPanel {
 	}
 
 	private void paintCalque(Graphics g, Calque calque) {
-		Graphics2D g2d = (Graphics2D) g;
 		super.paintComponent(g);
-		ListIterator<Forme> it = calque.listIterator();
-
+		Graphics2D g2d = (Graphics2D) g;
+		
+		// Strokes
+		BasicStroke tmp = (BasicStroke) g2d.getStroke();		
+		g2d.setStroke(new BasicStroke(6f));
+		
 		// Parcours de la liste pour redessiner toutes les formes
+		ListIterator<Forme> it = calque.listIterator();
 		while (it.hasNext()) {
 			Forme forme = it.next();
 			forme.draw(g2d);
-			
 		}
+		
+		// Rétablissement de l'épaisseur de graphics
+		g2d.setStroke(tmp);
 	}
 
 
