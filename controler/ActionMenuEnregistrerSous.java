@@ -57,7 +57,7 @@ public class ActionMenuEnregistrerSous extends AbstractAction {
 			ExtensionFileFilter filter = new ExtensionFileFilter("Fichiers .CTH", "cth");
 		    filechoose.setFileFilter(filter);
 
-		// DialogBox
+		// ChooseBox
 		int resultatEnregistrer = filechoose.showDialog(filechoose,	approve);
 		
 		if (resultatEnregistrer == JFileChooser.APPROVE_OPTION) { // Si l’utilisateur clique sur "Enregistrer", on applique la bonne extension

@@ -5,10 +5,14 @@ import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+
 import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
+
+import ressources.ExtensionFileFilter;
+import ressources.JFileChooserOverwrite;
 import model.Model;
 
 /**
@@ -20,32 +24,46 @@ import model.Model;
  * 
  * @version 0.2
  */
-public class ActionMenuInserer extends AbstractAction {
+public class ActionMenuInsererImage extends AbstractAction {
 	private Model model;
 	private BufferedImage photo ;
-	private Component parent;          //ouvre une bo�te de dialogue d�ouverture de fichier.
-
-	public ActionMenuInserer(Model model) {
-		this.model=model;
-		putValue(NAME, "Ins�rer");
-		putValue(SHORT_DESCRIPTION, "Ins�re une image");
+	private Component parent; // Ouvre une boite de dialogue réouverture de fichier.
+	private String extensions[];
+	
+	public ActionMenuInsererImage(Model model) {
+		this.model = model;
+		this.extensions = new String[]{ "jpg", "png", "gif", "bmp"};
+		
+		putValue(NAME, "Insérer");
+		putValue(SHORT_DESCRIPTION, "Insère une image");
 	}
 
 	public void actionPerformed(ActionEvent arg0) {
-		photo=null;
+		photo = null;
 
+		// Fichier
+			String adresse_du_fichier = "";
+			File file = new File(adresse_du_fichier);
+		
+		// FileChooser
+			JFileChooser filechoose = new JFileChooserOverwrite(new File(adresse_du_fichier));
+			filechoose.setSelectedFile(file);
+			String approve = new String("Insérer"); // Étiquette : "Enregistrer"
+			
+		// Extension
+			ExtensionFileFilter filter = new ExtensionFileFilter("Fichiers  .jpg, .png, .gif, .bmp", extensions);
+		    filechoose.setFileFilter(filter);
+		
+		 // DialogBox
 		try {
-
 			JFileChooser choix = new JFileChooser();
 			FileFilter ff = new FileFilter(){
-
 				public boolean accept(File f){
-
 					if(f.isDirectory()) return true;
 					else if(f.getName().endsWith(".jpg")) return true;
-					else if(f.getName().endsWith(".png")) return true;
-					else if(f.getName().endsWith(".gif")) return true;
-					else if(f.getName().endsWith(".bmp")) return true;
+					else if(f.getName().endsWith(".")) return true;
+					else if(f.getName().endsWith(".")) return true;
+					else if(f.getName().endsWith(".")) return true;
 					else return false;
 				}
 
@@ -69,5 +87,4 @@ public class ActionMenuInserer extends AbstractAction {
 		model.addForme(photo);
 		System.out.println("passe1");
 	}
-
 }
