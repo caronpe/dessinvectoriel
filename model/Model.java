@@ -312,7 +312,7 @@ public class Model extends Observable {
 	/**
 	 * @category accessor
 	 */
-	public void setFormePending(ArrayList formePending) {
+	public void setFormePending(ArrayList<Forme> formePending) {
 		if (formePending != null) {
 			this.formePending = formePending;
 		}
@@ -336,7 +336,7 @@ public class Model extends Observable {
 	 * 
 	 * @return Toutes les formes de tous les calques
 	 */
-	public ArrayList getAllFormes() {
+	public ArrayList<Forme> getAllFormes() {
 		Calque calque = null;
 		ArrayList<Forme> formes = new ArrayList<Forme>();
 		ListIterator<Calque> it = listCalque.listIterator();

@@ -1,13 +1,10 @@
 package view;
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
 import model.Calque;
 import model.Model;
 import ressources.DimensionMenuDroit;

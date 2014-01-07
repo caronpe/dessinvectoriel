@@ -1,6 +1,5 @@
 package controler;
 
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -11,8 +10,6 @@ import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 
-import ressources.ExtensionFileFilter;
-import ressources.JFileChooserOverwrite;
 import model.Model;
 
 /**
@@ -27,12 +24,10 @@ import model.Model;
 public class ActionMenuInsererImage extends AbstractAction {
 	private Model model;
 	private BufferedImage photo ;
-	private Component parent; // Ouvre une boite de dialogue réouverture de fichier.
-	private String extensions[];
+//	private Component parent; // Ouvre une boite de dialogue réouverture de fichier.
 	
 	public ActionMenuInsererImage(Model model) {
 		this.model = model;
-		this.extensions = new String[]{ "jpg", "png", "gif", "bmp"};
 		
 		putValue(NAME, "Insérer");
 		putValue(SHORT_DESCRIPTION, "Insère une image");
@@ -41,42 +36,16 @@ public class ActionMenuInsererImage extends AbstractAction {
 	public void actionPerformed(ActionEvent arg0) {
 		photo = null;
 
-		// Fichier
-			String adresse_du_fichier = "";
-			File file = new File(adresse_du_fichier);
-		
-		// FileChooser
-			JFileChooser filechoose = new JFileChooserOverwrite(new File(adresse_du_fichier));
-			filechoose.setSelectedFile(file);
-			String approve = new String("Insérer"); // Étiquette : "Enregistrer"
-			
-		// Extension
-			ExtensionFileFilter filter = new ExtensionFileFilter("Fichiers  .jpg, .png, .gif, .bmp", extensions);
-		    filechoose.setFileFilter(filter);
-		
-		 // DialogBox
+		// DialogBox
 		try {
-			JFileChooser choix = new JFileChooser();
-			FileFilter ff = new FileFilter(){
-				public boolean accept(File f){
-					if(f.isDirectory()) return true;
-					else if(f.getName().endsWith(".jpg")) return true;
-					else if(f.getName().endsWith(".")) return true;
-					else if(f.getName().endsWith(".")) return true;
-					else if(f.getName().endsWith(".")) return true;
-					else return false;
-				}
-
-				public String getDescription(){
-					return ".jpg .png .gif .bmp";
-
-				}
-			};
-
+			String approve = new String("Insérer"); // Étiquette : "Enregistrer"
+			JFileChooser choix = new JFileChooser(new File(""));
 			choix.removeChoosableFileFilter(choix.getAcceptAllFileFilter());
-			choix.setFileFilter(ff);
-
-			int retour = choix.showOpenDialog(parent);
+			choix.setFileFilter(new ImageFilter());
+			
+//			int retour = choix.showOpenDialog(parent); // AVANT
+			
+			int retour = choix.showDialog(choix, approve);
 			if(retour == JFileChooser.APPROVE_OPTION) {
 				photo=ImageIO.read(new File(choix.getSelectedFile().getAbsolutePath()));
 			}
@@ -86,5 +55,21 @@ public class ActionMenuInsererImage extends AbstractAction {
 		}
 		model.addForme(photo);
 		System.out.println("passe1");
+	}
+}
+
+class ImageFilter extends FileFilter {
+	public boolean accept(File f){
+		if(f.isDirectory()) return true;
+		else if(f.getName().endsWith(".jpg")) return true;
+		else if(f.getName().endsWith(".png")) return true;
+		else if(f.getName().endsWith(".gif")) return true;
+		else if(f.getName().endsWith(".bmp")) return true;
+		else return false;
+	}
+
+	public String getDescription(){
+		return ".jpg .png .gif .bmp";
+
 	}
 }

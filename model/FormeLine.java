@@ -132,11 +132,7 @@ public class FormeLine extends Forme implements Serializable {
 	}
 	
 	@Override
-	public void resize(int marqueur, Point pointResize, boolean parfait) {
-		// Initialisation variables
-		Point 	tmpOrigin = this.pointOrigin,
-				tmpFin = this.pointFin;
-		
+	public void resize(int marqueur, Point pointResize, boolean parfait) {		
 		switch (marqueur) {
 		case 0 : // Origine
 			this.setOrigin(pointResize);

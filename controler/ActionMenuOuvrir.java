@@ -80,7 +80,7 @@ public class ActionMenuOuvrir extends AbstractAction {
 		JFileChooser filechoose = new JFileChooser();
 		
 		// Permets de donner un nom au fichier dans le TextField et à 
-		String extension = model.getExtension(), nom_du_fichier = ""; // choisit ~ comme répertoire par défaut
+		String nom_du_fichier = ""; // choisit ~ comme répertoire par défaut
 		filechoose.setSelectedFile(new File(nom_du_fichier));
 		
 		// Le répertoire source du JFileChooser est le répertoire d’où est lancé notre programme
@@ -110,15 +110,17 @@ public class ActionMenuOuvrir extends AbstractAction {
 			ObjectInputStream input = new ObjectInputStream(fichier);
 			Calque listeDessin = (Calque) input.readObject();
 			model.setCalque(listeDessin);
+			
+			input.close();
 		} catch (StreamCorruptedException e) {
 			System.err.println("Extension non correcte.");
 			Object[] options = {"OK"};
-			int n = JOptionPane.showOptionDialog(new JFrame(), "Extension du fichier non correcte.", "Extension", 
+			JOptionPane.showOptionDialog(new JFrame(), "Extension du fichier non correcte.", "Extension", 
 					JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE, null, options, options[0]);
 		} catch (IOException | ClassNotFoundException e) {
 			System.err.println("Problème.");
 			Object[] options = {"OK"};
-			int n = JOptionPane.showOptionDialog(new JFrame(), "Problème lors de l'ouverture du fichier.", "Extension", 
+			JOptionPane.showOptionDialog(new JFrame(), "Problème lors de l'ouverture du fichier.", "Extension", 
 					JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE, null, options, options[0]);
 		}
 	}

@@ -3,6 +3,8 @@ package view;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.KeyStroke;
+
 // INTERNE
 import model.Model;
 import controler.ActionMenuColler;
@@ -34,14 +36,49 @@ public class MenuHaut extends JMenuBar {
 		
 		// Items
 		nouveau = new JMenuItem(new ActionMenuNouveau(model));
+		nouveau.setAccelerator(KeyStroke.getKeyStroke(
+		        java.awt.event.KeyEvent.VK_N, 
+		        java.awt.Event.CTRL_MASK));
+		
 		ouvrir = new JMenuItem(new ActionMenuOuvrir(model));
+		ouvrir.setAccelerator(KeyStroke.getKeyStroke(
+		        java.awt.event.KeyEvent.VK_O, 
+		        java.awt.Event.CTRL_MASK));
+		
 		enregistrer = new JMenuItem(new ActionMenuEnregistrer(model));
+		enregistrer.setAccelerator(KeyStroke.getKeyStroke(
+		        java.awt.event.KeyEvent.VK_S,
+		        java.awt.Event.CTRL_MASK));
+		
 		enregistrerSous = new JMenuItem(new ActionMenuEnregistrerSous(model));
+		enregistrerSous.setAccelerator(KeyStroke.getKeyStroke(
+		        java.awt.event.KeyEvent.VK_S, 
+		        java.awt.Event.CTRL_MASK | java.awt.Event.SHIFT_MASK));
+		
 		exit = new JMenuItem(new ActionMenuQuitter(model));
+		exit.setAccelerator(KeyStroke.getKeyStroke(
+		        java.awt.event.KeyEvent.VK_Q, 
+		        java.awt.Event.CTRL_MASK));
+		
 		copy = new JMenuItem(new ActionMenuCopier(model));
+		copy.setAccelerator(KeyStroke.getKeyStroke(
+		        java.awt.event.KeyEvent.VK_C, 
+		        java.awt.Event.CTRL_MASK));
+		
 		cut = new JMenuItem(new ActionMenuCouper(model));
+		cut.setAccelerator(KeyStroke.getKeyStroke(
+		        java.awt.event.KeyEvent.VK_X, 
+		        java.awt.Event.CTRL_MASK));
+		
 		paste = new JMenuItem(new ActionMenuColler(model));
+		paste.setAccelerator(KeyStroke.getKeyStroke(
+		        java.awt.event.KeyEvent.VK_V, 
+		        java.awt.Event.CTRL_MASK));
+		
 		image = new JMenuItem(new ActionMenuInsererImage(model));
+		image.setAccelerator(KeyStroke.getKeyStroke(
+		        java.awt.event.KeyEvent.VK_I, 
+		        java.awt.Event.CTRL_MASK));
 		
 		// Menu : Fichiers
 		fileMenu.addSeparator();
