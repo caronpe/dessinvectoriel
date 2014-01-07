@@ -112,7 +112,6 @@ public class DessinListener implements MouseListener, MouseMotionListener {
 				
 				// Si le curseur est sur un marqueur de la forme ou non
 				if ( f.isSelected() && f.containsPointDeSelection(this.pointDebut)) {
-					System.out.println("here"); // DEBUG
 					this.resizing = f.getMarqueurs(this.pointDebut);
 				} else {
 					this.dragging = true;

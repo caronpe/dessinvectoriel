@@ -71,7 +71,6 @@ public class ActionOutilEllipse extends AbstractAction  implements Observer {
 		
 		if (model.getObjetCourant().equals("ellipse") && model.getTypeCourant().equals("plein")) {
 			bouton.setIcon(new ImageIcon("ressources/cerclePlein.png"));
-			System.out.println("test"); // DEBUG
 		} else if (model.getObjetCourant().equals("ellipse") && model.getTypeCourant().equals("vide")) {
 			bouton.setIcon(new ImageIcon("ressources/cercleVide.png"));
 		}
