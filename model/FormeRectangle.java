@@ -24,8 +24,6 @@ public class FormeRectangle extends Forme {
 	 */
 	public FormeRectangle(Point pointDebut, Point pointArrivee, String type, String objet, Color couleur, boolean parfait) {
 		super(pointDebut, pointArrivee, type, objet, couleur, parfait);
-		
-		calculVariables();
 	}
 	
 	@Override

@@ -4,25 +4,19 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.RenderingHints;
-import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
 public class FormeImage extends Forme {
-	protected BufferedImage image;
+	protected BufferedImage image, imageRedessinée;
 
 	public FormeImage(Point pointDebut, Point pointArrivee, BufferedImage image){
 		super(pointDebut, pointArrivee, "image", "image");
 		this.image = image;
 		
-		this.marqueurs = new Rectangle2D.Double[4];
-		calculVariables();
+		calculVariables(); // Pour faire en sorte que l'image soit réinitialisée après sa création
 	}
-	
-	public boolean contains(Point2D position){
-		return this.referentielPosition.contains(position);
-	}
-	
+		
 	public Image getImage(){
 		return this.image;
 	}
@@ -32,14 +26,14 @@ public class FormeImage extends Forme {
 		
 		// Instanciation de la forme et du référentiel
 		this.referentielPosition = new Rectangle2D.Double(oX , oY , width, height);
+		this.imageRedessinée = this.scale();
 	} 
 	
 	public void draw(Graphics2D g) {
-		this.scale();
-		g.drawImage(this.image, pointOrigin.x, pointOrigin.y, null);
+		g.drawImage(this.imageRedessinée, pointOrigin.x, pointOrigin.y, null);
 	}
 	
-	public void scale() {
+	public BufferedImage scale() {
 		// On crée une nouvelle image aux bonnes dimensions
 		BufferedImage buf = new BufferedImage(this.width, this.height, BufferedImage.TYPE_INT_ARGB);
 
@@ -49,6 +43,6 @@ public class FormeImage extends Forme {
 		g.drawImage(this.image, 0, 0, width, height, null);
 		g.dispose();
 
-		this.image = buf;
+		return buf;
 	}
 }

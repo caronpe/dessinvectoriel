@@ -82,8 +82,9 @@ public abstract class Forme implements Serializable, Cloneable {
 		this.parfait = parfait;
 		this.marqueurCourant = -1;
 		this.selected = false;
-		
 		this.marqueurs = new Rectangle2D.Double[4];
+		
+		calculVariables();
 	}
 
 	/**
