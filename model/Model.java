@@ -8,14 +8,14 @@ import java.util.ListIterator;
 import java.util.Observable;
 
 /**
- * Partie Modèle du MVC. Gère l'ajout des formes (temporaires ou non) et tous
- * les outils qui peuvent être selectionnées par l'utilisateur à un moment t.
+ * Partie Modèle du MVC. S'occupe de la gestion des formes (temporaires ou non), des calques 
+ * et de tous les outils.
  * 
  * @author Alexandre Thorez
  * @author Fabien Huitelec
  * @author Pierre-Édouard Caron
  * 
- * @version 0.2
+ * @version 0.4
  */
 public class Model extends Observable {
 
@@ -95,6 +95,7 @@ public class Model extends Observable {
 		} else {
 			notifyObservers();
 		}
+		setEnregistre(false);
 	}
 
 	public void addForme(BufferedImage photo){
@@ -105,13 +106,16 @@ public class Model extends Observable {
 		// Envoi de la notification aux vues
 		setChanged();
 		notifyObservers();
+		setEnregistre(false);
 	}
+	
 	public void addForme(Forme f) {
 		calqueCourant.add((Forme) f.clone());
 
 		// Envoi de la notification aux vues
 		setChanged();
 		notifyObservers();
+		setEnregistre(false);
 	}
 
 	/**
@@ -191,6 +195,7 @@ public class Model extends Observable {
 			// Envoi de la notification aux vues
 			setChanged();
 			notifyObservers();
+			setEnregistre(false);
 		}
 	}
 
@@ -204,6 +209,7 @@ public class Model extends Observable {
 	}
 
 	/**
+	 * TODO Réécrire
 	 * Supprime toutes les formes de la liste de formes
 	 * 
 	 * @see model.Calque#removeAll
@@ -249,6 +255,7 @@ public class Model extends Observable {
 		// Envoi de l'objet au vues
 		setChanged();
 		notifyObservers();
+		setEnregistre(false);
 	}
 
 	public void resizeForme(int marqueur, Forme forme, Point pointArrivee) {
@@ -257,6 +264,7 @@ public class Model extends Observable {
 		// Envoi de l'objet au vues
 		setChanged();
 		notifyObservers();
+		setEnregistre(false);
 	}
 
 	/**
@@ -281,6 +289,8 @@ public class Model extends Observable {
 		// Définis le comportement du modèle
 		if (!ilYaDesFormesSelectionnes) {
 			this.couleurCourante = couleur;
+		} else {
+			setEnregistre(false);
 		}
 
 		// Envoi de la notification aux vues
@@ -535,6 +545,7 @@ public class Model extends Observable {
 		// Envoi de la notification aux vues
 		setChanged();
 		notifyObservers(calqueCourant);
+		setEnregistre(false);
 	}
 
 	/**
@@ -542,7 +553,7 @@ public class Model extends Observable {
 	 * Peu importe le calque supprimé, il y aura
 	 * toujours un calque de sélectionné.
 	 */
-	public void  delCalque(Calque calque) {
+	public void delCalque(Calque calque) {
 		this.listCalque.remove(calque);
 		this.deselectionnerToutesLesFormes();
 
@@ -556,6 +567,7 @@ public class Model extends Observable {
 			this.calqueCourant = listCalque.get(listCalque.size() - 1);
 		}
 		notifyObservers();
+		setEnregistre(false);
 	}
 
 	public void setAfficherCalque(Calque calque) {
@@ -569,7 +581,8 @@ public class Model extends Observable {
 	@Override
 	public void setChanged() {
 		super.setChanged();
-		setEnregistre(false);
+		
+		System.out.println("Ici"); // DEBUG
 	}
 
 }

@@ -24,8 +24,7 @@ public class ActionCalqueView extends AbstractAction implements Observer{
 		this.calque= calque;
 		
 		this.putValue(SHORT_DESCRIPTION, "Affiche/Masque le calque");
-		this.putValue(SMALL_ICON, new ImageIcon("ressources/images/cerclePlein.png"));
-		
+		this.putValue(SMALL_ICON, new ImageIcon("ressources/images/openedEye.png"));
 	}	
 	
 	@Override

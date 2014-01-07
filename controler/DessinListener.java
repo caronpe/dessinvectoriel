@@ -14,7 +14,7 @@ import model.Model;
 import view.ZoneDessin;
 
 /**
- * Contient les Listeners de la zone de dessin. 
+ * Contient les Listeners de la zone de dessin.
  * S'occupe des mouvements de la souris ainsi que des clics.
  * Nécessite d'avoir une seule et même instance par Panel sans quoi
  * la méthode mouseDragged ne fonctionne pas car elles n'auraient pas

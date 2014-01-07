@@ -40,7 +40,7 @@ public class ActionMenuInsererImage extends AbstractAction {
 
 		// DialogBox
 		try {
-			String approve = new String("Insérer"); // Étiquette : "Enregistrer"
+			String approve = new String("Insérer"); // Étiquette : "Insérer"
 			JFileChooser choix = new JFileChooser(new File(""));
 			choix.removeChoosableFileFilter(choix.getAcceptAllFileFilter());
 			choix.setFileFilter(new ImageFilter());
@@ -48,15 +48,13 @@ public class ActionMenuInsererImage extends AbstractAction {
 //			int retour = choix.showOpenDialog(parent); // AVANT
 			
 			int retour = choix.showDialog(choix, approve);
-			if(retour == JFileChooser.APPROVE_OPTION) {
+			if (retour == JFileChooser.APPROVE_OPTION) {
 				photo=ImageIO.read(new File(choix.getSelectedFile().getAbsolutePath()));
+				model.addForme(photo);
 			}
-
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		model.addForme(photo);
-		System.out.println("passe1");
 	}
 }
 
@@ -71,7 +69,6 @@ class ImageFilter extends FileFilter {
 	}
 
 	public String getDescription(){
-		return ".jpg .png .gif .bmp";
-
+		return "Fichiers .jpg, .png, .gif et .bmp";
 	}
 }

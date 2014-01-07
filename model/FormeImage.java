@@ -27,7 +27,7 @@ public class FormeImage extends Forme {
 		// Instanciation de la forme et du référentiel
 		this.referentielPosition = new Rectangle2D.Double(oX , oY , width, height);
 		this.imageRedessinee = this.scale();
-	} 
+	}
 	
 	public void draw(Graphics2D g) {
 		g.drawImage(this.imageRedessinee, pointOrigin.x, pointOrigin.y, null);
