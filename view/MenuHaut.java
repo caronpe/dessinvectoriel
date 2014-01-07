@@ -1,10 +1,9 @@
 package view;
 
-import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-
+// INTERNE
 import model.Model;
 import controler.ActionMenuColler;
 import controler.ActionMenuCopier;
@@ -15,27 +14,23 @@ import controler.ActionMenuInsererImage;
 import controler.ActionMenuNouveau;
 import controler.ActionMenuOuvrir;
 import controler.ActionMenuQuitter;
-import controler.ActionMenuType;
 
 public class MenuHaut extends JMenuBar {
-	private JMenu fileMenu, editMenu, insertionMenu, formeMenu;
+	private JMenu fileMenu, editMenu, insertionMenu;
 	private JMenuItem nouveau, ouvrir, enregistrer, enregistrerSous, exit;
 	private JMenuItem copy, cut, paste;
 	private JMenuItem image;
-	private JMenuItem plein;
 
 	public MenuHaut(Model model){
 		// Menus
 		fileMenu = new JMenu("Fichier");
 		editMenu = new JMenu("Édition");
 		insertionMenu = new JMenu("Insertion");
-		formeMenu = new JMenu("Forme");
 		
 		// Ajouts
 		this.add(fileMenu);
 		this.add(editMenu);
 		this.add(insertionMenu);
-		this.add(formeMenu);
 		
 		// Items
 		nouveau = new JMenuItem(new ActionMenuNouveau(model));
@@ -47,8 +42,6 @@ public class MenuHaut extends JMenuBar {
 		cut = new JMenuItem(new ActionMenuCouper(model));
 		paste = new JMenuItem(new ActionMenuColler(model));
 		image = new JMenuItem(new ActionMenuInsererImage(model));
-		plein = new JCheckBoxMenuItem("Forme pleine", true);
-		plein.setAction(new ActionMenuType(model));
 		
 		// Menu : Fichiers
 		fileMenu.addSeparator();
@@ -66,8 +59,5 @@ public class MenuHaut extends JMenuBar {
 		
 		// Menu : Insertion
 		insertionMenu.add(image);
-		
-		// Menu : Forme
-		formeMenu.add(plein);
 	}
 }
