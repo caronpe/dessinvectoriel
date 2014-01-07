@@ -1,7 +1,10 @@
 package controler;
 
 import java.awt.event.ActionEvent;
+
 import javax.swing.AbstractAction;
+import javax.swing.ImageIcon;
+
 //INTERNE
 import model.Model;
 
@@ -27,6 +30,7 @@ public class ActionMenuEnregistrer extends AbstractAction {
 		// Values
 		putValue(NAME, "Enregistrer");
 		putValue(SHORT_DESCRIPTION, "Enregistre votre travail");
+		this.putValue(SMALL_ICON, new ImageIcon("ressources/images/save.png"));
 	}
 	
 	/**

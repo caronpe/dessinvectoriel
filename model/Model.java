@@ -550,6 +550,7 @@ public class Model extends Observable {
 		setChanged();
 		if (listCalque.size() < 1) {
 			this.calqueCourant = new Calque();
+			this.listCalque.add(calqueCourant);
 			notifyObservers(calqueCourant);
 		} else {
 			this.calqueCourant = listCalque.get(listCalque.size() - 1);

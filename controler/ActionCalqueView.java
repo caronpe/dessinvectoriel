@@ -11,20 +11,20 @@ import javax.swing.JButton;
 import model.Calque;
 import model.Model;
 
-public class ActionViewCalque extends AbstractAction implements Observer{
+public class ActionCalqueView extends AbstractAction implements Observer{
 	
 	private Model model;
 	private Calque calque;
 	private JButton bouton;
 
-	public ActionViewCalque(Model model, Calque calque, JButton bouton){
+	public ActionCalqueView(Model model, Calque calque, JButton bouton){
 		this.model=model;
 		this.model.addObserver(this);
 		this.bouton=bouton;
 		this.calque= calque;
 		
 		this.putValue(SHORT_DESCRIPTION, "Affiche/Masque le calque");
-		this.putValue(SMALL_ICON, new ImageIcon("ressources/cerclePlein.png"));
+		this.putValue(SMALL_ICON, new ImageIcon("ressources/images/cerclePlein.png"));
 		
 	}	
 	
@@ -37,9 +37,9 @@ public class ActionViewCalque extends AbstractAction implements Observer{
 	public void update(Observable arg0, Object arg1) {
 		// TODO Auto-generated method stub
 		if(calque.getAfficher()==true){
-			bouton.setIcon(new ImageIcon("ressources/cerclePlein.png"));
+			bouton.setIcon(new ImageIcon("ressources/images/openedEye.png"));
 		}else if(calque.getAfficher()==false){
-			bouton.setIcon(new ImageIcon("ressources/cercleVide.png"));
+			bouton.setIcon(new ImageIcon("ressources/images/closedEye.png"));
 		}
 	}
 

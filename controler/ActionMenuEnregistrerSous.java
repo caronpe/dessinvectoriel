@@ -4,8 +4,11 @@ import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
+
 import javax.swing.AbstractAction;
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+
 //INTERNE
 import model.Model;
 import ressources.*;
@@ -37,6 +40,7 @@ public class ActionMenuEnregistrerSous extends AbstractAction {
 		// Values
 		putValue(NAME, "Enregistrer sous");
 		putValue(SHORT_DESCRIPTION, "Enregistre-sous votre travail");
+		this.putValue(SMALL_ICON, new ImageIcon("ressources/images/saveAs.png"));
 	}
 	
 	/**

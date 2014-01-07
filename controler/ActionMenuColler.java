@@ -2,7 +2,10 @@ package controler;
 
 import java.awt.event.ActionEvent;
 import java.util.ListIterator;
+
 import javax.swing.AbstractAction;
+import javax.swing.ImageIcon;
+
 // INTERNE
 import model.Forme;
 import model.Model;
@@ -25,6 +28,7 @@ public class ActionMenuColler extends AbstractAction {
 		// Values
 		putValue(NAME, "Coller");
 		putValue(SHORT_DESCRIPTION, "Colle la forme");
+		this.putValue(SMALL_ICON, new ImageIcon("ressources/images/paste.png"));
 	}
 	
 	public void actionPerformed(ActionEvent arg0) {

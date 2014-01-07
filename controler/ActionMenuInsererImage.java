@@ -7,6 +7,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 
@@ -31,6 +32,7 @@ public class ActionMenuInsererImage extends AbstractAction {
 		
 		putValue(NAME, "Insérer");
 		putValue(SHORT_DESCRIPTION, "Insère une image");
+		this.putValue(SMALL_ICON, new ImageIcon("ressources/images/insert.png"));
 	}
 
 	public void actionPerformed(ActionEvent arg0) {

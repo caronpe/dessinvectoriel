@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import model.Calque;
 // INTERNE
@@ -39,7 +41,12 @@ public class ActionCalqueRemove extends AbstractAction {
 	 */
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		this.calquePanel.removeCalque(calque);
-		model.delCalque(calque);
+		int answer = JOptionPane.showConfirmDialog(new JFrame(), "Souhaitez-vous vraiment supprimer ce calque ?", "Supprimer",
+				JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+		if (answer == JOptionPane.OK_OPTION) {
+			this.calquePanel.removeCalque(calque);
+			model.delCalque(calque);
+		}		
 	}
 }

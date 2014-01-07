@@ -8,12 +8,10 @@ import java.io.ObjectInputStream;
 import java.io.StreamCorruptedException;
 
 import javax.swing.AbstractAction;
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-
-
-
 
 //INTERNE
 import model.Calque;
@@ -39,6 +37,7 @@ public class ActionMenuOuvrir extends AbstractAction {
 		// Values
 		putValue(NAME, "Ouvrir");
 		putValue(SHORT_DESCRIPTION, "Ouvrir un fichier déjà existant");
+		this.putValue(SMALL_ICON, new ImageIcon("ressources/images/open.png"));
 	}
 	
 	/**

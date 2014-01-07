@@ -3,9 +3,12 @@ package controler;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+
 import javax.swing.AbstractAction;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+
 // INTERNE
 import model.*;
 
@@ -27,6 +30,7 @@ public class ActionMenuQuitter extends AbstractAction implements WindowListener 
 		// Values
 		putValue(NAME, "Quitter");
 		putValue(SHORT_DESCRIPTION, "Quitte le logiciel");
+		this.putValue(SMALL_ICON, new ImageIcon("ressources/images/quit.png"));
 	}
 	
 	/**

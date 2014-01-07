@@ -31,9 +31,9 @@ public class ActionMenuNouveau extends AbstractAction {
 		this.model = model;
 		
 		// Values
-		putValue(NAME, "Nouveau");
-		putValue(SHORT_DESCRIPTION, "Crée un nouveau fichier");
-		this.putValue(SMALL_ICON, new ImageIcon("dessinvectoriel/ressources/open.png"));
+		this.putValue(NAME, "Nouveau");
+		this.putValue(SHORT_DESCRIPTION, "Crée un nouveau fichier");
+		this.putValue(SMALL_ICON, new ImageIcon("ressources/images/newFile.png"));
 	}
 	
 	/**
