@@ -8,7 +8,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
 public class FormeImage extends Forme {
-	protected BufferedImage image, imageRedessinée;
+	protected BufferedImage image, imageRedessinee;
 
 	public FormeImage(Point pointDebut, Point pointArrivee, BufferedImage image){
 		super(pointDebut, pointArrivee, "image", "image");
@@ -26,11 +26,11 @@ public class FormeImage extends Forme {
 		
 		// Instanciation de la forme et du référentiel
 		this.referentielPosition = new Rectangle2D.Double(oX , oY , width, height);
-		this.imageRedessinée = this.scale();
+		this.imageRedessinee = this.scale();
 	} 
 	
 	public void draw(Graphics2D g) {
-		g.drawImage(this.imageRedessinée, pointOrigin.x, pointOrigin.y, null);
+		g.drawImage(this.imageRedessinee, pointOrigin.x, pointOrigin.y, null);
 	}
 	
 	public BufferedImage scale() {
