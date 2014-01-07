@@ -6,10 +6,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ListIterator;
-
-
-
-
 //INTERNE
 import model.Forme;
 import model.FormeLine;
@@ -111,7 +107,6 @@ public class DessinListener implements MouseListener, MouseMotionListener {
 				if (f.isSelected()) {
 					model.deselectionner(f);
 				} else {
-					model.deselectionnerToutesLesFormes();
 					model.selectionner(f);
 				}
 				
