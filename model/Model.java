@@ -108,7 +108,6 @@ public class Model extends Observable {
 	}
 	public void addForme(Forme f) {
 		calqueCourant.add((Forme) f.clone());
-		System.out.println("adding : " + f); // DEBUG
 		
 		// Envoi de la notification aux vues
 		setChanged();

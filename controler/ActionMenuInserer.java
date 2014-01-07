@@ -64,7 +64,6 @@ public class ActionMenuInserer extends AbstractAction {
 			}
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		model.addForme(photo);
