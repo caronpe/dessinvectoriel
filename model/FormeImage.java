@@ -5,14 +5,15 @@ import java.awt.Image;
 import java.awt.Point;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.awt.image.ImageObserver;
+import java.awt.image.BufferedImage;
 
 public class FormeImage extends Forme {
-	protected Image image;
+	protected BufferedImage image;
 
-	public FormeImage(Image image){
-		super(new Point(0,0), new Point(image.getWidth((ImageObserver) image),image.getHeight((ImageObserver) image)), "image", "image", null);
-		this.image=image;
+	public FormeImage(Point pointDebut, Point pointArrivee, BufferedImage image){
+		super(pointDebut, pointArrivee, "image", "image");
+		this.image = image;
+		
 		this.marqueurs = new Rectangle2D.Double[4];
 		calculVariables();
 	}
@@ -43,16 +44,6 @@ public class FormeImage extends Forme {
 	} 
 	
 	public void draw(Graphics2D g) {
-		g.drawImage(this.image, 0, 0, null);
-	}
-	
-	@Override
-	public void setOrigin(Point pointDebut) {
-		super.setOrigin(pointDebut);
-	}
-	
-	@Override
-	public void setFin(Point pointArrivee) {
-		super.setFin(pointArrivee);
+		g.drawImage(this.image, pointOrigin.x, pointOrigin.y, null);
 	}
 }

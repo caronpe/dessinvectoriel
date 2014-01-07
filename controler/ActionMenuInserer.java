@@ -1,17 +1,14 @@
 package controler;
 
 import java.awt.Component;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
-
-import model.FormeImage;
 import model.Model;
 
 /**
@@ -25,13 +22,13 @@ import model.Model;
  */
 public class ActionMenuInserer extends AbstractAction {
 	private Model model;
-	private Image photo ;
-	private Component parent;          //ouvre une boîte de dialogue d’ouverture de fichier.
+	private BufferedImage photo ;
+	private Component parent;          //ouvre une boï¿½te de dialogue dï¿½ouverture de fichier.
 
 	public ActionMenuInserer(Model model) {
 		this.model=model;
-		putValue(NAME, "Insérer");
-		putValue(SHORT_DESCRIPTION, "Insère une image");
+		putValue(NAME, "Insï¿½rer");
+		putValue(SHORT_DESCRIPTION, "Insï¿½re une image");
 	}
 
 	public void actionPerformed(ActionEvent arg0) {
@@ -64,13 +61,13 @@ public class ActionMenuInserer extends AbstractAction {
 			int retour = choix.showOpenDialog(parent);
 			if(retour == JFileChooser.APPROVE_OPTION) {
 				photo=ImageIO.read(new File(choix.getSelectedFile().getAbsolutePath()));
-			} else ;
+			}
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		model.addForme(new FormeImage(photo));
+		model.addForme(photo);
 		System.out.println("passe1");
 	}
 

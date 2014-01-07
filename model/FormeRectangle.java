@@ -25,23 +25,12 @@ public class FormeRectangle extends Forme {
 	public FormeRectangle(Point pointDebut, Point pointArrivee, String type, String objet, Color couleur, boolean parfait) {
 		super(pointDebut, pointArrivee, type, objet, couleur, parfait);
 		
-		this.marqueurs = new Rectangle2D.Double[4];
 		calculVariables();
 	}
 	
 	@Override
 	protected void calculVariables() {
 		super.calculVariables();
-		
-		// On initialiser/réinitialise les points secondaires de la forme
-		this.pointBasGauche = new Point(oX, aY);
-		this.pointHautDroit= new Point(aX ,oY);
-		
-		// Instanciation des marqueurs
-		this.marqueurs[0] = new Rectangle2D.Double(oX - 4, oY - 4, 8, 8); // En haut à gauche
-		this.marqueurs[1] = new Rectangle2D.Double(oX + width - 4, oY - 4, 8, 8); // En haut à droite
-		this.marqueurs[2] = new Rectangle2D.Double(oX - 4, oY + height - 4, 8, 8); // En bas à gauche
-		this.marqueurs[3] = new Rectangle2D.Double(oX + width - 4, oY + height - 4, 8, 8); // En bas à droite
 		
 		// Instanciation de la forme et du référentiel
 		this.forme = new Rectangle2D.Double(oX, oY, width, height);

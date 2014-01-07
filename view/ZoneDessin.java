@@ -9,16 +9,14 @@ import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.util.ListIterator;
-
 import javax.swing.JPanel;
-
+// INTERNE
 import model.Calque;
 import model.Forme;
-import model.FormeImage;
 import model.FormeRectangle;
 import model.Model;
 import ressources.DimensionMenuDroit;
-//INTERNE
+
 
 /**
  * Listener qui régit les actions de la souris sur la zone de dessin.

@@ -73,7 +73,7 @@ public abstract class Forme implements Serializable, Cloneable {
 	 * @param parfait
 	 *            Définit si la forme est temporaire
 	 */
-	public Forme(Point pointDebut, Point pointArrivee, String type, String objet,Color couleur, boolean parfait) {
+	public Forme(Point pointDebut, Point pointArrivee, String type, String objet, Color couleur, boolean parfait) {
 		this.pointOrigin = pointDebut;
 		this.pointFin = pointArrivee;
 		this.type = type;
@@ -82,6 +82,8 @@ public abstract class Forme implements Serializable, Cloneable {
 		this.parfait = parfait;
 		this.marqueurCourant = -1;
 		this.selected = false;
+		
+		this.marqueurs = new Rectangle2D.Double[4];
 	}
 
 	/**
@@ -99,8 +101,12 @@ public abstract class Forme implements Serializable, Cloneable {
 	 * @param couleur
 	 *            Couleur de l'objet
 	 */
-	public Forme(Point pointDebut, Point pointArrivee, String type, String objet,Color couleur) {
+	public Forme(Point pointDebut, Point pointArrivee, String type, String objet, Color couleur) {
 		this(pointDebut, pointArrivee, type, objet, couleur, false);
+	}
+	
+	public Forme(Point pointDebut, Point pointArrivee, String type, String objet) {
+		this(pointDebut, pointArrivee, type, objet, Color.WHITE, false);
 	}
 	
 	/**
@@ -136,6 +142,15 @@ public abstract class Forme implements Serializable, Cloneable {
 		// On réinitialise les points de la forme
 		this.pointOrigin = new Point(oX, oY);
 		this.pointFin = new Point(aX, aY);
+		// On initialiser/réinitialise les points secondaires de la forme
+		this.pointBasGauche = new Point(oX, aY);
+		this.pointHautDroit= new Point(aX ,oY);
+		
+		// Instanciation des marqueurs
+		this.marqueurs[0] = new Rectangle2D.Double(oX - 4, oY - 4, 8, 8); // En haut à gauche
+		this.marqueurs[1] = new Rectangle2D.Double(oX + width - 4, oY - 4, 8, 8); // En haut à droite
+		this.marqueurs[2] = new Rectangle2D.Double(oX - 4, oY + height - 4, 8, 8); // En bas à gauche
+		this.marqueurs[3] = new Rectangle2D.Double(oX + width - 4, oY + height - 4, 8, 8); // En bas à droite
 	}
 	
 	/**

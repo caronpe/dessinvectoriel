@@ -2,6 +2,7 @@ package model;
 
 import java.awt.Color;
 import java.awt.Point;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.ListIterator;
 import java.util.Observable;
@@ -96,8 +97,12 @@ public class Model extends Observable {
 		}
 	}
 	
-	public void addForme(FormeImage f){
-		calqueCourant.add(f);
+	public void addForme(BufferedImage photo){
+		Point pointOrigin = new Point(0,0), pointFin = new Point(photo.getWidth(),photo.getHeight());
+		FormeImage image = new FormeImage(pointOrigin, pointFin, photo);
+		calqueCourant.add(image);
+		
+		// Envoi de la notification aux vues
 		setChanged();
 		notifyObservers();
 	}
