@@ -2,12 +2,15 @@ package controler;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
+import java.net.URL;
 import java.util.Observable;
 import java.util.Observer;
+
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+
 // INTERNE
 import model.Model;
 
@@ -24,6 +27,7 @@ public class ActionOutilRectangle extends AbstractAction implements Observer {
 	private Model model;
 	private JButton bouton;
 	private boolean plein;
+	private URL urlRectangleVide, urlRectanglePlein;
 	
 	/**
 	 * Ne comporte pas de nom, autrement
@@ -37,9 +41,13 @@ public class ActionOutilRectangle extends AbstractAction implements Observer {
 		this.bouton = bouton;
 		this.plein = false;
 		
+		// URL
+		this.urlRectangleVide = ClassLoader.getSystemClassLoader().getResource("ressources/images/rectangleVide.png");
+		this.urlRectanglePlein = ClassLoader.getSystemClassLoader().getResource("ressources/images/rectanglePlein.png");
+		
 		// Values
 		this.putValue(SHORT_DESCRIPTION, "Sélectionne l'outil rectangle");
-		this.putValue(SMALL_ICON, new ImageIcon("ressources/images/rectangleVide.png"));
+		this.putValue(SMALL_ICON, new ImageIcon(urlRectangleVide));
 	}
 
 	/**
@@ -69,9 +77,9 @@ public class ActionOutilRectangle extends AbstractAction implements Observer {
 		
 		// Modification de l'icône en fonction du booléen "plein"
 		if (model.getObjetCourant().equals("rectangle") && model.getPleinCourant()) {
-			bouton.setIcon(new ImageIcon("ressources/images/rectanglePlein.png"));
+			bouton.setIcon(new ImageIcon(urlRectanglePlein));
 		} else if (model.getObjetCourant().equals("rectangle") && !model.getPleinCourant()) {
-			bouton.setIcon(new ImageIcon("ressources/images/rectangleVide.png"));
+			bouton.setIcon(new ImageIcon(urlRectangleVide));
 		}
 	}
 }

@@ -2,6 +2,7 @@ package controler;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
+import java.net.URL;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -26,6 +27,7 @@ public class ActionOutilEllipse extends AbstractAction  implements Observer {
 	private Model model;
 	private JButton bouton;
 	private boolean plein;
+	private URL urlCercleVide, urlCerclePlein;
 	
 	/**
 	 * Ne comporte pas de nom, autrement
@@ -39,9 +41,13 @@ public class ActionOutilEllipse extends AbstractAction  implements Observer {
 		this.bouton = bouton;
 		this.plein = false;
 		
+		// URL
+		this.urlCercleVide = ClassLoader.getSystemClassLoader().getResource("ressources/images/cercleVide.png");
+		this.urlCerclePlein = ClassLoader.getSystemClassLoader().getResource("ressources/images/cerclePlein.png");
+		
 		// Values
 		this.putValue(SHORT_DESCRIPTION, "Sélectionne l'outil cercle");
-		this.putValue(SMALL_ICON, new ImageIcon("ressources/images/cercleVide.png"));
+		this.putValue(SMALL_ICON, new ImageIcon(urlCercleVide));
 	}
 	
 	/**
@@ -70,9 +76,9 @@ public class ActionOutilEllipse extends AbstractAction  implements Observer {
 		
 		// Modification de l'icône en fonction du booléen "plein"
 		if (model.getObjetCourant().equals("ellipse") && model.getPleinCourant()) {
-			bouton.setIcon(new ImageIcon("ressources/images/cerclePlein.png"));
+			bouton.setIcon(new ImageIcon(urlCerclePlein));
 		} else if (model.getObjetCourant().equals("ellipse") && !model.getPleinCourant()) {
-			bouton.setIcon(new ImageIcon("ressources/images/cercleVide.png"));
+			bouton.setIcon(new ImageIcon(urlCercleVide));
 		}
 	}
 }

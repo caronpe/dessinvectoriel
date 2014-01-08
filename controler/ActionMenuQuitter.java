@@ -3,6 +3,7 @@ package controler;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.net.URL;
 
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
@@ -10,7 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 // INTERNE
-import model.*;
+import model.Model;
 
 /**
  * Listener pour le menu Quitter. Contient toutes les fonctions pour quitter le programme.
@@ -23,14 +24,18 @@ import model.*;
  */
 public class ActionMenuQuitter extends AbstractAction implements WindowListener {
 	private Model model;
+	private URL urlQuit;
 	
 	public ActionMenuQuitter(Model model) {
 		this.model = model;
 		
+		// URL
+		this.urlQuit = ClassLoader.getSystemClassLoader().getResource("ressources/images/quit.png");
+		
 		// Values
 		putValue(NAME, "Quitter");
 		putValue(SHORT_DESCRIPTION, "Quitte le logiciel");
-		this.putValue(SMALL_ICON, new ImageIcon("ressources/images/quit.png"));
+		this.putValue(SMALL_ICON, new ImageIcon(urlQuit));
 	}
 	
 	/**

@@ -2,6 +2,7 @@ package controler;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
+import java.net.URL;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -9,8 +10,6 @@ import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-
-
 
 // INTERNE
 import model.Model;
@@ -27,6 +26,7 @@ import model.Model;
 public class ActionOutilSelection extends AbstractAction implements Observer {
 	private Model model;
 	private JButton bouton;
+	private URL urlSelection;
 	
 	/**
 	 * Ne comporte pas de nom, autrement
@@ -39,9 +39,12 @@ public class ActionOutilSelection extends AbstractAction implements Observer {
 		this.model.addObserver(this);
 		this.bouton = bouton;
 		
+		// URL
+		this.urlSelection = ClassLoader.getSystemClassLoader().getResource("ressources/images/selection.png");
+		
 		// Values
 		this.putValue(SHORT_DESCRIPTION, "Sélectionne l'outil sélection");
-		this.putValue(SMALL_ICON, new ImageIcon("ressources/images/selection.png"));
+		this.putValue(SMALL_ICON, new ImageIcon(urlSelection));
 	}
 
 	/**

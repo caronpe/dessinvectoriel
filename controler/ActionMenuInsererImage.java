@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 
 import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
@@ -25,14 +26,17 @@ import model.Model;
 public class ActionMenuInsererImage extends AbstractAction {
 	private Model model;
 	private BufferedImage photo ;
-//	private Component parent; // Ouvre une boite de dialogue réouverture de fichier.
+	private URL urlInsert;
 	
 	public ActionMenuInsererImage(Model model) {
 		this.model = model;
 		
+		// URL
+		this.urlInsert = ClassLoader.getSystemClassLoader().getResource("ressources/images/insert.png");
+		
 		putValue(NAME, "Insérer");
 		putValue(SHORT_DESCRIPTION, "Insère une image");
-		this.putValue(SMALL_ICON, new ImageIcon("ressources/images/insert.png"));
+		this.putValue(SMALL_ICON, new ImageIcon(urlInsert));
 	}
 
 	public void actionPerformed(ActionEvent arg0) {

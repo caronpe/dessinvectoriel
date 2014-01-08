@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.StreamCorruptedException;
+import java.net.URL;
 import java.util.ArrayList;
 
 import javax.swing.AbstractAction;
@@ -31,14 +32,18 @@ import model.Model;
  */
 public class ActionMenuOuvrir extends AbstractAction {
 	private Model model;
+	private URL urlOpen;
 	
 	public ActionMenuOuvrir(Model model) {
 		this.model = model;
 		
+		// URL
+		this.urlOpen = ClassLoader.getSystemClassLoader().getResource("ressources/images/open.png");
+		
 		// Values
 		putValue(NAME, "Ouvrir");
 		putValue(SHORT_DESCRIPTION, "Ouvrir un fichier déjà existant");
-		this.putValue(SMALL_ICON, new ImageIcon("ressources/images/open.png"));
+		this.putValue(SMALL_ICON, new ImageIcon(urlOpen));
 	}
 	
 	/**
