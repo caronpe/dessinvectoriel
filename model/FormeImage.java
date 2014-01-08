@@ -11,7 +11,7 @@ public class FormeImage extends Forme {
 	protected BufferedImage image, imageRedessinee;
 
 	public FormeImage(Point pointDebut, Point pointArrivee, BufferedImage image){
-		super(pointDebut, pointArrivee, "image", "image");
+		super(pointDebut, pointArrivee, false, "image");
 		this.image = image;
 		
 		calculVariables(); // Pour faire en sorte que l'image soit réinitialisée après sa création

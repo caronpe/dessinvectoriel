@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.StreamCorruptedException;
+import java.util.ArrayList;
 
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
@@ -55,7 +56,7 @@ public class ActionMenuOuvrir extends AbstractAction {
 			Object[] options = {"Enregistrer", "Ne pas enregistrer", "Annuler"};
 			int n = JOptionPane.showOptionDialog(new JFrame(), 
 					"Souhaitez-vous vraiment ouvrir un fichier sans enregistrer ?", 
-					"Ouvrir", 
+					"Ouvrir",
 					JOptionPane.YES_NO_CANCEL_OPTION, 
 					JOptionPane.QUESTION_MESSAGE, 
 					null, 
@@ -107,8 +108,8 @@ public class ActionMenuOuvrir extends AbstractAction {
 		try {
 			FileInputStream fichier = new FileInputStream(monFichier);
 			ObjectInputStream input = new ObjectInputStream(fichier);
-			Calque listeDessin = (Calque) input.readObject();
-			model.setCalque(listeDessin);
+			ArrayList<Calque> listeCalque = (ArrayList<Calque>) input.readObject();
+			model.open(listeCalque);
 			
 			input.close();
 		} catch (StreamCorruptedException e) {

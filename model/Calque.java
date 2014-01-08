@@ -21,17 +21,17 @@ public class Calque implements Serializable {
 	static final long serialVersionUID = 1L;
 	String name;
 	private ArrayList<Forme> listeDessin;
-	private boolean selectionner;
+	private boolean afficher;
 	
 	public Calque() {
 		this.listeDessin = new ArrayList<Forme>();
-		this.selectionner=true;
+		this.afficher=true;
 	}
 	
 	public Calque(ArrayList<Forme> liste) {
 		this.listeDessin = new ArrayList<Forme>();
 		this.listeDessin.addAll(liste);
-		this.selectionner=true;
+		this.afficher=true;
 	}
 	
 	/**
@@ -147,11 +147,11 @@ public class Calque implements Serializable {
 	}
 	
 	public boolean getAfficher(){
-		return this.selectionner;
+		return this.afficher;
 	}
 	
 	public void setAfficher(boolean b){
-		this.selectionner=b;
+		this.afficher=b;
 	}
 
 }

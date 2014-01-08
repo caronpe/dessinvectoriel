@@ -23,7 +23,8 @@ public class Model extends Observable {
 	private Calque calqueCourant;
 	// Types de modification d'un objet forme
 	private Color couleurCourante;
-	private String typeCourant, objetCourant;
+	private String objetCourant;
+	private boolean pleinCourant;
 	// Enregistrement
 	private String adresseEnregistrement, extension;
 	private boolean travail_enregistre;
@@ -51,7 +52,7 @@ public class Model extends Observable {
 		this.listCalque = new ArrayList<Calque>();
 		this.listCalque.add(calqueCourant);
 		this.couleurCourante = Color.BLACK;
-		this.typeCourant = "plein";
+		this.pleinCourant = false;
 		this.objetCourant = "selection";
 		this.setEnregistre(true);
 		this.extension = ".cth";
@@ -77,13 +78,13 @@ public class Model extends Observable {
 
 		switch (this.objetCourant) {
 		case "rectangle":
-			courant = new FormeRectangle(pointDebut, pointArrivee, typeCourant, objetCourant,couleurCourante, parfait);
+			courant = new FormeRectangle(pointDebut, pointArrivee, pleinCourant, objetCourant,couleurCourante, parfait);
 			break;
 		case "ellipse":
-			courant = new FormeEllipse(pointDebut, pointArrivee, typeCourant, objetCourant, couleurCourante, parfait);
+			courant = new FormeEllipse(pointDebut, pointArrivee, pleinCourant, objetCourant, couleurCourante, parfait);
 			break;
 		case "trait":
-			courant = new FormeLine(pointDebut, pointArrivee, "vide", objetCourant,couleurCourante, parfait);
+			courant = new FormeLine(pointDebut, pointArrivee, false, objetCourant,couleurCourante, parfait);
 			break;
 		}
 		calqueCourant.add(courant);
@@ -340,6 +341,10 @@ public class Model extends Observable {
 	public Calque getCalqueCourant() {
 		return this.calqueCourant;
 	}
+	
+	public ArrayList<Calque> getListCalque() {
+		return this.listCalque;
+	}
 
 	/**
 	 * @category accessor
@@ -391,8 +396,8 @@ public class Model extends Observable {
 	 * 
 	 * @return Le type actuel
 	 */
-	public String getTypeCourant() {
-		return this.typeCourant;
+	public boolean getPleinCourant() {
+		return this.pleinCourant;
 	}
 
 	/**
@@ -443,12 +448,20 @@ public class Model extends Observable {
 	 * @param objetCourant
 	 *            L'objet à modifier
 	 */
-	public void setTypeCourant(String typeCourant) {
-		this.typeCourant = typeCourant;
+	public void setTypeCourant(boolean pleinCourant) {
+		this.pleinCourant = pleinCourant;
 
 		// Envoi de la notification aux vues
 		setChanged();
 		notifyObservers();
+	}
+	
+	public void setListeCalque(ArrayList<Calque> listCalque) {
+		this.listCalque = listCalque;
+		
+		// Envoi de la notification aux vues
+		setChanged();
+		notifyObservers(this.listCalque);
 	}
 
 	/**
@@ -565,6 +578,7 @@ public class Model extends Observable {
 			notifyObservers(calqueCourant);
 		} else {
 			this.calqueCourant = listCalque.get(listCalque.size() - 1);
+			
 		}
 		notifyObservers();
 		setEnregistre(false);
@@ -578,11 +592,16 @@ public class Model extends Observable {
 		notifyObservers();
 	}
 	
-	@Override
-	public void setChanged() {
-		super.setChanged();
+	public void newFile() {
 		
-		System.out.println("Ici"); // DEBUG
 	}
-
+	
+	public ArrayList<Calque> save() {
+		return this.getListCalque();
+	}
+	
+	public void open(ArrayList<Calque> listCalque) {
+		this.setListeCalque(listCalque);
+		this.calqueCourant = this.listCalque.get(0);
+	}
 }

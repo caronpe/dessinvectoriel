@@ -166,7 +166,7 @@ public class DessinListener implements MouseListener, MouseMotionListener {
 				// Envoi au model
 				model.resizeForme(this.resizing, this.modifiedForme, this.pointArrivee);
 			} else {
-				rectangleSelection = new FormeRectangle(pointDebut, pointArrivee, "plein", "rectangle",Color.GRAY, false);
+				rectangleSelection = new FormeRectangle(pointDebut, pointArrivee, true, "rectangle", Color.GRAY, false);
 				this.zoneDessin.dessinMultiSelection(rectangleSelection);
 			}
 		}

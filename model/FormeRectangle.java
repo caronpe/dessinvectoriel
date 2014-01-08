@@ -22,8 +22,8 @@ public class FormeRectangle extends Forme {
 	 * @see model.Forme
 	 * @see #initialiserVariables
 	 */
-	public FormeRectangle(Point pointDebut, Point pointArrivee, String type, String objet, Color couleur, boolean parfait) {
-		super(pointDebut, pointArrivee, type, objet, couleur, parfait);
+	public FormeRectangle(Point pointDebut, Point pointArrivee, boolean plein, String objet, Color couleur, boolean parfait) {
+		super(pointDebut, pointArrivee, plein, objet, couleur, parfait);
 	}
 	
 	@Override

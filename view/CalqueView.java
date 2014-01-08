@@ -69,15 +69,15 @@ public class CalqueView extends JPanel {
 		
 		// Panels intermédiaires
 		JPanel tmp = new JPanel();
-		tmp.setBackground(new Color(0 ,0 ,0 ,0f));
+		tmp.setBackground(new Color(0, 0, 0, 0f));
 		JPanel tmp2 = new JPanel();
-		tmp2.setBackground(new Color(0 ,0 ,0 ,0f));
+		tmp2.setBackground(new Color(0, 0, 0, 0f));
 		
 		// Panel
 		JPanel button = new JPanel();
 		button.setPreferredSize(new Dimension(22,22));
 		button.setLayout(new GridLayout(4, 1));
-		button.setBackground(new Color(0 ,0 ,0 ,0f));
+		button.setBackground(new Color(0, 0, 0, 0f));
 		button.add(afficher);
 		button.add(tmp);
 		button.add(tmp2);

@@ -46,7 +46,7 @@ public class ActionCalqueRemove extends AbstractAction {
 
 		if (answer == JOptionPane.OK_OPTION) {
 			this.calquePanel.removeCalque(calque);
-			model.delCalque(calque);
+			this.model.delCalque(calque);
 		}		
 	}
 }

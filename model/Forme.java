@@ -34,7 +34,8 @@ public abstract class Forme implements Serializable, Cloneable {
 	 */
 	protected Point pointHautDroit, pointBasGauche;
 	protected Point pointOrigin, pointFin;
-	protected String type, objet;
+	protected String objet;
+	protected boolean plein;
 	protected Color couleur;
 	/**
 	 * Ce booléen est utilisé comme appelation. L'algorithme vérifie régulièrement
@@ -73,10 +74,10 @@ public abstract class Forme implements Serializable, Cloneable {
 	 * @param parfait
 	 *            Définit si la forme est temporaire
 	 */
-	public Forme(Point pointDebut, Point pointArrivee, String type, String objet, Color couleur, boolean parfait) {
+	public Forme(Point pointDebut, Point pointArrivee, boolean plein, String objet, Color couleur, boolean parfait) {
 		this.pointOrigin = pointDebut;
 		this.pointFin = pointArrivee;
-		this.type = type;
+		this.plein = plein;
 		this.objet = objet;
 		this.couleur = couleur;
 		this.parfait = parfait;
@@ -102,12 +103,12 @@ public abstract class Forme implements Serializable, Cloneable {
 	 * @param couleur
 	 *            Couleur de l'objet
 	 */
-	public Forme(Point pointDebut, Point pointArrivee, String type, String objet, Color couleur) {
-		this(pointDebut, pointArrivee, type, objet, couleur, false);
+	public Forme(Point pointDebut, Point pointArrivee, boolean plein, String objet, Color couleur) {
+		this(pointDebut, pointArrivee, plein, objet, couleur, false);
 	}
 	
-	public Forme(Point pointDebut, Point pointArrivee, String type, String objet) {
-		this(pointDebut, pointArrivee, type, objet, Color.WHITE, false);
+	public Forme(Point pointDebut, Point pointArrivee, boolean plein, String objet) {
+		this(pointDebut, pointArrivee, plein, objet, Color.WHITE, false);
 	}
 	
 	/**
@@ -350,13 +351,10 @@ public abstract class Forme implements Serializable, Cloneable {
 	public void draw(Graphics2D graphics) {
 		graphics.setColor(this.couleur);
 
-		switch (this.type) {
-		case "plein":
+		if (this.plein) {
 			graphics.fill(this.forme);
-			break;
-		case "vide":
+		} else {
 			graphics.draw(this.forme);
-			break;
 		}
 	}
 	
@@ -482,15 +480,15 @@ public abstract class Forme implements Serializable, Cloneable {
 	/**
 	 * @category accessor
 	 */
-	public String getType() {
-		return this.type;
+	public boolean getType() {
+		return this.plein;
 	}
 
 	/**
 	 * @category accessor
 	 */
-	public void setType(String type) {
-		this.type = type;
+	public void setType(boolean plein) {
+		this.plein = plein;
 	}
 	
 	/**
@@ -648,7 +646,7 @@ public abstract class Forme implements Serializable, Cloneable {
 		forme.pointOrigin = (Point) pointOrigin.clone();
 		forme.pointHautDroit = (Point) pointBasGauche.clone();
 		forme.pointFin = (Point) pointFin.clone();
-		forme.type = (String) type;
+		forme.plein = (boolean) plein;
 		forme.objet = (String) objet;
 		forme.couleur = (Color) couleur;
 		forme.calculVariables();

@@ -23,7 +23,7 @@ import model.Model;
 public class ActionOutilRectangle extends AbstractAction implements Observer {
 	private Model model;
 	private JButton bouton;
-	private String type;
+	private boolean plein;
 	
 	/**
 	 * Ne comporte pas de nom, autrement
@@ -35,7 +35,7 @@ public class ActionOutilRectangle extends AbstractAction implements Observer {
 		this.model = model;
 		this.model.addObserver(this);
 		this.bouton = bouton;
-		this.type = "vide";
+		this.plein = false;
 		
 		// Values
 		this.putValue(SHORT_DESCRIPTION, "Sélectionne l'outil rectangle");
@@ -47,19 +47,18 @@ public class ActionOutilRectangle extends AbstractAction implements Observer {
 	 * 
 	 */
 	public void actionPerformed(ActionEvent e) {
-		if (model.getObjetCourant().equals("rectangle") && this.type.equals("plein")) {
-			this.type = "vide";
-		} else if (model.getObjetCourant().equals("rectangle") && this.type.equals("vide")) {
-			this.type = "plein";
+		if (model.getObjetCourant().equals("rectangle")) {
+			this.plein = !this.plein;
 		}
 		
 		model.setObjetCourant("rectangle");
-		model.setTypeCourant(this.type);
+		model.setTypeCourant(this.plein);
 		model.deselectionnerToutesLesFormes();
  	}
 	
 	@Override
 	public void update(Observable arg0, Object arg1) {
+		// Définition du bouton rectangle comme outil courant
 		if (model.getObjetCourant().equals("rectangle")) {
 			bouton.setBackground(new Color(220, 220, 220));
 			bouton.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.GRAY));
@@ -68,9 +67,10 @@ public class ActionOutilRectangle extends AbstractAction implements Observer {
 			bouton.setBackground(Color.WHITE);
 		}
 		
-		if (model.getObjetCourant().equals("rectangle") && model.getTypeCourant().equals("plein")) {
+		// Modification de l'icône en fonction du booléen "plein"
+		if (model.getObjetCourant().equals("rectangle") && model.getPleinCourant()) {
 			bouton.setIcon(new ImageIcon("ressources/images/rectanglePlein.png"));
-		} else if (model.getObjetCourant().equals("rectangle") && model.getTypeCourant().equals("vide")) {
+		} else if (model.getObjetCourant().equals("rectangle") && !model.getPleinCourant()) {
 			bouton.setIcon(new ImageIcon("ressources/images/rectangleVide.png"));
 		}
 	}

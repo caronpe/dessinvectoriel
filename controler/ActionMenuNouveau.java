@@ -76,6 +76,6 @@ public class ActionMenuNouveau extends AbstractAction {
 	 * Supprime tous les éléments de la liste de dessins du modèle.
 	 */
 	public void nouveau() {
-		model.delAllFormes();
+		model.newFile();
 	}
 }
