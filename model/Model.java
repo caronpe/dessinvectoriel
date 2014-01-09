@@ -18,7 +18,6 @@ import java.util.Observable;
  * @version 0.4
  */
 public class Model extends Observable {
-
 	private ArrayList<Calque> listCalque;
 	private Calque calqueCourant;
 	// Types de modification d'un objet forme
@@ -30,8 +29,7 @@ public class Model extends Observable {
 	private boolean travail_enregistre;
 	private ArrayList<Forme> formePending;
 	// Touches
-	private boolean keyShiftPressed,
-	keyControlPressed;
+	private boolean keyShiftPressed, keyControlPressed;
 	// Curseur
 	public final int DEFAULT_CURSOR = 0, NORTH_WEST_CURSOR = 1, NORTH_EAST_CURSOR = 2;
 	private int redimensionnementPotentiel;
@@ -570,18 +568,25 @@ public class Model extends Observable {
 		this.listCalque.remove(calque);
 		this.deselectionnerToutesLesFormes();
 
-		// Envoi de la notification aux vues
-		setChanged();
 		if (listCalque.size() < 1) {
-			this.calqueCourant = new Calque();
-			this.listCalque.add(calqueCourant);
-			notifyObservers(calqueCourant);
+			this.resetCalques();
 		} else {
 			this.calqueCourant = listCalque.get(listCalque.size() - 1);
-			
 		}
+		
+		// Envoi de la notification aux vues
+		setChanged();
 		notifyObservers();
 		setEnregistre(false);
+	}
+	
+	private void resetCalques() {
+		this.calqueCourant = new Calque();
+		this.listCalque.add(calqueCourant);
+		
+		// Envoi de la notification aux vues
+		setChanged();
+		notifyObservers(listCalque);
 	}
 
 	public void setAfficherCalque(Calque calque) {
@@ -593,7 +598,9 @@ public class Model extends Observable {
 	}
 	
 	public void newFile() {
-		
+		this.listCalque = new ArrayList<Calque>();
+		this.resetCalques();
+		this.adresseEnregistrement = null;
 	}
 	
 	public ArrayList<Calque> save() {

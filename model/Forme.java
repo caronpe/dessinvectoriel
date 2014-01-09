@@ -107,10 +107,6 @@ public abstract class Forme implements Serializable, Cloneable {
 		this(pointDebut, pointArrivee, plein, objet, couleur, false);
 	}
 	
-	public Forme(Point pointDebut, Point pointArrivee, boolean plein, String objet) {
-		this(pointDebut, pointArrivee, plein, objet, Color.WHITE, false);
-	}
-	
 	/**
 	 * Calcule selon les différentes positions du point d'arrivée et du point d'origine.
 	 * Cette approche de la forme est optimisée pour le redimensionnement. En effet,

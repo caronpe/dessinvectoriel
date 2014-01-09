@@ -55,7 +55,7 @@ public class ActionMenuEnregistrerSous extends AbstractAction {
 	 */
 	public void enregistrerSous() {
 		// Fichier
-			String adresse_du_fichier = "Nom du fichier" + extension;
+			String adresse_du_fichier = "*" + extension;
 			File file = new File(adresse_du_fichier);
 		
 		// FileChooser

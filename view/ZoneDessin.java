@@ -49,7 +49,7 @@ public class ZoneDessin extends JPanel {
 		this.setBackground(Color.WHITE);
 		this.rectangleSelection = null;
 	}
-
+ 
 	/**
 	 * Parcours la liste de dessin si elle n'est pas vide et redessine toutes
 	 * les formes, puis dessine la forme courante. Si la forme n'a pas été
@@ -64,6 +64,7 @@ public class ZoneDessin extends JPanel {
 	public void paintComponent(Graphics g) {	
 		Graphics2D g2d = (Graphics2D) g;
 		super.paintComponent(g2d);
+		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		ListIterator<Forme> it = model.getAllFormes().listIterator();
 
 		// Parcours de la liste pour redessiner toutes les formes

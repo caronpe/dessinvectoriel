@@ -15,6 +15,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+
 //INTERNE
 import model.Calque;
 import model.Model;
@@ -109,6 +110,7 @@ public class ActionMenuOuvrir extends AbstractAction {
 	 * @param monFichier Nom du fichier contenant l'adresse absolue du fichier.
 	 * @throws ClassNotFoundException 
 	 */
+	@SuppressWarnings("unchecked")
 	public void fluxOuverture(String monFichier) {
 		try {
 			FileInputStream fichier = new FileInputStream(monFichier);
@@ -125,7 +127,7 @@ public class ActionMenuOuvrir extends AbstractAction {
 		} catch (IOException | ClassNotFoundException e) {
 			System.err.println("Problème.");
 			Object[] options = {"OK"};
-			JOptionPane.showOptionDialog(new JFrame(), "Problème lors de l'ouverture du fichier.", "Extension", 
+			JOptionPane.showOptionDialog(new JFrame(), "Problème lors de l'ouverture du fichier.", "Erreur", 
 					JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE, null, options, options[0]);
 		}
 	}

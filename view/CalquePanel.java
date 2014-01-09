@@ -8,6 +8,7 @@ import java.util.Observer;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
+
 // INTERNE
 import model.Calque;
 import model.Model;
@@ -82,7 +83,6 @@ public class CalquePanel extends JPanel implements Observer {
 
 	public void setArrayCalqueView(ArrayList<Calque> listCalque) {
 		this.removeAllCalqueView();
-		System.out.println("dans setarraycalqueview calquepanel"); // DEBUG
 		Calque calque = null;
 		CalqueView tmp = null;
 		ListIterator<Calque> it = listCalque.listIterator();
@@ -91,6 +91,7 @@ public class CalquePanel extends JPanel implements Observer {
 			tmp = new CalqueView(model, calque, zoneDessin , this);
 			this.add(tmp);
 			this.listCalquesView.add(tmp);
+			this.repaint();
 			this.revalidate();
 		}
 	}
@@ -100,6 +101,7 @@ public class CalquePanel extends JPanel implements Observer {
 	 * Informe également tous les calques
 	 * qu'il y a eu une modification (utile pour la suppression).
 	 */
+	@SuppressWarnings("unchecked")
 	public void update(Observable arg0, Object arg1) {
 		if (arg1 instanceof Calque) {
 			this.addCalque((Calque) arg1);
@@ -108,7 +110,7 @@ public class CalquePanel extends JPanel implements Observer {
 		
 		if (arg1 instanceof ArrayList<?>) {
 			ArrayList<?> list = (ArrayList<?>) arg1;
-			ListIterator it = list.listIterator();
+			ListIterator<?> it = list.listIterator();
 			if (it.hasNext() && it.next() instanceof Calque) {
 				this.setArrayCalqueView( (ArrayList<Calque>) list );
 			}
