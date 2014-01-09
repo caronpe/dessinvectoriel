@@ -322,7 +322,7 @@ public class Model extends Observable {
 	 * @category accessor
 	 */
 	public void setFormePending(ArrayList<Forme> formePending) {
-		if (formePending != null) {
+		if (formePending != null && formePending.size() != 0 ) {
 			this.formePending = formePending;
 		}
 
