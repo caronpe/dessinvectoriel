@@ -57,6 +57,8 @@ public class JColorChooserUnique extends JFrame implements ActionListener {
 		AbstractColorChooserPanel[] oldPanels = colorChooser.getChooserPanels();
 		AbstractColorChooserPanel[] newPanels = { oldPanels[0] };
 		colorChooser.setChooserPanels(newPanels);
+		//colorChooser.grabFocus();
+		this.setAlwaysOnTop(true);
 	}
 
 	/**
