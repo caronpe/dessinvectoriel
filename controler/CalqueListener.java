@@ -42,19 +42,18 @@ public class CalqueListener implements MouseListener {
 	 */
 	@Override
 	public void mousePressed(MouseEvent arg0) {
-		// Clic gauche
-		if(arg0.getButton() == MouseEvent.BUTTON1){
-			model.deselectionnerToutesLesFormes();
-			model.setCalque(calque);
-		}
-		
+        // Clic gauche
+        if(arg0.getButton() == MouseEvent.BUTTON1){
+                model.deselectionnerToutesLesFormes();
+                model.setCalque(calque);
+        }
+        
 		// Clic droit
 		if(arg0.getButton() == MouseEvent.BUTTON3) {
 			JPopupMenu menu = new JPopupMenu();
 			JMenuItem rem = new JMenuItem("Supprimer");
 			rem.addActionListener(new ActionCalqueRemove(calquePanel, model, calque));
 			menu.add(rem);
-			
 			menu.show(calqueView, arg0.getX(), arg0.getY());
 		}
 	}
@@ -62,8 +61,16 @@ public class CalqueListener implements MouseListener {
 	public void mouseClicked(MouseEvent arg0) {
 	}
 	public void mouseEntered(MouseEvent arg0) {	
+		calqueView.getAfficher().setVisible(true);
+		calqueView.getSupprimer().setVisible(true);
+		System.out.println("entrée de " + calqueView);
+		calqueView.repaint();
 	}
 	public void mouseExited(MouseEvent arg0) {
+		calqueView.getAfficher().setVisible(false);
+		calqueView.getSupprimer().setVisible(false);
+		System.out.println("sortie de " + calqueView);
+		calqueView.repaint();
 	}
 	public void mouseReleased(MouseEvent arg0) {
 	}
