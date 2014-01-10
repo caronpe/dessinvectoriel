@@ -23,10 +23,9 @@ public class FormeEllipse extends Forme {
 	 * @see model.Forme
 	 * @see #initialiserVariables
 	 */
-	public FormeEllipse(Point pointDebut, Point pointArrivee, String type, String objet, Color couleur, boolean parfait) {
-		super(pointDebut, pointArrivee, type, objet,couleur, parfait);
+	public FormeEllipse(Point pointDebut, Point pointArrivee, boolean plein, String objet, Color couleur, boolean parfait) {
+		super(pointDebut, pointArrivee, plein, objet,couleur, parfait);
 
-		this.marqueurs = new Rectangle2D.Double[4];
 		calculVariables();
 	}
 	
@@ -38,18 +37,9 @@ public class FormeEllipse extends Forme {
 	protected void calculVariables() {
 		super.calculVariables();
 		
-		// On initialiser/réinitialise les points secondaires de la forme
-		this.pointBasGauche = new Point(oX, aY);
-		this.pointHautDroit= new Point(aX ,oY);
 		
-		// Instanciation des marqueurs
-		this.marqueurs[0] = new Rectangle2D.Double(oX - 13, oY - 13, 7, 7); // En haut à gauche
-		this.marqueurs[1] = new Rectangle2D.Double(oX + width + 7, oY - 13, 7, 7); // En haut à droite
-		this.marqueurs[2] = new Rectangle2D.Double(oX - 13, oY + height + 7, 7, 7); // En bas à gauche
-		this.marqueurs[3] = new Rectangle2D.Double(oX + width + 7, oY + height + 7, 7, 7); // En bas à droite
-				
 		// Instanciation de la forme et du référentiel
 		this.forme = new Ellipse2D.Double(oX, oY, width, height);
-		this.referentielPosition = new Rectangle2D.Double(oX - 10, oY - 10, width + 20, height + 20);
+		this.referentielPosition = new Rectangle2D.Double(oX , oY , width, height);
 	}
 }

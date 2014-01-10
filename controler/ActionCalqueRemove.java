@@ -1,9 +1,12 @@
 package controler;
 
 import java.awt.event.ActionEvent;
+import java.net.URL;
 
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import model.Calque;
 // INTERNE
@@ -24,13 +27,17 @@ public class ActionCalqueRemove extends AbstractAction {
 	private Model model;
 	private CalquePanel calquePanel;
 	private Calque calque;
+	private URL urlRemove;
 
 	public ActionCalqueRemove(CalquePanel calquePanel, Model model, Calque calque) {
 		this.model = model;
 		this.calquePanel = calquePanel;
 		this.calque = calque;
 		
-		this.putValue(SMALL_ICON, new ImageIcon("dessinvectoriel/ressources/removeCalque.png"));
+		// URL
+		this.urlRemove = ClassLoader.getSystemClassLoader().getResource("ressources/images/removeCalque.png");
+		
+		this.putValue(SMALL_ICON, new ImageIcon(urlRemove));
 		putValue(SHORT_DESCRIPTION, "retire le calque sélectionné");
 	}
 
@@ -39,7 +46,12 @@ public class ActionCalqueRemove extends AbstractAction {
 	 */
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		this.calquePanel.removeCalque(calque);
-		model.delCalque(calque);
+		int answer = JOptionPane.showConfirmDialog(new JFrame(), "Souhaitez-vous vraiment supprimer ce calque ?", "Supprimer",
+				JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+		if (answer == JOptionPane.OK_OPTION) {
+			this.calquePanel.removeCalque(calque);
+			this.model.delCalque(calque);
+		}		
 	}
 }

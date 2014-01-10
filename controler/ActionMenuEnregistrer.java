@@ -1,7 +1,11 @@
 package controler;
 
 import java.awt.event.ActionEvent;
+import java.net.URL;
+
 import javax.swing.AbstractAction;
+import javax.swing.ImageIcon;
+
 //INTERNE
 import model.Model;
 
@@ -17,6 +21,7 @@ import model.Model;
  */
 public class ActionMenuEnregistrer extends AbstractAction {
 	private Model model;
+	private URL urlSave;
        
 	/**
 	 * @param model Modèle du MVC
@@ -24,9 +29,13 @@ public class ActionMenuEnregistrer extends AbstractAction {
 	public ActionMenuEnregistrer(Model model) {
 		this.model = model;
 		
+		// URL
+		this.urlSave = ClassLoader.getSystemClassLoader().getResource("ressources/images/save.png");
+		
 		// Values
 		putValue(NAME, "Enregistrer");
 		putValue(SHORT_DESCRIPTION, "Enregistre votre travail");
+		this.putValue(SMALL_ICON, new ImageIcon(urlSave));
 	}
 	
 	/**

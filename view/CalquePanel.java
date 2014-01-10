@@ -4,8 +4,11 @@ import java.util.ArrayList;
 import java.util.ListIterator;
 import java.util.Observable;
 import java.util.Observer;
+
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
+
+
 // INTERNE
 import model.Calque;
 import model.Model;
@@ -50,29 +53,67 @@ public class CalquePanel extends JPanel implements Observer {
 	
 	public void removeCalque(Calque calque) {		
 		// Avertissement à tous les calques
-		boolean trouve = false;
 		CalqueView calqueView = null;
 		ListIterator<CalqueView> it = this.listCalquesView.listIterator();
 		
-		while (calque != null && it.hasNext() && !trouve) {
+		while (it.hasNext()) {
+			System.out.println("here"); // DEBUG
 			calqueView = it.next();
 			if (calqueView.getCalque() == calque) {
-				this.remove(calqueView);
 				it.remove();
+				this.remove(calqueView);
+				this.repaint();
 				this.revalidate();
 			}
 		}
+		
+	}
+	
+	/**
+	 * Supprime tous les CalqueView actuels
+	 */
+	private void removeAllCalqueView() {
+		ListIterator<CalqueView> it = this.listCalquesView.listIterator();
+		
+		while (it.hasNext()) {
+			this.remove(it.next());
+			it.remove();
+		}
 	}
 
+	public void setArrayCalqueView(ArrayList<Calque> listCalque) {
+		this.removeAllCalqueView();
+		Calque calque = null;
+		CalqueView tmp = null;
+		ListIterator<Calque> it = listCalque.listIterator();
+		while (it.hasNext()) {
+			calque = it.next();
+			tmp = new CalqueView(model, calque, zoneDessin , this);
+			this.add(tmp);
+			this.listCalquesView.add(tmp);
+			this.repaint();
+			this.revalidate();
+		}
+	}
+	
 	/**
 	 * Ajoute un calque à la zone de calque.
 	 * Informe également tous les calques
 	 * qu'il y a eu une modification (utile pour la suppression).
 	 */
+	@SuppressWarnings("unchecked")
 	public void update(Observable arg0, Object arg1) {
 		if (arg1 instanceof Calque) {
 			this.addCalque((Calque) arg1);
 			this.revalidate();
+		}
+		
+		if (arg1 instanceof ArrayList<?>) {
+			ArrayList<?> list = (ArrayList<?>) arg1;
+			ListIterator<?> it = list.listIterator();
+			if (it.hasNext() && it.next() instanceof Calque) {
+				this.setArrayCalqueView( (ArrayList<Calque>) list );
+			}
 		}
 		
 		// Avertissement à tous les calques

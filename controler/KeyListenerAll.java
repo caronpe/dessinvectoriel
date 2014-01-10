@@ -34,32 +34,6 @@ public class KeyListenerAll extends KeyAdapter {
 		if (e.getKeyCode() == KeyEvent.VK_CONTROL) model.setControlPressed(true);
 		
 		if (e.getKeyCode() == KeyEvent.VK_DELETE) model.delFormes();
-		
-		// Raccourcis
-		if (e.getKeyCode() == KeyEvent.VK_S && e.isControlDown()) {
-			System.out.println("Ctrl-S pressé !");
-			new ActionMenuEnregistrerSous(model).enregistrerSous();
-		}
-		
-		if (e.getKeyCode() == KeyEvent.VK_O && e.isControlDown()) {
-			System.out.println("Ctrl-O pressé !");
-			new ActionMenuOuvrir(model).ouvrir();
-		}
-		
-		if (e.getKeyCode() == KeyEvent.VK_Q && e.isControlDown()) {
-			System.out.println("Ctrl-Q pressé !");
-			new ActionMenuQuitter(model).quitter();
-		}
-		
-		if (e.getKeyCode() == KeyEvent.VK_N && e.isControlDown()) {
-			System.out.println("Ctrl-N pressé !");
-			if (model.getEnregistre()) {
-				new ActionMenuNouveau(model).nouveau();
-			} else {
-				new ActionMenuNouveau(model).nouveau_non_enregistre();
-			}
-			new ActionMenuNouveau(model).nouveau();
-		}
 	}
 
 	/**

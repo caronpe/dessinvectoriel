@@ -2,6 +2,7 @@ package controler;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
+import java.net.URL;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -9,8 +10,6 @@ import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-
-
 
 // INTERNE
 import model.Model;
@@ -27,6 +26,8 @@ import model.Model;
 public class ActionOutilEllipse extends AbstractAction  implements Observer {
 	private Model model;
 	private JButton bouton;
+	private boolean plein;
+	private URL urlCercleVide, urlCerclePlein;
 	
 	/**
 	 * Ne comporte pas de nom, autrement
@@ -38,22 +39,33 @@ public class ActionOutilEllipse extends AbstractAction  implements Observer {
 		this.model = model;
 		this.model.addObserver(this);
 		this.bouton = bouton;
+		this.plein = false;
+		
+		// URL
+		this.urlCercleVide = ClassLoader.getSystemClassLoader().getResource("ressources/images/cercleVide.png");
+		this.urlCerclePlein = ClassLoader.getSystemClassLoader().getResource("ressources/images/cerclePlein.png");
 		
 		// Values
 		this.putValue(SHORT_DESCRIPTION, "Sélectionne l'outil cercle");
-		this.putValue(SMALL_ICON, new ImageIcon("dessinvectoriel/ressources/cercle.png"));
+		this.putValue(SMALL_ICON, new ImageIcon(urlCercleVide));
 	}
 	
 	/**
 	 * Sélectionne l'outil cercle dans le modèle
 	 */
 	public void actionPerformed(ActionEvent e) {
+		if (model.getObjetCourant().equals("ellipse")) {
+			this.plein = !this.plein;
+		}
+		
 		model.setObjetCourant("ellipse");
+		model.setTypeCourant(this.plein);
 		model.deselectionnerToutesLesFormes();
 	}
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
+		// Définition du bouton rectangle comme outil courant
 		if (model.getObjetCourant().equals("ellipse")) {
 			bouton.setBackground(new Color(220, 220, 220));
 			bouton.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.GRAY));
@@ -62,10 +74,11 @@ public class ActionOutilEllipse extends AbstractAction  implements Observer {
 			bouton.setBackground(Color.WHITE);
 		}
 		
-		if (model.getTypeCourant().equals("vide")) {
-			bouton.setIcon(new ImageIcon("dessinvectoriel/ressources/cercleVide.png"));
-		} else {
-			bouton.setIcon(new ImageIcon("dessinvectoriel/ressources/cerclePlein.png"));
+		// Modification de l'icône en fonction du booléen "plein"
+		if (model.getObjetCourant().equals("ellipse") && model.getPleinCourant()) {
+			bouton.setIcon(new ImageIcon(urlCerclePlein));
+		} else if (model.getObjetCourant().equals("ellipse") && !model.getPleinCourant()) {
+			bouton.setIcon(new ImageIcon(urlCercleVide));
 		}
 	}
 }

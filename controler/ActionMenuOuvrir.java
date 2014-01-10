@@ -6,13 +6,14 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.StreamCorruptedException;
+import java.net.URL;
+import java.util.ArrayList;
 
 import javax.swing.AbstractAction;
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-
-
 
 
 //INTERNE
@@ -32,13 +33,18 @@ import model.Model;
  */
 public class ActionMenuOuvrir extends AbstractAction {
 	private Model model;
+	private URL urlOpen;
 	
 	public ActionMenuOuvrir(Model model) {
 		this.model = model;
 		
+		// URL
+		this.urlOpen = ClassLoader.getSystemClassLoader().getResource("ressources/images/open.png");
+		
 		// Values
 		putValue(NAME, "Ouvrir");
 		putValue(SHORT_DESCRIPTION, "Ouvrir un fichier déjà existant");
+		this.putValue(SMALL_ICON, new ImageIcon(urlOpen));
 	}
 	
 	/**
@@ -56,7 +62,7 @@ public class ActionMenuOuvrir extends AbstractAction {
 			Object[] options = {"Enregistrer", "Ne pas enregistrer", "Annuler"};
 			int n = JOptionPane.showOptionDialog(new JFrame(), 
 					"Souhaitez-vous vraiment ouvrir un fichier sans enregistrer ?", 
-					"Ouvrir", 
+					"Ouvrir",
 					JOptionPane.YES_NO_CANCEL_OPTION, 
 					JOptionPane.QUESTION_MESSAGE, 
 					null, 
@@ -80,7 +86,7 @@ public class ActionMenuOuvrir extends AbstractAction {
 		JFileChooser filechoose = new JFileChooser();
 		
 		// Permets de donner un nom au fichier dans le TextField et à 
-		String extension = model.getExtension(), nom_du_fichier = ""; // choisit ~ comme répertoire par défaut
+		String nom_du_fichier = ""; // choisit ~ comme répertoire par défaut
 		filechoose.setSelectedFile(new File(nom_du_fichier));
 		
 		// Le répertoire source du JFileChooser est le répertoire d’où est lancé notre programme
@@ -104,21 +110,24 @@ public class ActionMenuOuvrir extends AbstractAction {
 	 * @param monFichier Nom du fichier contenant l'adresse absolue du fichier.
 	 * @throws ClassNotFoundException 
 	 */
+	@SuppressWarnings("unchecked")
 	public void fluxOuverture(String monFichier) {
 		try {
 			FileInputStream fichier = new FileInputStream(monFichier);
 			ObjectInputStream input = new ObjectInputStream(fichier);
-			Calque listeDessin = (Calque) input.readObject();
-			model.setCalque(listeDessin);
+			ArrayList<Calque> listeCalque = (ArrayList<Calque>) input.readObject();
+			model.open(listeCalque);
+			
+			input.close();
 		} catch (StreamCorruptedException e) {
 			System.err.println("Extension non correcte.");
 			Object[] options = {"OK"};
-			int n = JOptionPane.showOptionDialog(new JFrame(), "Extension du fichier non correcte.", "Extension", 
+			JOptionPane.showOptionDialog(new JFrame(), "Extension du fichier non correcte.", "Extension", 
 					JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE, null, options, options[0]);
 		} catch (IOException | ClassNotFoundException e) {
 			System.err.println("Problème.");
 			Object[] options = {"OK"};
-			int n = JOptionPane.showOptionDialog(new JFrame(), "Problème lors de l'ouverture du fichier.", "Extension", 
+			JOptionPane.showOptionDialog(new JFrame(), "Problème lors de l'ouverture du fichier.", "Erreur", 
 					JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE, null, options, options[0]);
 		}
 	}

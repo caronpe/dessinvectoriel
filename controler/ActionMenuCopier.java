@@ -1,10 +1,12 @@
 package controler;
 
 import java.awt.event.ActionEvent;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.ListIterator;
 
 import javax.swing.AbstractAction;
+import javax.swing.ImageIcon;
 
 import model.Forme;
 import model.Model;
@@ -20,13 +22,18 @@ import model.Model;
  */
 public class ActionMenuCopier extends AbstractAction {
 	private Model model;
+	private URL urlCopy;
 	
 	public ActionMenuCopier(Model model) {
 		this.model = model;
 		
+		// URL
+		this.urlCopy = ClassLoader.getSystemClassLoader().getResource("ressources/images/copy.png");
+		
 		// Values
 		putValue(NAME, "Copier");
 		putValue(SHORT_DESCRIPTION, "Copie l'objet actuel");
+		this.putValue(SMALL_ICON, new ImageIcon(urlCopy));
 	}
 
 	public void actionPerformed(ActionEvent arg0) {

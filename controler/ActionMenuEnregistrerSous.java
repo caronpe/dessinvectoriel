@@ -4,11 +4,16 @@ import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
+import java.net.URL;
+
 import javax.swing.AbstractAction;
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+
 //INTERNE
 import model.Model;
-import ressources.*;
+import ressources.ExtensionFileFilter;
+import ressources.JFileChooserOverwrite;
 
 /**
  * Listener pour le menu Enregistrer sous. Est appelé lorsqu'on appuie sur le bouton enregistrer sous mais aussi
@@ -24,6 +29,7 @@ public class ActionMenuEnregistrerSous extends AbstractAction {
 	private Model model;
 	/** * L'extension est sous la forme ".extension" */
 	private String extension;
+	private URL urlSaveAs;
 
 	/**
 	 * Récupère l'extension de fichier définie dans le modèle.
@@ -33,10 +39,14 @@ public class ActionMenuEnregistrerSous extends AbstractAction {
 	public ActionMenuEnregistrerSous(Model model) {
 		this.model = model;
 		this.extension = model.getExtension();
+	
+		// URL	
+		this.urlSaveAs = ClassLoader.getSystemClassLoader().getResource("ressources/images/saveAs.png");
 		
 		// Values
 		putValue(NAME, "Enregistrer sous");
 		putValue(SHORT_DESCRIPTION, "Enregistre-sous votre travail");
+		this.putValue(SMALL_ICON, new ImageIcon(urlSaveAs));
 	}
 	
 	/**
@@ -45,7 +55,7 @@ public class ActionMenuEnregistrerSous extends AbstractAction {
 	 */
 	public void enregistrerSous() {
 		// Fichier
-			String adresse_du_fichier = "Nom du fichier" + extension;
+			String adresse_du_fichier = "*" + extension;
 			File file = new File(adresse_du_fichier);
 		
 		// FileChooser
@@ -57,7 +67,7 @@ public class ActionMenuEnregistrerSous extends AbstractAction {
 			ExtensionFileFilter filter = new ExtensionFileFilter("Fichiers .CTH", "cth");
 		    filechoose.setFileFilter(filter);
 
-		// DialogBox
+		// ChooseBox
 		int resultatEnregistrer = filechoose.showDialog(filechoose,	approve);
 		
 		if (resultatEnregistrer == JFileChooser.APPROVE_OPTION) { // Si l’utilisateur clique sur "Enregistrer", on applique la bonne extension
@@ -87,7 +97,7 @@ public class ActionMenuEnregistrerSous extends AbstractAction {
 		try {
 			FileOutputStream fichier = new FileOutputStream(adresse_du_fichier);
 			ObjectOutputStream output = new ObjectOutputStream(fichier);
-			output.writeObject(model.getCalqueCourant());
+			output.writeObject(model.save());
 			output.flush();
 			output.close();
 		} catch (java.io.IOException e) {

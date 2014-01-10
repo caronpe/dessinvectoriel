@@ -1,7 +1,10 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
+
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -33,6 +36,8 @@ public class MenuDroit extends JPanel {
 		addCalque = new JButton(new ActionCalqueAdd(model));
 		addCalque.setPreferredSize(new Dimension(DimensionMenuDroit.width, 22));
 		addCalque.setFocusable(false);
+		addCalque.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.GRAY));
+		addCalque.setBackground(Color.WHITE);
 		
 		// Panel boutons
 		buttons = new JPanel();

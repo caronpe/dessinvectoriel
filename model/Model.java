@@ -2,34 +2,34 @@ package model;
 
 import java.awt.Color;
 import java.awt.Point;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.ListIterator;
 import java.util.Observable;
 
 /**
- * Partie Modèle du MVC. Gère l'ajout des formes (temporaires ou non) et tous
- * les outils qui peuvent être selectionnées par l'utilisateur à un moment t.
+ * Partie Modèle du MVC. S'occupe de la gestion des formes (temporaires ou non), des calques 
+ * et de tous les outils.
  * 
  * @author Alexandre Thorez
  * @author Fabien Huitelec
  * @author Pierre-Édouard Caron
  * 
- * @version 0.2
+ * @version 0.4
  */
 public class Model extends Observable {
-	
 	private ArrayList<Calque> listCalque;
 	private Calque calqueCourant;
 	// Types de modification d'un objet forme
 	private Color couleurCourante;
-	private String typeCourant, objetCourant;
+	private String objetCourant;
+	private boolean pleinCourant;
 	// Enregistrement
 	private String adresseEnregistrement, extension;
 	private boolean travail_enregistre;
 	private ArrayList<Forme> formePending;
 	// Touches
-	private boolean keyShiftPressed,
-					keyControlPressed;
+	private boolean keyShiftPressed, keyControlPressed;
 	// Curseur
 	public final int DEFAULT_CURSOR = 0, NORTH_WEST_CURSOR = 1, NORTH_EAST_CURSOR = 2;
 	private int redimensionnementPotentiel;
@@ -50,13 +50,13 @@ public class Model extends Observable {
 		this.listCalque = new ArrayList<Calque>();
 		this.listCalque.add(calqueCourant);
 		this.couleurCourante = Color.BLACK;
-		this.typeCourant = "plein";
+		this.pleinCourant = false;
 		this.objetCourant = "selection";
 		this.setEnregistre(true);
 		this.extension = ".cth";
 		this.adresseEnregistrement = null;
 	}
-	
+
 	/**
 	 * Ajoute une figure à la liste des formes présentes. Crée une forme
 	 * spécifique selon l'objet courant. Lorsqu'une forme est ajoutée, l'objet
@@ -76,34 +76,45 @@ public class Model extends Observable {
 
 		switch (this.objetCourant) {
 		case "rectangle":
-			courant = new FormeRectangle(pointDebut, pointArrivee, typeCourant, objetCourant,couleurCourante, parfait);
+			courant = new FormeRectangle(pointDebut, pointArrivee, pleinCourant, objetCourant,couleurCourante, parfait);
 			break;
 		case "ellipse":
-			courant = new FormeEllipse(pointDebut, pointArrivee, typeCourant, objetCourant, couleurCourante, parfait);
+			courant = new FormeEllipse(pointDebut, pointArrivee, pleinCourant, objetCourant, couleurCourante, parfait);
 			break;
 		case "trait":
-			courant = new FormeLine(pointDebut, pointArrivee, "vide", objetCourant,couleurCourante, parfait);
+			courant = new FormeLine(pointDebut, pointArrivee, false, objetCourant,couleurCourante, parfait);
 			break;
 		}
 		calqueCourant.add(courant);
-		
+
 		// Envoi de la notification aux vues
 		setChanged();
 		if (tmp) {
-			
 			notifyObservers(courant);
 		} else {
 			notifyObservers();
 		}
+		setEnregistre(false);
+	}
+
+	public void addForme(BufferedImage photo){
+		Point pointOrigin = new Point(0,0), pointFin = new Point(photo.getWidth(),photo.getHeight());
+		FormeImage image = new FormeImage(pointOrigin, pointFin, photo);
+		calqueCourant.add(image);
+
+		// Envoi de la notification aux vues
+		setChanged();
+		notifyObservers();
+		setEnregistre(false);
 	}
 	
 	public void addForme(Forme f) {
 		calqueCourant.add((Forme) f.clone());
-		System.out.println("adding : " + f); // DEBUG
-		
+
 		// Envoi de la notification aux vues
 		setChanged();
 		notifyObservers();
+		setEnregistre(false);
 	}
 
 	/**
@@ -137,7 +148,7 @@ public class Model extends Observable {
 	 */
 	public void selectionner(Forme forme) {
 		forme.setSelected(true);
-		
+
 		// Envoi de la notification aux vues
 		setChanged();
 		notifyObservers();
@@ -145,12 +156,12 @@ public class Model extends Observable {
 
 	public void deselectionner(Forme f) {
 		f.setSelected(false);
-		
+
 		// Envoi de la notification aux vues
 		setChanged();
 		notifyObservers();
 	}
-	
+
 	public void deselectionnerToutesLesFormes() {
 		ListIterator<Forme> it = this.getAllFormes().listIterator();
 		while (it.hasNext()) {
@@ -161,14 +172,14 @@ public class Model extends Observable {
 		setChanged();
 		notifyObservers();
 	}
-	
+
 	/**
 	 * Supprimes toutes les formes sélectionnées. Si aucune forme n'est sélectionné,
 	 * il n'y a aucune notifications aux vues.
 	 */
 	public void delFormes() {
 		boolean ilYaDesFormesSelectionnes = false;
-		
+
 		// Parcours de toutes les formes
 		ListIterator<Forme> it = this.calqueCourant.listIterator();
 		while (it.hasNext()) {
@@ -178,14 +189,15 @@ public class Model extends Observable {
 				ilYaDesFormesSelectionnes = true;
 			}
 		}
-		
+
 		if (ilYaDesFormesSelectionnes) {
 			// Envoi de la notification aux vues
 			setChanged();
 			notifyObservers();
+			setEnregistre(false);
 		}
 	}
-	
+
 	/**
 	 * Supprime la dernière forme de la liste de formes
 	 * 
@@ -196,6 +208,7 @@ public class Model extends Observable {
 	}
 
 	/**
+	 * TODO Réécrire
 	 * Supprime toutes les formes de la liste de formes
 	 * 
 	 * @see model.Calque#removeAll
@@ -241,14 +254,16 @@ public class Model extends Observable {
 		// Envoi de l'objet au vues
 		setChanged();
 		notifyObservers();
+		setEnregistre(false);
 	}
-	
+
 	public void resizeForme(int marqueur, Forme forme, Point pointArrivee) {
 		forme.resize(marqueur, pointArrivee, this.getShiftPressed());
-		
+
 		// Envoi de l'objet au vues
 		setChanged();
 		notifyObservers();
+		setEnregistre(false);
 	}
 
 	/**
@@ -269,12 +284,14 @@ public class Model extends Observable {
 				ilYaDesFormesSelectionnes = true;
 			}
 		}
-		
+
 		// Définis le comportement du modèle
 		if (!ilYaDesFormesSelectionnes) {
 			this.couleurCourante = couleur;
+		} else {
+			setEnregistre(false);
 		}
-		
+
 		// Envoi de la notification aux vues
 		setChanged();
 		notifyObservers();
@@ -293,7 +310,7 @@ public class Model extends Observable {
 	public void setEnregistre(boolean travail) {
 		this.travail_enregistre = travail;
 	}
-	
+
 	/**
 	 * @category accessor
 	 */
@@ -304,11 +321,11 @@ public class Model extends Observable {
 	/**
 	 * @category accessor
 	 */
-	public void setFormePending(ArrayList formePending) {
-		if (formePending != null) {
+	public void setFormePending(ArrayList<Forme> formePending) {
+		if (formePending != null && formePending.size() != 0 ) {
 			this.formePending = formePending;
 		}
-		
+
 		// Envoi de la notification aux vues
 		setChanged();
 		notifyObservers();
@@ -323,21 +340,29 @@ public class Model extends Observable {
 		return this.calqueCourant;
 	}
 	
+	public ArrayList<Calque> getListCalque() {
+		return this.listCalque;
+	}
+
 	/**
 	 * @category accessor
 	 * 
 	 * @return Toutes les formes de tous les calques
 	 */
-	public ArrayList getAllFormes() {
+	public ArrayList<Forme> getAllFormes() {
+		Calque calque = null;
 		ArrayList<Forme> formes = new ArrayList<Forme>();
 		ListIterator<Calque> it = listCalque.listIterator();
 		while (it.hasNext()) {
-			ListIterator<Forme> itF = it.next().listIterator();
-			while (itF.hasNext()) {
-				formes.add(itF.next());
+			calque = it.next();
+			if(calque.getAfficher()==true){
+				ListIterator<Forme> itF = calque.listIterator();
+				while (itF.hasNext()) {
+					formes.add(itF.next());
+				}
 			}
 		}
-		
+
 		return formes;
 	}
 
@@ -349,7 +374,7 @@ public class Model extends Observable {
 	 */
 	public void setCalque(Calque calque) {
 		this.calqueCourant = calque;
-		
+
 		// Envoi de la notification aux vues
 		setChanged();
 		notifyObservers();
@@ -369,8 +394,8 @@ public class Model extends Observable {
 	 * 
 	 * @return Le type actuel
 	 */
-	public String getTypeCourant() {
-		return this.typeCourant;
+	public boolean getPleinCourant() {
+		return this.pleinCourant;
 	}
 
 	/**
@@ -379,14 +404,14 @@ public class Model extends Observable {
 	public boolean getShiftPressed() {
 		return this.keyShiftPressed;
 	}
-	
+
 	/**
 	 * @category accessor
 	 */
 	public void setShiftPressed(boolean keyControlPressed) {
 		this.keyShiftPressed = keyControlPressed;
 	}
-	
+
 	/**
 	 * @category accessor
 	 */
@@ -409,24 +434,32 @@ public class Model extends Observable {
 	 */
 	public void setObjetCourant(String objetCourant) {
 		this.objetCourant = objetCourant;
-		
+
 		// Envoi de la notification aux vues
 		setChanged();
 		notifyObservers();
 	}
-	
+
 	/**
 	 * @category accessor
 	 * 
 	 * @param objetCourant
 	 *            L'objet à modifier
 	 */
-	public void setTypeCourant(String typeCourant) {
-		this.typeCourant = typeCourant;
-		
+	public void setTypeCourant(boolean pleinCourant) {
+		this.pleinCourant = pleinCourant;
+
 		// Envoi de la notification aux vues
 		setChanged();
 		notifyObservers();
+	}
+	
+	public void setListeCalque(ArrayList<Calque> listCalque) {
+		this.listCalque = listCalque;
+		
+		// Envoi de la notification aux vues
+		setChanged();
+		notifyObservers(this.listCalque);
 	}
 
 	/**
@@ -445,7 +478,7 @@ public class Model extends Observable {
 	public Color getColor() {
 		return this.couleurCourante;
 	}
-	
+
 	/**
 	 * @category accessor
 	 * 
@@ -455,7 +488,7 @@ public class Model extends Observable {
 	public void setAdresseEnregistrement(String adresseEnregistrement) {
 		this.adresseEnregistrement = adresseEnregistrement;
 	}
-	
+
 	/**
 	 * @category accessor
 	 * 
@@ -464,7 +497,7 @@ public class Model extends Observable {
 	public int getRedimensionnement() {
 		return this.redimensionnementPotentiel;
 	}
-	
+
 	/**
 	 * @category accessor
 	 * 
@@ -473,12 +506,12 @@ public class Model extends Observable {
 	 */
 	public void setRedimensionnement(int redimensionnementPotentiel) {
 		this.redimensionnementPotentiel = redimensionnementPotentiel;
-		
+
 		// Envoi de la notification aux vues
 		setChanged();
 		notifyObservers();
 	}
-	
+
 	/**
 	 * @category accessor
 	 * 
@@ -487,7 +520,7 @@ public class Model extends Observable {
 	public boolean getCreation() {
 		return this.creationPotentielle;
 	}
-	
+
 	/**
 	 * @category accessor
 	 * 
@@ -496,12 +529,12 @@ public class Model extends Observable {
 	 */
 	public void setCreation(boolean creationPotentielle) {
 		this.creationPotentielle = creationPotentielle;
-		
+
 		// Envoi de la notification aux vues
 		setChanged();
 		notifyObservers();
 	}
-	
+
 	/**
 	 * @category accessor
 	 * 
@@ -510,7 +543,7 @@ public class Model extends Observable {
 	public String getAdresseEnregistrement() {
 		return this.adresseEnregistrement;
 	}
-	
+
 	/**
 	 * Place le nouveau calque en calque courant et l'ajoute dans la liste de calque.
 	 * Il ajoute donc un calque vide.
@@ -519,34 +552,63 @@ public class Model extends Observable {
 		this.deselectionnerToutesLesFormes();
 		calqueCourant = new Calque();
 		listCalque.add(calqueCourant);
-				
+
 		// Envoi de la notification aux vues
 		setChanged();
 		notifyObservers(calqueCourant);
+		setEnregistre(false);
 	}
-	
+
 	/**
 	 * Supprime le calque qui lui est envoyé.
 	 * Peu importe le calque supprimé, il y aura
 	 * toujours un calque de sélectionné.
 	 */
-	public void  delCalque(Calque calque) {
+	public void delCalque(Calque calque) {
 		this.listCalque.remove(calque);
 		this.deselectionnerToutesLesFormes();
-			
+
+		if (listCalque.size() < 1) {
+			this.resetCalques();
+		} else {
+			this.calqueCourant = listCalque.get(listCalque.size() - 1);
+		}
+		
 		// Envoi de la notification aux vues
 		setChanged();
-		if (listCalque.size() < 1) {
-			this.calqueCourant = new Calque();
-			notifyObservers(calqueCourant);
-		} 
-		this.calqueCourant = listCalque.get(listCalque.size() - 1);
+		notifyObservers();
+		setEnregistre(false);
+	}
+	
+	private void resetCalques() {
+		this.calqueCourant = new Calque();
+		this.listCalque.add(calqueCourant);
+		
+		// Envoi de la notification aux vues
+		setChanged();
+		notifyObservers(listCalque);
+	}
+
+	public void setAfficherCalque(Calque calque) {
+		calque.setAfficher(!calque.getAfficher());
+		
+		// Envoi de la notification aux vues
+		setChanged();
 		notifyObservers();
 	}
 	
-	@Override
-	public void setChanged() {
-		super.setChanged();
-		setEnregistre(false);
+	public void newFile() {
+		this.listCalque = new ArrayList<Calque>();
+		this.resetCalques();
+		this.adresseEnregistrement = null;
+	}
+	
+	public ArrayList<Calque> save() {
+		return this.getListCalque();
+	}
+	
+	public void open(ArrayList<Calque> listCalque) {
+		this.setListeCalque(listCalque);
+		this.calqueCourant = this.listCalque.get(0);
 	}
 }

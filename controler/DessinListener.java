@@ -6,10 +6,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ListIterator;
-
-
-
-
 //INTERNE
 import model.Forme;
 import model.FormeLine;
@@ -18,7 +14,7 @@ import model.Model;
 import view.ZoneDessin;
 
 /**
- * Contient les Listeners de la zone de dessin. 
+ * Contient les Listeners de la zone de dessin.
  * S'occupe des mouvements de la souris ainsi que des clics.
  * Nécessite d'avoir une seule et même instance par Panel sans quoi
  * la méthode mouseDragged ne fonctionne pas car elles n'auraient pas
@@ -30,7 +26,7 @@ import view.ZoneDessin;
  * 
  * @see view.FenetrePrincipale#initialiser
  * 
- * @version 0.2
+ * @version 0.4
  */
 public class DessinListener implements MouseListener, MouseMotionListener {
 	private Point pointDebut, pointArrivee;
@@ -111,14 +107,12 @@ public class DessinListener implements MouseListener, MouseMotionListener {
 				if (f.isSelected()) {
 					model.deselectionner(f);
 				} else {
-					model.deselectionnerToutesLesFormes();
 					model.selectionner(f);
 				}
 				
 				// Si le curseur est sur un marqueur de la forme ou non
 				if ( f.isSelected() && f.containsPointDeSelection(this.pointDebut)) {
 					this.resizing = f.getMarqueurs(this.pointDebut);
-				
 				} else {
 					this.dragging = true;
 				}
@@ -172,7 +166,7 @@ public class DessinListener implements MouseListener, MouseMotionListener {
 				// Envoi au model
 				model.resizeForme(this.resizing, this.modifiedForme, this.pointArrivee);
 			} else {
-				rectangleSelection = new FormeRectangle(pointDebut, pointArrivee, "plein", "rectangle",Color.GRAY, false);
+				rectangleSelection = new FormeRectangle(pointDebut, pointArrivee, true, "rectangle", Color.GRAY, false);
 				this.zoneDessin.dessinMultiSelection(rectangleSelection);
 			}
 		}
@@ -232,9 +226,9 @@ public class DessinListener implements MouseListener, MouseMotionListener {
 			ListIterator<Forme> it = this.model.getCalqueCourant().listIterator();
 			while (it.hasNext()) {
 				f = it.next();
-				if (f instanceof FormeLine && f.isSelected() && ( f.getMarqueurs(e.getPoint()) == 0 || f.getMarqueurs(e.getPoint()) == 3 )) {
+				if (!(f instanceof FormeLine) && f.isSelected() && ( f.getMarqueurs(e.getPoint()) == 0 || f.getMarqueurs(e.getPoint()) == 3 )) {
 					this.model.setRedimensionnement(this.model.NORTH_WEST_CURSOR);
-				} else if (f instanceof FormeLine && f.isSelected() && ( f.getMarqueurs(e.getPoint()) == 1 || f.getMarqueurs(e.getPoint()) == 2 )) {
+				} else if (!(f instanceof FormeLine) && f.isSelected() && ( f.getMarqueurs(e.getPoint()) == 1 || f.getMarqueurs(e.getPoint()) == 2 )) {
 					this.model.setRedimensionnement(this.model.NORTH_EAST_CURSOR);
 				} else {
 					this.model.setRedimensionnement(this.model.DEFAULT_CURSOR);

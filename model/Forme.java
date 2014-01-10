@@ -1,12 +1,10 @@
 package model;
 
 import java.awt.AlphaComposite;
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Shape;
-import java.awt.Stroke;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
@@ -36,7 +34,8 @@ public abstract class Forme implements Serializable, Cloneable {
 	 */
 	protected Point pointHautDroit, pointBasGauche;
 	protected Point pointOrigin, pointFin;
-	protected String type, objet;
+	protected String objet;
+	protected boolean plein;
 	protected Color couleur;
 	/**
 	 * Ce booléen est utilisé comme appelation. L'algorithme vérifie régulièrement
@@ -75,15 +74,18 @@ public abstract class Forme implements Serializable, Cloneable {
 	 * @param parfait
 	 *            Définit si la forme est temporaire
 	 */
-	public Forme(Point pointDebut, Point pointArrivee, String type, String objet,Color couleur, boolean parfait) {
+	public Forme(Point pointDebut, Point pointArrivee, boolean plein, String objet, Color couleur, boolean parfait) {
 		this.pointOrigin = pointDebut;
 		this.pointFin = pointArrivee;
-		this.type = type;
+		this.plein = plein;
 		this.objet = objet;
 		this.couleur = couleur;
 		this.parfait = parfait;
 		this.marqueurCourant = -1;
 		this.selected = false;
+		this.marqueurs = new Rectangle2D.Double[4];
+		
+		calculVariables();
 	}
 
 	/**
@@ -101,8 +103,8 @@ public abstract class Forme implements Serializable, Cloneable {
 	 * @param couleur
 	 *            Couleur de l'objet
 	 */
-	public Forme(Point pointDebut, Point pointArrivee, String type, String objet,Color couleur) {
-		this(pointDebut, pointArrivee, type, objet, couleur, false);
+	public Forme(Point pointDebut, Point pointArrivee, boolean plein, String objet, Color couleur) {
+		this(pointDebut, pointArrivee, plein, objet, couleur, false);
 	}
 	
 	/**
@@ -138,6 +140,15 @@ public abstract class Forme implements Serializable, Cloneable {
 		// On réinitialise les points de la forme
 		this.pointOrigin = new Point(oX, oY);
 		this.pointFin = new Point(aX, aY);
+		// On initialiser/réinitialise les points secondaires de la forme
+		this.pointBasGauche = new Point(oX, aY);
+		this.pointHautDroit= new Point(aX ,oY);
+		
+		// Instanciation des marqueurs
+		this.marqueurs[0] = new Rectangle2D.Double(oX - 4, oY - 4, 8, 8); // En haut à gauche
+		this.marqueurs[1] = new Rectangle2D.Double(oX + width - 4, oY - 4, 8, 8); // En haut à droite
+		this.marqueurs[2] = new Rectangle2D.Double(oX - 4, oY + height - 4, 8, 8); // En bas à gauche
+		this.marqueurs[3] = new Rectangle2D.Double(oX + width - 4, oY + height - 4, 8, 8); // En bas à droite
 	}
 	
 	/**
@@ -242,7 +253,7 @@ public abstract class Forme implements Serializable, Cloneable {
 		switch (marqueur) {
 		
 		case 0 : // En haut à gauche
-			pointResize.setLocation(pointResize.getX() + 10, pointResize.getY() + 10);
+			pointResize.setLocation(pointResize.getX(), pointResize.getY());
 			this.setOrigin(pointResize);
 			
 			if ( ( !(this.getHeight() > 0) && !(this.getWidth() > 0) ) ) { // Test de la taille de la nouvelle forme
@@ -254,7 +265,7 @@ public abstract class Forme implements Serializable, Cloneable {
 			break;
 			
 		case 1 : // En haut à droite
-			pointResize.setLocation(pointResize.getX() - 10, pointResize.getY() + 10);
+			pointResize.setLocation(pointResize.getX(), pointResize.getY());
 			this.setHautDroit(pointResize);
 			
 			if ( ( !(this.getHeight() > 0) && !(this.getWidth() > 0) ) ) { // Test de la taille de la nouvelle forme
@@ -266,7 +277,7 @@ public abstract class Forme implements Serializable, Cloneable {
 			break;
 			
 		case 2 : // En bas à gauche
-			pointResize.setLocation(pointResize.getX() + 10, pointResize.getY() - 10);
+			pointResize.setLocation(pointResize.getX(), pointResize.getY());
 			this.setBasGauche(pointResize);
 						
 			if ( ( !(this.getHeight() > 0) && !(this.getWidth() > 0) ) ) { // Test de la taille de la nouvelle forme
@@ -278,7 +289,7 @@ public abstract class Forme implements Serializable, Cloneable {
 			break;
 			
 		case 3 : // En bas à droite
-			pointResize.setLocation(pointResize.getX() - 10, pointResize.getY() - 10);
+			pointResize.setLocation(pointResize.getX(), pointResize.getY());
 			this.setFin(pointResize);
 
 			if ( ( !(this.getHeight() > 0) && !(this.getWidth() > 0) ) ) { // Test de la taille de la nouvelle forme
@@ -308,28 +319,20 @@ public abstract class Forme implements Serializable, Cloneable {
 	 */
 	public void selectionner(Graphics2D graphics) {
 		// Sauvegarde des variables
-		Stroke strokeTmp = graphics.getStroke();
 		Color colorTmp = graphics.getColor();
 		
-		// Initialisation du stroke en pointillé
-		final float dash1[] = { 10.0f };
-		BasicStroke dashed = 	new BasicStroke(1.0f, BasicStroke.CAP_BUTT,
-								BasicStroke.JOIN_MITER, 10.0f, dash1, 0.0f);
-		
-		graphics.setComposite(AlphaComposite.SrcOver.derive(0.9f));
-		graphics.setStroke(dashed);
-		graphics.setColor(Color.GRAY);
+		graphics.setComposite(AlphaComposite.SrcOver.derive(0.7f));
+		graphics.setColor(Color.BLACK);
 
 		// Rectangle en pointillés
 		graphics.draw(referentielPosition);
 		
 		// Marqueurs
 		for (Rectangle2D.Double rectangle : marqueurs) {
-			graphics.fill(rectangle);
+			graphics.draw(rectangle);
 		}
 
 		// Réinitialisation du graphics avec ses valeurs par défaut
-		graphics.setStroke(strokeTmp);
 		graphics.setColor(colorTmp); // Rétablissement de la couleur d'origine
 		graphics.setComposite(AlphaComposite.SrcOver); // Rétablissement de la transparence d'origine
 	}
@@ -344,13 +347,10 @@ public abstract class Forme implements Serializable, Cloneable {
 	public void draw(Graphics2D graphics) {
 		graphics.setColor(this.couleur);
 
-		switch (this.type) {
-		case "plein":
+		if (this.plein) {
 			graphics.fill(this.forme);
-			break;
-		case "vide":
+		} else {
 			graphics.draw(this.forme);
-			break;
 		}
 	}
 	
@@ -476,15 +476,15 @@ public abstract class Forme implements Serializable, Cloneable {
 	/**
 	 * @category accessor
 	 */
-	public String getType() {
-		return this.type;
+	public boolean getType() {
+		return this.plein;
 	}
 
 	/**
 	 * @category accessor
 	 */
-	public void setType(String type) {
-		this.type = type;
+	public void setType(boolean plein) {
+		this.plein = plein;
 	}
 	
 	/**
@@ -642,7 +642,7 @@ public abstract class Forme implements Serializable, Cloneable {
 		forme.pointOrigin = (Point) pointOrigin.clone();
 		forme.pointHautDroit = (Point) pointBasGauche.clone();
 		forme.pointFin = (Point) pointFin.clone();
-		forme.type = (String) type;
+		forme.plein = (boolean) plein;
 		forme.objet = (String) objet;
 		forme.couleur = (Color) couleur;
 		forme.calculVariables();

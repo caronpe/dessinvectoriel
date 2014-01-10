@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.ListIterator;
 
 import javax.swing.AbstractAction;
+import javax.swing.ImageIcon;
 
 import model.Forme;
 import model.Model;
@@ -27,6 +28,7 @@ public class ActionMenuCouper extends AbstractAction {
 		// Values
 		putValue(NAME, "Couper");
 		putValue(SHORT_DESCRIPTION, "Coupe l'objet actuel");
+		this.putValue(SMALL_ICON, new ImageIcon("ressources/images/cut.png"));
 	}
 	
 	public void actionPerformed(ActionEvent arg0) {

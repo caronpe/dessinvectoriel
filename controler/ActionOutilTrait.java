@@ -36,7 +36,7 @@ public class ActionOutilTrait extends AbstractAction implements Observer {
 		
 		// Values
 		this.putValue(SHORT_DESCRIPTION, "Sélectionne l'outil trait");
-		this.putValue(SMALL_ICON, new ImageIcon("dessinvectoriel/ressources/crayon.png"));
+		this.putValue(SMALL_ICON, new ImageIcon("ressources/images/crayon.png"));
 	}
 
 	/**

@@ -8,7 +8,6 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Line2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.PathIterator;
-import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
 
@@ -24,8 +23,8 @@ import java.io.Serializable;
 public class FormeLine extends Forme implements Serializable {
 	private Shape referentielPositionLine;
 	
-	public FormeLine(Point pointDebut, Point pointArrivee, String type, String objet, Color couleur, boolean parfait) {
-		super(pointDebut, pointArrivee, type, objet, couleur, parfait);
+	public FormeLine(Point pointDebut, Point pointArrivee, boolean plein, String objet, Color couleur, boolean parfait) {
+		super(pointDebut, pointArrivee, plein, objet, couleur, parfait);
 
 		this.marqueurs = new Rectangle2D.Double[2];
 		this.calculVariables();
@@ -45,6 +44,10 @@ public class FormeLine extends Forme implements Serializable {
 		this.marqueurs[0] = new Rectangle2D.Double(oX - 4, oY - 4, 8, 8); // Point d'origine
 		this.marqueurs[1] = new Rectangle2D.Double(aX - 4, aY - 4, 8, 8); // Point de fin
 		
+		// On redéfinit les points secondaires de la forme comme étant nuls
+		this.pointBasGauche = null;
+		this.pointHautDroit = null;
+
 		// Instanciation de la forme et du référentiel
 		this.forme = new Line2D.Double(oX, oY, aX, aY);
 	}
@@ -77,7 +80,7 @@ public class FormeLine extends Forme implements Serializable {
 		this.referentielPositionLine = new Rectangle2D.Double(oX, oY, width, height);
 		
 		// Initialisation du référentiel en rectangle classique
-		FormeRectangle tmp = new FormeRectangle(pointOrigin, pointFin, "plein", "rectangle", Color.black, false);
+		FormeRectangle tmp = new FormeRectangle(pointOrigin, pointFin, false, "rectangle", Color.black, false);
 		this.referentielPosition = (Rectangle2D.Double)tmp.getShape();
 		
 		// Calcul de langle
@@ -117,11 +120,11 @@ public class FormeLine extends Forme implements Serializable {
 	@Override
 	public void selectionner(Graphics2D graphics) {
 		Color tmp = graphics.getColor();
-		graphics.setColor(Color.GRAY);
+		graphics.setColor(Color.BLACK);
 
 		// Marqueurs
 		for (Rectangle2D.Double rectangle : marqueurs) {
-			graphics.fill(rectangle);
+			graphics.draw(rectangle);
 		}
 		
 		// Rétablissement de la couleur d'origine
@@ -129,11 +132,7 @@ public class FormeLine extends Forme implements Serializable {
 	}
 	
 	@Override
-	public void resize(int marqueur, Point pointResize, boolean parfait) {
-		// Initialisation variables
-		Point 	tmpOrigin = this.pointOrigin,
-				tmpFin = this.pointFin;
-		
+	public void resize(int marqueur, Point pointResize, boolean parfait) {		
 		switch (marqueur) {
 		case 0 : // Origine
 			this.setOrigin(pointResize);
@@ -143,10 +142,5 @@ public class FormeLine extends Forme implements Serializable {
 			this.setFin(pointResize);
 			break;
 		}
-	}
-	
-	@Override
-	public boolean contains(Point2D point) {
-		return referentielPositionLine.contains(point);
 	}
 }

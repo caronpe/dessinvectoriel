@@ -1,9 +1,13 @@
 package controler;
 
 import java.awt.event.ActionEvent;
+import java.net.URL;
+
 import javax.swing.AbstractAction;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+
 // INTERNE
 import model.Model;
 
@@ -20,6 +24,7 @@ import model.Model;
  */
 public class ActionMenuNouveau extends AbstractAction {
 	private Model model;
+	private URL urlNewFile;
 	
 	/**
 	 * @param model Modèle du MVC
@@ -27,9 +32,13 @@ public class ActionMenuNouveau extends AbstractAction {
 	public ActionMenuNouveau(Model model) {
 		this.model = model;
 		
+		// URL
+		this.urlNewFile = ClassLoader.getSystemClassLoader().getResource("ressources/images/newFile.png");
+		
 		// Values
-		putValue(NAME, "Nouveau");
-		putValue(SHORT_DESCRIPTION, "Crée un nouveau fichier");
+		this.putValue(NAME, "Nouveau");
+		this.putValue(SHORT_DESCRIPTION, "Crée un nouveau fichier");
+		this.putValue(SMALL_ICON, new ImageIcon(urlNewFile));
 	}
 	
 	/**
@@ -72,6 +81,6 @@ public class ActionMenuNouveau extends AbstractAction {
 	 * Supprime tous les éléments de la liste de dessins du modèle.
 	 */
 	public void nouveau() {
-		model.delAllFormes();
+		model.newFile();
 	}
 }
