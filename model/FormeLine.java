@@ -1,9 +1,11 @@
 package model;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Shape;
+import java.awt.Stroke;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Line2D;
 import java.awt.geom.Path2D;
@@ -23,8 +25,8 @@ import java.io.Serializable;
 public class FormeLine extends Forme implements Serializable {
 	private Shape referentielPositionLine;
 	
-	public FormeLine(Point pointDebut, Point pointArrivee, boolean plein, String objet, Color couleur, boolean parfait) {
-		super(pointDebut, pointArrivee, plein, objet, couleur, parfait);
+	public FormeLine(Point pointDebut, Point pointArrivee, float strokeFloat, boolean plein, String objet, Color couleur, boolean parfait) {
+		super(pointDebut, pointArrivee, strokeFloat, plein, objet, couleur, parfait);
 
 		this.marqueurs = new Rectangle2D.Double[2];
 		this.calculVariables();
@@ -41,9 +43,9 @@ public class FormeLine extends Forme implements Serializable {
 		this.initialiserReferentiel();
 		
 		// Instanciation des marqueurs
-		this.marqueurs[0] = new Rectangle2D.Double(oX - 4, oY - 4, 8, 8); // Point d'origine
-		this.marqueurs[1] = new Rectangle2D.Double(aX - 4, aY - 4, 8, 8); // Point de fin
-		
+		this.marqueurs[0] = new Rectangle2D.Double(oX - 4  - (strokeFloat/2), oY - 4  - (strokeFloat/2), 8, 8); // Point d'origine
+		this.marqueurs[1] = new Rectangle2D.Double(aX - 4  + (strokeFloat/2), aY - 4  + (strokeFloat/2), 8, 8); // Point de fin
+
 		// On redéfinit les points secondaires de la forme comme étant nuls
 		this.pointBasGauche = null;
 		this.pointHautDroit = null;
@@ -119,16 +121,19 @@ public class FormeLine extends Forme implements Serializable {
 
 	@Override
 	public void selectionner(Graphics2D graphics) {
-		Color tmp = graphics.getColor();
+		Color colorTmp = graphics.getColor();
+		Stroke strokeTmp = graphics.getStroke();
 		graphics.setColor(Color.BLACK);
+		graphics.setStroke(new BasicStroke(1f));
 
 		// Marqueurs
 		for (Rectangle2D.Double rectangle : marqueurs) {
 			graphics.draw(rectangle);
 		}
 		
-		// Rétablissement de la couleur d'origine
-		graphics.setColor(tmp);
+		// Rétablissement des variables d'origine
+		graphics.setColor(colorTmp);
+		graphics.setStroke(strokeTmp);
 	}
 	
 	@Override

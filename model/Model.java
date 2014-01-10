@@ -1,7 +1,9 @@
 package model;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Point;
+import java.awt.Stroke;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.ListIterator;
@@ -36,7 +38,8 @@ public class Model extends Observable {
 	public final int DEFAULT_CURSOR = 0, NORTH_WEST_CURSOR = 1, NORTH_EAST_CURSOR = 2;
 	private int redimensionnementPotentiel;
 	private boolean creationPotentielle;
-
+	protected float strokeFloat;
+	
 	/**
 	 * Couleur : noire,
 	 * Objet : sélection,
@@ -57,6 +60,7 @@ public class Model extends Observable {
 		this.setEnregistre(true);
 		this.extension = ".cth";
 		this.adresseEnregistrement = null;
+		this.strokeFloat=1f;
 	}
 
 	/**
@@ -78,13 +82,13 @@ public class Model extends Observable {
 
 		switch (this.objetCourant) {
 		case "rectangle":
-			courant = new FormeRectangle(pointDebut, pointArrivee, pleinCourant, objetCourant,couleurCourante, parfait);
+			courant = new FormeRectangle(pointDebut, pointArrivee, this.strokeFloat, pleinCourant, objetCourant,couleurCourante, parfait);
 			break;
 		case "ellipse":
-			courant = new FormeEllipse(pointDebut, pointArrivee, pleinCourant, objetCourant, couleurCourante, parfait);
+			courant = new FormeEllipse(pointDebut, pointArrivee, this.strokeFloat, pleinCourant, objetCourant, couleurCourante, parfait);
 			break;
 		case "trait":
-			courant = new FormeLine(pointDebut, pointArrivee, false, objetCourant,couleurCourante, parfait);
+			courant = new FormeLine(pointDebut, pointArrivee, this.strokeFloat, false, objetCourant,couleurCourante, parfait);
 			break;
 		}
 		calqueCourant.add(courant);
@@ -134,8 +138,7 @@ public class Model extends Observable {
 	 * @see controler.DessinListener
 	 * @see view.ZoneDessin#update
 	 */
-	public void addTmpForme(Point pointDebut, Point pointArrivee,
-			boolean parfait) {
+	public void addTmpForme(Point pointDebut, Point pointArrivee, boolean parfait) {
 		this.addForme(pointDebut, pointArrivee, parfait, true);
 		this.delLastForme();
 	}
@@ -419,7 +422,7 @@ public class Model extends Observable {
 	 */
 	public boolean getControlPressed() {
 		return this.keyControlPressed;
-	}
+	}	
 
 	/**
 	 * @category accessor
@@ -603,5 +606,18 @@ public class Model extends Observable {
 	public void open(ArrayList<Calque> listCalque) {
 		this.setListeCalque(listCalque);
 		this.calqueCourant = this.listCalque.get(0);
+	}
+	
+	public Stroke getStroke() {
+		return new BasicStroke(this.strokeFloat);
+	}
+	
+	public void setStroke(float strokeFloat){
+		this.strokeFloat=strokeFloat;
+	}
+	
+	public void setStroke(String s){
+		
+		setStroke(Float.parseFloat(s));
 	}
 }

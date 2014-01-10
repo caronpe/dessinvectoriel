@@ -22,9 +22,14 @@ public class FormeRectangle extends Forme {
 	 * @see model.Forme
 	 * @see #initialiserVariables
 	 */
+	public FormeRectangle(Point pointDebut, Point pointArrivee, float strokeFloat, boolean plein, String objet, Color couleur, boolean parfait) {
+		super(pointDebut, pointArrivee, strokeFloat, plein, objet, couleur, parfait);
+	}
+	
 	public FormeRectangle(Point pointDebut, Point pointArrivee, boolean plein, String objet, Color couleur, boolean parfait) {
 		super(pointDebut, pointArrivee, plein, objet, couleur, parfait);
 	}
+	
 	
 	@Override
 	protected void calculVariables() {

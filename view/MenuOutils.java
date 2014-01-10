@@ -1,15 +1,22 @@
 package view;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
+
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
-// INTERNE
+import javax.swing.JTextField;
+
 import model.Model;
 import controler.ActionOutilCouleurs;
 import controler.ActionOutilEllipse;
 import controler.ActionOutilRectangle;
 import controler.ActionOutilSelection;
+import controler.ActionOutilStroke;
 import controler.ActionOutilTrait;
+// INTERNE
 
 /**
  * Menu de gauche contenant tous les outils de couleur,
@@ -27,7 +34,10 @@ public class MenuOutils extends JPanel {
 	Model model;
 	// JButton
 		JButton selection, crayon, rectangle, ellipse, selectionCouleur;
-		
+	//JLabel
+		JLabel labelStroke;
+	// JTextField
+		JTextField textStroke;
 	/**
 	 * Les boutons sont non focusable pour les keylistener fonctionnent
 	 * 
@@ -70,13 +80,34 @@ public class MenuOutils extends JPanel {
 		selectionCouleur.setPreferredSize(new Dimension(22,22));
 		selectionCouleur.setFocusable(false);
 		
+		//Ajout LabelStroke
+		
+		labelStroke= new JLabel("Ep");
+		labelStroke.setPreferredSize(new Dimension(22,22));
+
+		//Ajout Texte Field
+		textStroke=new JTextField();
+		textStroke.addKeyListener(new ActionOutilStroke(model,textStroke));
+		
 		// Ajouts boutons outils
 		this.add(selection);
 		this.add(crayon);
 		this.add(rectangle);
 		this.add(ellipse);
+		
 		// Ajouts boutons couleurs
 		this.add(selectionCouleur);
+		
+		JPanel panel = new JPanel();
+		panel.setLayout(new BoxLayout(panel,1));
+		
+		// Ajout JLabel
+		panel.add(labelStroke);
+		
+		// Ajout JTextField
+		panel.add(textStroke);
+	
+		this.add(panel);
 	}
 	
 	/**

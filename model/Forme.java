@@ -1,10 +1,12 @@
 package model;
 
 import java.awt.AlphaComposite;
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Shape;
+import java.awt.Stroke;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
@@ -55,6 +57,12 @@ public abstract class Forme implements Serializable, Cloneable {
 	 * @see #calculVariablesParfait()
 	 */
 	protected int marqueurCourant;
+	
+	/**
+	 * Epaisseur du trait de la forme
+	 */
+	protected Stroke stroke;
+	protected float strokeFloat;
 
 	/**
 	 * Constructeur basique de la forme à dessiner avec ses coordonnées
@@ -74,7 +82,7 @@ public abstract class Forme implements Serializable, Cloneable {
 	 * @param parfait
 	 *            Définit si la forme est temporaire
 	 */
-	public Forme(Point pointDebut, Point pointArrivee, boolean plein, String objet, Color couleur, boolean parfait) {
+	public Forme(Point pointDebut, Point pointArrivee, float strokeFloat, boolean plein, String objet, Color couleur, boolean parfait) {
 		this.pointOrigin = pointDebut;
 		this.pointFin = pointArrivee;
 		this.plein = plein;
@@ -84,8 +92,13 @@ public abstract class Forme implements Serializable, Cloneable {
 		this.marqueurCourant = -1;
 		this.selected = false;
 		this.marqueurs = new Rectangle2D.Double[4];
-		
+		this.strokeFloat = strokeFloat;
+		this.stroke=new BasicStroke(strokeFloat);
 		calculVariables();
+	}
+	
+	public Forme(Point pointDebut, Point pointArrivee, boolean plein, String objet, Color couleur, boolean parfait) {
+		this(pointDebut, pointArrivee, 1f, plein, objet, couleur, parfait);
 	}
 
 	/**
@@ -104,11 +117,11 @@ public abstract class Forme implements Serializable, Cloneable {
 	 *            Couleur de l'objet
 	 */
 	public Forme(Point pointDebut, Point pointArrivee, boolean plein, String objet, Color couleur) {
-		this(pointDebut, pointArrivee, plein, objet, couleur, false);
+		this(pointDebut, pointArrivee, 1f, plein, objet, couleur, false);
 	}
 	
 	public Forme(Point pointDebut, Point pointArrivee, boolean plein, String objet) {
-		this(pointDebut, pointArrivee, plein, objet, Color.WHITE, false);
+		this(pointDebut, pointArrivee, 1f, plein, objet, Color.WHITE, false);
 	}
 	
 	/**
@@ -149,10 +162,10 @@ public abstract class Forme implements Serializable, Cloneable {
 		this.pointHautDroit= new Point(aX ,oY);
 		
 		// Instanciation des marqueurs
-		this.marqueurs[0] = new Rectangle2D.Double(oX - 4, oY - 4, 8, 8); // En haut à gauche
-		this.marqueurs[1] = new Rectangle2D.Double(oX + width - 4, oY - 4, 8, 8); // En haut à droite
-		this.marqueurs[2] = new Rectangle2D.Double(oX - 4, oY + height - 4, 8, 8); // En bas à gauche
-		this.marqueurs[3] = new Rectangle2D.Double(oX + width - 4, oY + height - 4, 8, 8); // En bas à droite
+		this.marqueurs[0] = new Rectangle2D.Double(oX - 4 - strokeFloat/2, oY - 4 - strokeFloat/2, 8, 8); // En haut à gauche
+		this.marqueurs[1] = new Rectangle2D.Double(oX + width - 4 + strokeFloat/2, oY - 4 - strokeFloat/2, 8, 8); // En haut à droite
+		this.marqueurs[2] = new Rectangle2D.Double(oX - 4 - strokeFloat/2, oY + height - 4 + strokeFloat/2, 8, 8); // En bas à gauche
+		this.marqueurs[3] = new Rectangle2D.Double(oX + width - 4 + strokeFloat/2, oY + height - 4 + strokeFloat/2, 8, 8); // En bas à droite
 	}
 	
 	/**
@@ -324,9 +337,11 @@ public abstract class Forme implements Serializable, Cloneable {
 	public void selectionner(Graphics2D graphics) {
 		// Sauvegarde des variables
 		Color colorTmp = graphics.getColor();
+		Stroke strokeTmp = graphics.getStroke();
 		
 		graphics.setComposite(AlphaComposite.SrcOver.derive(0.7f));
 		graphics.setColor(Color.BLACK);
+		graphics.setStroke(new BasicStroke());
 
 		// Rectangle en pointillés
 		graphics.draw(referentielPosition);
@@ -338,6 +353,7 @@ public abstract class Forme implements Serializable, Cloneable {
 
 		// Réinitialisation du graphics avec ses valeurs par défaut
 		graphics.setColor(colorTmp); // Rétablissement de la couleur d'origine
+		graphics.setStroke(strokeTmp); // Rétablissement du stroke d'origine
 		graphics.setComposite(AlphaComposite.SrcOver); // Rétablissement de la transparence d'origine
 	}
 	
@@ -651,6 +667,15 @@ public abstract class Forme implements Serializable, Cloneable {
 		forme.couleur = (Color) couleur;
 		forme.calculVariables();
 		return forme;
+	}
+	
+	public Stroke getStroke(){
+		return this.stroke;
+	}
+	
+	public void setStroke(float strokeStroke){
+		this.strokeFloat = strokeStroke;
+		this.stroke = new BasicStroke(strokeFloat);
 	}
 	
 	public String toString() {

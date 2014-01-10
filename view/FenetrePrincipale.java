@@ -4,15 +4,20 @@ import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.HeadlessException;
+import java.awt.event.FocusEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Observable;
 import java.util.Observer;
+
 import javax.swing.JFrame;
-//INTERNE
+
 import model.Forme;
 import model.Model;
 import controler.ActionMenuQuitter;
 import controler.DessinListener;
 import controler.KeyListenerAll;
+//INTERNE
 
 /**
  * Fenêtre principale contenant tous les éléments graphiques.
@@ -43,7 +48,6 @@ public class FenetrePrincipale extends JFrame implements Observer {
 		super();
 		this.model = model;
 		this.model.addObserver(this);
-		
 		this.initialiser();
 		this.pack();
 	}
@@ -105,7 +109,7 @@ public class FenetrePrincipale extends JFrame implements Observer {
 		this.setLocationRelativeTo(null);
 		
 		// Barre de menu
-		this.setJMenuBar(new MenuHaut(model)); 
+		this.setJMenuBar(new MenuHaut(model));
 	}
 	
 	
