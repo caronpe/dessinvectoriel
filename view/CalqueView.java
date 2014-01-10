@@ -4,11 +4,13 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
 import model.Calque;
 import model.Model;
 import ressources.DimensionMenuDroit;
@@ -56,6 +58,7 @@ public class CalqueView extends JPanel {
 		afficher.setFocusable(false);
 		afficher.setBackground(new Color(220, 220, 220));setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.GRAY));
 		afficher.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.GRAY));
+		afficher.setVisible(false);
 		
 		// Bouton supprimer
 		supprimer = new JButton(new ActionCalqueRemove(this.calquePanel, model, this.calque));
@@ -64,6 +67,7 @@ public class CalqueView extends JPanel {
 		supprimer.setFocusable(false);
 		supprimer.setBackground(new Color(220, 220, 220));setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.GRAY));
 		supprimer.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.GRAY));
+		supprimer.setVisible(false);
 		
 		// Panels intermédiaires
 		JPanel tmp = new JPanel();
@@ -89,6 +93,14 @@ public class CalqueView extends JPanel {
 	
 	public Calque getCalque() {
 		return this.calque;
+	}
+	
+	public JButton getAfficher() {
+		return this.afficher;
+	}
+	
+	public JButton getSupprimer() {
+		return this.supprimer;
 	}
 
 	/**
