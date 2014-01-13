@@ -35,7 +35,7 @@ public class ActionCalqueRemove extends AbstractAction {
 		this.calque = calque;
 		
 		// URL
-		this.urlRemove = ClassLoader.getSystemClassLoader().getResource("ressources/images/removeCalque.png");
+		this.urlRemove = ClassLoader.getSystemClassLoader().getResource("ressources/images/delCalque.png");
 		
 		this.putValue(SMALL_ICON, new ImageIcon(urlRemove));
 		putValue(SHORT_DESCRIPTION, "retire le calque sélectionné");

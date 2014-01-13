@@ -34,6 +34,7 @@ public class CalqueView extends JPanel {
 	private CalquePanel calquePanel;
 	// Panel
 	private JLabel image;
+	private JPanel button;
 	private JButton afficher, supprimer;
 	
 	public CalqueView(Model model, Calque calque, ZoneDessin zoneDessin , CalquePanel calquePanel){
@@ -62,7 +63,6 @@ public class CalqueView extends JPanel {
 		
 		// Bouton supprimer
 		supprimer = new JButton(new ActionCalqueRemove(this.calquePanel, model, this.calque));
-		supprimer.setIcon(new ImageIcon("ressources/images/delCalque.png"));
 		supprimer.setPreferredSize(new Dimension(22,22));
 		supprimer.setFocusable(false);
 		supprimer.setBackground(new Color(220, 220, 220));setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.GRAY));
@@ -76,7 +76,7 @@ public class CalqueView extends JPanel {
 		tmp2.setBackground(new Color(0, 0, 0, 0f));
 		
 		// Panel
-		JPanel button = new JPanel();
+		button = new JPanel();
 		button.setPreferredSize(new Dimension(22,22));
 		button.setLayout(new GridLayout(4, 1));
 		button.setBackground(new Color(0, 0, 0, 0f));
@@ -101,6 +101,10 @@ public class CalqueView extends JPanel {
 	
 	public JButton getSupprimer() {
 		return this.supprimer;
+	}
+	
+	public JPanel getButtonPanel() {
+		return this.button;
 	}
 
 	/**

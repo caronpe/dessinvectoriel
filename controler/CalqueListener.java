@@ -1,5 +1,6 @@
 package controler;
 
+import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -65,15 +66,18 @@ public class CalqueListener implements MouseListener {
 	public void mouseEntered(MouseEvent arg0) {
 		calqueView.getAfficher().setVisible(true);
 		calqueView.getSupprimer().setVisible(true);
-		System.out.println("entrée de " + calqueView);
 		calqueView.repaint();
 	}
 
-	public void mouseExited(MouseEvent arg0) {
-		calqueView.getAfficher().setVisible(false);
-		calqueView.getSupprimer().setVisible(false);
-		System.out.println("sortie de " + calqueView);
-		calqueView.repaint();
+	public void mouseExited(MouseEvent e) {
+		// Si le point du MouseEvent est dans un des boutons, on 
+		Point event = e.getPoint();
+		if ( !calqueView.getButtonPanel().contains(event)  ) {
+			System.out.println("là");
+			calqueView.getAfficher().setVisible(false);
+			calqueView.getSupprimer().setVisible(false);
+			calqueView.repaint();
+		}
 	}
 	public void mouseReleased(MouseEvent arg0) {
 	}

@@ -47,5 +47,4 @@ public class ActionCalqueView extends AbstractAction implements Observer{
 			bouton.setIcon(new ImageIcon(urlClosedEyes));
 		}
 	}
-
 }
