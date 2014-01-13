@@ -15,7 +15,7 @@ import model.Calque;
 import model.Model;
 import ressources.DimensionMenuDroit;
 import controler.ActionCalqueRemove;
-import controler.ActionCalqueView;
+import controler.ActionCalqueAfficher;
 import controler.CalqueListener;
 
 /**
@@ -53,7 +53,7 @@ public class CalqueView extends JPanel {
 		
 		//Bouton afficher/masquer
 		afficher = new JButton();
-		ActionCalqueView actionAfficher = new ActionCalqueView(model, this.calque, afficher);
+		ActionCalqueAfficher actionAfficher = new ActionCalqueAfficher(model, this.calque, afficher);
 		afficher.setAction(actionAfficher);
 		afficher.setPreferredSize(new Dimension(22,22));
 		afficher.setFocusable(false);

@@ -1,35 +1,35 @@
 package controler;
 
 import java.awt.event.ActionEvent;
+import java.net.URL;
+
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
+
 import ressources.URLIcons;
 //INTERNE
 import model.Model;
 
 /**
- * Listener pour le menu Enregistrer. Est appelé lorsqu'on appuie sur le bouton enregistrer.
- * 
- * 
  * @author Alexandre Thorez
  * @author Fabien Huitelec
  * @author Pierre-Édouard Caron
  * 
  * @version 0.2
  */
-public class ActionMenuEnregistrer extends AbstractAction {
+public class ActionMenuHelp extends AbstractAction {
 	private Model model;
        
 	/**
 	 * @param model Modèle du MVC
 	 */
-	public ActionMenuEnregistrer(Model model) {
+	public ActionMenuHelp(Model model) {
 		this.model = model;
 		
 		// Values
-		putValue(NAME, "Enregistrer");
-		putValue(SHORT_DESCRIPTION, "Enregistre votre travail");
-		this.putValue(SMALL_ICON, new ImageIcon(URLIcons.SAVEAS));
+		putValue(NAME, "Aide");
+		putValue(SHORT_DESCRIPTION, "Besoin d'aide ?");
+		this.putValue(SMALL_ICON, new ImageIcon(URLIcons.HELP));
 	}
 	
 	/**
@@ -41,13 +41,7 @@ public class ActionMenuEnregistrer extends AbstractAction {
 	 * @see controler.ActionMenuEnregistrerSous#enregistrerSous
 	 */
 	public void actionPerformed(ActionEvent e) {
-		if (model.getAdresseEnregistrement() == null) {
-			new ActionMenuEnregistrerSous(model).enregistrerSous();
-		} else {
-			new ActionMenuEnregistrerSous(model).fluxEnregistrement(model.getAdresseEnregistrement());
-		}
+		// TODO
 	}
 }
-
-
 
