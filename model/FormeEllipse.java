@@ -23,8 +23,8 @@ public class FormeEllipse extends Forme {
 	 * @see model.Forme
 	 * @see #initialiserVariables
 	 */
-	public FormeEllipse(Point pointDebut, Point pointArrivee, boolean plein, String objet, Color couleur, boolean parfait) {
-		super(pointDebut, pointArrivee, plein, objet,couleur, parfait);
+	public FormeEllipse(Point pointDebut, Point pointArrivee, float strokeFloat, boolean plein, String objet, Color couleur, boolean parfait) {
+		super(pointDebut, pointArrivee, strokeFloat, plein, objet,couleur, parfait);
 
 		calculVariables();
 	}
@@ -37,9 +37,8 @@ public class FormeEllipse extends Forme {
 	protected void calculVariables() {
 		super.calculVariables();
 		
-		
 		// Instanciation de la forme et du référentiel
 		this.forme = new Ellipse2D.Double(oX, oY, width, height);
-		this.referentielPosition = new Rectangle2D.Double(oX , oY , width, height);
+		this.referentielPosition = new Rectangle2D.Double(oX - strokeFloat/2, oY - strokeFloat/2, width + strokeFloat, height + strokeFloat);
 	}
 }

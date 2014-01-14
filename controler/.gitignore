@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /ActionMenuCopier.class
 /ActionMenuCouper.class
 /ActionMenuEnregistrer.class
@@ -32,3 +33,42 @@
 /ActionCalqueAfficher.class
 /ActionMenuHelp.class
 /ActionMenuAPropos.class
+=======
+/ActionMenuCopier.class
+/ActionMenuCouper.class
+/ActionMenuEnregistrer.class
+/ActionMenuEnregistrerSous.class
+/ActionMenuNouveau.class
+/ActionMenuOuvrir.class
+/ActionMenuQuitter.class
+/ActionOutilCouleur.class
+/ActionOutilEllipse.class
+/ActionOutilRectangle.class
+/ActionOutilSelection.class
+/ActionOutilTrait.class
+/DessinListener.class
+/KeyListenerAll.class
+/package-info.class
+/ActionAutresCouleur.class
+/ActionCalque.class
+/ActionCalquer.class
+/CalqueListener.class
+/ActionCalqueAdd.class
+/ActionRemoveCalque.class
+/ActionOutilCouleurs.class
+/ActionCalqueRemove.class
+/ActionMenuColler.class
+/ActionMenuInserer$1.class
+/ActionMenuInserer.class
+/ActionMenuType.class
+/ActionMenuInsererImage$1.class
+/ActionMenuInsererImage.class
+/ImageFilter.class
+/ActionCalqueView.class
+/ActionOutilStroke.class
+/ActionOutilStroke$Verifier.class
+/Verifier.class
+/StrokeChek.class
+/StrokeCheck.class
+/StrokeListener.class
+>>>>>>> Stroke

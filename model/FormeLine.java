@@ -1,13 +1,16 @@
 package model;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Shape;
+import java.awt.Stroke;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Line2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.PathIterator;
+import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
 
@@ -22,9 +25,10 @@ import java.io.Serializable;
  */
 public class FormeLine extends Forme implements Serializable {
 	private Shape referentielPositionLine;
+	float angle, cos, sin;
 	
-	public FormeLine(Point pointDebut, Point pointArrivee, boolean plein, String objet, Color couleur, boolean parfait) {
-		super(pointDebut, pointArrivee, plein, objet, couleur, parfait);
+	public FormeLine(Point pointDebut, Point pointArrivee, float strokeFloat, boolean plein, String objet, Color couleur, boolean parfait) {
+		super(pointDebut, pointArrivee, strokeFloat, plein, objet, couleur, parfait);
 
 		this.marqueurs = new Rectangle2D.Double[2];
 		this.calculVariables();
@@ -39,11 +43,15 @@ public class FormeLine extends Forme implements Serializable {
 		this.aY = (int) pointFin.getY();
 		
 		this.initialiserReferentiel();
+
+		this.angle = (float) Math.atan2(aY - oY, oX - aX);
+		this.cos = (float) Math.cos(angle);
+		this.sin = (float) Math.sin(angle);
 		
 		// Instanciation des marqueurs
-		this.marqueurs[0] = new Rectangle2D.Double(oX - 4, oY - 4, 8, 8); // Point d'origine
-		this.marqueurs[1] = new Rectangle2D.Double(aX - 4, aY - 4, 8, 8); // Point de fin
-		
+		this.marqueurs[0] = new Rectangle2D.Double(oX + (strokeFloat / 2) * cos - 4, oY - sin * (strokeFloat / 2) - 4, 8, 8); // Point d'origine
+		this.marqueurs[1] = new Rectangle2D.Double(aX - (strokeFloat / 2) * cos - 4, aY + sin * (strokeFloat / 2) - 4, 8, 8); // Point de fin
+
 		// On redéfinit les points secondaires de la forme comme étant nuls
 		this.pointBasGauche = null;
 		this.pointHautDroit = null;
@@ -70,10 +78,10 @@ public class FormeLine extends Forme implements Serializable {
 				aY = (int) pointFin.getY(),
 				width = (int) (aX - oX),
 				height = (int) (aY - oY),
-				zoneDeClic = 40;
+				zoneDeClic = 40 + (int)strokeFloat;
 		
 		// Redéfinition de la hauteur et de la longueur
-		height = (int) Math.sqrt((height*height + width*width)); // Hypoténuse = Racine(height² + width²)
+		height = (int) Math.sqrt((height*height + width*width)) + (int)strokeFloat; // Hypoténuse = Racine(height² + width²)
 		width = zoneDeClic; // Épaisseur de la zone de clic pour le contains
 		
 		// Première initialisation du référentiel en rectangle classique
@@ -91,7 +99,7 @@ public class FormeLine extends Forme implements Serializable {
         at.rotate(angle, oX, oY);
         
         // Translation
-        at.translate(zoneDeClic / (-2), 0);
+        at.translate( zoneDeClic / (-2), (int)strokeFloat/ (-2) );
         
         // Application des transformation
         PathIterator pi = referentielPositionLine.getPathIterator(at);
@@ -119,28 +127,39 @@ public class FormeLine extends Forme implements Serializable {
 
 	@Override
 	public void selectionner(Graphics2D graphics) {
-		Color tmp = graphics.getColor();
+		Color colorTmp = graphics.getColor();
+		Stroke strokeTmp = graphics.getStroke();
 		graphics.setColor(Color.BLACK);
+		graphics.setStroke(new BasicStroke(1f));
 
 		// Marqueurs
+		graphics.draw(this.referentielPositionLine); // DEBUG
+		
 		for (Rectangle2D.Double rectangle : marqueurs) {
 			graphics.draw(rectangle);
 		}
 		
-		// Rétablissement de la couleur d'origine
-		graphics.setColor(tmp);
+		// Rétablissement des variables d'origine
+		graphics.setColor(colorTmp);
+		graphics.setStroke(strokeTmp);
 	}
 	
 	@Override
 	public void resize(int marqueur, Point pointResize, boolean parfait) {		
 		switch (marqueur) {
 		case 0 : // Origine
+			pointResize.setLocation(pointResize.x - ((strokeFloat / 2) * cos), pointResize.y + sin * (strokeFloat / 2));
 			this.setOrigin(pointResize);
 			break;
 			
 		case 1 : // Fin
+			pointResize.setLocation(pointResize.x + ((strokeFloat / 2) * cos), pointResize.y - sin * (strokeFloat / 2 + 4));
 			this.setFin(pointResize);
 			break;
 		}
+	}
+	
+	public boolean contains(Point2D position) {
+		return referentielPositionLine.contains(position) || this.containsPointDeSelection(position);
 	}
 }

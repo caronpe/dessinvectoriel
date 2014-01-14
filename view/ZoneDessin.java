@@ -48,6 +48,7 @@ public class ZoneDessin extends JPanel {
 		this.model = model;
 		this.setBackground(Color.WHITE);
 		this.rectangleSelection = null;
+		this.setFocusable(true);
 	}
  
 	/**
@@ -70,6 +71,7 @@ public class ZoneDessin extends JPanel {
 		// Parcours de la liste pour redessiner toutes les formes
 		while (it.hasNext()) {
 			Forme forme = it.next();
+			g2d.setStroke(forme.getStroke());
 			forme.draw(g2d);
 			if (forme.isSelected()) {
 				forme.selectionner(g2d);
@@ -78,6 +80,7 @@ public class ZoneDessin extends JPanel {
 
 		// Si courante a été initialisée
 		if (courante != null) {
+			g2d.setStroke(courante.getStroke());
 			courante.draw(g2d);
 		}
 
@@ -105,12 +108,12 @@ public class ZoneDessin extends JPanel {
 		
 		// Strokes
 		BasicStroke tmp = (BasicStroke) g2d.getStroke();		
-		g2d.setStroke(new BasicStroke(6f));
 		
 		// Parcours de la liste pour redessiner toutes les formes
 		ListIterator<Forme> it = calque.listIterator();
 		while (it.hasNext()) {
 			Forme forme = it.next();
+			g2d.setStroke(forme.getStroke());
 			forme.draw(g2d);
 		}
 		
