@@ -21,7 +21,7 @@ import model.Model;
  * @author Fabien Huitelec
  * @author Pierre-Édouard Caron
  * 
- * @version 0.3
+ * @version 0.4 finale
  */
 public class JColorChooserUnique extends JFrame implements ActionListener {
 	// MVC

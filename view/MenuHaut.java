@@ -16,6 +16,15 @@ import controler.ActionMenuNouveau;
 import controler.ActionMenuOuvrir;
 import controler.ActionMenuQuitter;
 
+/**
+ * Définit tous les composant du menu du haut.
+ * 
+ * @author Alexandre Thorez
+ * @author Fabien Huitelec
+ * @author Pierre-Édouard Caron
+ * 
+ * @version 0.4 finale
+ */
 public class MenuHaut extends JMenuBar {
 	private JMenu fileMenu, editMenu, insertionMenu;
 	private JMenuItem nouveau, ouvrir, enregistrer, enregistrerSous, exit;

@@ -11,7 +11,7 @@ import java.awt.geom.Rectangle2D;
  * @author Fabien Huitelec
  * @author Pierre-Édouard Caron
  * 
- * @version 0.3
+ * @version 0.4 finale
  */
 public class FormeRectangle extends Forme {
 

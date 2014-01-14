@@ -3,15 +3,14 @@ package ressources;
 import java.awt.Dimension;
 
 /**
- * dimension des composant du menu gauche
+ * Dimension des composant du menu gauche
  * 
  * @author Alexandre Thorez
  * @author Fabien Huitelec
  * @author Pierre-Édouard Caron
  * 
- * @version 0.2
+ * @version 0.4 finale
  */
-
 public class DimensionMenuDroit extends Dimension{
 	public static int width;
 	public static int height;

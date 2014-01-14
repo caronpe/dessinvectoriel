@@ -12,7 +12,7 @@ import java.awt.geom.Rectangle2D;
  * @author Fabien Huitelec
  * @author Pierre-Édouard Caron
  * 
- * @version 0.2
+ * @version 0.4 finale
  */
 public class FormeEllipse extends Forme {
 		

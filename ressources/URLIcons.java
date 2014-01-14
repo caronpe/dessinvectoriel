@@ -2,6 +2,15 @@ package ressources;
 
 import java.net.URL;
 
+/**
+ * Singleton d'URL utilisés pour les ImageIcon.
+ * 
+ * @author Alexandre Thorez
+ * @author Fabien Huitelec
+ * @author Pierre-Édouard Caron
+ * 
+ * @version 0.4 finale
+ */
 public class URLIcons {
 	public static URL ABOUT = ClassLoader.getSystemClassLoader().getResource("ressources/images/about.png");
 	public static URL HELP = ClassLoader.getSystemClassLoader().getResource("ressources/images/questionMark.png");

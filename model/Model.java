@@ -17,7 +17,7 @@ import java.util.Observable;
  * @author Fabien Huitelec
  * @author Pierre-Édouard Caron
  * 
- * @version 0.4
+ * @version 0.4 finale
  */
 public class Model extends Observable {
 	private ArrayList<Calque> listCalque;
@@ -615,14 +615,29 @@ public class Model extends Observable {
 		this.calqueCourant = this.listCalque.get(0);
 	}
 	
+	/**
+	 * @category accessor
+	 * 
+	 * @return
+	 */
 	public Stroke getStroke() {
 		return new BasicStroke(this.strokeFloat);
 	}
 	
+	/**
+	 * @category accessor
+	 * 
+	 * @return
+	 */
 	public float getStrokeFloat() {
 		return this.strokeFloat;
 	}
 	
+	/**
+	 * @category accessor
+	 * 
+	 * @param strokeFloat
+	 */
 	public void setStroke(float strokeFloat){
 		boolean ilYaDesFormesSelectionnes = false;
 
@@ -648,8 +663,12 @@ public class Model extends Observable {
 		notifyObservers();
 	}
 	
+	/**
+	 * @category accessor
+	 * 
+	 * @param s
+	 */
 	public void setStroke(String s){
-		
 		setStroke(Float.parseFloat(s));
 	}
 }

@@ -4,12 +4,11 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
-
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
+//INTERNE
 import model.Model;
 import controler.ActionOutilCouleurs;
 import controler.ActionOutilEllipse;
@@ -17,7 +16,7 @@ import controler.ActionOutilRectangle;
 import controler.ActionOutilSelection;
 import controler.ActionOutilTrait;
 import controler.StrokeListener;
-// INTERNE
+
 
 /**
  * Menu de gauche contenant tous les outils de couleur,
@@ -29,7 +28,7 @@ import controler.StrokeListener;
  * @author Fabien Huitelec
  * @author Pierre-Édouard Caron
  * 
- * @version 0.2
+ * @version 0.4 finale
  */
 public class MenuOutils extends JPanel {
 	Model model;

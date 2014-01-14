@@ -20,20 +20,14 @@ import java.io.Serializable;
  * @author Fabien Huitelec
  * @author Pierre-Édouard Caron
  * 
- * @version 0.3
+ * @version 0.4 finale
  */
 public abstract class Forme implements Serializable, Cloneable {
 	protected int oX, oY, aX, aY, width, height;
 	protected Shape forme;
-	/**
-	 * Permets de renvoyer un contains correct.
-	 * 
-	 * @see #initialiserReferentiel()
-	 */
+	/** Permets de renvoyer un contains correct. @see #initialiserReferentiel() */
 	protected Rectangle2D.Double referentielPosition;
-	/**
-	 * Points intermédiaires calculés à partir des points principaux (d'origine et de fin)
-	 */
+	/** Points intermédiaires calculés à partir des points principaux (d'origine et de fin) */
 	protected Point pointHautDroit, pointBasGauche;
 	protected Point pointOrigin, pointFin;
 	protected String objet;
@@ -57,10 +51,7 @@ public abstract class Forme implements Serializable, Cloneable {
 	 * @see #calculVariablesParfait()
 	 */
 	protected int marqueurCourant;
-	
-	/**
-	 * Epaisseur du trait de la forme
-	 */
+	/** Epaisseur du trait de la forme */
 	transient protected Stroke stroke;
 	protected float strokeFloat;
 
@@ -73,7 +64,7 @@ public abstract class Forme implements Serializable, Cloneable {
 	 *            Point d'origine de l'objet
 	 * @param pointArrivee
 	 *            Point final de l'objet
-	 * @param type
+	 * @param plein
 	 *            Plein, vide
 	 * @param objet
 	 *            Carré, rond, droite
@@ -97,19 +88,35 @@ public abstract class Forme implements Serializable, Cloneable {
 		calculVariables();
 	}
 	
+	/**
+	 * Constructeur avec une stroke de 1f par défaut.
+	 * 
+	 * @param pointDebut
+	 *            Point d'origine de l'objet
+	 * @param pointArrivee
+	 *            Point final de l'objet
+	 * @param plein
+	 *            Plein, vide
+	 * @param objet
+	 *            Carré, rond, droite
+	 * @param couleur
+	 *            Couleur de l'objet
+	 * @param parfait
+	 *            Définit si la forme est temporaire
+	 */
 	public Forme(Point pointDebut, Point pointArrivee, boolean plein, String objet, Color couleur, boolean parfait) {
 		this(pointDebut, pointArrivee, 1f, plein, objet, couleur, parfait);
 	}
 
 	/**
 	 * Constructeur basique de la forme à dessiner avec ses coordonnées
-	 * vectorielles, sa couleur, sa forme et son type
+	 * vectorielles, sa couleur, sa forme et son type.
 	 * 
 	 * @param pointDebut
 	 *            Point d'origine de l'objet
 	 * @param pointArrivee
 	 *            Point final de l'objet
-	 * @param type
+	 * @param plein
 	 *            Plein, vide
 	 * @param objet
 	 *            Carré, rond, droite
@@ -120,6 +127,18 @@ public abstract class Forme implements Serializable, Cloneable {
 		this(pointDebut, pointArrivee, 1f, plein, objet, couleur, false);
 	}
 	
+	/**
+	 * Constructeur pour une forme générique de couleur blanche et de stroke 1f.
+	 * 
+	 * @param pointDebut
+	 *            Point d'origine de l'objet
+	 * @param pointArrivee
+	 *            Point final de l'objet
+	 * @param plein
+	 *            Plein, vide
+	 * @param objet
+	 *            Carré, rond, droite
+	 */
 	public Forme(Point pointDebut, Point pointArrivee, boolean plein, String objet) {
 		this(pointDebut, pointArrivee, 1f, plein, objet, Color.WHITE, false);
 	}
@@ -523,10 +542,10 @@ public abstract class Forme implements Serializable, Cloneable {
 	}
 	
 	/**
-	 * @category accessor
-	 * 
 	 * Compare la position du curseur au rectangle de marqueurs de la sélection.
 	 * Utile les contains() des rectangle2D.Double.
+	 * 
+	 * @category accessor
 	 * 
 	 * @param position Position du curseur
 	 * 
@@ -585,6 +604,8 @@ public abstract class Forme implements Serializable, Cloneable {
 
 	/**
 	 * @category accessor
+	 * 
+	 * @return la couleur de la forme
 	 */
 	public Color getCouleur() {
 		return this.couleur;
@@ -592,6 +613,8 @@ public abstract class Forme implements Serializable, Cloneable {
 
 	/**
 	 * @category accessor
+	 * 
+	 * @param couleur couleur que l'on souhaite assigner à la forme
 	 */
 	public void setCouleur(Color couleur) {
 		this.couleur = couleur;
@@ -599,6 +622,8 @@ public abstract class Forme implements Serializable, Cloneable {
 
 	/**
 	 * @category accessor
+	 * 
+	 * @return si c'est une forme parfaite ou non
 	 */
 	public boolean getParfait() {
 		return this.parfait;
@@ -606,6 +631,8 @@ public abstract class Forme implements Serializable, Cloneable {
 
 	/**
 	 * @category accessor
+	 * 
+	 * @param temporaire si c'est une forme temporaire ou non.
 	 */
 	public void setTemporaire(boolean temporaire) {
 		this.parfait = temporaire;
@@ -613,6 +640,8 @@ public abstract class Forme implements Serializable, Cloneable {
 
 	/**
 	 * @category accessor
+	 * 
+	 * @return la forme en elle-même
 	 */
 	public Shape getShape() {
 		return this.forme;
@@ -620,6 +649,8 @@ public abstract class Forme implements Serializable, Cloneable {
 	
 	/**
 	 * @category accessor
+	 * 
+	 * @return le référentielPosition
 	 */
 	public Rectangle2D.Double getReferentiel() {
 		return this.referentielPosition;
@@ -643,7 +674,11 @@ public abstract class Forme implements Serializable, Cloneable {
 		}
 		return false;
 	}
-	
+	/** 
+	 * Clone tous les attributs clonable de la forme.
+	 * 
+	 * @see java.lang.Object#clone()
+	 */
 	public Object clone() {
 		Forme forme = null;
 		try {
@@ -671,6 +706,11 @@ public abstract class Forme implements Serializable, Cloneable {
 		return forme;
 	}
 	
+	/**
+	 * @return le stroke de la forme
+	 * 
+	 * @category accessor
+	 */
 	public Stroke getStroke(){
 		if (this.stroke == null) {
 			this.stroke = new BasicStroke(strokeFloat);
@@ -678,6 +718,11 @@ public abstract class Forme implements Serializable, Cloneable {
 		return this.stroke;
 	}
 	
+	/**
+	 * @param strokeStroke stroke que l'on souhaite appliquer à la forme.
+	 * 
+	 * @category accessor
+	 */
 	public void setStroke(float strokeStroke){
 		this.strokeFloat = strokeStroke;
 		this.stroke = new BasicStroke(strokeFloat);

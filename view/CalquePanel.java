@@ -22,7 +22,7 @@ import model.Model;
  * @author Fabien Huitelec
  * @author Pierre-Édouard Caron
  * 
- * @version 0.4
+ * @version 0.4 finale
  */
 public class CalquePanel extends JPanel implements Observer {
 	Model model;
@@ -51,6 +51,9 @@ public class CalquePanel extends JPanel implements Observer {
 		this.add(tmp);
 	}
 	
+	/**
+	 * @param calque calque définissant un calqueView que l'on souhaite supprimer.
+	 */
 	public void removeCalque(Calque calque) {		
 		// Avertissement à tous les calques
 		CalqueView calqueView = null;
@@ -69,7 +72,7 @@ public class CalquePanel extends JPanel implements Observer {
 	}
 	
 	/**
-	 * Supprime tous les CalqueView actuels
+	 * Supprime tous les CalqueView actuels.
 	 */
 	private void removeAllCalqueView() {
 		ListIterator<CalqueView> it = this.listCalquesView.listIterator();
@@ -80,6 +83,9 @@ public class CalquePanel extends JPanel implements Observer {
 		}
 	}
 
+	/**
+	 * @param listCalque liste de calques que que l'on souhaite appliquer au calquePanel (donc au calqueView) 
+	 */
 	public void setArrayCalqueView(ArrayList<Calque> listCalque) {
 		this.removeAllCalqueView();
 		Calque calque = null;

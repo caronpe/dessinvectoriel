@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
  * @author Fabien Huitelec
  * @author Pierre-Édouard Caron
  * 
- * @version 0.2
+ * @version 0.4 finale
  */
 public class JFileChooserOverwrite extends JFileChooser {
 	// FileChooser qui supporte l'écrasement de fichier

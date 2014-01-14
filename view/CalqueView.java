@@ -4,13 +4,12 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
+// INTERNE
 import model.Calque;
 import model.Model;
 import ressources.DimensionMenuDroit;
@@ -25,7 +24,7 @@ import controler.CalqueListener;
  * @author Fabien Huitelec
  * @author Pierre-Édouard Caron
  * 
- * @version 0.3
+ * @version 0.4 finale
  */
 public class CalqueView extends JPanel {
 	// MVC

@@ -10,16 +10,13 @@ import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.util.ListIterator;
-
 import javax.swing.JPanel;
-
 // INTERNE
 import model.Calque;
 import model.Forme;
 import model.FormeRectangle;
 import model.Model;
 import ressources.DimensionMenuDroit;
-
 
 /**
  * Listener qui régit les actions de la souris sur la zone de dessin.
@@ -28,7 +25,7 @@ import ressources.DimensionMenuDroit;
  * @author Fabien Huitelec
  * @author Pierre-Édouard Caron
  * 
- * @version 0.3
+ * @version 0.4 finale
  */
 public class ZoneDessin extends JPanel {
 	private Forme courante;

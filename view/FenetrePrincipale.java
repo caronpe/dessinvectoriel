@@ -6,16 +6,14 @@ import java.awt.Dimension;
 import java.awt.HeadlessException;
 import java.util.Observable;
 import java.util.Observer;
-
 import javax.swing.JFrame;
-
+//INTERNE
 import model.Forme;
 import model.Model;
 import controler.ActionMenuQuitter;
 import controler.StrokeListener;
 import controler.DessinListener;
 import controler.KeyListenerAll;
-//INTERNE
 
 /**
  * Fenêtre principale contenant tous les éléments graphiques.
@@ -25,7 +23,7 @@ import controler.KeyListenerAll;
  * @author Fabien Huitelec
  * @author Pierre-Édouard Caron
  * 
- * @version 0.2
+ * @version 0.4 finale
  */
 public class FenetrePrincipale extends JFrame implements Observer {
 	// Fenêtre

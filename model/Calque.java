@@ -3,7 +3,6 @@ package model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.ListIterator;
-// INTERNE
 
 /**
  * Gère une arrayList de Formes. Encapsule ArrayList pour implémenter Serializable
@@ -13,21 +12,23 @@ import java.util.ListIterator;
  * @author Fabien Huitelec
  * @author Pierre-Édouard Caron
  * 
- * @version 0.1
+ * @version 0.4 finale
  */
 public class Calque implements Serializable {
-	
-
-	static final long serialVersionUID = 1L;
-	String name;
 	private ArrayList<Forme> listeDessin;
 	private boolean afficher;
 	
+	/**
+	 * Initialise la visibilité à afficher.
+	 */
 	public Calque() {
 		this.listeDessin = new ArrayList<Forme>();
 		this.afficher=true;
 	}
 	
+	/**
+	 * @param liste Liste de formes que l'on souhaite appliquer au calque.
+	 */
 	public Calque(ArrayList<Forme> liste) {
 		this.listeDessin = new ArrayList<Forme>();
 		this.listeDessin.addAll(liste);
@@ -43,35 +44,47 @@ public class Calque implements Serializable {
 		this.listeDessin.add(forme);
 	}
 	
-	public Forme getIdx(int index) {
+	/**
+	 * @param index Indice à partir duquel on souhaite récupérer la forme
+	 * 
+	 * @return La forme à l'indice
+	 * 
+	 * @category accessor
+	 */
+	public Forme get(int index) {
 		return this.listeDessin.get(index);
 	}
 	
+	/**
+	 * @param f Forme à supprimer
+	 */
 	public void remove(Forme f) {
 		this.listeDessin.remove(f);
 	}
 	
+	/**
+	 * @param i Indice à partir duquel on va supprimer la forme
+	 */
 	public void remove(int i) {
 		this.listeDessin.remove(i);
 	}
 	
 	/**
-	 * Supprime la dernière forme de l'arrayList
+	 * Supprime la dernière forme de l'arrayList.
 	 */
 	public void removeLast() {
 		this.listeDessin.remove(this.listeDessin.size() - 1);
 	}
 	
 	/**
-	 * Supprime toutes les formes de l'arrayList
-	 * 
+	 * Supprime toutes les formes de l'arrayList.
 	 */
 	public void removeAll() {
 		this.listeDessin.removeAll(listeDessin);
 	}
 	
 	/**
-	 * @return Un ListIterator qui permets d'être parcourus par next() et previous().
+	 * @return Un ListIterator qui permet d'être parcouru par next() et previous().
 	 * 
 	 * @category accessor
 	 * 
@@ -106,52 +119,60 @@ public class Calque implements Serializable {
 		return listeDessin.size();
 	}
 	
-	
 	/**
-	 * 
 	 * @return la liste de Forme
+	 * 
 	 * @category accessor
 	 */
 	public ArrayList<Forme> getListeDessin() {
 		return listeDessin;
 	}
 
-	
 	/**
-	 *  remplace la liste de forme par une autre
-	 * @return void
+	 * Remplace la liste de forme par une autre.
 	 * 
+	 * @param listeDessin Liste de dessin à remplacer.
+	 * 
+	 * @category accessor
 	 */
 	public void setListeDessin(Calque listeDessin) {
 		this.listeDessin = listeDessin.getListeDessin();
 	}
 	
-	
 	/**
-	 *  rajoute une liste de forme devant la pr�cedente
-	 * @return void
+	 * Rajoute une liste de forme avant la precédente.
 	 * 
+	 * @param listeDessin Liste de dessin à ajouter devant.
 	 */
 	public void ajouteDevant(Calque listeDessin) {
 		this.listeDessin.addAll(listeDessin.getListeDessin());
 	}
 	
-	
 	/**
-	 *  rajoute une liste de forme derriere la pr�cedente
-	 * @return void
+	 * Rajoute une liste de forme derrière la précedente.
 	 * 
+	 * @param listeDessin Liste de dessin à ajouter derrière.
 	 */
 	public void ajouteDerriere(Calque listeDessin) {
 		this.listeDessin.addAll(0 ,listeDessin.getListeDessin());
 	}
 	
+	/**
+	 * @return La visibilité du calque
+	 * 
+	 * @category accessor
+	 */
 	public boolean getAfficher(){
 		return this.afficher;
 	}
 	
-	public void setAfficher(boolean b){
-		this.afficher=b;
+	/**
+	 * @param afficher Booléen déterminant la visibilité du calque
+	 * 
+	 * @category accessor
+	 */
+	public void setAfficher(boolean afficher){
+		this.afficher = afficher;
 	}
 
 }

@@ -8,9 +8,17 @@ import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-
 import javax.swing.ImageIcon;
 
+/**
+ * Gère la forme image.
+ * 
+ * @author Alexandre Thorez
+ * @author Fabien Huitelec
+ * @author Pierre-Édouard Caron
+ * 
+ * @version 0.4 finale
+ */
 public class FormeImage extends Forme {
 	/** transient : pour ne pas afficher d'erreur de NonSerializable */
 	protected transient BufferedImage image, imageRedessinee;
@@ -25,6 +33,11 @@ public class FormeImage extends Forme {
 		calculVariables(); // Pour faire en sorte que l'image soit réinitialisée après sa création
 	}
 		
+	/**
+	 * @return l'image.
+	 * 
+	 * category accessor
+	 */
 	public Image getImage(){
 		return this.image;
 	}
@@ -41,11 +54,17 @@ public class FormeImage extends Forme {
 		this.imageRedessinee = this.scale();
 	}
 	
+	/** Dessine l'image.
+	 * @see model.Forme#draw(java.awt.Graphics2D)
+	 */
 	public void draw(Graphics2D g) {
 		calculVariables();
 		g.drawImage(this.imageRedessinee, pointOrigin.x, pointOrigin.y, null);
 	}
 	
+	/**
+	 * @return L'image traitée.
+	 */
 	public BufferedImage scale() {
 		if (!(this.width <= 0 || this.height <= 0)) {
 			// On crée une nouvelle image aux bonnes dimensions
@@ -63,6 +82,9 @@ public class FormeImage extends Forme {
 		return null;
 	}
 	
+	/**
+	 * @return L'image provenant de l'icône
+	 */
 	private BufferedImage iconToImage() {
 		BufferedImage newImage = new BufferedImage(this.icon.getIconWidth(),
 				this.icon.getIconHeight(), BufferedImage.TYPE_INT_RGB);
@@ -74,6 +96,11 @@ public class FormeImage extends Forme {
 		return newImage;
 	}
 	
+	/** 
+	 * Redessine l'image mais en ne réagissant pas à la touche SHIFT (formes parfaites)
+	 * 
+	 * @see model.Forme#resize(int, java.awt.Point, boolean)
+	 */
 	@Override
 	public void resize(int marqueur, Point pointResize, boolean parfait) {
 		super.resize(marqueur, pointResize, false);

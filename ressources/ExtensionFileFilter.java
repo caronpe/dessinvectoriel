@@ -1,7 +1,6 @@
 package ressources;
 
 import java.io.File;
-
 import javax.swing.filechooser.FileFilter;
 
 /**
@@ -9,7 +8,7 @@ import javax.swing.filechooser.FileFilter;
  * 
  * @author Developpez.net
  * 
- * @version 0.2
+ * @version 0.4 finale
  */
 public class ExtensionFileFilter extends FileFilter {
 	  String description, extensions[];

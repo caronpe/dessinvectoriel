@@ -3,7 +3,6 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -20,7 +19,7 @@ import controler.ActionCalqueAdd;
  * @author Fabien Huitelec
  * @author Pierre-Édouard Caron
  *
- * @version 0.3
+ * @version 0.4 finale
  */
 public class MenuDroit extends JPanel {
 	private JPanel buttons; // Panel qui recevra les boutons
