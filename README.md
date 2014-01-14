@@ -49,7 +49,7 @@ Il y a 3 types de formes : le rectangle, le rond et le trait.
 
 Sélection :
 On peut sélection une forme en cliquant dessus. Des marqueurs de sélection sont dessinés pour notifier à l'utilisateur qu'une forme est sélectionnée. La zone de sélection d'un rectangle est le rectangle lui-même, celle d'un cercle est un rectangle de mêmes dimensions que le cercle lui-même. Celle d'un trait en revanche est une zone de 40 pixel de largeur et de la longueur du trait (Le théorème de Pythagore y a été utilisé avec succès).
-On peut sélectionner plusieurs formes en cliquant sur Ctrl. De même si on a sélectionné une mauvaise forme, on peut cliquer dessus pour la déselectionner. Un clic dans le vide (sur la zone de dessin) déselectionne toutes les formes. De même, si on sélectionne une ou plusieurs formes et qu'on clique sur un outil, toutes les formes sont déselectionnées.
+On peut sélectionner plusieurs formes en cliquant sur Shift. De même si on a sélectionné une mauvaise forme, on peut cliquer dessus pour la déselectionner. Un clic dans le vide (sur la zone de dessin) déselectionne toutes les formes. De même, si on sélectionne une ou plusieurs formes et qu'on clique sur un outil, toutes les formes sont déselectionnées.
 L'utilisateur peut modifier la couleur de la ou des formes sélectionnées. Ce changement de couleur ne modifie pas la couleur actuelle du modèle.
 
 
