@@ -1,19 +1,22 @@
 package view;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
 import model.Model;
 import controler.ActionOutilCouleurs;
 import controler.ActionOutilEllipse;
 import controler.ActionOutilRectangle;
 import controler.ActionOutilSelection;
-import controler.StrokeListener;
 import controler.ActionOutilTrait;
+import controler.StrokeListener;
 // INTERNE
 
 /**
@@ -50,10 +53,11 @@ public class MenuOutils extends JPanel {
 	}
 	
 	private void initialiserBoutons() {
-		Font f = new Font("Serif", Font.PLAIN, 10);
+		Font f = new Font("Arial", Font.PLAIN, 10);
 		
 		// Outils
 		outilsStroke= new JLabel("Outils");
+		outilsStroke.setForeground(Color.GRAY);
 		outilsStroke.setHorizontalAlignment(JLabel.CENTER);
 		outilsStroke.setFont(f);
 		outilsStroke.setPreferredSize(new Dimension(45,10));
@@ -91,11 +95,13 @@ public class MenuOutils extends JPanel {
 
 		// TextField
 		labelStroke= new JLabel("Épaisseur");
+		labelStroke.setForeground(Color.GRAY);
 		labelStroke.setHorizontalAlignment(JLabel.CENTER);
 		labelStroke.setFont(f);
 		labelStroke.setPreferredSize(new Dimension(45,10));
 		
 		strokeField=new JTextField(Float.toString(model.getStrokeFloat()));
+	
 		strokeField.setPreferredSize(new Dimension(35,22));
 		strokeField.setMaximumSize(new Dimension(35,22));
 		strokeField.setMinimumSize(new Dimension(35,22));

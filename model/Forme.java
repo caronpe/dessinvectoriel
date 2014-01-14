@@ -61,7 +61,7 @@ public abstract class Forme implements Serializable, Cloneable {
 	/**
 	 * Epaisseur du trait de la forme
 	 */
-	protected Stroke stroke;
+	transient protected Stroke stroke;
 	protected float strokeFloat;
 
 	/**
@@ -140,6 +140,10 @@ public abstract class Forme implements Serializable, Cloneable {
 	 * @see #calculVariablesParfait()
 	 */
 	protected void calculVariables() {
+		if (this.stroke == null) {
+			this.stroke = new BasicStroke(strokeFloat);
+		}
+		
 		if (this.parfait) {
 			calculVariablesParfait();
 		} else {
@@ -662,11 +666,15 @@ public abstract class Forme implements Serializable, Cloneable {
 		forme.plein = (boolean) plein;
 		forme.objet = (String) objet;
 		forme.couleur = (Color) couleur;
+		forme.strokeFloat = (float) strokeFloat;
 		forme.calculVariables();
 		return forme;
 	}
 	
 	public Stroke getStroke(){
+		if (this.stroke == null) {
+			this.stroke = new BasicStroke(strokeFloat);
+		}
 		return this.stroke;
 	}
 	

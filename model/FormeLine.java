@@ -133,8 +133,6 @@ public class FormeLine extends Forme implements Serializable {
 		graphics.setStroke(new BasicStroke(1f));
 
 		// Marqueurs
-		graphics.draw(this.referentielPositionLine); // DEBUG
-		
 		for (Rectangle2D.Double rectangle : marqueurs) {
 			graphics.draw(rectangle);
 		}

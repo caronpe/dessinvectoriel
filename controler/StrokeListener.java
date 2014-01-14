@@ -35,7 +35,7 @@ public class StrokeListener implements KeyListener, MouseListener {
 		this.strokeField.setInputVerifier(new StrokeCheck(model, strokeField));
 		this.strokeField.addKeyListener(this);
 		this.strokeField.setCaretColor(Color.BLUE);
-		this.strokeField.setForeground(Color.RED);
+		this.strokeField.setForeground(Color.BLACK);
 		initNewTraversalKey();
 	}
 	

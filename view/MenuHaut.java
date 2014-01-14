@@ -4,28 +4,22 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
-
-
-
 // INTERNE
 import model.Model;
-import controler.ActionMenuAPropos;
 import controler.ActionMenuColler;
 import controler.ActionMenuCopier;
 import controler.ActionMenuCouper;
 import controler.ActionMenuEnregistrer;
 import controler.ActionMenuEnregistrerSous;
-import controler.ActionMenuHelp;
 import controler.ActionMenuInsererImage;
 import controler.ActionMenuNouveau;
 import controler.ActionMenuOuvrir;
 import controler.ActionMenuQuitter;
 
 public class MenuHaut extends JMenuBar {
-	private JMenu fileMenu, editMenu, insertionMenu, question;
+	private JMenu fileMenu, editMenu, insertionMenu;
 	private JMenuItem nouveau, ouvrir, enregistrer, enregistrerSous, exit;
 	private JMenuItem copy, cut, paste;
-	private JMenuItem aPropos, help;
 	private JMenuItem image;
 
 	public MenuHaut(Model model){
@@ -33,13 +27,11 @@ public class MenuHaut extends JMenuBar {
 		fileMenu = new JMenu("Fichier");
 		editMenu = new JMenu("Édition");
 		insertionMenu = new JMenu("Insertion");
-		question = new JMenu("?");
 		
 		// Ajouts
 		this.add(fileMenu);
 		this.add(editMenu);
 		this.add(insertionMenu);
-		this.add(question);
 		
 		// Items
 		nouveau = new JMenuItem(new ActionMenuNouveau(model));
@@ -87,18 +79,6 @@ public class MenuHaut extends JMenuBar {
 		        java.awt.event.KeyEvent.VK_I, 
 		        java.awt.Event.CTRL_MASK));
 		
-		help = new JMenuItem(new ActionMenuHelp(model));
-		help.setAccelerator(KeyStroke.getKeyStroke(
-		        java.awt.event.KeyEvent.VK_H, 
-		        java.awt.Event.CTRL_MASK));
-		
-		aPropos = new JMenuItem(new ActionMenuAPropos(model));
-		aPropos.setAccelerator(KeyStroke.getKeyStroke(
-		        java.awt.event.KeyEvent.VK_A, 
-		        java.awt.Event.CTRL_MASK));
-		
-		
-		
 		// Menu : Fichiers
 		fileMenu.addSeparator();
 		fileMenu.add(nouveau);
@@ -115,9 +95,5 @@ public class MenuHaut extends JMenuBar {
 		
 		// Menu : Insertion
 		insertionMenu.add(image);
-		
-		// Menu : ?
-		question.add(aPropos);
-		question.add(help);
 	}
 }
