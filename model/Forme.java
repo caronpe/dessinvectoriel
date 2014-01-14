@@ -185,11 +185,19 @@ public abstract class Forme implements Serializable, Cloneable {
 		this.pointHautDroit= new Point(aX ,oY);
 		
 		// Instanciation des marqueurs
-		this.marqueurs[0] = new Rectangle2D.Double(oX - 4 - strokeFloat/2, oY - 4 - strokeFloat/2, 8, 8); // En haut à gauche
-		this.marqueurs[1] = new Rectangle2D.Double(oX + width - 4 + strokeFloat/2, oY - 4 - strokeFloat/2, 8, 8); // En haut à droite
-		this.marqueurs[2] = new Rectangle2D.Double(oX - 4 - strokeFloat/2, oY + height - 4 + strokeFloat/2, 8, 8); // En bas à gauche
-		this.marqueurs[3] = new Rectangle2D.Double(oX + width - 4 + strokeFloat/2, oY + height - 4 + strokeFloat/2, 8, 8); // En bas à droite
+		if (!this.plein) {
+			this.marqueurs[0] = new Rectangle2D.Double(oX - 4 - strokeFloat/2, oY - 4 - strokeFloat/2, 8, 8); // En haut à gauche
+			this.marqueurs[1] = new Rectangle2D.Double(oX + width - 4 + strokeFloat/2, oY - 4 - strokeFloat/2, 8, 8); // En haut à droite
+			this.marqueurs[2] = new Rectangle2D.Double(oX - 4 - strokeFloat/2, oY + height - 4 + strokeFloat/2, 8, 8); // En bas à gauche
+			this.marqueurs[3] = new Rectangle2D.Double(oX + width - 4 + strokeFloat/2, oY + height - 4 + strokeFloat/2, 8, 8); // En bas à droite
+		} else {
+			this.marqueurs[0] = new Rectangle2D.Double(oX - 4, oY - 4, 8, 8); // En haut à gauche
+			this.marqueurs[1] = new Rectangle2D.Double(oX + width - 4, oY - 4, 8, 8); // En haut à droite
+			this.marqueurs[2] = new Rectangle2D.Double(oX - 4, oY + height - 4, 8, 8); // En bas à gauche
+			this.marqueurs[3] = new Rectangle2D.Double(oX + width - 4, oY + height - 4, 8, 8); // En bas à droite
+		}
 	}
+		
 	
 	/**
 	 * Initialise les variables de la forme en prenant en compte le fait qu'elle est parfaite.
