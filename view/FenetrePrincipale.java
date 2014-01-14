@@ -4,9 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.HeadlessException;
-import java.awt.event.FocusEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -15,6 +12,7 @@ import javax.swing.JFrame;
 import model.Forme;
 import model.Model;
 import controler.ActionMenuQuitter;
+import controler.StrokeListener;
 import controler.DessinListener;
 import controler.KeyListenerAll;
 //INTERNE
@@ -90,8 +88,10 @@ public class FenetrePrincipale extends JFrame implements Observer {
 		menuDroit = new MenuDroit(model, zoneDessin);
 				
 		// Ajout des panels au container
-		outils = new MenuOutils(model);
-				
+		StrokeListener actionStroke = new StrokeListener(model);
+		outils = new MenuOutils(model, actionStroke);
+		zoneDessin.addMouseListener(actionStroke);
+		
 		// Ajouts
 		container.add(outils, BorderLayout.WEST);
 		container.add(zoneDessin , BorderLayout.CENTER);

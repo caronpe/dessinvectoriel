@@ -60,7 +60,7 @@ public class Model extends Observable {
 		this.setEnregistre(true);
 		this.extension = ".cth";
 		this.adresseEnregistrement = null;
-		this.strokeFloat=1f;
+		this.strokeFloat = 1f;
 	}
 
 	/**
@@ -612,8 +612,33 @@ public class Model extends Observable {
 		return new BasicStroke(this.strokeFloat);
 	}
 	
+	public float getStrokeFloat() {
+		return this.strokeFloat;
+	}
+	
 	public void setStroke(float strokeFloat){
-		this.strokeFloat=strokeFloat;
+		boolean ilYaDesFormesSelectionnes = false;
+
+		// Parcours de toutes les formes
+		ListIterator<Forme> it = this.calqueCourant.listIterator();
+		while (it.hasNext()) {
+			Forme f = it.next();
+			if (f.isSelected()) {
+				f.setStroke(strokeFloat);
+				ilYaDesFormesSelectionnes = true;
+			}
+		}
+
+		// Définis le comportement du modèle
+		if (!ilYaDesFormesSelectionnes) {
+			this.strokeFloat = strokeFloat;
+		} else {
+			setEnregistre(false);
+		}
+
+		// Envoi de la notification aux vues
+		setChanged();
+		notifyObservers();
 	}
 	
 	public void setStroke(String s){

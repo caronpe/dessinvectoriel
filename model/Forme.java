@@ -270,7 +270,7 @@ public abstract class Forme implements Serializable, Cloneable {
 		switch (marqueur) {
 		
 		case 0 : // En haut à gauche
-			pointResize.setLocation(pointResize.getX(), pointResize.getY());
+			pointResize.setLocation(pointResize.getX() + strokeFloat / 2, pointResize.getY() + strokeFloat / 2);
 			this.setOrigin(pointResize);
 			
 			if ( ( !(this.getHeight() > 0) && !(this.getWidth() > 0) ) ) { // Test de la taille de la nouvelle forme
@@ -282,7 +282,7 @@ public abstract class Forme implements Serializable, Cloneable {
 			break;
 			
 		case 1 : // En haut à droite
-			pointResize.setLocation(pointResize.getX(), pointResize.getY());
+			pointResize.setLocation(pointResize.getX() - strokeFloat / 2, pointResize.getY() + strokeFloat / 2);
 			this.setHautDroit(pointResize);
 			
 			if ( ( !(this.getHeight() > 0) && !(this.getWidth() > 0) ) ) { // Test de la taille de la nouvelle forme
@@ -294,7 +294,7 @@ public abstract class Forme implements Serializable, Cloneable {
 			break;
 			
 		case 2 : // En bas à gauche
-			pointResize.setLocation(pointResize.getX(), pointResize.getY());
+			pointResize.setLocation(pointResize.getX() + strokeFloat / 2, pointResize.getY() - strokeFloat / 2);
 			this.setBasGauche(pointResize);
 						
 			if ( ( !(this.getHeight() > 0) && !(this.getWidth() > 0) ) ) { // Test de la taille de la nouvelle forme
@@ -306,7 +306,7 @@ public abstract class Forme implements Serializable, Cloneable {
 			break;
 			
 		case 3 : // En bas à droite
-			pointResize.setLocation(pointResize.getX(), pointResize.getY());
+			pointResize.setLocation(pointResize.getX() - strokeFloat / 2, pointResize.getY() - strokeFloat / 2);
 			this.setFin(pointResize);
 
 			if ( ( !(this.getHeight() > 0) && !(this.getWidth() > 0) ) ) { // Test de la taille de la nouvelle forme
@@ -342,9 +342,6 @@ public abstract class Forme implements Serializable, Cloneable {
 		graphics.setComposite(AlphaComposite.SrcOver.derive(0.7f));
 		graphics.setColor(Color.BLACK);
 		graphics.setStroke(new BasicStroke());
-
-		// Rectangle en pointillés
-		graphics.draw(referentielPosition);
 		
 		// Marqueurs
 		for (Rectangle2D.Double rectangle : marqueurs) {
@@ -676,6 +673,7 @@ public abstract class Forme implements Serializable, Cloneable {
 	public void setStroke(float strokeStroke){
 		this.strokeFloat = strokeStroke;
 		this.stroke = new BasicStroke(strokeFloat);
+		calculVariables();
 	}
 	
 	public String toString() {

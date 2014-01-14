@@ -1,19 +1,18 @@
 package view;
 
+import java.awt.Component;
 import java.awt.Dimension;
-
-import javax.swing.BoxLayout;
+import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
 import model.Model;
 import controler.ActionOutilCouleurs;
 import controler.ActionOutilEllipse;
 import controler.ActionOutilRectangle;
 import controler.ActionOutilSelection;
-import controler.ActionOutilStroke;
+import controler.StrokeListener;
 import controler.ActionOutilTrait;
 // INTERNE
 
@@ -34,80 +33,88 @@ public class MenuOutils extends JPanel {
 	// JButton
 		JButton selection, crayon, rectangle, ellipse, selectionCouleur;
 	//JLabel
-		JLabel labelStroke;
+		JLabel outilsStroke, labelStroke;
 	// JTextField
-		JTextField textStroke;
+		JTextField strokeField;
+		StrokeListener actionStroke;
 	/**
 	 * Les boutons sont non focusable pour les keylistener fonctionnent
 	 * 
 	 * @param model Modèle du MVC
 	 */
-	public MenuOutils(Model model){
+	public MenuOutils(Model model, StrokeListener actionStroke){
 		this.model = model;
-		initialiserBoutons();
+		this.actionStroke = actionStroke;
 		initialiserPanel();
+		initialiserBoutons();
 	}
 	
 	private void initialiserBoutons() {
+		Font f = new Font("Serif", Font.PLAIN, 10);
+		
+		// Outils
+		outilsStroke= new JLabel("Outils");
+		outilsStroke.setHorizontalAlignment(JLabel.CENTER);
+		outilsStroke.setFont(f);
+		outilsStroke.setPreferredSize(new Dimension(45,10));
+		
+		
 		crayon = new JButton();
 		ActionOutilTrait actionTrait = new ActionOutilTrait(model, crayon);
 		crayon.setAction(actionTrait);
-		crayon.setPreferredSize(new Dimension(22,22));
+		crayon.setPreferredSize(new Dimension(35,22));
 		crayon.setFocusable(false);
 		
 		rectangle = new JButton();
 		ActionOutilRectangle rectangleAction = new ActionOutilRectangle(model, rectangle);
 		rectangle.setAction(rectangleAction);
-		rectangle.setPreferredSize(new Dimension(22,22));
+		rectangle.setPreferredSize(new Dimension(35,22));
 		rectangle.setFocusable(false);
 		
 		ellipse = new JButton();
 		ActionOutilEllipse ellipseAction = new ActionOutilEllipse(model, ellipse);
 		ellipse.setAction(ellipseAction);
-		ellipse.setPreferredSize(new Dimension(22,22));
+		ellipse.setPreferredSize(new Dimension(35,22));
 		ellipse.setFocusable(false);
 		
 		selection = new JButton();
 		ActionOutilSelection selectionAction = new ActionOutilSelection(model, selection);
 		selection.setAction(selectionAction);
-		selection.setPreferredSize(new Dimension(22,22));
+		selection.setPreferredSize(new Dimension(35,22));
 		selection.setFocusable(false);
 		
 		// Boutons : Couleurs
 		selectionCouleur = new JButton(new ActionOutilCouleurs(model));
 		selectionCouleur.setBackground(model.getColor());
-		selectionCouleur.setPreferredSize(new Dimension(22,22));
+		selectionCouleur.setPreferredSize(new Dimension(35,22));
 		selectionCouleur.setFocusable(false);
-		
-		//Ajout LabelStroke
-		
-		labelStroke= new JLabel("Ep");
-		labelStroke.setPreferredSize(new Dimension(22,22));
 
-		//Ajout Texte Field
-		textStroke=new JTextField();
-		ActionOutilStroke actionOutil = new ActionOutilStroke(model,textStroke);
-		textStroke.addKeyListener(actionOutil);
+		// TextField
+		labelStroke= new JLabel("Épaisseur");
+		labelStroke.setHorizontalAlignment(JLabel.CENTER);
+		labelStroke.setFont(f);
+		labelStroke.setPreferredSize(new Dimension(45,10));
 		
-		// Ajouts boutons outils
+		strokeField=new JTextField(Float.toString(model.getStrokeFloat()));
+		strokeField.setPreferredSize(new Dimension(35,22));
+		strokeField.setMaximumSize(new Dimension(35,22));
+		strokeField.setMinimumSize(new Dimension(35,22));
+		actionStroke.setStrokeField(strokeField);
+		strokeField.addKeyListener(actionStroke);
+		strokeField.addMouseListener(actionStroke);
+		strokeField.setAlignmentX(Component.CENTER_ALIGNMENT);
+		
+		// Outils
+		this.add(outilsStroke);
 		this.add(selection);
 		this.add(crayon);
 		this.add(rectangle);
 		this.add(ellipse);
-		
-		// Ajouts boutons couleurs
 		this.add(selectionCouleur);
 		
-		JPanel panel = new JPanel();
-		panel.setLayout(new BoxLayout(panel,1));
-		
-		// Ajout JLabel
-		panel.add(labelStroke);
-		
-		// Ajout JTextField
-		panel.add(textStroke);
-	
-		this.add(panel);
+		// Stroke
+		this.add(labelStroke);
+		this.add(strokeField);
 	}
 	
 	/**
@@ -115,10 +122,14 @@ public class MenuOutils extends JPanel {
 	 * @category init
 	 */
 	public void initialiserPanel() {
-		int taille = 45;
-		this.setPreferredSize(new Dimension(taille,taille));
-        this.setMinimumSize(new Dimension(taille,taille));
-        this.setMaximumSize(new Dimension(taille,taille));
+		int width = 60, height = 45;
+		this.setPreferredSize(new Dimension(width,height));
+        this.setMinimumSize(new Dimension(width,height));
+        this.setMaximumSize(new Dimension(width,height));
+	}
+	
+	public JTextField getStrokeField() {
+		return this.strokeField;
 	}
 }
 

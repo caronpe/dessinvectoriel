@@ -40,7 +40,6 @@ public class ActionCalqueView extends AbstractAction implements Observer{
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		// TODO Auto-generated method stub
 		if(calque.getAfficher()==true){
 			bouton.setIcon(new ImageIcon(urlOpenedEyes));
 		}else if(calque.getAfficher()==false){

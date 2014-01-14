@@ -56,7 +56,6 @@ public class CalquePanel extends JPanel implements Observer {
 		ListIterator<CalqueView> it = this.listCalquesView.listIterator();
 		
 		while (it.hasNext()) {
-			System.out.println("here"); // DEBUG
 			calqueView = it.next();
 			if (calqueView.getCalque() == calque) {
 				it.remove();
@@ -82,7 +81,6 @@ public class CalquePanel extends JPanel implements Observer {
 
 	public void setArrayCalqueView(ArrayList<Calque> listCalque) {
 		this.removeAllCalqueView();
-		System.out.println("dans setarraycalqueview calquepanel"); // DEBUG
 		Calque calque = null;
 		CalqueView tmp = null;
 		ListIterator<Calque> it = listCalque.listIterator();
@@ -107,8 +105,8 @@ public class CalquePanel extends JPanel implements Observer {
 		}
 		
 		if (arg1 instanceof ArrayList<?>) {
-			ArrayList<?> list = (ArrayList<?>) arg1;
-			ListIterator it = list.listIterator();
+			ArrayList<Calque> list = (ArrayList<Calque>) arg1;
+			ListIterator<?> it = list.listIterator();
 			if (it.hasNext() && it.next() instanceof Calque) {
 				this.setArrayCalqueView( (ArrayList<Calque>) list );
 			}

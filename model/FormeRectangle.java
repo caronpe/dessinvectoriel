@@ -37,6 +37,6 @@ public class FormeRectangle extends Forme {
 		
 		// Instanciation de la forme et du référentiel
 		this.forme = new Rectangle2D.Double(oX, oY, width, height);
-		this.referentielPosition = new Rectangle2D.Double(oX, oY, width, height);
+		this.referentielPosition = new Rectangle2D.Double(oX - strokeFloat / 2, oY - strokeFloat / 2, width + strokeFloat, height + strokeFloat);
 	}
 }

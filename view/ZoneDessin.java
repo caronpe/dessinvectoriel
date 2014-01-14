@@ -48,6 +48,7 @@ public class ZoneDessin extends JPanel {
 		this.model = model;
 		this.setBackground(Color.WHITE);
 		this.rectangleSelection = null;
+		this.setFocusable(true);
 	}
 
 	/**
