@@ -101,6 +101,9 @@ public class Model extends Observable {
 		setEnregistre(false);
 	}
 
+	/**
+	 * @param photo image que l'on souhaite ajouter à la liste de formes
+	 */
 	public void addForme(BufferedImage photo){
 		Point pointOrigin = new Point(0,0), pointFin = new Point(photo.getWidth(),photo.getHeight());
 		FormeImage image = new FormeImage(pointOrigin, pointFin, photo);
@@ -112,6 +115,11 @@ public class Model extends Observable {
 		setEnregistre(false);
 	}
 	
+	/**
+	 * Méthode utilisée lors de l'ouverture d'un fichier.
+	 * 
+	 * @param f forme que l'on souhaite ajouter
+	 */
 	public void addForme(Forme f) {
 		calqueCourant.add((Forme) f.clone());
 
@@ -157,6 +165,9 @@ public class Model extends Observable {
 		notifyObservers();
 	}
 
+	/**
+	 * @param f forme à déselectionner
+	 */
 	public void deselectionner(Forme f) {
 		f.setSelected(false);
 
@@ -165,6 +176,9 @@ public class Model extends Observable {
 		notifyObservers();
 	}
 
+	/**
+	 * Marque toutes les formes de tous les calques comme non sélectionnées.
+	 */
 	public void deselectionnerToutesLesFormes() {
 		ListIterator<Forme> it = this.getAllFormes().listIterator();
 		while (it.hasNext()) {
@@ -260,6 +274,13 @@ public class Model extends Observable {
 		setEnregistre(false);
 	}
 
+	/**
+	 * Méthode gérant le redimensionnement.
+	 * 
+	 * @param marqueur Marqueur concerné par le resize
+	 * @param forme Forme que l'on souhaite redimensionner
+	 * @param pointArrivee Nouveau point à définir au marqueur indiqué 
+	 */
 	public void resizeForme(int marqueur, Forme forme, Point pointArrivee) {
 		forme.resize(marqueur, pointArrivee, this.getShiftPressed());
 
@@ -583,6 +604,10 @@ public class Model extends Observable {
 		setEnregistre(false);
 	}
 	
+	/**
+	 * Supprime tous les calques et envoie le nouveau calque
+	 * courant aux observer
+	 */
 	private void resetCalques() {
 		this.calqueCourant = new Calque();
 		this.listCalque.add(calqueCourant);
@@ -592,6 +617,9 @@ public class Model extends Observable {
 		notifyObservers(listCalque);
 	}
 
+	/**
+	 * @param calque Calque à marquer comme visible
+	 */
 	public void setAfficherCalque(Calque calque) {
 		calque.setAfficher(!calque.getAfficher());
 		
@@ -600,6 +628,10 @@ public class Model extends Observable {
 		notifyObservers();
 	}
 	
+	/**
+	 * Méthode rassemblant toutes les actions à effectuer
+	 * lors de la création d'un nouveau fichier.
+	 */
 	public void newFile() {
 		this.listCalque = new ArrayList<Calque>();
 		this.resetCalques();
@@ -610,6 +642,12 @@ public class Model extends Observable {
 		return this.getListCalque();
 	}
 	
+	/**
+	 * Méthode rassemblant toutes les actions à effectuer
+	 * lors de l'ouverture d'un fichier.
+	 * 
+	 * @param listCalque liste des calques du fichier ouvert à appliquer à la liste de calques
+	 */
 	public void open(ArrayList<Calque> listCalque) {
 		this.setListeCalque(listCalque);
 		this.calqueCourant = this.listCalque.get(0);
@@ -618,7 +656,7 @@ public class Model extends Observable {
 	/**
 	 * @category accessor
 	 * 
-	 * @return
+	 * @return le Stroke actuel
 	 */
 	public Stroke getStroke() {
 		return new BasicStroke(this.strokeFloat);
@@ -627,16 +665,21 @@ public class Model extends Observable {
 	/**
 	 * @category accessor
 	 * 
-	 * @return
+	 * @return le strokeFloat associé au stroke actuel
 	 */
 	public float getStrokeFloat() {
 		return this.strokeFloat;
 	}
 	
 	/**
+	 * Si une ou plusieurs formes sont sélectionnées,
+	 * le stroke leur est appliqué. Sinon elle est appliqué
+	 * au modèle.
+	 * Même fonctionnement que pour le changement de couleur.
+	 * 
 	 * @category accessor
 	 * 
-	 * @param strokeFloat
+	 * @param strokeFloat nouveau StroakFloat
 	 */
 	public void setStroke(float strokeFloat){
 		boolean ilYaDesFormesSelectionnes = false;
@@ -663,12 +706,4 @@ public class Model extends Observable {
 		notifyObservers();
 	}
 	
-	/**
-	 * @category accessor
-	 * 
-	 * @param s
-	 */
-	public void setStroke(String s){
-		setStroke(Float.parseFloat(s));
-	}
 }

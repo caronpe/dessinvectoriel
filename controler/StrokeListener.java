@@ -172,7 +172,7 @@ class StrokeCheck extends InputVerifier {
 		boolean valid = verify(input);
 
 		if (valid) {
-			model.setStroke(strokeField.getText());
+			model.setStroke(new Float(strokeField.getText()));
 			return true;
 		} else {
 			// Beep
