@@ -55,7 +55,6 @@ public class CalqueListener implements MouseListener {
 			JMenuItem rem = new JMenuItem("Supprimer");
 			rem.addActionListener(new ActionCalqueRemove(calquePanel, model, calque));
 			menu.add(rem);
-			
 			menu.show(calqueView, arg0.getX(), arg0.getY());
 		}
 	}
@@ -73,7 +72,6 @@ public class CalqueListener implements MouseListener {
 		// Si le point du MouseEvent est dans un des boutons, on 
 		Point event = e.getPoint();
 		if ( !calqueView.getButtonPanel().contains(event)  ) {
-			System.out.println("là");
 			calqueView.getAfficher().setVisible(false);
 			calqueView.getSupprimer().setVisible(false);
 			calqueView.repaint();
