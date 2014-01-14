@@ -1,14 +1,12 @@
 package controler;
 
 import java.awt.event.ActionEvent;
-import java.net.URL;
-
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-
 // INTERNE
+import ressources.URLIcons;
 import model.Model;
 
 /**
@@ -20,25 +18,23 @@ import model.Model;
  * @author Fabien Huitelec
  * @author Pierre-Édouard Caron
  * 
- * @version 0.2
+ * @version 0.4 finale
  */
 public class ActionMenuNouveau extends AbstractAction {
 	private Model model;
-	private URL urlNewFile;
 	
 	/**
+	 * Paramètre le bouton (valeurs).
+	 * 
 	 * @param model Modèle du MVC
 	 */
 	public ActionMenuNouveau(Model model) {
 		this.model = model;
-		
-		// URL
-		this.urlNewFile = ClassLoader.getSystemClassLoader().getResource("ressources/images/newFile.png");
-		
+
 		// Values
 		this.putValue(NAME, "Nouveau");
 		this.putValue(SHORT_DESCRIPTION, "Crée un nouveau fichier");
-		this.putValue(SMALL_ICON, new ImageIcon(urlNewFile));
+		this.putValue(SMALL_ICON, new ImageIcon(URLIcons.NEWFILE));
 	}
 	
 	/**

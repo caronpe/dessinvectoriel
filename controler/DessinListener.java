@@ -26,7 +26,7 @@ import view.ZoneDessin;
  * 
  * @see view.FenetrePrincipale#initialiser
  * 
- * @version 0.4
+ * @version 0.4 finale
  */
 public class DessinListener implements MouseListener, MouseMotionListener {
 	private Point pointDebut, pointArrivee;
@@ -38,6 +38,7 @@ public class DessinListener implements MouseListener, MouseMotionListener {
 	int resizing;
 	private Model model;
 	private ZoneDessin zoneDessin;
+	/** Rectangle utilisé lors d'une sélection multique à l'aide du curseur */
 	private FormeRectangle rectangleSelection;
 	
 	/**

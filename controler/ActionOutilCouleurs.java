@@ -1,12 +1,10 @@
 package controler;
 
 import java.awt.event.ActionEvent;
-
 import javax.swing.AbstractAction;
-
-import model.Model;
 // INTERNE
 import ressources.JColorChooserUnique;
+import model.Model;
 
 /**
  * Listener pour le bouton des couleurs.
@@ -17,11 +15,16 @@ import ressources.JColorChooserUnique;
  * @author Fabien Huitelec
  * @author Pierre-Édouard Caron
  * 
- * @version 0.3
+ * @version 0.4 finale
  */
 public class ActionOutilCouleurs extends AbstractAction {
 	private JColorChooserUnique color;
 	
+	/**
+	 * Paramètre le bouton (valeurs).
+	 * 
+	 * @param model Modèle du MVC
+	 */
 	public ActionOutilCouleurs(Model model) {
 		this.color = new JColorChooserUnique(model);
 	}

@@ -12,22 +12,26 @@ import model.Model;
  * @author Fabien Huitelec
  * @author Pierre-Édouard Caron
  * 
- * @version 0.2
+ * @version 0.4 finale
  */
-
 public class ActionCalqueAdd extends AbstractAction {
 	Model model;
 
+	/**
+	 * Paramètre le bouton (valeurs).
+	 * 
+	 * @param model Modèle du MVC
+	 */
 	public ActionCalqueAdd(Model model) {
 		this.model = model;
 		
 		// Values
 		this.putValue(NAME, "Nouveau Calque");
-		putValue(SHORT_DESCRIPTION, "Ajoute un calque");
+		putValue(SHORT_DESCRIPTION, "Ajoute un nouveau calque");
 	}
 
 	/**
-	 *Ajoute un nouveau calque
+	 * Ajoute un nouveau calque dans le modèle.
 	 */
 	@Override
 	public void actionPerformed(ActionEvent arg0) {

@@ -2,17 +2,15 @@ package controler;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
-import java.net.URL;
 import java.util.Observable;
 import java.util.Observer;
-
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-
 // INTERNE
 import model.Model;
+import ressources.URLIcons;
 
 /**
  * Listener pour le bouton cercle.
@@ -21,13 +19,13 @@ import model.Model;
  * @author Fabien Huitelec
  * @author Pierre-Édouard Caron
  * 
- * @version 0.2
+ * @version 0.4 finale
  */
 public class ActionOutilEllipse extends AbstractAction  implements Observer {
 	private Model model;
 	private JButton bouton;
 	private boolean plein;
-	private URL urlCercleVide, urlCerclePlein;
+	private ImageIcon urlCercleVide, urlCerclePlein;
 	
 	/**
 	 * Ne comporte pas de nom, autrement
@@ -41,13 +39,13 @@ public class ActionOutilEllipse extends AbstractAction  implements Observer {
 		this.bouton = bouton;
 		this.plein = false;
 		
-		// URL
-		this.urlCercleVide = ClassLoader.getSystemClassLoader().getResource("ressources/images/cercleVide.png");
-		this.urlCerclePlein = ClassLoader.getSystemClassLoader().getResource("ressources/images/cerclePlein.png");
+		// ImageIcon
+		this.urlCercleVide = new ImageIcon(URLIcons.CERCLEVIDE);
+		this.urlCerclePlein = new ImageIcon(URLIcons.CERCLEPLEIN);
 		
 		// Values
 		this.putValue(SHORT_DESCRIPTION, "Sélectionne l'outil cercle");
-		this.putValue(SMALL_ICON, new ImageIcon(urlCercleVide));
+		this.putValue(SMALL_ICON, urlCercleVide);
 	}
 	
 	/**
@@ -63,6 +61,11 @@ public class ActionOutilEllipse extends AbstractAction  implements Observer {
 		model.deselectionnerToutesLesFormes();
 	}
 
+	/**
+	 * Met à jour l'icône du bouton en fonction du type du modèle (vide/plein).
+	 * 
+	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
+	 */
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		// Définition du bouton rectangle comme outil courant
@@ -76,9 +79,9 @@ public class ActionOutilEllipse extends AbstractAction  implements Observer {
 		
 		// Modification de l'icône en fonction du booléen "plein"
 		if (model.getObjetCourant().equals("ellipse") && model.getPleinCourant()) {
-			bouton.setIcon(new ImageIcon(urlCerclePlein));
+			bouton.setIcon(urlCerclePlein);
 		} else if (model.getObjetCourant().equals("ellipse") && !model.getPleinCourant()) {
-			bouton.setIcon(new ImageIcon(urlCercleVide));
+			bouton.setIcon(urlCercleVide);
 		}
 	}
 }

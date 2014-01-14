@@ -5,7 +5,6 @@ import java.awt.event.KeyEvent;
 //INTERNE
 import model.Model;
 
-
 /**
  * Contient tous les listeners concernant le clavier.
  * Gère la touche shift pour dessiner des formes parfaites. 
@@ -15,11 +14,14 @@ import model.Model;
  * @author Fabien Huitelec
  * @author Pierre-Édouard Caron
  *
- * @version 0.2
+ * @version 0.4 finale
  */
 public class KeyListenerAll extends KeyAdapter {
 	private Model model;
 	
+	/**
+	 * @param model Modèle du MVC
+	 */
 	public KeyListenerAll(Model model) {
 		this.model = model;
 	}

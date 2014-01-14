@@ -10,17 +10,18 @@ import model.Model;
 /**
  * Listener pour le menu Enregistrer. Est appelé lorsqu'on appuie sur le bouton enregistrer.
  * 
- * 
  * @author Alexandre Thorez
  * @author Fabien Huitelec
  * @author Pierre-Édouard Caron
  * 
- * @version 0.2
+ * @version 0.4 finale
  */
 public class ActionMenuEnregistrer extends AbstractAction {
 	private Model model;
        
 	/**
+	 * Paramètre le bouton (valeurs).
+	 * 
 	 * @param model Modèle du MVC
 	 */
 	public ActionMenuEnregistrer(Model model) {
@@ -48,6 +49,3 @@ public class ActionMenuEnregistrer extends AbstractAction {
 		}
 	}
 }
-
-
-

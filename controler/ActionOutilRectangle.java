@@ -2,16 +2,14 @@ package controler;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
-import java.net.URL;
 import java.util.Observable;
 import java.util.Observer;
-
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-
 // INTERNE
+import ressources.URLIcons;
 import model.Model;
 
 /**
@@ -21,13 +19,13 @@ import model.Model;
  * @author Fabien Huitelec
  * @author Pierre-Édouard Caron
  * 
- * @version 0.2
+ * @version 0.4 finale
  */
 public class ActionOutilRectangle extends AbstractAction implements Observer {
 	private Model model;
 	private JButton bouton;
 	private boolean plein;
-	private URL urlRectangleVide, urlRectanglePlein;
+	private ImageIcon rectangleVide, rectanglePlein;
 	
 	/**
 	 * Ne comporte pas de nom, autrement
@@ -41,18 +39,17 @@ public class ActionOutilRectangle extends AbstractAction implements Observer {
 		this.bouton = bouton;
 		this.plein = false;
 		
-		// URL
-		this.urlRectangleVide = ClassLoader.getSystemClassLoader().getResource("ressources/images/rectangleVide.png");
-		this.urlRectanglePlein = ClassLoader.getSystemClassLoader().getResource("ressources/images/rectanglePlein.png");
+		// ImageIcon
+		this.rectangleVide = new ImageIcon(URLIcons.RECTANGLEVIDE);
+		this.rectanglePlein = new ImageIcon(URLIcons.RECTANGLEPLEIN);
 		
 		// Values
 		this.putValue(SHORT_DESCRIPTION, "Sélectionne l'outil rectangle");
-		this.putValue(SMALL_ICON, new ImageIcon(urlRectangleVide));
+		this.putValue(SMALL_ICON, rectangleVide);
 	}
 
 	/**
 	 * Sélectionne l'outil rectangle dans le modèle
-	 * 
 	 */
 	public void actionPerformed(ActionEvent e) {
 		if (model.getObjetCourant().equals("rectangle")) {
@@ -64,6 +61,11 @@ public class ActionOutilRectangle extends AbstractAction implements Observer {
 		model.deselectionnerToutesLesFormes();
  	}
 	
+	/**
+	 * Modifie les bordures du bouton selon la forme sélectionnée dans le modèle.
+	 * 
+	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
+	 */
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		// Définition du bouton rectangle comme outil courant
@@ -77,9 +79,9 @@ public class ActionOutilRectangle extends AbstractAction implements Observer {
 		
 		// Modification de l'icône en fonction du booléen "plein"
 		if (model.getObjetCourant().equals("rectangle") && model.getPleinCourant()) {
-			bouton.setIcon(new ImageIcon(urlRectanglePlein));
+			bouton.setIcon(rectanglePlein);
 		} else if (model.getObjetCourant().equals("rectangle") && !model.getPleinCourant()) {
-			bouton.setIcon(new ImageIcon(urlRectangleVide));
+			bouton.setIcon(rectangleVide);
 		}
 	}
 }

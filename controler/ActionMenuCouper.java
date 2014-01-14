@@ -3,10 +3,9 @@ package controler;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.ListIterator;
-
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
-
+// INTERNE
 import ressources.URLIcons;
 import model.Forme;
 import model.Model;
@@ -18,11 +17,16 @@ import model.Model;
  * @author Fabien Huitelec
  * @author Pierre-Édouard Caron
  * 
- * @version 0.2
+ * @version 0.4 finale
  */
 public class ActionMenuCouper extends AbstractAction {
 	private Model model;
 	
+	/**
+	 * Paramètre le bouton (valeurs).
+	 * 
+	 * @param model Modèle du MVC
+	 */
 	public ActionMenuCouper(Model model) {
 		this.model = model;
 		
@@ -32,6 +36,12 @@ public class ActionMenuCouper extends AbstractAction {
 		this.putValue(SMALL_ICON, new ImageIcon(URLIcons.CUT));
 	}
 	
+	/**
+	 * Ajoute les formes sélectionnés à la zone de pending du modèle puis
+	 * supprime ces formes du calque.
+	 * 
+	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
 	public void actionPerformed(ActionEvent arg0) {
 		ArrayList<Forme> formePending = new ArrayList<Forme>();
 		
@@ -44,7 +54,7 @@ public class ActionMenuCouper extends AbstractAction {
 				it.remove();
 			}
 		}
+		
 		this.model.setFormePending(formePending);
 	}
-
 }

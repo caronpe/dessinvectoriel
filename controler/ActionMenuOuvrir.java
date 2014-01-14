@@ -6,20 +6,16 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.StreamCorruptedException;
-import java.net.URL;
 import java.util.ArrayList;
-
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-
-
 //INTERNE
+import ressources.URLIcons;
 import model.Calque;
 import model.Model;
-
 
 /**
  * Listener pour le menu Ouvrir. Contient toutes les fonctions d'ouverture de fichier
@@ -29,22 +25,23 @@ import model.Model;
  * @author Fabien Huitelec
  * @author Pierre-Édouard Caron
  * 
- * @version 0.2
+ * @version 0.4 finale
  */
 public class ActionMenuOuvrir extends AbstractAction {
 	private Model model;
-	private URL urlOpen;
 	
+	/**
+	 * Paramètre le bouton (valeurs).
+	 * 
+	 * @param model Modèle du MVC
+	 */
 	public ActionMenuOuvrir(Model model) {
 		this.model = model;
-		
-		// URL
-		this.urlOpen = ClassLoader.getSystemClassLoader().getResource("ressources/images/open.png");
-		
+
 		// Values
 		putValue(NAME, "Ouvrir");
 		putValue(SHORT_DESCRIPTION, "Ouvrir un fichier déjà existant");
-		this.putValue(SMALL_ICON, new ImageIcon(urlOpen));
+		this.putValue(SMALL_ICON, new ImageIcon(URLIcons.OPEN));
 	}
 	
 	/**
@@ -74,7 +71,6 @@ public class ActionMenuOuvrir extends AbstractAction {
 			} else if ( n == 1 ) { // Si Ne pas enregistrer
 				ouvrir();
 			}
-			
 		}
 	}
 	
@@ -110,7 +106,6 @@ public class ActionMenuOuvrir extends AbstractAction {
 	 * @param monFichier Nom du fichier contenant l'adresse absolue du fichier.
 	 * @throws ClassNotFoundException 
 	 */
-	@SuppressWarnings("unchecked")
 	public void fluxOuverture(String monFichier) {
 		try {
 			FileInputStream fichier = new FileInputStream(monFichier);

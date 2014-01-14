@@ -4,16 +4,14 @@ import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
-import java.net.URL;
-
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
-
 //INTERNE
 import model.Model;
 import ressources.ExtensionFileFilter;
 import ressources.JFileChooserOverwrite;
+import ressources.URLIcons;
 
 /**
  * Listener pour le menu Enregistrer sous. Est appelé lorsqu'on appuie sur le bouton enregistrer sous mais aussi
@@ -23,30 +21,27 @@ import ressources.JFileChooserOverwrite;
  * @author Fabien Huitelec
  * @author Pierre-Édouard Caron
  * 
- * @version 0.2
+ * @version 0.4 finale
  */
 public class ActionMenuEnregistrerSous extends AbstractAction {
 	private Model model;
 	/** * L'extension est sous la forme ".extension" */
 	private String extension;
-	private URL urlSaveAs;
 
 	/**
 	 * Récupère l'extension de fichier définie dans le modèle.
+	 * Paramètre le bouton (valeurs).
 	 * 
 	 * @param model Modèle du MVC
 	 */
 	public ActionMenuEnregistrerSous(Model model) {
 		this.model = model;
 		this.extension = model.getExtension();
-	
-		// URL	
-		this.urlSaveAs = ClassLoader.getSystemClassLoader().getResource("ressources/images/saveAs.png");
 		
 		// Values
 		putValue(NAME, "Enregistrer sous");
 		putValue(SHORT_DESCRIPTION, "Enregistre-sous votre travail");
-		this.putValue(SMALL_ICON, new ImageIcon(urlSaveAs));
+		this.putValue(SMALL_ICON, new ImageIcon(URLIcons.SAVEAS));
 	}
 	
 	/**

@@ -11,7 +11,7 @@ import view.FenetrePrincipale;
  * @author Fabien Huitelec
  * @author Pierre-Édouard Caron
  * 
- * @version 0.2
+ * @version 0.4 finale
  *
  */
 public class Main {

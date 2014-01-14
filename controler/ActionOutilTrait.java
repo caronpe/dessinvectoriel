@@ -10,6 +10,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 // INTERNE
 import model.Model;
+import ressources.URLIcons;
 
 /**
  * Listener pour le bouton trait.
@@ -18,7 +19,7 @@ import model.Model;
  * @author Fabien Huitelec
  * @author Pierre-Édouard Caron
  * 
- * @version 0.4
+ * @version 0.4 finale
  */
 public class ActionOutilTrait extends AbstractAction implements Observer {
 	private Model model;
@@ -27,6 +28,7 @@ public class ActionOutilTrait extends AbstractAction implements Observer {
 	/**
 	 * Ne comporte pas de nom, autrement
 	 * l'affichage ne s'effectuerait pas correctement
+	 * 
 	 * @param model Modèle du MVC
 	 */
 	public ActionOutilTrait(Model model, JButton bouton) {
@@ -36,7 +38,7 @@ public class ActionOutilTrait extends AbstractAction implements Observer {
 		
 		// Values
 		this.putValue(SHORT_DESCRIPTION, "Sélectionne l'outil trait");
-		this.putValue(SMALL_ICON, new ImageIcon("ressources/images/crayon.png"));
+		this.putValue(SMALL_ICON, new ImageIcon(URLIcons.CRAYON));
 	}
 
 	/**
@@ -47,6 +49,11 @@ public class ActionOutilTrait extends AbstractAction implements Observer {
 		model.deselectionnerToutesLesFormes();
 	}
 
+	/**
+	 * Crée des bordures lorsque cet outil est sélectionné dans le modèle.
+	 * 
+	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
+	 */
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		if (model.getObjetCourant().equals("trait")) {

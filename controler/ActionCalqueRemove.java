@@ -1,13 +1,11 @@
 package controler;
 
 import java.awt.event.ActionEvent;
-import java.net.URL;
-
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-
+import ressources.URLIcons;
 import model.Calque;
 // INTERNE
 import model.Model;
@@ -20,29 +18,32 @@ import view.CalquePanel;
  * @author Fabien Huitelec
  * @author Pierre-Édouard Caron
  * 
- * @version 0.2
+ * @version 0.4 finale
  */
-
 public class ActionCalqueRemove extends AbstractAction {
 	private Model model;
 	private CalquePanel calquePanel;
 	private Calque calque;
-	private URL urlRemove;
 
+	/**
+	 * Paramètre le bouton (valeurs).
+	 * 
+	 * @param model Modèle du MVC
+	 * @param calquePanel Panel de calque contenant tous les calqueView
+	 * @param calque Calque associé au calqueView qui va être supprimé
+	 */
 	public ActionCalqueRemove(CalquePanel calquePanel, Model model, Calque calque) {
 		this.model = model;
 		this.calquePanel = calquePanel;
 		this.calque = calque;
-		
-		// URL
-		this.urlRemove = ClassLoader.getSystemClassLoader().getResource("ressources/images/delCalque.png");
-		
-		this.putValue(SMALL_ICON, new ImageIcon(urlRemove));
+
+		// Values
+		this.putValue(SMALL_ICON, new ImageIcon(URLIcons.DELCALQUE));
 		putValue(SHORT_DESCRIPTION, "retire le calque sélectionné");
 	}
 
 	/**
-	 * Ajoute un calque vide qui devient le calque courant du modèle.
+	 * Supprime le calque dans le Panel de calqueView et dans le modèle.
 	 */
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
