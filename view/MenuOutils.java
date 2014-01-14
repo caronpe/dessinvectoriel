@@ -1,6 +1,5 @@
 package view;
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
 
 import javax.swing.BoxLayout;
@@ -87,7 +86,8 @@ public class MenuOutils extends JPanel {
 
 		//Ajout Texte Field
 		textStroke=new JTextField();
-		textStroke.addKeyListener(new ActionOutilStroke(model,textStroke));
+		ActionOutilStroke actionOutil = new ActionOutilStroke(model,textStroke);
+		textStroke.addKeyListener(actionOutil);
 		
 		// Ajouts boutons outils
 		this.add(selection);
